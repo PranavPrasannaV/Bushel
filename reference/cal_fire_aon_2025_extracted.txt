@@ -1,0 +1,751 @@
+1  
+ 
+ 
+California Department of Forestry & Fire Protection (CAL FIRE) Reforestation 
+Services Program 2025 Assessment of Needs for the State Seed Bank,  
+May 20, 2025 
+ 
+EXECUTIVE SUMMARY 
+ 
+Scope and objective: Establish an analytical process for targeted conifer seed collection 
+throughout California. 
+Methods Used: Geographic Information Systems (GIS) data layers were used to provide 
+baseline forest land mass areas, seed zones, elevation bands, total and high-severity wildfire 
+perimeters, and tree mortality areas. The dataset generated was then exported for further 
+analytics to target desired species, incorporate CAL FIRE-s Seed Bank inventory, nursery 
+requirements, and CAL FIRE Units to obtain the target number of conifer cone bushels to 
+reforest 25 percent of forest land area in California. 
+Findings and recommendations: A grand total of 55,978 bushels of conifer cones would need 
+to be collected throughout the various seed zones, elevations bands, and species to address 
+2025 needs that target a 25% reforestation goal statewide on included lands and under the 
+current vegetation distribution. While this Assessment of Needs (AON) is extensive, the 
+recommendation is to use this document as a guide with the datasets subject to amendments 
+as variables change. 
+New features in 2025 since the last publication of this report (July 2024): The 2025 analysis 
+includes (1) a more recent version of the Landscape Ecology, Modeling, Mapping, and Analysis 
+(LEMMA) vegetation data published by Oregon State University (version 2023.1) and (2) a new 
+data source for productive timberlands. Timberlands boundary is still mapped internally by 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+2  
+CAL FIRE, but the underlying data source has been updated from the U.S. Forest Service 
+CalVeg data, a fine-scale vegetation mapping product, to the even higher resolution current 
+and historic LEMMA vegetation. This update resulted in an expanded area of interest for our 
+analysis compared to July 2024 and masks some of the seed collection progress over the past 
+year. However, this update also makes our analysis more consistent, as the entire AON area of 
+interest is now derived from the same underlying LEMMA vegetation data source.  
+Limitations: The current version of the assessment does not explicitly exclude privately-owned 
+industrial land. However, the Seed Bank primarily collects seed on state-owned and non-
+industrial private forestlands. The estimated seed collection need statistics therefore 
+somewhat overestimate the actual need, which is lower due to industrial seed reserves.  
+ 
+ABSTRACT 
+ 
+The purpose of the Assessment of Needs for the State Seed Bank (AON) is to provide a 
+structured framework for directing the seed collection resources of the California Department 
+of Forestry & Fire Protection-s (CAL FIRE-s) Reforestation Services Program (RSP), targeting and 
+prioritizing efforts across all 85 seed zones and all 500-foot elevation bands for all native conifer 
+tree species within all forested landscapes of State and Local Responsibility Areas (SRA and LRA) 
+within the State of California. The information contained within this document should be seen 
+as first, a tool for RSP staff, second, as a guide for internal and external collaborators, and third, 
+as a resource for general consumption. 
+ 
+CAL FIRE has a need for a systematic way to estimate the number of bushels needed for 
+collection that will be needed to grow sufficient seedlings for reforestation on state and private 
+forest lands. In this analysis, spatial data layers were used to identify areas of productive 
+conifer species and where they intersected with elevation, seed zones, and, as a proxy for 
+disturbance, wildfire history and historic tree mortality due to insects and disease. That 
+information was then used to calculate carrying capacity and deviation below those productive 
+thresholds (or seed lots). When combined with the results of the RSP-s existing seed inventory, 
+a concerted approach to cone surveying and collection can be made to replenish seed lots of 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+3  
+greatest need. The results of this exercise for 2025 are to be shared with internal and external 
+cooperators with the expectation that datasets are revisited, and a corresponding report and 
+table produced annually. 
+ 
+BACKGROUND 
+ 
+Healthy forests provide a multitude of benefits. Wood products, wildlife habitat, clean water 
+and air, recreation, education, and steady employment are but a handful of the immense values 
+they support. Recognizing the vast environmental, economic, and social benefits of this natural 
+resource, it is incumbent on resource managers to improve forest conditions and lessen threats 
+in the face of climate change and persistent drought, as well as forest disturbances including 
+catastrophic wildfire, insect and diseases, and poor forest management and land conversion.  
+ 
+Table 1 presents an overview of disturbance statistics within productive conifer forests on non-
+federal lands of California between 2018 and 2024. These years were chosen as they are more 
+recent (and larger) fires that still have reforestation potential. 2023 is the most recent year of 
+tree mortality and wildfire severity data available at the time of publication. The numbers are 
+based on our calculations using a variety of state and federal data. The details of these 
+calculations are outlined in the methodology section, in subsection C. An estimated 1.5 million 
+acres burned on non-federal conifer forestlands, with 0.36 million acres burning at high severity. 
+Among our conifer species of interest, 22.5 million trees died from exposure to insects and 
+diseases. Data on tree mortality is missing for 2020, so this number is an underestimate. Due to 
+the devasting tree mortality (including that of parent seed trees), increased wildfire, as well as 
+other biotic and abiotic factors, there grew an increasing need for post-disturbance 
+reforestation and thus a surging demand for seeds and seedlings. 
+ 
+ 
+ 
+ 
+ 
+ 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+4  
+ 
+Year 
+Tree Mortality due to 
+Insects and Diseases 
+(in Millions) 
+Acres Burned by  
+Wildfires 
+High-Severity 
+Acres Burned by 
+Wildfires 
+2018 2.7 273,113 68,369 
+2019 2.0 32,378 5,306 
+2020 - 623,868 185,261 
+2021 1.9 356,392 78,586 
+2022 9.7 73,705 20,679 
+2023 6.2 5,918 981 
+2024  142,456  
+Total 22.5 1,507,830 359,182 
+ 
+Table 1: Disturbance Statistics by Year 
+ 
+To help meet the mounting need for reforestation services on SRA lands, CAL FIRE operates a 
+single Reforestation Center for the entire state, located in Davis, California. The center 
+encompasses the only remaining State-run conifer seed bank and nursery. Established in 1921, 
+the Lewis A. Moran Reforestation Center (LAMRC) has provided reforestation resources to 
+public and private non-industrial landowners throughout the state of California in the form of 
+seeds and seedlings for over 100 years. Unfortunately, due to budget restrictions, the nursery 
+portion of LAMRC was shut down in 2006. The seed bank remained functional and continued to 
+collect, process, and store seeds with drastically reduced staffing. In 2017, a Budget Change 
+Proposal adopted by California State Legislature allowed for additional staffing for the RSP as 
+well as related infrastructure and facility upgrades at LAMRC to expand seed storage capacity 
+along with the necessary nursery equipment to eventually increase production of up to 1 
+million seedlings annually for forestland owners. While those improvements have yet to fully 
+materialize, and despite fluctuations in yearly funding, the RSP has maintained CAL FIRE-s 
+ongoing mission to serve and safeguard the people and protect the property and resources of 
+California.   
+ 
+RSP staffing remains minimal, employing 8 full-time employees and 5-10 seasonal or limited-
+term hires engaged in both seed bank and nursery operations. The employees not only manage 
+seed requests made by forestland owners but engage in the day-to-day processing of cones and 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+5  
+seeds, as well as the coordination of surveys and collections of cones from field locations at 
+optimal times of year. In 2024, staff and cooperators collected 4,630 bushels of cone which 
+resulted in more than 3,696 pounds of processed seed destined for the public seed bank or set 
+aside privately as cooperator orchard seed shares. Exact final amounts are unavailable at the 
+time of this report given ongoing processing. The Seed Bank staff also facilitated the sale and 
+distribution of 801 pounds of seed, while Nursery staff processed 24 unique seedling orders, 
+growing a quarter million seedlings, amounting to 182,551 seedlings distributed in 2024 with the 
+remainder distributed in Spring 2025. While very dedicated and productive, the RSP suffers not 
+only from limited staffing, but antiquated processing and accounting systems, as well as 
+restricted storage and growing capacity. 
+ 
+ 
+ 
+Cone surveys, which serve as the first step in reforestation pipeline, are inconsistently done, 
+historically, by regional unit foresters with many conflicting duties, and the results of which are 
+usually submitted to the RSP on paper sheets with limited accuracy or utility. Personnel, 
+experience, and leveraged technology are not only lacking for the surveying of ripening cones 
+but in their collection as well. Current practices see but a handful of experienced surveyors and 
+collectors utilizing binoculars and traditional climbing practices to gather intelligence and 
+materials from forest stands which are not always themselves accessible or practical for 
+harvesting. Aside from minor investments in cooperative seed orchards out of state, the RSP 
+lacks a steady supply of farmed or genetically bred seed stock, and thus, relies on the intricacies 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+6  
+of wild seed collections on lands not owned by the Department which require access 
+agreements and other negotiations. In factoring in the related struggle of demand for 
+reforestation materials far outweighing supply, and the compounding obstacles that add to site 
+preparation as time before replanting lengthens, the entire industry is facing increasing 
+adversity. 
+ 
+All these processes are in some form of being updated and modernized as staffing/funding 
+increase and attention is given to the importance of growing the reforestation supply pipeline, 
+however this does illustrate the challenges we currently face. With the many challenges that 
+hamper adequate reforestation of degraded forestlands, a methodical approach needs to be 
+employed routinely to evaluate a prioritized and enhanced response to the needs of these 
+crucial landscapes in California. 
+ 
+ 
+ 
+Further enabled by the goals of the 2021 California Wildfire and Forest Resilience Action Plan, 
+CAL FIRE is working to meet the following key actions relative to its RSP, as follows: 
+1.15 Provide Seedlings for Restoration: CAL FIRE will expand its nursery and seed bank 
+to deliver seeds and seedlings to small landowners whose properties are affected by 
+wildfire or diseases. Experts will focus on using native seed selections that are best 
+suited to current and future landscapes. 
+1.34 Develop Coordinated State Restoration Strategy: California Natural Resource 
+Agency (CNRA) will partner with the California Office of Emergency Services (Cal OES), 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+7  
+The Office of Planning and Research (OPR), and other federal, state, and local agencies 
+to develop a coordinated strategy to prioritize and restore non-federal burned areas 
+and communities as part of the state-s overall long-term recovery and resilience 
+strategies. 
+ 
+ 
+ 
+ 
+  METHODOLOGY 
+ 
+RSP staff realizes that a rational approach is needed to estimate the number of seeds to grow 
+sufficient numbers of seedlings to restore California-s state and private forests. An Assessment 
+of Needs (AON) was developed in conjunction with this report to determine how many bushels 
+of seed need to be collected to reforest 25% of productive conifer forests on non-federal lands 
+at any given time throughout the state of California. Twenty-five percent was determined to be 
+an obtainable goal for the affected lands realizing the inventory of seeds, capacity of nurseries, 
+and site considerations and practicality of regeneration practices in those areas. This AON for 
+the State Seed Bank was developed using a spatial approach identifying conifer forest on state 
+and private lands. Information on individual tree species growing on these lands was then 
+extracted for each seed zone and 500-ft elevation band and matched against the State Seed 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+8  
+Bank inventory. The AON allows a methodical approach for allocating State-held resources to 
+areas of highest priority for reforestation as well as defining programmatic areas necessary for 
+increased success. The assessment not only allows us to best allocate our resources in the form 
+of surveying and collecting cones but can give us internal directives as to how to strategize 
+other initiatives like investment in related seed tree orchards, prioritizing limited processing 
+and freezer space, collaborating with industry partners to formulate response plans, directing 
+funding for local projects, and other endeavors. 
+ 
+It may be deemed that a regional approach, based on more delineated topographic and 
+climatic descriptions, other than seed zone, could be further assistive. Support of advanced 
+tools and protocols should also be considered to make the process more streamlined and 
+efficient. CAL FIRE-s Fire and Resource Assessment Program (FRAP), along with the 
+Reforestation Services Program staff, used spatial data and Geographic Information System 
+(GIS) overlay analysis using Environmental Systems Research Institute (ESRI) and Python 
+software. The data comes from a variety of federal and state government sources, including 
+CAL FIRE, the U.S. Forest Service, and the U.S. Geological Survey. The results of the analysis are 
+both a visual representation of the data as well as a functional tool that allows the user to 
+estimate the bushels needed to successfully regenerate specific species of conifer forests. The 
+following is a list of the steps followed to perform the analysis. 
+ 
+ 
+A. Establish the spatial extent of the analysis, focused on productive conifer forests 
+ 
+The LA Moran seed bank collects seed primarily for regenerating conifer forests on non- 
+industrial private forestlands as well as State-owned public lands. We estimated the spatial 
+extent of these lands using three data sources described in the following paragraphs.  
+ 
+To identify areas of conifer vegetation, we used most recent vegetation data hosted by the 
+Landscape Ecology, Modeling, Mapping, and Analysis (LEMMA) program at Oregon State 
+University and supported by researchers at the U.S. Forest Service. This data maps current 
+vegetation type, an attribute that identifies up to two dominant tree species based on basal 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+9  
+area, and groups vegetation type into a broader vegetation class, such as a conifer or a 
+broadleaf forest. We first filtered LEMMA vegetation class to include only conifer and mixed 
+forests.  
+ 
+LEMMA vegetation data reports what is on the ground at the time of remote sensing. CAL FIRE 
+has a spatial layer that depicts productive timberlands, whether the areas are currently 
+forested or not (Forest Practice Timberlands 22_3). This dataset is a manipulation of both 
+current and historic LEMMA data and spatially incorporates multiple vegetation years into one 
+composite footprint. For example, an area that has been recently harvested will not be 
+classified as a forest in the most recent LEMMA data but will be reported as productive 
+timberland in Timberlands. To complete a depiction of conifer forests that may not be 
+currently forested, our second step was to add productive timberland areas to conifer and 
+mixed forests flagged in step 1.   
+ 
+The analysis focused on state and private lands and so needed to exclude federal lands. We 
+used the CAL FIRE State Responsibility Area (SRA) layer, which identifies lands that fall within 
+the State Department-s jurisdiction for fire protection, Federal Responsibility Area for fire 
+protection (FRA), and Local Responsibility Area for fire protection (LRA). We identified conifer 
+forest and timberland areas that fall within the federal jurisdiction and dropped them from our 
+analysis. This final step left us with a boundary of productive conifer forests on non-federal 
+lands. We refer to it as the -footprint- of the analysis (Figure 1). 
+ 
+B. Control for climate and elevation - seed zones and elevation bands 
+ 
+The collection of seed for successful regeneration should account for environmental variables 
+as species differ in growth and success depending on climate, soils, and elevation. We used 
+seed zones to account for climactic and soil variation throughout the state. Seed zones are 
+defined by major areas in California having similar climatic, topographic, and soil conditions. 
+The original mapped seed zones were first proposed in 1946 with the most recent version 
+having been revised in 1966 and published as part of a joint report between the USDA Forest 
+Service and CAL FIRE in 1970. Denoted by a three-digit identifier and broken out into 85 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+10  
+distinct zones within 32 subregions contained within 6 overarching regions, the map attempts 
+to base the location of native tree plantings within close proximity and elevation to the 
+collected seed source from which those trees were propagated. 
+ 
+The regions, known as Physiographic and Climatic Regions, are depicted by the first digit in the 
+three-digit designation for each seed zone. Divisions of the regions, called subregions, were 
+delineated based on the next lower level of environmental changes known to affect growth and 
+adaptability of plants. These are designated by the second digit in the three-digit seed zone 
+number. Divisions of the subregions, called subzones, are indicated by the third digit in the 
+three-digit seed zone number. Individual subzones within subregions were defined based on 
+the overall framework of approximately 50 miles in latitude and further refinement in 
+uniformity of environment within subregion. Subzone boundaries were made to follow natural 
+or physical features (FRAP, 2003) (Figure 2). 
+ 
+We used elevation to further refine climatic and soil variation boundaries. A 10-meter 
+resolution digital elevation model (DEM) from the USGS depicting elevation was converted into 
+smoothed elevation contours that delineate the 500-foot bands (Figure 3). 
+ 
+C. Calculate measures of disturbance to conifer forests  
+ 
+To include measures of natural disturbances to conifer forests, we used data on wildfire 
+perimeters, wildfire burn severity, and areas of tree mortality due to insects and disease 
+between 2018 and 2024. These are the areas where heavy reforestation may be necessary.  
+In addition to seed need calculations for each species at a particular seed zone and elevation 
+band, site-specific analyses of seed needs will be targeted to these disturbed areas to 
+influence collection needs. 
+ 
+Perimeters of large wildfires at least 100 acres in size come from CAL FIRE FRAP-s fire 
+perimeter dataset that includes wildfires managed by state, local, or federal agencies for the 
+past 100 years (Figure 4). We focused on perimeter areas that burned non-federal conifer 
+forests defined by the analysis footprint and calculated the total acreage burned in each seed 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+11  
+zone and elevation band area using overlay analysis. A list of wildfire names and complex 
+names if any wildfires were part of a complex are also included for each area. 
+ 
+To account for the variation in burn severity, and thus variation in disturbance and need for 
+reforestation across the spatial extent of the fire, we performed similar calculations for 
+wildfire areas that burned at high severity only (Figure 5). The result was the total high-
+severity acreage burned in each seed zone and elevation band area. Boundaries of high-
+severity wildfire burn patches are mapped for wildfires of at least 1000 acres by the 
+Monitoring Trends in Burn Severity (MTBS), an interagency program that includes contributors 
+like the U.S. Forest Service and the Department of Interior.  
+ 
+A final measure of disturbance to conifer forests is based on the U.S. Forest Service-s Aerial 
+Detection Surveys (ADS). This data maps areas of forest damage and mortality due to insects 
+and disease (Figure 6). From this data, we derived measures of acreage affected by insects and 
+disease and total tree mortality due to such diseases in a way analogous to wildfire acreage 
+calculations. We restricted the damaged forest areas to those that contain our conifer species 
+of interest (listed in the next section) and to the analysis footprint. Using the resulting damage 
+boundaries and the recorded average tree mortality per acre, we estimated total acreage and 
+total mortality count in each seed zone and elevation band area.   
+ 
+D. Determine species distribution and calculate reforestation acres per target species for each 
+500- elevation band in each seed zone 
+ 
+We subset vegetation data that maps dominant tree species described in step A to our 
+footprint of non-federal productive conifer forests. We further filtered all species identified by 
+the vegetation data to the 15 conifer species of interest: 
+1. Big-Cone Douglas Fir 
+2. Coast Redwood 
+3. Coulter Pine 
+4. Douglas Fir  
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+12  
+5. Giant Sequoia  
+6. Incense Cedar  
+7. Jeffrey Pine  
+8. Knobcone Pine  
+9. Lodgepole Pine  
+10. Ponderosa Pine  
+11. Red Fir  
+12. Subalpine Fir  
+13. Sugar Pine  
+14. Western White Pine  
+15. White Fir 
+ 
+While not the only species present in the State Seed Bank, the above-mentioned species are 
+the primary species or forest types that are requested and focused on due to demand and 
+storability. As such, hardwoods, like oaks, maples, and walnuts, as well as native conifer 
+species of less commercial value, such as Torrey pine and Monterey pine, are not included. This 
+is not to suggest that the RSP will not collect these species, but for the purposes of prioritizing 
+the most requested tree species to support reforestation, the above species were the initial 
+focus. The RSP will always serve as a genetic library for native tree species in California and will 
+employ more localized prioritization for special status species when available for collection. As 
+the RSP matures and expands, we will begin to include hardwoods and other native shrubs.  
+ 
+We overlayed the resulting subset of the vegetation layer with seed zone and 500-ft elevation 
+band boundaries to extract information on share of area covered by each species in each 
+unique seed zone and elevation band combination. We converted this area share to acres 
+based on the resolution of the vegetation data to get targeted reforestation acres for all 
+species of interest within each seed zone and elevation band. 
+ 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+13  
+ 
+ 
+ 
+ 
+E. Generate trees per acre and total bushels per target species for each 500- elevation band in 
+each seed zone 
+An average stocking requirement of 200 trees per acre (TPA) was applied to targeted 
+reforestation acres for all species found above. This number was derived as an acceptable 
+average carrying capacity for forestlands relative to CA Forest Practice Rule (FPR) requirements 
+that can range between 50 and 200 TPA depending on location and forest management 
+prescriptions. This stocking requirement was applied and generated the number of total trees 
+needed to reforest target acres in each seed zone and elevation within a 500- elevation band 
+with the assumption of each acre needing maximum stocking in the worst-case hypothetical 
+scenario. 
+ 
+Conifer seed collections are classified as number of bushels needed in terms of harvesting 
+based on species. One bushel consists of 8 dry gallons of opened cones. A conversion is needed 
+to get from acres to number of bushels. The process comprises determining, on a per species 
+basis; the average seed per pound, average seedling produced per pound, number of pounds 
+needed to collect, and finally number of bushels needed. 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+14  
+Datasets for those processes were obtained as follows: 
+ 
+Average seed per pound 
+ 
+LAMRC inventory data were used to obtain data averages per species. 
+Average seedlings produced per pound 
+ 
+= (average seed per pound/average seed per pot) x percent survival rate in 
+nursery x average probability of a tree in nursery. 
+ 
+Historical LAMRC nursery datasets were used for: 
+i. number of seeds per pot- is determined based on the germination 
+calculations. 
+ii. percent survival in nursery- seed that germinated and grew to a two- 
+year seedling. 
+iii. average probability of tree in nursery- seedlings that were thinned and 
+were able to be transplanted. 
+Number of pounds needed to collect 
+ 
+= (number of trees in reforestation acres/average seedlings per pound) 
+ 
+Number of bushels needed 
+= (number of pounds needed to collect/average pounds of clean seed per bushel).  
+ 
+Clean seed is defined as seed that has been processed to have >95% purity, <9% moisture content, and is 
+ready for long-term storage. Bushels were rounded to whole numbers. Average pound of clean seed per 
+bushel was obtained via historical records shown in Table 2. For species not represented in the table, a 
+conversion of one bushel of seed equaling one pound of seed was assumed. 
+ 
+ 
+ 
+ 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+15  
+Species Avg. No. Cones/Bushel Avg. Lbs. Clean Seed/Bushel 
+Big-Cone Douglas Fir 300-400 0.75 
+Coast Redwood 1000s 0.75 
+Coulter Pine 10-12 0.9 
+Douglas Fir 900-1000 0.5 
+Giant Sequoia 1000s 0.75 
+Incense Cedar 1000s 0.7 
+Jeffrey Pine 35-50 1.2 
+Ponderosa Pine 90-100 1 
+Red Fir 50-65 0.9 
+Sugar Pine 12-18 1.4 
+White Fir 170-200 1.1 
+ 
+Table 2: LAMRC records of average number of cones and clean seed obtained per species. 
+ 
+Current LAMRC seed bank inventories (comprised of wild and orchard seeds) are measured in 
+pounds which were also converted to bushels needed based on process # 4 detailed above. 
+Inventory datasets were matched to the spatial dataset with estimated need based on species, 
+elevation, and seed zone. The final result shows deficits as positive bushel counts and excess 
+as negative bushel counts. It is worth noting that the final values of bushel deficit/excess do not 
+take into account private, industrial seed bank inventories. Figure 7 shows the spatial logic of 
+the entire AON creation process and provides an excerpt of the final data.  
+ 
+F. Supplementary data for coordination of seed collection 
+The most recent analysis includes supplementary information on CAL FIRE timber harvesting 
+operations, demonstration state forests, and parcel ownership data designed to facilitate 
+coordination of seed collection. For each unique seed zone and elevation band combination, 
+we present a list of Timber Harvesting Plans, Notices of Timber Operations, and Nonindustrial 
+Timber Management Plans that are at least 100 acres in size and are either approved or 
+unlogged. We identify any demonstration state forests that appear within each seed zone and 
+elevation band area boundary. We also flag parcels 40 or more acres in size that overlap with 
+the non-federal conifer forest footprint boundary and that are located in each seed zone and 
+elevation band. Additional data on parcel ownership, zoning, and other sensitive information 
+is available conditional on completion of restricted parcel data access agreement paperwork.  
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+16  
+H. Final bushel needs and collection priority index 
+ 
+The 2025 Seed Bank AON is an extensive list representing a spatial analysis baseline of the 
+number of bushels required to reforest 25% of productive conifer forests on non-federal lands, 
+along with natural disturbance statistics, CAL FIRE timber harvesting operations, demonstration 
+state forests, and parcel data within each seed zone and 500- elevation band. 
+ 
+Final bushel needs statistics are color-coded to aid in visualizing collection priority based on an 
+assigned priority index ranging from 1 to 3. Bushel needs higher than 100 are colored in red 
+and are coded as priority 1. Bushel needs between 11 and 100 are colored in orange and 
+receive priority level 2. Bushel needs of 10 or less are colored in yellow and are marked as the 
+lowest priority 3.  
+ 
+ 
+CONCLUSION 
+ 
+As of May 2025, a total of 55,978 bushels of conifer seed needs to be collected throughout the 
+entire state of California to accomplish the 25% reforestation goal statewide on the lands 
+included. This total number shows a reduction of 900 bushels from last year-s estimate. The 
+change reflects total seed collected in 2024 and updates to the underlying vegetation and 
+timberlands data described above. 
+ 
+Internally, the AON is being used to assist CAL FIRE Unit Foresters and their staff by providing a 
+list of species, per seed zone, and elevation band that can be tailored to match cone survey 
+routes when possible. Externally, CAL FIRE is using the AON to assist with discussions 
+surrounding seed acquisition and collaborations with private industrial timberland owners, 
+other government organizations, non-profits, and research institutions. A public viewer that 
+summarizes AON results is also available on the RSP website here to anyone interested in 
+California's reforestation efforts. The viewer maps statistics on bushel needs and other 
+supplementary data for each seed zone and elevation band boundary. It includes a variety of 
+filters and queries based on geographic boundaries or bushel needs distribution, a summary of 
+aggregate need for filtered areas, and a tool to upload additional data of choice to the viewer 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+17  
+from a variety of sources.  
+ 
+ 
+ 
+ 
+The intent of the AON approach is to incorporate quantitative data to provide a guide for areas 
+to focus resources and collection efforts on. Logic and rationale still need to be implemented 
+with the AON acting synergistically with recommendations from a Registered Professional 
+Forester or other qualified land managers in the field. CAL FIRE-s Reforestation Services 
+Program looks forward to making annual updates to this document, related tools, and guidance 
+in hopes that refined methodologies and enhanced data will better serve the purposes of this 
+assessment. Please refer to the contributors section below with any questions or concerns. 
+ 
+ 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+18  
+GLOSSARY OF TERMS 
+ 
+Assessment of Needs (AON) - Also referred to as the -Seed Needs Assessment-, i.e. this 
+document. Accompanied by quantified, tabular, localized data, this analysis is designed to be 
+conducted yearly by CAL FIRE staff and shared internally as well as with cooperators to better 
+assess where source tree materials are needed at defined levels. 
+Budget Change Proposal (BCP) - A formal document required when an office needs additional 
+resources or reduction of resources to change the level of funding for activities that need to be 
+authorized by the State Legislature. 
+Bushel - Measurement of dry volume of tree cones, represented as 8 dry gallons. 
+ 
+California Department of Forestry and Fire Protection (CAL FIRE) - California Natural Resources 
+Agency-s fire department whose mission is to serve and safeguard the people and protect the 
+property and resources of California. It does this by supporting staff engaged in engineering; 
+research, development, and adoption of regulations; fire and life safety programs; fire 
+prevention, law enforcement, and public information and education; resource protection; and 
+emergency response. 
+California Wildfire and Forest Resilience Action Plan - A strategy to restore the health and 
+resilience of California forests, grasslands, and natural places. In addition, improve fire safety of 
+communities and sustain the economic viability of rural forested areas. 
+Digital Elevation Model (DEM) - A computer graphic based on elevation data. It is comprised of 
+cells of a certain length and width as well as their elevation above zero. They are used to 
+represent topography and elevation. 
+Federal Responsibility Area (FRA) - Areas where the federal government has jurisdiction to first 
+respond to emergencies to include wildfires. These areas are marked primarily by federal 
+ownership, such as National Forests, National Parks, lands owned by the Bureau of Land 
+Management, the United States Military and others. 
+Fire and Resource Assessment Program (FRAP) - A CAL FIRE program whose primary function is 
+to analyze spatial data, model environmental variables, and create environmental spatial data 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+19  
+layers to inform land management. FRAP assesses the amount and extent of California's forests 
+and rangelands, analyzes their conditions, and identifies alternative management and policy 
+guidelines. 
+Forest Practice Rules (FPRs), aka Forest Practice Act - Laws enacted in 1973 and enforced by 
+CAL FIRE that regulate logging on privately-owned lands in California to ensure it is done in a 
+manner that will preserve and protect fish, wildlife, forests, and streams. 
+Lewis A. Moran Reforestation Center (LAMRC) - See Reforestation Services Program and State 
+Nursery. 
+Local Responsibility Area (LRA) - An incorporated area where the local government is 
+responsible for providing emergency services including fire protection. Emergency response in 
+these areas is typically provided by city fire departments, fire protection districts, counties, and 
+by CAL FIRE under contract. 
+Reforestation - Replanting trees (aka artificial regeneration) or supporting the regrowth of 
+trees from seed and stump sprouting (aka as natural regeneration), in previously forested areas 
+that have been affected by both natural and/or unnatural disturbances. 
+Reforestation Services Program (RSP) - Based out of the LAMRC in Davis, CA, the RSP is a CAL 
+FIRE Resource Management Program whose mission is to provide California landowners and 
+managers with resources needed to restore disturbed lands to maximize the values of highly 
+productive forests. 
+Seed Lot - A uniform quantity of seed within a permitted tolerance for percentage of pure seed 
+and other crop and inert matter. 
+Seed Zones - An inventory system that classifies seeds for collection and planting by 
+physiographic zones. Major areas in California having similar climatic, topographic, and soil 
+conditions are given the name "Physiographic and Climatic Regions." These are areas where 
+plant materials can be moved or transferred with minimal risk of being poorly adapted to new 
+location. 
+State Nursery - CAL FIRE-owned and operated facility that grows tree species for forest 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+20  
+restoration purposes for private and public landowners utilizing native seed stored at the State 
+Seed Bank. While there were previously multiple sites operating as such, the only facility in 
+operation currently is the Lewis A. Moran Reforestation Center (LAMRC) in Davis capable of 
+growing approximately 250,000 1-year seedlings. 
+State Responsibility Area (SRA) - Areas where the State of California has the primary 
+responsibility for providing emergency services including fire protection. The emergency service 
+is typically provided by CAL FIRE. 
+State Seed Bank - CAL FIRE-owned and operated facility in Davis, CA that processes and stores 
+native tree seed for on or off-site growing at nurseries for forest restoration purposes for 
+private and public landowners. A zero-degree freezer currently is able to preserve over 40,000 
+pounds of various seed at this site. 
+Stocking - A measure of the degree to which space is occupied by well-distributed countable 
+trees on forested land per the California Forest Practice Rules. 
+Timberland - Land, other than land owned by the federal government and land designated by 
+the board as experimental forest land, which is available for, and capable of, growing a crop of 
+trees of a commercial species used to produce lumber and other forest products, including 
+Christmas trees. 
+Trees Per Acre (TPA) - The average number of trees, of a given size, present on any one acre of 
+a forested tract. 
+Unit - Also known as a CAL FIRE Administrative Unit, these represent the 21 geographical 
+response areas within California that provide resource management and fire protection 
+services. 
+USDA Forest Service (USFS) - Agency of the U.S Department of Agriculture that administers the 
+nation's 154 national forests and 20 national grasslands. 
+United States Geological Survey (USGS) - Agency of the U.S. Department of Interior that 
+studies the landscape of the U.S., its natural resources and the natural hazards that threaten 
+it. It is the nation-s largest water, earth, and biological science and civilian mapping agency. 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+21  
+CONTRIBUTORS 
+ 
+Natalia Orlova, GIS Data Specialist II: natalia.orlova@fire.ca.gov 
+ 
+Marisol Villarreal, Assistant Seed Bank Manager/Environmental Scientist:  
+marisol.villarreal@fire.ca.gov 
+ 
+Spencer Lachman, Environmental Scientist: spencer.lachman@fire.ca.gov 
+ 
+Topher Byrd, Statewide Reforestation Coordinator: topher.byrd@fire.ca.gov 
+ 
+James Scheid, Reforestation Services Program Manager: james.scheid@fire.ca.gov 
+ 
+Stewart McMorrow, Wildfire Resilience Program Staff Chief: stewart.mcmorrow@fire.ca.gov 
+ 
+ 
+RESOURCES 
+Aerial Detection Survey (ADS) tree mortality data - https://www.fs.usda.gov/science-
+technology/data-tools-products/fhp-mapping-reporting/detection-surveys  
+California Department of Forestry & Fire Protection-s (CAL FIRE-s) Forest & Resources 
+Assessment Program (FRAP) (including maps) - https://www.fire.ca.gov/what-we-do/fire-
+resource-assessment-program 
+CAL FIRE-s Reforestation Services Program (Reforestation Center) -
+https://www.fire.ca.gov/what-we-do/natural-resource-management/wildfire-
+resilience/reforestation-services-program 
+California Forest Practice Rules - https://bof.fire.ca.gov/regulations/bills-statutes-rules-and-
+annual-california-forest-practice-rules/ 
+California Tree Seed Zones (publication, 1970) - https://www.fs.usda.gov/research/treesearch/41438 
+ 
+California-s Wildfire & Forest Resilience Action Plan (2021) - https://wildfiretaskforce.org/the- 
+plan/ 
+Landscape Ecology, Modeling, Mapping, and Analysis (LEMMA) vegetation data - 
+https://lemma.forestry.oregonstate.edu/data/home 
+Monitoring Trends in Burn Severity (MTBS) wildfire severity data - 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+22  
+https://www.mtbs.gov/direct-download 
+USFS Reforestation Toolbox - https://www.fs.usda.gov/t-d/seedlings/conecoll/colmeth.htm 
+ 
+ 
+ 
+PHOTO CREDIT 
+ 
+Christie Hemm-Klok - National Geographic  
+Christine McMorrow - CAL FIRE  
+Evett Kilmartin 
+Luciane Coletti 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+23  
+APPENDIX 
+ 
+Figure 1: Seed Needs Analysis Footprint 
+ 
+ 
+ 
+Notes: This footprint is a combination of conifer forests and productive timberlands defined in the California 
+Forest Practice Rules restricted to non-federal lands. Sources: LEMMA for vegetation data; CAL FIRE for 
+productive timberlands (derived from LEMMA) and federal, state, and local responsibility area boundaries.
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+24  
+Figure 2: California Seed Zones 
+ 
+ 
+ 
+ 
+Notes: Seed zones are a three-digit numeric designation used to identify each seed collection zone. They are 
+based on areas that have similar climatic, topographic, and edaphic conditions. Source: CAL FIRE.
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+25  
+Figure 3: 500-Foot Elevation Bands 
+ 
+ 
+ 
+Source: Authors- calculations of smoothed elevation contours based on USGS 10-meter resolution DEM 
+data. 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+26  
+Figure 4: Wildfire Perimeters in 2018-2024 
+ 
+ 
+ 
+Notes: Only wildfires that burned 100 acres or more are included. Source: CAL FIRE.  
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+27  
+Figure 5: High-Severity Wildfire Burn Perimeters in 2018-2023 
+ 
+ 
+ 
+ 
+ 
+ 
+Notes: Severity data is mapped only for wildfires at least 1000 acres in size. Source: Monitoring Trends in 
+Burn Severity (MTBS). 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+28  
+Figure 6: Areas of Tree Mortality Due to Insects and Disease for Conifers of Interest in 2018-2023 
+ 
+ 
+ 
+ 
+ 
+ 
+Notes: Mortality data was not collected in 2020. Source: Aerial Detection Surveys (ADS). 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+29  
+Figure 7: Spatial Analysis Logic 
+ 
+ 
+ 
+Species 
+Seed 
+Zone 
+Elevation 
+(max)  
+Bushel 
+Need 
+Collection 
+Priority 
+Acres 
+Burned 
+High-Severity 
+Acres Burned 
+Tree 
+Mortality 
+Acres 
+Tree 
+Mortality 
+Count 
+Coast Redwood 092 500 145 1 0 0 26,792 96,723 
+Coast Redwood 092 1000 284 1 0 0 62,217 225,921 
+Coast Redwood 092 1500 105 1 0 0 58,139 185,607 
+Coast Redwood 093 1000 140 1 39 0 7,932 31,695 
+Coast Redwood 094 1000 160 1 0 0 15,534 136,437 
+Coast Redwood 095 500 151 1 1,238 8 1,733 3,908 
+Coast Redwood 095 1000 124 1 23,202 3,104 5,692 86,999 
+ 
+Notes: The table included in this figure is an example of what the final data looks like for some zones that 
+grow high-priority Coast Redwood
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
+30  
+ 
+Docusign Envelope ID: 3B624CB7-41C1-473C-A4CE-7EC77BADF071
