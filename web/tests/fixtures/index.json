@@ -1,0 +1,17 @@
+{
+  "generated_at": "2026-09-17T00:00:00Z",
+  "severity_source": "MTBS thematic burn severity, class 4 = High",
+  "coverage_years": [2018, 2023],
+  "fires": [
+    {
+      "id": "fixture-fire",
+      "name": "Fixture Fire (test data)",
+      "year": 2021,
+      "discovery_date": "2021-08-01",
+      "perimeter_acres": 5000,
+      "retained_acres": 3000,
+      "interior_acres": 517,
+      "provisional": false
+    }
+  ]
+}

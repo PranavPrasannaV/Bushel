@@ -1,0 +1,112 @@
+.factor-trail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-3) var(--space-4);
+  border-left: 2px solid var(--color-accent);
+  cursor: auto;
+}
+
+.trail-gap {
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  color: var(--color-text);
+  font-size: var(--text-sm);
+}
+
+.trail-steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding-left: var(--space-5);
+}
+
+.trail-steps li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.step-formula {
+  color: var(--color-text-subtle);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+}
+
+.step-math {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.step-math strong {
+  color: var(--color-text);
+  font-weight: var(--weight-semibold);
+}
+
+.trail-input {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+.trail-factors {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.trail-factor.note {
+  padding: var(--space-2) var(--space-3);
+}
+
+.factor-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-1) var(--space-3);
+}
+
+.factor-name {
+  font-weight: var(--weight-semibold);
+}
+
+.trail-factor.published .factor-name {
+  color: var(--color-text);
+}
+
+.factor-value {
+  font-weight: var(--weight-semibold);
+}
+
+.factor-unit {
+  font-weight: var(--weight-regular);
+  opacity: 0.8;
+}
+
+.factor-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
+  font-size: var(--text-xs);
+}
+
+.factor-status {
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+}
+
+.trail-factor.published .factor-status {
+  color: var(--color-text-subtle);
+}
+
+.source-ref {
+  flex-basis: 100%;
+  opacity: 0.9;
+}

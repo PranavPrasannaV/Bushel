@@ -1,0 +1,356 @@
+/* Base + layout, built only on tokens.css. Component styles live beside their components. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  -webkit-font-smoothing: antialiased;
+  font-variant-numeric: tabular-nums;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: var(--color-accent);
+}
+
+code,
+.mono {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.caps {
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+/* ---- Shell layout: header over [map | order] ---------------------------- */
+
+.shell {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100%;
+}
+
+.shell-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-height: var(--header-height);
+  padding: var(--space-2) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.01em;
+}
+
+.shell-header .tagline {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.shell-main {
+  display: grid;
+  /* The order table needs room for nine columns; the map keeps the larger share at 1280 px. */
+  grid-template-columns: minmax(0, 1fr) clamp(var(--order-panel-width), 46vw, 48rem);
+  min-height: 0;
+}
+
+.map-region {
+  position: relative;
+  min-height: 0;
+  background: var(--map-canvas);
+}
+
+.order-region {
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--space-5) var(--space-4);
+  border-left: 1px solid var(--color-border);
+  background: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+@media (max-width: 900px) {
+  /* Stacked: map on top, order below, and the page itself scrolls. */
+  .shell {
+    height: auto;
+    min-height: 100%;
+  }
+  .shell-header {
+    padding: var(--space-2) var(--space-4);
+  }
+  .shell-header .tagline {
+    font-size: var(--text-xs);
+  }
+  .shell-main {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(55vh, 1fr) auto;
+  }
+  .order-region {
+    overflow: visible;
+    border-left: 0;
+    border-top: 1px solid var(--color-border);
+  }
+}
+
+.placeholder {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  padding: var(--space-5);
+  color: var(--color-text-subtle);
+  text-align: center;
+}
+
+/* ---- Load states --------------------------------------------------------- */
+
+.state {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  padding: var(--space-6);
+}
+
+.state-card {
+  max-width: 32rem;
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-panel);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.state-card--error {
+  border-left-color: var(--ash-200);
+}
+
+.detail {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.spinner {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--color-border-strong);
+  border-top-color: var(--color-text-muted);
+  border-radius: var(--radius-pill);
+  animation: spin 900ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}
+
+/* ---- Reserved-colour classes (use these; do not restyle ad hoc) ---------- */
+
+/* AON collection priority: order-table badges ONLY */
+.priority-badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.5rem;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-bold);
+}
+.priority-badge[data-priority='1'] {
+  background: var(--priority-1);
+  color: var(--priority-1-ink);
+}
+.priority-badge[data-priority='2'] {
+  background: var(--priority-2);
+  color: var(--priority-2-ink);
+}
+.priority-badge[data-priority='3'] {
+  background: var(--priority-3);
+  color: var(--priority-3-ink);
+}
+
+/* Unpublished CAL FIRE factor: the ONLY use of amber */
+.unpublished {
+  border: 1px solid var(--color-unpublished-border);
+  border-left-width: 3px;
+  background: var(--color-unpublished-bg);
+  color: var(--color-unpublished-text);
+}
+
+.published {
+  border: 1px solid var(--color-published-border);
+  color: var(--color-published-text);
+}
+
+.note {
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+}
+
+/* ---- Order panel (T036–T043) ---------------------------------------------- */
+
+.order-region > * {
+  min-width: 0;
+}
+
+.order-region h3 {
+  font-size: var(--text-lg);
+}
+
+.order-region h3 .count {
+  margin-left: var(--space-1);
+  color: var(--color-text-subtle);
+  font-family: var(--font-sans);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+/* Table 2 fallback marker (a dagger in the table, a tag in the trail). Neutral, never amber. */
+.fallback-dagger {
+  margin-left: 2px;
+  color: var(--color-text-muted);
+  font-weight: var(--weight-semibold);
+}
+
+.order-intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.order-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.button-primary,
+.button-quiet {
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-semibold);
+  transition: background-color var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out);
+}
+
+.button-primary {
+  border: 1px solid var(--color-accent);
+  background: var(--color-selected-bg);
+  color: var(--color-text);
+}
+
+.button-primary:hover {
+  border-color: var(--color-focus);
+}
+
+.button-quiet {
+  border: 1px solid var(--color-border-strong);
+  background: transparent;
+  color: var(--color-text-muted);
+}
+
+.button-quiet:hover:not(:disabled) {
+  border-color: var(--color-text-subtle);
+  color: var(--color-text);
+}
+
+.button-quiet:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+/* Table 2 fallback marker: neutral, never amber (amber is reserved for unpublished factors). */
+.fallback-mark {
+  display: inline-block;
+  margin-left: var(--space-1);
+  padding: 0 var(--space-1);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  color: var(--color-text-muted);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-medium);
+  line-height: 1.4;
+  vertical-align: 0.1em;
+}
+
+/* An unpublished factor's value inside running text or a formula. */
+.unpublished-value {
+  color: var(--color-unpublished-text);
+  font-weight: var(--weight-semibold);
+}
+
+.map-note {
+  position: absolute;
+  left: var(--space-4);
+  bottom: var(--space-4);
+  z-index: var(--z-overlay);
+  max-width: 28rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}

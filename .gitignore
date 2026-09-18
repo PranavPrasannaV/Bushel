@@ -8,3 +8,13 @@ node_modules/
 cache/
 *.tif
 *.tiff
+data/cache/
+dist/
+build/
+*.log
+.env*
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+web/test-results/
+web/playwright-report/

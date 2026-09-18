@@ -1,0 +1,178 @@
+.summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.summary-title {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.fire-name {
+  font-size: var(--text-2xl);
+}
+
+.stamp {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.provisional-flag {
+  padding: 0 var(--space-2);
+  border: 1px solid var(--ash-200);
+  border-radius: var(--radius-sm);
+  color: var(--ash-100);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+}
+
+/* An empty-result fire: the finding is the result, stated plainly. */
+.finding {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border-strong);
+  border-left: 3px solid var(--ash-200);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+}
+
+.finding-message {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  line-height: var(--leading-snug);
+  color: var(--color-text);
+}
+
+/* Acreage funnel: perimeter -> retained / excluded -> ... -> interior */
+.acreage {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.acreage > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-1) 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--text-sm);
+}
+
+.acreage dt {
+  color: var(--color-text-muted);
+}
+
+.acreage dd {
+  margin: 0;
+  white-space: nowrap;
+  font-weight: var(--weight-medium);
+}
+
+.acreage .is-excluded dt,
+.acreage .is-excluded dd {
+  color: var(--color-text-subtle);
+}
+
+.acreage .is-interior dt {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  color: var(--color-text);
+}
+
+.acreage .is-interior dd {
+  color: var(--regen-300);
+  font-weight: var(--weight-semibold);
+}
+
+.interior-swatch {
+  flex: none;
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: var(--radius-sm);
+  background: var(--regen-400);
+  box-shadow: 0 0 6px var(--regen-glow);
+}
+
+/* Headline totals: bushels of cones lead. */
+.totals {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.headline {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+}
+
+.headline-figure {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-semibold);
+  line-height: 1;
+  color: var(--color-text);
+}
+
+.headline-unit {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+}
+
+.subtotals {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  gap: var(--space-3);
+  margin: 0;
+}
+
+.subtotals > div {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  gap: var(--space-1);
+}
+
+.subtotals dt {
+  color: var(--color-text-subtle);
+  font-size: var(--text-xs);
+}
+
+.subtotals dd {
+  margin: 0;
+  font-size: var(--text-md);
+  font-weight: var(--weight-semibold);
+}
+
+.subtotals .unit {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-regular);
+}
+
+.gap-note {
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+.gap-note strong {
+  color: var(--color-text);
+}

@@ -1,0 +1,77 @@
+{
+  "fire": {
+    "id": "fixture-fire",
+    "name": "Fixture Fire (test data)",
+    "year": 2021,
+    "discovery_date": "2021-08-01",
+    "perimeter_source_date": "2021-10-01",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 5000,
+    "retained_acres": 3000,
+    "excluded_acres": 2000,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 1000,
+    "conifer_acres": 2500
+  },
+  "planting": {
+    "interior_acres": 517,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.517,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier"
+  },
+  "cells": [
+    {
+      "cell_id": "522_4500",
+      "seed_zone": "522",
+      "elevation_band": "4500–5000 ft",
+      "planting_acres": 30,
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 10
+        },
+        {
+          "species": "Sugar Pine",
+          "acres": 20
+        }
+      ]
+    },
+    {
+      "cell_id": "522_5000",
+      "seed_zone": "522",
+      "elevation_band": "5000–5500 ft",
+      "planting_acres": 25,
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 10
+        },
+        {
+          "species": "Western White Pine",
+          "acres": 5
+        },
+        {
+          "species": "Knobcone Pine",
+          "acres": 10
+        }
+      ]
+    },
+    {
+      "cell_id": "526_3000",
+      "seed_zone": "526",
+      "elevation_band": "3000–3500 ft",
+      "planting_acres": 462,
+      "species": [
+        {
+          "species": "Ponderosa Pine",
+          "acres": 462
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/fixture-fire.geojson"
+}

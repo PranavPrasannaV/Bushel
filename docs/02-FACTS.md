@@ -63,6 +63,13 @@ Species not in the table: the AON assumes **1 bushel = 1 lb**.
 
 "Clean seed" = processed to >95% purity, <9% moisture, ready for long-term storage.
 
+The unit: *"One bushel consists of 8 dry gallons of opened cones."* (AON, extracted text line 385.)
+
+### Limitations the AON states about itself
+
+- Known overestimate, verbatim (extracted text lines 36–39): *"The current version of the assessment does not explicitly exclude privately-owned industrial land ... The estimated seed collection need statistics therefore somewhat overestimate the actual need, which is lower due to industrial seed reserves."*
+- Internal boundary, verbatim (line 27): *"Timberlands boundary is still mapped internally by CAL FIRE"* — not a public layer, so per-fire retained acreage cannot be restricted to the agency's productive timberland exactly.
+
 ### ⚠️ The agency contradicts itself
 
 The AON **methodology** says "conifer cone bushels" and Table 2 is explicitly cones→clean seed. Its **conclusion section** says "55,978 bushels of conifer seed." **The methodology governs.** This is probably how American Forests came to publish the figure mislabelled as seed.
@@ -125,7 +132,9 @@ CAL FIRE matches orders *"with seeds from the same seed zone and elevation as th
 
 **Baker 2023, *Climate*** (~56M ha analysed): seed-limited interior area averages only **21.9%** of high-severity burn area, arguing regeneration failure is overstated. Single-author, MDPI, minority position — and entirely quotable by a judge.
 
-**Run 21.9% as the default.** On screen: *"computed using Baker (2023), the published estimate least favourable to this conclusion."* One number, not a range. A toggle reads as uncertainty and nobody can operate it in a video anyway.
+**The 90 m threshold.** Verbatim, abstract (verified 2026-09-17 via FRAMES catalog 68660; MDPI blocks automated fetch): *"The vulnerable interior area averaged only 21.9% of total high-severity fire area, as 78.1% of burned area was within 90 m of live seed sources where successful tree regeneration is likely."* Scope: ~56 million ha, 11 western US states, 2000–2020. Citation: Baker, W.L. 2023. *Climate* 11(11):214.
+
+**Run 90 m as the default threshold; 21.9% is a cross-check, never a multiplier** (superseded the earlier "run 21.9% as the default" — see `specs/001-post-fire-seed-order/research.md` R3: applying the 90 m buffer and then 21.9% double-counts one correction). On screen: *"90 m — Baker (2023), the published estimate least favourable to this conclusion."* One number, not a range, and no toggle.
 
 ---
 

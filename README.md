@@ -1,8 +1,8 @@
 # Bushel
 
-**For any burned place in California, Bushel works out the seed order that would actually bring the forest back — which acres will never grow back on their own, which species, how much seed, zone by zone.**
+**For a burned California fire, Bushel works out the seed order to replant it — which acres are unlikely to grow back on their own, which species, how much seed, zone by zone.**
 
-California publishes that number once a year, for the whole state: **55,978 bushels of cones**. Bushel computes it for one fire, on demand.
+California publishes a statewide seed need once a year: **55,978 bushels of cones**, sized to reforest 25% of productive conifer forest on non-federal land, not only burned land. Bushel applies the same method to one fire, on demand.
 
 Built for [NextStep Hacks 2026](https://nextstep2026.devpost.com) — theme *Earth Forward*.
 
@@ -20,7 +20,7 @@ That still happens after small or gentle fires. It increasingly doesn't happen a
 
 - Before 2000, **70%** of burned sites grew back to the tree density they had before the fire.
 - After 2000, **46%**.
-- About **a third** of burned sites now show no conifer regeneration at all.
+- About **a third** of burned sites show no conifer regeneration at all.
 
 ### Why it stopped working
 
@@ -28,23 +28,23 @@ Two things changed at once.
 
 **The survivors died.** A high-severity fire kills the trees that would have supplied the seed. No parent trees, no seed.
 
-**The burns got too wide.** This is the part people miss. Conifer seed doesn't travel far — most of it lands within 200 metres of the tree that dropped it, and for many species rarely past 100 metres. Meanwhile modern high-severity patches run thousands of acres across.
+**The burns got too wide.** This is the part people miss. Conifer seed doesn't travel far — most of it lands within 200 metres of the tree that dropped it, and for non-serotinous species (cones that open without fire) rarely much past 100 metres. Meanwhile modern high-severity patches run thousands of acres across.
 
-So picture a burned patch several kilometres wide. Around the edge, surviving trees seed into the first hundred metres or so. Everything past that is out of range. **Nothing will reach it.** That middle part — the part beyond seeding distance — is the part a human has to plant, and it's the single most important number in this whole project.
+So picture a burned patch several kilometres wide. Around the edge, surviving trees seed into the first hundred metres or so. Everything past that is out of range. **Very little seed will reach it.** That middle part — the part beyond seeding distance — is the part a human has to plant, and it's the single most important number in this whole project.
 
 ### So you plant it. Why is that hard?
 
 Because you can't plant just any seed.
 
-A ponderosa pine from the hot dry foothills is a different animal from a ponderosa pine from a cold high ridge, even though they're the same species. Plant the wrong one and it dies, or it limps along and never becomes a forest.
+A ponderosa pine from the hot dry foothills is a different animal from a ponderosa pine from a cold high ridge, even though they're the same species. Plant the wrong one and it may grow poorly or die.
 
-California solved this in 1970 by dividing the state into **85 seed zones** — areas with similar climate, soil and terrain, where seed can be moved around safely. There's a second rule on top of it: stay within **500 feet of the elevation** you collected from. So a single big fire that spans several zones and climbs a mountainside isn't one planting job. It's a dozen separate ones, each needing its own seed, and they can't be pooled.
+California solved this in 1970 by dividing the state into **85 seed zones** — areas of similar climate and terrain, within which seed can be moved. There's a second rule on top of it: stay within **500 feet of the elevation** you collected from. So a single big fire that spans several zones and climbs a mountainside isn't one planting job. It's several separate ones, each matched to its own seed, and Bushel never pools them.
 
-### And then there isn't enough seed
+### And then the seed has to be collected
 
-Seed comes from cones, and cones have to be physically collected off trees by people, in good years, from the right zone, at the right elevation.
+Seed comes from cones, and cones are physically collected off trees by people. The seed is matched to the zone and elevation where it will be planted.
 
-California's seed bank publishes what it needs once a year. For 2025: **55,978 bushels of cones** — enough to replant a quarter of the productive conifer forest on the state's non-federal land.
+California's seed bank publishes what it needs once a year. For 2025: **55,978 bushels of cones** — enough to reforest a quarter of the productive conifer forest on the state's non-federal land.
 
 That figure isn't only about fire. It answers for wildfire, insect and disease death, and timber harvest together. Between 2018 and 2024, **1.5 million acres** of non-federal conifer forest burned in California, and separately **22.5 million trees** died from insects and disease.
 
@@ -52,7 +52,7 @@ That figure isn't only about fire. It answers for wildfire, insect and disease d
 
 The state calculates that number **once a year, for the entire state, as a single planning document.** That's the right tool for planning a statewide seed-collection season. It's the wrong tool if you're standing in front of one particular burn and need to know what *this* fire needs, now.
 
-Bushel does the same calculation, for one fire, in seconds.
+Bushel applies the same method to one fire, on demand.
 
 ---
 
@@ -60,7 +60,7 @@ Bushel does the same calculation, for one fire, in seconds.
 
 ### The person
 
-A **Registered Professional Forester** — a licensed forester, the person California requires you to involve for serious forest work — is managing a burned property for a private landowner.
+A **Registered Professional Forester** — a licensed forester, the person California requires you to involve for serious forest work — is managing a burned property for a private non-industrial landowner.
 
 She's not hypothetical. CAL FIRE's own seed-ordering rules put her at the front of the queue. Their first sales priority is, word for word:
 
@@ -71,19 +71,19 @@ And their landowner preference runs: **private non-industrial and tribal first, 
 ### Her deadline is real and it is published
 
 - The seed order window runs **1 September to 31 December**.
-- **Sugar pine, red fir and white fir must be ordered by 31 October** — they need a longer cold-storage treatment before they'll germinate.
-- The seedling queue opens 1 April and closes 31 October *"or when the nursery has reached projected capacity — capacity is commonly reached by mid-summer."*
-- Seedlings are sown the **February after** the order closes, then grown at least nine months.
+- **Sugar pine, red fir and white fir must be ordered by 31 October** — they need longer stratification, a pre-sowing treatment.
+- The seedling queue opens 1 April and closes 31 October *"or when the RSP nursery has reached projected capacity… capacity is commonly reached by mid-summer."*
+- Seedlings are sown the **February and April after** the order closes, then grown at least nine months.
 
 Add it up: **roughly eighteen months from placing an order to having something you can put in the ground.** Miss the window and you don't lose a week. You lose a year.
 
 ### The fire
 
-Take the **Camp Fire** — Butte County, ignited 8 November 2018, **153,335 acres**, state responsibility. Those figures come straight from CAL FIRE's own perimeter record, which is one of the live data sources this project reads.
+Take the **Camp Fire** — Butte County, ignited 8 November 2018, **153,335 acres**. Those figures come straight from CAL FIRE's own perimeter record, which is one of the live data sources this project reads.
 
 ### What she does today
 
-She works it out by hand, over weeks. Pull the burn perimeter. Work out which parts are state responsibility and which are federal. Read how severely each part burned. Look up which seed zones it crosses and what elevations. Work out what was growing there before. Estimate how many trees per acre. Convert trees to seed. Convert seed to cone bushels, because that's the unit the seed bank orders in. Do that separately for every species in every zone at every elevation band.
+Today she works it out herself, step by step. Pull the burn perimeter. Work out which parts are state responsibility and which are federal. Read how severely each part burned. Look up which seed zones it crosses and what elevations. Work out what was growing there before. Estimate how many trees per acre. Convert trees to seed. Convert seed to cone bushels, because that's the unit the seed bank orders in. Do that separately for every species in every zone at every elevation band.
 
 Then check her arithmetic, because an error here doesn't show up for eighteen months.
 
@@ -91,17 +91,17 @@ Then check her arithmetic, because an error here doesn't show up for eighteen mo
 
 She clicks the fire.
 
-**First, the tool throws away everything it isn't allowed to count.** CAL FIRE only has jurisdiction over non-federal land, so the perimeter gets clipped to State Responsibility Area. The excluded acreage is reported, not silently dropped — if two-thirds of your fire was on National Forest land, you need to know that, not just get a smaller number with no explanation.
+**First, the tool throws away everything it isn't allowed to count.** The state's assessment covers only non-federal land (State and Local Responsibility Areas); Bushel clips the perimeter to State Responsibility Area. The excluded acreage is reported, not silently dropped — if two-thirds of your fire was on National Forest land, you need to know that, not just get a smaller number with no explanation.
 
 **Then it reads how badly each acre burned**, and keeps only the high-severity ground — the acres where the trees actually died.
 
-**Then the moment that matters.** It measures inward from every edge where living forest survived, and lights up the interior — the acres beyond seeding range. *They are not the whole fire.* Usually they're a minority of it. This is the difference between ordering seed for 153,335 acres and ordering it for the acres that genuinely need it, and it is the single biggest source of error in doing this by hand.
+**Then the moment that matters.** It measures inward from every edge where living forest survived, and lights up the interior — the acres beyond seeding range. *They are not the whole fire.* Usually they're a minority of it. This is the difference between ordering seed for 153,335 acres and ordering it for the acres that genuinely need it.
 
 **Then it splits the fire.** Not one job — one job per seed zone per 500-foot elevation band, with species assigned from what was growing there before the fire. The tool refuses to merge those cells together to make the number tidier. That refusal has a name in this codebase: **Provenance Lock**.
 
-**Then it converts, showing its work.** Acres to trees. Trees to pounds of seed. Pounds to cone bushels. Cone bushels to dollars. Every single factor displayed next to the CAL FIRE table it came from — and three of them flagged in amber, for a reason that's the most interesting thing in this project (Part 4).
+**Then it converts, showing its work.** Acres to trees. Trees to pounds of seed. Pounds to cone bushels. Pounds to dollars, off the seed price list. Every single factor displayed next to the CAL FIRE table it came from — and three of them flagged in amber, for a reason that's the most interesting thing in this project (Part 4).
 
-**And it lands next to the state's own number.** Her fire's requirement, beside California's 55,978.
+**And it is checked against the state's own number.** Bushel's roll-up across fires, beside California's 55,978.
 
 ---
 
@@ -111,7 +111,7 @@ Anyone can build a calculator that produces a number. The question is whether th
 
 **Bushel reimplements CAL FIRE's own published method rather than inventing one.** The formula is lifted verbatim from the state's 2025 Assessment of Needs, which is included in this repo as a PDF.
 
-**Which means it can be checked against the state's own answer.** Run the same calculation across the same period and jurisdiction the state covers, and compare the total to 55,978. That's not a claim of accuracy — it's a test that either passes or fails in public.
+**Which means it can be checked against the state's own answer.** Run it across the fires in the state's period and compare the total to 55,978, stated as a percentage difference with its likely causes. The two are not expected to match: the state's figure also covers insect and disease mortality and timber harvest, and Local Responsibility Area land. That's not a claim of accuracy — it's a comparison anyone can check in public.
 
 **There are upstream checks too**, so early stages can be verified before the conversion chain is even involved:
 
@@ -183,9 +183,9 @@ Four things fall out of that split:
 |---|---|---|---|
 | 1 | **Jurisdiction clip** | Intersect the perimeter with State Responsibility Area; report retained *and* excluded acreage | CAL FIRE's jurisdiction defines the benchmark's scope. Without this, any comparison to 55,978 is invalid. |
 | 2 | **Severity read** | MTBS thematic burn severity, class 4 = High | The same source the state's own assessment uses |
-| 3 | **Interior** | Euclidean distance transform inward from high-severity patch edges, 90 m threshold | The acres beyond natural seeding range. A correctness requirement, not polish — skip it and you order seed for the whole burn. |
+| 3 | **Interior** | Euclidean distance transform inward from high-severity patch edges, 90 m threshold (Baker 2023) | The acres beyond natural seeding range. A correctness requirement, not polish — skip it and you order seed for the whole burn. |
 | 4 | **Partition** | Intersect 85 seed zones (Buck 1970) with 500-foot elevation bands from a DEM | Seed is matched to zone *and* elevation. Cells are never merged. |
-| 5 | **Species allocation** | LEMMA 2023.1 vegetation, filtered to the 15 conifer species of interest | LEMMA carries up to two dominant species by basal area — and it's what the benchmark was computed from |
+| 5 | **Species allocation** | Pre-fire LEMMA GNN.2023.1 map (`TREEPLBA`, the species with the plurality of basal area), filtered to the 15 conifer species of interest | The AON describes LEMMA as carrying up to two dominant species by basal area — and it's what the benchmark was computed from |
 
 Stage 3 is where the technical difficulty lives, and stage 4 is where the constraint lives.
 
@@ -194,7 +194,7 @@ Stage 3 is where the technical difficulty lives, and stage 4 is where the constr
 Runs in the browser, pure, per species per cell:
 
 ```
-trees            = acres × 200 TPA                      ← AON §E
+trees            = acres × 200 TPA                      ← AON §E, max-stocking worst case
 seedlings_per_lb = (seeds_per_lb ÷ seeds_per_pot)
                      × nursery_survival
                      × probability_of_tree               ← 3 AMBER FACTORS
@@ -219,21 +219,20 @@ This domain is full of near-identical quantities that are not interchangeable. F
 
 ### Data sources
 
-Everything is public, keyless, and free of registration. All verified live.
+Everything is public and keyless. All but LEMMA are free of registration and verified live. LEMMA's download form asks for a name, organisation and email, so it is downloaded by hand and the pipeline reads the local files (see [Running it](#running-it)).
 
 | Layer | Source |
 |---|---|
 | Fire perimeters | CAL FIRE FRAP historical perimeters (1950+) |
-| Active incidents | WFIGS national incident feed |
 | Jurisdiction | CAL FIRE FRAP State Responsibility Area |
 | Seed zones | California Seed Zones — Buck et al. 1970, 85 zones, via data.ca.gov |
 | Elevation | USGS 3DEP |
 | Burn severity | MTBS thematic burn severity |
-| Pre-fire vegetation | LEMMA 2023.1 (Oregon State University) |
+| Pre-fire vegetation | LEMMA GNN.2023.1 (Oregon State University): 2017 map for 2018–2021 fires, 2021 map for 2022 fires |
 | Conversion factors | CAL FIRE 2025 Assessment of Needs, Table 2 |
 | Prices | CAL FIRE Seed and Seedlings Terms of Sale, Feb 2026 |
 
-Both CAL FIRE PDFs are committed to `reference/` along with extracted text, so every figure can be re-checked without a network call.
+Both CAL FIRE PDFs are committed to `reference/` along with the AON's extracted text, so every figure can be re-checked without a network call.
 
 ### Scope, and why it's California
 
@@ -254,8 +253,9 @@ bushel/
 │   ├── 01-EVENT.md          Judging rubric verbatim, deadline, requirements
 │   ├── 02-FACTS.md          Every verified claim with its source
 │   ├── 03-DO-NOT-CLAIM.md   Binding. Six claims died in review; this is the list.
-│   ├── 04-DATA-SOURCES.md   Endpoints, verified live, all keyless
-│   └── 05-METHOD.md         CAL FIRE's formula and the pipeline
+│   ├── 04-DATA-SOURCES.md   Endpoints, verified live, all keyless (LEMMA is form-gated)
+│   ├── 05-METHOD.md         CAL FIRE's formula and the pipeline
+│   └── 06-DEVPOST.md        The Devpost submission draft
 ├── specs/001-post-fire-seed-order/
 │   ├── spec.md              27 functional requirements, 9 success criteria
 │   ├── plan.md              Architecture and constitution gates
@@ -272,13 +272,28 @@ bushel/
 
 ### Running it
 
+**One manual step first: LEMMA.** Its download form asks for a name, organisation and email, so no script fetches it. At <https://lemmadownload.forestry.oregonstate.edu>, request GNN.2023.1, attributes `TREEPLBA` and `FORTYPBA`, model years 2017 and 2021, area preset "California". Put the four rasters and the two code tables in `data/cache/lemma/` (git-ignored), with these names:
+
+```
+data/cache/lemma/
+  treeplba_2017.tif  treeplba_2021.tif    per-fire species allocation and conifer mask
+  fortypba_2017.tif  fortypba_2021.tif    statewide validation sensitivity only
+  treeplba_codes.csv fortypba_codes.csv   raster code -> species symbol
+```
+
+Then:
+
 ```bash
 cd pipeline && pip install -e .
-python -m bushel.fetch --cache ../data/cache     # one-time, needs network
-python -m bushel.build --out ../web/public/data  # emits static artifacts
+python -m bushel.fetch --cache ../data/cache     # one-time, needs network; reads LEMMA from data/cache/lemma/
+python -m bushel.fetch --species-only            # only if the stacks were built before LEMMA was in place (no network)
+python -m bushel.build --out ../web/public/data  # emits static artifacts; stops if the species layer is missing
+python -m bushel.validate --out ../web/public/data  # writes reference/validation.json
 
 cd ../web && npm install && npm run dev
 ```
+
+The artifacts in `web/public/data/` come from this build for eight fires: Camp and Carr (2018), North Complex and Creek (2020), Caldor and Dixie (2021), Mosquito and McKinney (2022). Details of the LEMMA download are in [`docs/04-DATA-SOURCES.md`](docs/04-DATA-SOURCES.md) §6.
 
 After the build, the application runs fully offline. Validation scenarios are in [`specs/001-post-fire-seed-order/quickstart.md`](specs/001-post-fire-seed-order/quickstart.md).
 
@@ -301,8 +316,8 @@ Before adding anything user-facing, read [`docs/03-DO-NOT-CLAIM.md`](docs/03-DO-
 
 ## Prior art, named up front
 
-- **CAL FIRE's Assessment of Needs** already produces this artifact — annually, statewide, as a GIS analysis. Bushel's contribution is doing it per fire, on demand. Nobody has built that.
-- **Seedlot Selection Tool** (USFS PNW / Oregon State / Conservation Biology Institute) and **Climate-Smart Restoration Tool** (USFS RMRS) already do climate-adjusted provenance matching. Bushel does not claim that capability.
+- **CAL FIRE's Assessment of Needs** already produces this artifact — annually, statewide, as a GIS analysis. Bushel's contribution is doing it per fire, on demand. Nobody has computed it per fire.
+- **Seedlot Selection Tool** (St.Clair et al. 2022) and **Climate-Smart Restoration Tool** (USFS RMRS) already do climate-adjusted provenance matching. Bushel does not claim that capability.
 - **CAST**, the Climate-Adapted Seed Tool, is CAL FIRE's own, built with USFS and UC Davis. It's what the agency uses when an exact zone match isn't available.
 - **Terraware** covers reforestation and nursery operations.
 - **Regenmapper** takes a burn perimeter but answers a different question: will this regenerate unaided?

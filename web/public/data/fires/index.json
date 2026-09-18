@@ -1,0 +1,90 @@
+{
+  "generated_at": "2026-09-18T04:13:31Z",
+  "severity_source": "MTBS thematic burn severity, class 4 = High",
+  "coverage_years": [
+    2018,
+    2023
+  ],
+  "fires": [
+    {
+      "id": "camp-2018",
+      "name": "Camp",
+      "year": 2018,
+      "discovery_date": "2018-11-08",
+      "perimeter_acres": 153335.5741,
+      "retained_acres": 105161.4378,
+      "interior_acres": 334.4818,
+      "provisional": false
+    },
+    {
+      "id": "carr-2018",
+      "name": "Carr",
+      "year": 2018,
+      "discovery_date": "2018-07-23",
+      "perimeter_acres": 229651.467,
+      "retained_acres": 92336.0404,
+      "interior_acres": 3713.5491,
+      "provisional": false
+    },
+    {
+      "id": "north-complex-2020",
+      "name": "North Complex",
+      "year": 2020,
+      "discovery_date": "2020-08-17",
+      "perimeter_acres": 318797.3222,
+      "retained_acres": 115707.636,
+      "interior_acres": 13507.3732,
+      "provisional": false
+    },
+    {
+      "id": "creek-2020",
+      "name": "Creek",
+      "year": 2020,
+      "discovery_date": "2020-09-04",
+      "perimeter_acres": 379842.5115,
+      "retained_acres": 23173.0547,
+      "interior_acres": 593.5718,
+      "provisional": false
+    },
+    {
+      "id": "caldor-2021",
+      "name": "Caldor",
+      "year": 2021,
+      "discovery_date": "2021-08-14",
+      "perimeter_acres": 221786.4379,
+      "retained_acres": 40060.372,
+      "interior_acres": 2239.0713,
+      "provisional": false
+    },
+    {
+      "id": "dixie-2021",
+      "name": "Dixie",
+      "year": 2021,
+      "discovery_date": "2021-07-13",
+      "perimeter_acres": 963405.6299,
+      "retained_acres": 205026.6885,
+      "interior_acres": 5781.8211,
+      "provisional": false
+    },
+    {
+      "id": "mosquito-2022",
+      "name": "Mosquito",
+      "year": 2022,
+      "discovery_date": "2022-09-06",
+      "perimeter_acres": 76771.4717,
+      "retained_acres": 22907.831,
+      "interior_acres": 1385.9647,
+      "provisional": false
+    },
+    {
+      "id": "mckinney-2022",
+      "name": "McKinney",
+      "year": 2022,
+      "discovery_date": "2022-07-29",
+      "perimeter_acres": 60102.2632,
+      "retained_acres": 20888.5609,
+      "interior_acres": 1772.9317,
+      "provisional": false
+    }
+  ]
+}
