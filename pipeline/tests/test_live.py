@@ -105,6 +105,15 @@ def test_health_reports_lemma_and_the_window(server):
     assert _get(f"{server}/api/health") == {"ok": True, "lemma": False, "years": [2018, 2023]}
 
 
+def test_prebuilt_map_data_is_served_as_json(server, tmp_path):
+    """The web app rejects data not typed as JSON; Windows' own type table calls .geojson octet-stream."""
+    fires = tmp_path / "data" / "fires"
+    fires.mkdir(parents=True)
+    (fires / "caldor-2021.geojson").write_text('{"type": "FeatureCollection", "features": []}')
+    with urlopen(f"{server}/data/fires/caldor-2021.geojson", timeout=5) as r:
+        assert "json" in r.headers["Content-Type"]
+
+
 def test_a_build_runs_as_a_job_and_serves_its_record(server):
     job = _post(f"{server}/api/build", {"frap_name": "CALDOR", "year": 2021})["job"]
     state = _wait(server, job)
