@@ -1,0 +1,172 @@
+/* Live builds and data provenance. Tokens only. Interaction is sky; regen, amber and priority stay
+ * reserved for the interior, the unpublished factors and the order badges. */
+
+.live-build {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+}
+
+.live-build-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.live-build-head h3 {
+  font-size: var(--text-md);
+}
+
+/* Mode badge: a sky dot for live, a plain ash outline for pre-built. Told apart by label and form. */
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 0 var(--space-2);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.live-badge[data-mode='live'] {
+  border-color: var(--color-accent);
+  color: var(--color-focus);
+}
+
+.live-badge[data-mode='live']::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+}
+
+.live-provenance,
+.live-small {
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  color: var(--color-text-subtle);
+}
+
+.live-provenance code,
+.live-note code {
+  font-family: var(--font-mono);
+  color: var(--color-text-muted);
+}
+
+.live-note {
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  color: var(--color-text-muted);
+  border-left: 2px solid var(--color-border-strong);
+  padding-left: var(--space-2);
+}
+
+.live-label {
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.live-input {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-sunken);
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--text-base);
+}
+
+.live-input:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 1px;
+}
+
+.live-results {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.live-results li + li {
+  border-top: 1px solid var(--color-border);
+}
+
+.live-results button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--text-sm);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color var(--duration-fast) var(--ease-out);
+}
+
+.live-results button:hover:not(:disabled),
+.live-results button:focus-visible {
+  background: var(--color-selected-bg);
+  outline: none;
+}
+
+.live-results button:disabled {
+  cursor: progress;
+  color: var(--color-text-subtle);
+}
+
+.live-quiet {
+  color: var(--color-text-subtle);
+  font-variant-numeric: tabular-nums;
+}
+
+.live-status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+/* A slow sky pulse while agency services answer. Opacity only, and still under reduced motion. */
+.live-pulse {
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  animation: live-pulse 1.2s var(--ease-out) infinite;
+}
+
+@keyframes live-pulse {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-pulse {
+    animation: none;
+  }
+}

@@ -3,12 +3,13 @@ import AssumptionPanel from './components/AssumptionPanel.tsx'
 import BurnMap from './components/BurnMap.tsx'
 import FactorTrail from './components/FactorTrail.tsx'
 import FireSelector from './components/FireSelector.tsx'
+import LiveBuild from './components/LiveBuild.tsx'
 import OrderSummary from './components/OrderSummary.tsx'
 import OrderTable from './components/OrderTable.tsx'
 import Validation from './components/Validation.tsx'
 import { computeOrder } from './convert/computeOrder.ts'
-import type { Assumptions, Factors, FireIndex, FireRecord, OrderLine } from './convert/types.ts'
-import { getData } from './data.ts'
+import type { Assumptions, Factors, FireIndex, FireIndexEntry, FireRecord, OrderLine } from './convert/types.ts'
+import { getData, getFireData } from './data.ts'
 import { downloadOrderExport } from './export/exportOrder.ts'
 
 type Load =
@@ -48,6 +49,8 @@ export default function App() {
   const [load, setLoad] = useState<Load>({ status: 'loading' })
   const [fireId, setFireId] = useState('')
   const [fire, setFire] = useState<FireLoad>({ status: 'idle' })
+  // Fires built live this session (python -m bushel.serve), listed after the pre-built set.
+  const [liveFires, setLiveFires] = useState<FireIndexEntry[]>([])
   // Only what the user changed; computeOrder fills in defaults and clamps to bounds.
   const [overrides, setOverrides] = useState<Assumptions>({})
   const [selectedKey, setSelectedKey] = useState<string | null>(null)
@@ -79,9 +82,9 @@ export default function App() {
     setFire({ status: 'loading', id })
     let mapError: string | null = null
     Promise.all([
-      getData<FireRecord>(`fires/${id}.json`, ctrl.signal),
+      getFireData<FireRecord>(id, 'json', ctrl.signal),
       // The order does not depend on the map layers; a missing geojson is reported, not fatal.
-      getData<GeoJSON.FeatureCollection>(`fires/${id}.geojson`, ctrl.signal).catch((err: unknown) => {
+      getFireData<GeoJSON.FeatureCollection>(id, 'geojson', ctrl.signal).catch((err: unknown) => {
         if (ctrl.signal.aborted) throw err
         mapError = errorText(err)
         return null
@@ -93,6 +96,11 @@ export default function App() {
       .catch((err: unknown) => {
         if (!ctrl.signal.aborted) setFire({ status: 'error', id, message: errorText(err) })
       })
+  }
+
+  function onBuilt(built: FireIndexEntry) {
+    setLiveFires((list) => [...list.filter((f) => f.id !== built.id), built])
+    selectFire(built.id)
   }
 
   const factors = load.status === 'ready' ? load.factors : null
@@ -111,7 +119,8 @@ export default function App() {
   const onReset = useCallback(() => setOverrides({}), [])
   const onToggleLine = useCallback((key: string) => setSelectedKey((k) => (k === key ? null : key)), [])
 
-  const entry = load.status === 'ready' ? load.index.fires.find((f) => f.id === fireId) : undefined
+  const allFires = load.status === 'ready' ? [...load.index.fires, ...liveFires] : liveFires
+  const entry = allFires.find((f) => f.id === fireId)
   const fireName = record?.fire?.name ?? entry?.name ?? ''
   const geojson = fire.status === 'ready' ? fire.geojson : null
   const planting = record?.planting ?? null
@@ -167,7 +176,8 @@ export default function App() {
           </section>
 
           <aside className="order-region" aria-label="Seed order">
-            <FireSelector fires={load.index.fires} value={fireId} onChange={selectFire} />
+            <FireSelector fires={load.index.fires} liveFires={liveFires} value={fireId} onChange={selectFire} />
+            <LiveBuild prebuilt={load.index.fires.length} generatedAt={load.index.generated_at} onBuilt={onBuilt} />
 
             {fire.status === 'idle' && (
               <div className="order-intro">
@@ -182,7 +192,7 @@ export default function App() {
             {fire.status === 'loading' && (
               <div className="order-intro" role="status">
                 <div className="spinner" aria-hidden="true" />
-                <p className="detail">Loading this fire's precomputed cells…</p>
+                <p className="detail">Loading this fire's cells…</p>
               </div>
             )}
 

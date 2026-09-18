@@ -161,7 +161,7 @@ Every factor a user can adjust — planting density, and the three unpublished n
 That means you can precompute all the geography, stop at that boundary, and ship the remainder as arithmetic.
 
 ```
-┌─────────────────────── OFFLINE (Python) ───────────────────────┐
+┌─────── PIPELINE (Python) · pre-built or live on request ───────┐
 │  perimeter → SRA clip → severity → interior → partition        │
 │                                  → species allocation          │
 └────────────────────────────┬───────────────────────────────────┘
@@ -178,8 +178,8 @@ Four things fall out of that split:
 
 - **Adjusting an assumption is instant.** It's a local recalculation over a small payload, not a server round-trip.
 - **The numeric path is trivially testable.** It's a pure function with no dependencies.
-- **The deployed artifact is static.** There's no backend to fall over while someone is looking at it.
-- **The heavy geospatial stack never runs in production.** It runs once, at build time.
+- **The deployed artifact can be static.** Eight fires ship pre-built, so a static deploy has no backend to fall over while someone is looking at it, and it says on screen that they are pre-built and when.
+- **Any other fire can be built live.** `python -m bushel.serve` searches CAL FIRE's perimeter service for any 2018–2023 California fire and runs the same pipeline on it at request time: perimeter, jurisdiction, seed zones, MTBS severity and 3DEP elevation all fetched from the agency services then and there. Only LEMMA comes from the local download, because it has no public service. The app shows a **Live** panel when that server is running and a **Pre-built** label when it isn't.
 
 ### Pipeline stages
 
@@ -270,8 +270,8 @@ bushel/
 │   └── tasks.md             71 tasks across 7 phases
 ├── data/                    Extracted agency tables (CSV)
 ├── reference/               CAL FIRE PDFs and extracted text
-├── pipeline/                Offline geospatial build (Python)
-└── web/                     Static application (TypeScript)
+├── pipeline/                Geospatial build and live-build server (Python)
+└── web/                     Application (TypeScript); runs static or beside the live server
 ```
 
 ### Running it
@@ -297,9 +297,18 @@ python -m bushel.validate --out ../web/public/data  # writes reference/validatio
 cd ../web && npm install && npm run dev
 ```
 
+**To build any fire live**, build the web app once, then run the server. It serves the app and the live-build API on one address:
+
+```bash
+cd web && npm run build
+cd ../pipeline && python -m bushel.serve        # http://127.0.0.1:8787
+```
+
+Type a fire name into **Build any fire**. Each build fetches that fire's layers from the agency services (about 30 s for a large fire) and adds it to the fire list under "Built live this session". During development, `npm run dev` proxies `/api` to the same server.
+
 The artifacts in `web/public/data/` come from this build for eight fires: Camp and Carr (2018), North Complex and Creek (2020), Caldor and Dixie (2021), Mosquito and McKinney (2022). Details of the LEMMA download are in [`docs/04-DATA-SOURCES.md`](docs/04-DATA-SOURCES.md) §6.
 
-After the build, the application runs fully offline. Validation scenarios are in [`specs/001-post-fire-seed-order/quickstart.md`](specs/001-post-fire-seed-order/quickstart.md).
+After the build, the pre-built fires run fully offline; only live builds need the network. Validation scenarios are in [`specs/001-post-fire-seed-order/quickstart.md`](specs/001-post-fire-seed-order/quickstart.md).
 
 ---
 

@@ -115,6 +115,14 @@ offline in Python, once, and stops at that point. The browser loads static JSON 
 arithmetic, with no backend. Changing an assumption is a local recalculation, and the whole numeric
 path is one pure function that can be tested on its own.
 
+**Live builds.** The eight demo fires ship pre-built, and the app labels them that way. Any other
+2018–2023 California fire can be built on request: `python -m bushel.serve` searches CAL FIRE's
+perimeter service, fetches that fire's perimeter, jurisdiction, seed zones, MTBS severity and 3DEP
+elevation from the agency services at request time, and runs the same pipeline code on them (about
+30 s for a large fire). LEMMA is the one exception: it has no public service, so it is read from the
+local download. A live build of Caldor matches the pre-built Caldor's perimeter and retained acres
+exactly.
+
 **Pipeline (Python: geopandas, shapely, rasterio, NumPy, SciPy).** `fetch.py` downloads each source
 layer from its public endpoint, except LEMMA, which it reads from the manually downloaded files, and
 records the URL and retrieval time in a manifest. If a layer's

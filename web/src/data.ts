@@ -8,3 +8,22 @@ export async function getData<T>(path: string, signal?: AbortSignal): Promise<T>
   }
   return (await res.json()) as T
 }
+
+/** Live-built fires are served by `python -m bushel.serve`, not bundled: their ids start with `live-`. */
+export const isLive = (id: string) => id.startsWith('live-')
+
+/** A fire's record or geometry, from the static bundle or, for a live-built fire, from the API. */
+export function getFireData<T>(id: string, ext: 'json' | 'geojson', signal?: AbortSignal): Promise<T> {
+  return isLive(id) ? getApi<T>(`data/fires/${id}.${ext}`, { signal }) : getData<T>(`fires/${id}.${ext}`, signal)
+}
+
+/** JSON from the local live-build server. Throws with the server's own error text when it gives one. */
+export async function getApi<T>(path: string, init?: RequestInit): Promise<T> {
+  const res = await fetch(`/api/${path}`, init)
+  if (!res.headers.get('content-type')?.includes('json')) {
+    throw new Error(`/api/${path}: no live-build server answered`)
+  }
+  const body = await res.json()
+  if (!res.ok) throw new Error(body?.error ?? `/api/${path} failed (HTTP ${res.status})`)
+  return body as T
+}
