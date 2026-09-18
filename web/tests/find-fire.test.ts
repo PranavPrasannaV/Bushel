@@ -1,6 +1,6 @@
 // T093: searching the pre-built fires works offline, by name and year, largest interior first.
 import { describe, expect, it } from 'vitest'
-import { matchFires } from '../src/components/LiveBuild.tsx'
+import { canHostServer, matchFires } from '../src/components/LiveBuild.tsx'
 import type { FireIndexEntry } from '../src/convert/types.ts'
 
 const fire = (id: string, name: string, year: number, interior: number): FireIndexEntry => ({
@@ -36,3 +36,12 @@ describe('matchFires', () => {
     expect(matchFires(FIRES, '   ')).toEqual([])
   })
 })
+
+describe('canHostServer', () => {
+  it('asks for a live server only where one can run', () => {
+    expect(canHostServer('localhost')).toBe(true)
+    expect(canHostServer('127.0.0.1')).toBe(true)
+    expect(canHostServer('pranavprasannav.github.io')).toBe(false)
+  })
+})
+

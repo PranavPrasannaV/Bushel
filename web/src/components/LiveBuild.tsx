@@ -39,6 +39,12 @@ const SHOWN = 6
 const SOURCES = 'CAL FIRE perimeters, State Responsibility Area and seed zones; MTBS; USGS 3DEP'
 const message = (err: unknown) => (err instanceof Error ? err.message : String(err))
 
+/** True where `python -m bushel.serve` can be running: the local machine, or a host named at build time. */
+export function canHostServer(hostname: string): boolean {
+  const extra = import.meta.env.VITE_LIVE_HOST as string | undefined
+  return ['localhost', '127.0.0.1', '[::1]'].includes(hostname) || (!!extra && hostname === extra)
+}
+
 /** Pre-built fires whose name (or year) matches every word of the query, largest interior first. */
 export function matchFires(fires: FireIndexEntry[], query: string): FireIndexEntry[] {
   const words = query.toLowerCase().split(/\s+/).filter(Boolean)
@@ -59,7 +65,11 @@ export default function LiveBuild({
   onPick: (id: string) => void
   onBuilt: (entry: FireIndexEntry) => void
 }) {
-  const [server, setServer] = useState<Server>({ status: 'checking' })
+  // A live-build server only ever runs on the machine serving the app. A static host has none, so it is
+  // never asked (asking would log a 404 on every visit).
+  const [server, setServer] = useState<Server>(() =>
+    canHostServer(window.location.hostname) ? { status: 'checking' } : { status: 'offline' },
+  )
   const [query, setQuery] = useState('')
   const [found, setFound] = useState<Found[] | null>(null)
   const [searchError, setSearchError] = useState<string | null>(null)
@@ -67,6 +77,7 @@ export default function LiveBuild({
   const polling = useRef(0)
 
   useEffect(() => {
+    if (!canHostServer(window.location.hostname)) return
     const ctrl = new AbortController()
     const timer = window.setTimeout(() => ctrl.abort(), 2000)
     getApi<Health>('health', { signal: ctrl.signal })
