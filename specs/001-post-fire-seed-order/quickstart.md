@@ -20,10 +20,10 @@ How to prove the feature works end to end. Each scenario maps to a success crite
 cd pipeline && pip install -e .
 
 # Fetch and cache source layers (seed zones, SRA, perimeters, severity, vegetation, DEM)
-python -m seedshed.fetch --cache ../data/cache
+python -m bushel.fetch --cache ../data/cache
 
 # Generate artifacts for the demo fire set
-python -m seedshed.build --out ../web/public/data
+python -m bushel.build --out ../web/public/data
 
 # Web application
 cd ../web && npm install && npm run dev
@@ -127,7 +127,7 @@ cd pipeline && pytest tests/test_units.py
 
 Asserts, as code rather than convention:
 
-- Bushels are labelled as **cones**; no output labels a bushel as a quantity of seed.
+- The bushel unit is labelled as **cones**; no output labels a bushel as a quantity of seed.
 - `seeds_per_lb` is never substituted for `seedlings_per_lb`.
 - Any seedling-denominated figure carries the **two-year-equivalent** label.
 - Cost derives from the **seed** price list in dollars per pound, never the seedling list.
@@ -138,7 +138,7 @@ Asserts, as code rather than convention:
 ## Scenario 8 — It reproduces the state's own total (US3, SC-004, SC-005)
 
 ```bash
-cd pipeline && python -m seedshed.validate   # periods are per-figure; see benchmark.json
+cd pipeline && python -m bushel.validate   # periods are per-figure; see benchmark.json
 ```
 
 **Expected output**: computed total in bushels beside the published **55,978**, with the percentage difference stated.
@@ -170,7 +170,7 @@ Partial coverage is reported as partial, never suppressed.
 
 ```bash
 cd pipeline && pytest                          # units, invariants, jurisdiction, interior, no-merge
-cd pipeline && python -m seedshed.validate     # benchmark comparison
+cd pipeline && python -m bushel.validate     # benchmark comparison
 cd web && npm run test && npm run test:e2e     # conversion purity, assumptions, UI scenarios
 ```
 

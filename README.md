@@ -1,8 +1,8 @@
-# Seedshed
+# Bushel
 
-**For any burned place in California, Seedshed works out the seed order that would actually bring the forest back — which acres will never grow back on their own, which species, how much seed, zone by zone.**
+**For any burned place in California, Bushel works out the seed order that would actually bring the forest back — which acres will never grow back on their own, which species, how much seed, zone by zone.**
 
-California publishes that number once a year, for the whole state: **55,978 bushels of cones**. Seedshed computes it for one fire, on demand.
+California publishes that number once a year, for the whole state: **55,978 bushels of cones**. Bushel computes it for one fire, on demand.
 
 Built for [NextStep Hacks 2026](https://nextstep2026.devpost.com) — theme *Earth Forward*.
 
@@ -48,11 +48,11 @@ California's seed bank publishes what it needs once a year. For 2025: **55,978 b
 
 That figure isn't only about fire. It answers for wildfire, insect and disease death, and timber harvest together. Between 2018 and 2024, **1.5 million acres** of non-federal conifer forest burned in California, and separately **22.5 million trees** died from insects and disease.
 
-### What Seedshed does about it
+### What Bushel does about it
 
 The state calculates that number **once a year, for the entire state, as a single planning document.** That's the right tool for planning a statewide seed-collection season. It's the wrong tool if you're standing in front of one particular burn and need to know what *this* fire needs, now.
 
-Seedshed does the same calculation, for one fire, in seconds.
+Bushel does the same calculation, for one fire, in seconds.
 
 ---
 
@@ -87,7 +87,7 @@ She works it out by hand, over weeks. Pull the burn perimeter. Work out which pa
 
 Then check her arithmetic, because an error here doesn't show up for eighteen months.
 
-### What she does with Seedshed
+### What she does with Bushel
 
 She clicks the fire.
 
@@ -99,7 +99,7 @@ She clicks the fire.
 
 **Then it splits the fire.** Not one job — one job per seed zone per 500-foot elevation band, with species assigned from what was growing there before the fire. The tool refuses to merge those cells together to make the number tidier. That refusal has a name in this codebase: **Provenance Lock**.
 
-**Then it converts, showing its work.** Acres to trees. Trees to pounds of seed. Pounds to cone bushels. Bushels to dollars. Every single factor displayed next to the CAL FIRE table it came from — and three of them flagged in amber, for a reason that's the most interesting thing in this project (Part 4).
+**Then it converts, showing its work.** Acres to trees. Trees to pounds of seed. Pounds to cone bushels. Cone bushels to dollars. Every single factor displayed next to the CAL FIRE table it came from — and three of them flagged in amber, for a reason that's the most interesting thing in this project (Part 4).
 
 **And it lands next to the state's own number.** Her fire's requirement, beside California's 55,978.
 
@@ -109,7 +109,7 @@ She clicks the fire.
 
 Anyone can build a calculator that produces a number. The question is whether the number is right.
 
-**Seedshed reimplements CAL FIRE's own published method rather than inventing one.** The formula is lifted verbatim from the state's 2025 Assessment of Needs, which is included in this repo as a PDF.
+**Bushel reimplements CAL FIRE's own published method rather than inventing one.** The formula is lifted verbatim from the state's 2025 Assessment of Needs, which is included in this repo as a PDF.
 
 **Which means it can be checked against the state's own answer.** Run the same calculation across the same period and jurisdiction the state covers, and compare the total to 55,978. That's not a claim of accuracy — it's a test that either passes or fails in public.
 
@@ -122,7 +122,7 @@ Anyone can build a calculator that produces a number. The question is whether th
 
 Those two windows are different, and that isn't a typo. The state's Table 1 carries no 2024 severity value — the six years 2018–2023 sum to exactly 359,182 — while the acreage total does include 2024. Comparing either against the wrong window produces a failure that has nothing to do with the code.
 
-**Where the science is contested, the tool takes the side that hurts it.** How much of a high-severity burn is genuinely beyond seeding range is actively disputed. Baker (2023) puts it at an average of 21.9%, which is the estimate least favourable to the conclusion that planting is needed. Seedshed uses Baker's method and threshold by default, and says so on screen.
+**Where the science is contested, the tool takes the side that hurts it.** How much of a high-severity burn is genuinely beyond seeding range is actively disputed. Baker (2023) puts it at an average of 21.9%, which is the estimate least favourable to the conclusion that planting is needed. Bushel uses Baker's method and threshold by default, and says so on screen.
 
 ---
 
@@ -142,7 +142,7 @@ Those datasets are internal. **They are not published.**
 
 So the state's published method cannot be reproduced from public data. Three numbers stand between a public price list and a reproducible estimate.
 
-**Seedshed does not paper over this.** Those three factors appear in amber, carrying explicit defaults, clearly labelled as not published by CAL FIRE, and adjustable by the user. The formula stays on screen.
+**Bushel does not paper over this.** Those three factors appear in amber, carrying explicit defaults, clearly labelled as not published by CAL FIRE, and adjustable by the user. The formula stays on screen.
 
 That's not the project disclosing its own weakness. It's the project disclosing the agency's, precisely, with the formula visible — and it makes the fix obvious. **Publish those three numbers and this becomes reproducible for every state.**
 
@@ -248,7 +248,7 @@ The method generalises. The ground truth doesn't — yet. See Part 4.
 ## Part 6 — Repository
 
 ```
-seedshed/
+bushel/
 ├── docs/
 │   ├── 00-BRIEF.md          Product: user, walkthrough, demo climax, build order
 │   ├── 01-EVENT.md          Judging rubric verbatim, deadline, requirements
@@ -274,8 +274,8 @@ seedshed/
 
 ```bash
 cd pipeline && pip install -e .
-python -m seedshed.fetch --cache ../data/cache     # one-time, needs network
-python -m seedshed.build --out ../web/public/data  # emits static artifacts
+python -m bushel.fetch --cache ../data/cache     # one-time, needs network
+python -m bushel.build --out ../web/public/data  # emits static artifacts
 
 cd ../web && npm install && npm run dev
 ```
@@ -301,8 +301,8 @@ Before adding anything user-facing, read [`docs/03-DO-NOT-CLAIM.md`](docs/03-DO-
 
 ## Prior art, named up front
 
-- **CAL FIRE's Assessment of Needs** already produces this artifact — annually, statewide, as a GIS analysis. Seedshed's contribution is doing it per fire, on demand. Nobody has built that.
-- **Seedlot Selection Tool** (USFS PNW / Oregon State / Conservation Biology Institute) and **Climate-Smart Restoration Tool** (USFS RMRS) already do climate-adjusted provenance matching. Seedshed does not claim that capability.
+- **CAL FIRE's Assessment of Needs** already produces this artifact — annually, statewide, as a GIS analysis. Bushel's contribution is doing it per fire, on demand. Nobody has built that.
+- **Seedlot Selection Tool** (USFS PNW / Oregon State / Conservation Biology Institute) and **Climate-Smart Restoration Tool** (USFS RMRS) already do climate-adjusted provenance matching. Bushel does not claim that capability.
 - **CAST**, the Climate-Adapted Seed Tool, is CAL FIRE's own, built with USFS and UC Davis. It's what the agency uses when an exact zone match isn't available.
 - **Terraware** covers reforestation and nursery operations.
 - **Regenmapper** takes a burn perimeter but answers a different question: will this regenerate unaided?

@@ -1,10 +1,10 @@
-# Seedshed — product brief
+# Bushel — product brief
 
 **Read this first. `03-DO-NOT-CLAIM.md` is binding on every line of UI copy, README text and video script.**
 
 ## In one sentence
 
-For any burned place in California, Seedshed produces the order that would actually bring the forest back — which acres will never reseed themselves, which species, how many cone bushels, by seed zone and elevation band — the assessment the state publishes once a year for the whole state, computed for a single fire in seconds.
+For any burned place in California, Bushel produces the order that would actually bring the forest back — which acres will never reseed themselves, which species, how many cone bushels, by seed zone and elevation band — the assessment the state publishes once a year for the whole state, computed for a single fire in seconds.
 
 ## The problem
 
@@ -14,7 +14,7 @@ So you plant. But seed is matched to the planting site's seed zone and to within
 
 Between 2018 and 2024, 1.5 million acres of non-federal conifer forest burned in California, 359,182 of them at high severity, and 22.5 million more trees were killed by insects and disease. Against all of that, plus timber harvest, the state publishes a single figure once a year: **55,978 bushels of cones**, the amount needed to reforest a quarter of the productive conifer forest on its non-federal land.
 
-One number, statewide, annually. Seedshed computes it for one fire, on demand.
+One number, statewide, annually. Bushel computes it for one fire, on demand.
 
 ## The user
 
@@ -26,7 +26,7 @@ Today she works this out by hand over weeks, forest type by forest type, against
 
 ## The walkthrough
 
-She clicks the scar. Seedshed:
+She clicks the scar. Bushel:
 
 1. **Clips the perimeter to State Responsibility Area** — CAL FIRE's jurisdiction is non-federal land, so this is what makes the comparison valid for any California fire.
 2. **Reads burn severity** from MTBS.

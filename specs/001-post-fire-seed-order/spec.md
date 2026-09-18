@@ -22,7 +22,7 @@ Today she derives it by hand over several weeks — reading the burn against see
 and elevation, forest type by forest type, then converting to a quantity she can actually
 order.
 
-She selects the fire. Seedshed returns the order: how much seed, of which species, broken
+She selects the fire. Bushel returns the order: how much seed, of which species, broken
 out by seed zone and elevation band, expressed in the units the state's seed bank uses, with
 every conversion factor shown next to the published table it came from. Factors the state's
 own method requires but has never published are shown as adjustable assumptions, visibly

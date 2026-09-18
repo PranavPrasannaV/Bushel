@@ -8,7 +8,7 @@ Six claims died during idea selection because nobody asked what a number was act
 
 ## The four unit traps (all the same family — check what the number counts)
 
-1. **Bushels are CONES, not seed.** A bushel is 8 dry gallons of opened cones. Douglas-fir yields ~0.5 lb clean seed per bushel; sugar pine ~1.4. Never write "bushels of conifer seed" — even though the AON's own conclusion section does.
+1. **The bushel unit measures CONES, not seed.** A bushel is 8 dry gallons of opened cones. Douglas-fir yields ~0.5 lb clean seed per bushel; sugar pine ~1.4. Never write "bushels of conifer seed" — even though the AON's own conclusion section does.
 
 2. **"Average Seeds/pounds" ≠ seedlings per pound.** The Terms of Sale header says *seeds*. The AON formula needs *seedlings per pound*. Substituting one for the other silently assumes 100% germination and 100% survival and understates seed required, plausibly by 2× or more — inside the very conversion chain that exists to demonstrate rigour.
 

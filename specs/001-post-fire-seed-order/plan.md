@@ -104,7 +104,7 @@ specs/001-post-fire-seed-order/
 
 ```text
 pipeline/
-├── src/seedshed/
+├── src/bushel/
 │   ├── fetch.py                   # Cache source layers from docs/04-DATA-SOURCES.md
 │   ├── jurisdiction.py            # Clip perimeter to State Responsibility Area
 │   ├── severity.py                # MTBS thematic read, class 4 = High

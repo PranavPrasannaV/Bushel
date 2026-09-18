@@ -1,6 +1,6 @@
 # The computation
 
-Seedshed reimplements CAL FIRE's published method at per-fire resolution. Every factor is either agency-published or flagged amber as an unpublished agency factor.
+Bushel reimplements CAL FIRE's published method at per-fire resolution. Every factor is either agency-published or flagged amber as an unpublished agency factor.
 
 ---
 

@@ -136,7 +136,7 @@ CAL FIRE matches orders *"with seeds from the same seed zone and elevation as th
 - **American Forests 2021:** 14 USFS nurseries closed, 6 remain; 8 states have shut theirs mostly since 2005. Fargione separately documents the South: 28 closures since 1995, −650M seedlings/yr.
 - **NASEM 2023**, *An Assessment of Native Seed Needs and the Capacity for Their Supply* — qualitative authority that nobody tracks native seed supply: *"there were limits to the committee's ability to obtain a complete picture."*
 
-**No national conifer-seed figure exists in pounds.** All national gap figures are seedlings or acres. California is the only jurisdiction publishing in the unit Seedshed outputs.
+**No national conifer-seed figure exists in pounds.** All national gap figures are seedlings or acres. California is the only jurisdiction publishing in the unit Bushel outputs.
 
 ---
 

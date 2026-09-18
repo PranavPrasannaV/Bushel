@@ -84,7 +84,7 @@ Derive 500-ft bands and intersect with the seed zones. This is how CAL FIRE oper
 Direct download: https://www.mtbs.gov/direct-download
 BAER products:   https://burnseverity.cr.usgs.gov/baer/home
 ```
-MTBS maps high-severity burn patches for fires ≥1,000 acres, 30 m, 1984–present. **The AON uses MTBS**, so using it keeps Seedshed's severity read on the same footing as the benchmark.
+MTBS maps high-severity burn patches for fires ≥1,000 acres, 30 m, 1984–present. **The AON uses MTBS**, so using it keeps Bushel's severity read on the same footing as the benchmark.
 
 ---
 
@@ -123,6 +123,6 @@ here.
 ## 8. Not available — plan around these
 
 - **CAL FIRE's three nursery factors** (seeds per pot, nursery survival rate, probability of a tree in nursery) — from internal LAMRC datasets, unpublished. This is the feature, not the bug. See `03-DO-NOT-CLAIM.md`.
-- **Seed availability / purchasable inventory** — BLM Seed Warehouse System is not public; Seeds of Success is login-gated; commercial vendors publish no aggregated inventory. Seedshed is **demand-side only**. Do not design a screen that needs a supply database.
+- **Seed availability / purchasable inventory** — BLM Seed Warehouse System is not public; Seeds of Success is login-gated; commercial vendors publish no aggregated inventory. Bushel is **demand-side only**. Do not design a screen that needs a supply database.
 - **Parcel data** in the AON is behind a restricted access agreement.
 - **National conifer seed figures in pounds** — do not exist. National gap numbers are seedlings or acres.

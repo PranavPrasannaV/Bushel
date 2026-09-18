@@ -3,7 +3,7 @@ SYNC IMPACT REPORT
 ==================
 Version change: (none) → 1.0.0
 Bump rationale: Initial ratification. No prior version existed; template placeholders
-replaced with concrete governance for the Seedshed project.
+replaced with concrete governance for the Bushel project.
 
 Principles defined (all new):
   I.   Source-Traceable Claims (NON-NEGOTIABLE)
@@ -29,9 +29,9 @@ Templates requiring updates:
 Deferred TODOs: none.
 -->
 
-# Seedshed Constitution
+# Bushel Constitution
 
-Seedshed reimplements CAL FIRE's published post-fire reforestation seed calculation at
+Bushel reimplements CAL FIRE's published post-fire reforestation seed calculation at
 per-fire resolution. Its entire value rests on being checkable against a state agency's
 own published total. Every principle below exists to protect that property.
 
@@ -95,7 +95,7 @@ number into a demonstrable one.
 
 ### IV. Disclose the Gap, Never Fill It
 
-Where required data is not public, Seedshed MUST show the gap explicitly rather than
+Where required data is not public, Bushel MUST show the gap explicitly rather than
 estimate past it, relabel it, or quietly omit the step.
 
 CAL FIRE's published method depends on three factors — seeds per pot, nursery survival
@@ -103,19 +103,19 @@ rate, and probability of a tree in nursery — drawn from internal unpublished d
 These MUST be surfaced as named, user-adjustable assumptions carrying explicit defaults
 and labelled as not published by CAL FIRE. The formula MUST be shown on screen.
 
-Seed availability and purchasable inventory data do not exist publicly anywhere. Seedshed
+Seed availability and purchasable inventory data do not exist publicly anywhere. Bushel
 is demand-side only; no feature may depend on a supply or inventory dataset.
 
 Where the underlying science is contested, the published estimate least favourable to
-Seedshed's conclusion MUST be used as the default, and named on screen.
+Bushel's conclusion MUST be used as the default, and named on screen.
 
 **Rationale:** A disclosed gap in an agency's method is a finding. A silently filled one
 is a fabrication, and it is the failure mode this domain invites most strongly.
 
 ### V. Scope Follows Verifiability
 
-Seedshed's scope is California, because California is the only jurisdiction publishing a
-benchmark in Seedshed's own output unit, together with the conversion table, the price
+Bushel's scope is California, because California is the only jurisdiction publishing a
+benchmark in Bushel's own output unit, together with the conversion table, the price
 list, and the seed-zone system the calculation requires.
 
 Scope MUST NOT be widened for breadth alone. Any proposed expansion MUST first identify
@@ -135,7 +135,7 @@ The burn perimeter MUST be clipped to State Responsibility Area before any compu
 CAL FIRE's jurisdiction defines the benchmark's scope and the clip is what makes any
 California fire comparable.
 
-Burn severity MUST come from MTBS, the same source the AON uses, so that Seedshed's
+Burn severity MUST come from MTBS, the same source the AON uses, so that Bushel's
 severity read stands on the same footing as the benchmark.
 
 Output MUST be validated against CAL FIRE's published statewide total of 55,978 bushels,

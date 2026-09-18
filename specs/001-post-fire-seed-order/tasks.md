@@ -21,7 +21,7 @@ description: "Task list for post-fire seed order"
 
 Two deliverables separated by the precompute boundary, per plan.md:
 
-- **Pipeline** (offline, Python): `pipeline/src/seedshed/`, `pipeline/tests/`
+- **Pipeline** (offline, Python): `pipeline/src/bushel/`, `pipeline/tests/`
 - **Web** (static, TypeScript): `web/src/`, `web/tests/`, artifacts at `web/public/data/`
 
 ---
@@ -45,15 +45,15 @@ Two deliverables separated by the precompute boundary, per plan.md:
 
 **⚠️ CRITICAL**: No user story work begins until this phase completes
 
-- [ ] T007 Implement source layer fetch and cache in `pipeline/src/seedshed/fetch.py` for the endpoints in `docs/04-DATA-SOURCES.md` — SRA, California Seed Zones, FRAP perimeters, MTBS severity, LEMMA 2023.1 vegetation, USGS 3DEP elevation
-- [ ] T008 Add fetch integrity checks in `pipeline/src/seedshed/fetch.py` — record retrieval date per layer and fail loudly on an unexpected schema
-- [ ] T009 Implement the published factor registry in `pipeline/src/seedshed/factors.py` loading `data/table2_cones_to_seed.csv` and `data/seed_prices.csv`, each entry carrying `source_ref`, `unit` and `status: published`
-- [ ] T010 Add the 200 TPA stocking factor to `pipeline/src/seedshed/factors.py` with `source_ref` "CAL FIRE AON 2025 §E", bounds 50–200, and the maximum-stocking-worst-case caveat string (research.md R1)
-- [ ] T011 Implement the unpublished assumption registry in `pipeline/src/seedshed/factors.py` — `seeds_per_pot`, `nursery_survival_rate`, `probability_of_tree_in_nursery` — each with default, bounds, `unpublished_by: CAL FIRE`, and a rationale stating the default is general rather than agency-specific
-- [ ] T012 Implement the Table 2 fallback rule in `pipeline/src/seedshed/factors.py` — 1 bushel = 1 lb for the four species absent from Table 2 — setting `fallback_applied` on every affected factor
-- [ ] T013 Define the 15 AON species of interest as an enum in `pipeline/src/seedshed/species.py` (research.md R5)
-- [ ] T014 Implement the artifact writer in `pipeline/src/seedshed/build.py` emitting the schemas in `contracts/pipeline-output.md`
-- [ ] T015 Implement the contract invariant validator in `pipeline/src/seedshed/build.py` — acreage sums, interior ≤ high severity, cell species sums, unique cell ids, valid species — failing the build rather than emitting a violating artifact
+- [ ] T007 Implement source layer fetch and cache in `pipeline/src/bushel/fetch.py` for the endpoints in `docs/04-DATA-SOURCES.md` — SRA, California Seed Zones, FRAP perimeters, MTBS severity, LEMMA 2023.1 vegetation, USGS 3DEP elevation
+- [ ] T008 Add fetch integrity checks in `pipeline/src/bushel/fetch.py` — record retrieval date per layer and fail loudly on an unexpected schema
+- [ ] T009 Implement the published factor registry in `pipeline/src/bushel/factors.py` loading `data/table2_cones_to_seed.csv` and `data/seed_prices.csv`, each entry carrying `source_ref`, `unit` and `status: published`
+- [ ] T010 Add the 200 TPA stocking factor to `pipeline/src/bushel/factors.py` with `source_ref` "CAL FIRE AON 2025 §E", bounds 50–200, and the maximum-stocking-worst-case caveat string (research.md R1)
+- [ ] T011 Implement the unpublished assumption registry in `pipeline/src/bushel/factors.py` — `seeds_per_pot`, `nursery_survival_rate`, `probability_of_tree_in_nursery` — each with default, bounds, `unpublished_by: CAL FIRE`, and a rationale stating the default is general rather than agency-specific
+- [ ] T012 Implement the Table 2 fallback rule in `pipeline/src/bushel/factors.py` — 1 bushel = 1 lb for the four species absent from Table 2 — setting `fallback_applied` on every affected factor
+- [ ] T013 Define the 15 AON species of interest as an enum in `pipeline/src/bushel/species.py` (research.md R5)
+- [ ] T014 Implement the artifact writer in `pipeline/src/bushel/build.py` emitting the schemas in `contracts/pipeline-output.md`
+- [ ] T015 Implement the contract invariant validator in `pipeline/src/bushel/build.py` — acreage sums, interior ≤ high severity, cell species sums, unique cell ids, valid species — failing the build rather than emitting a violating artifact
 - [ ] T016 [P] Write invariant tests in `pipeline/tests/test_invariants.py` covering every guarantee listed in `contracts/pipeline-output.md`
 - [ ] T017 Write `reference/benchmark.json` from the verified figures in `docs/02-FACTS.md` — 55,978 bushels, non-federal, plus the scope note, the known-overestimate caveat and the agency self-contradiction note.
   **Carry a period per figure, not one period for all**: acres burned 1,507,830 covers **2018–2024**; high-severity 359,182 covers **2018–2023 only** — AON Table 1 has no 2024 severity value, and the six years 2018–2023 sum to exactly 359,182. Record `acres_burned_period` and `high_severity_period` separately and state the asymmetry in a `period_note`
@@ -71,17 +71,17 @@ Two deliverables separated by the precompute boundary, per plan.md:
 
 ### Pipeline
 
-- [ ] T020 [US1] Implement SRA clip in `pipeline/src/seedshed/jurisdiction.py` returning retained acres, excluded acres and the exclusion reason
+- [ ] T020 [US1] Implement SRA clip in `pipeline/src/bushel/jurisdiction.py` returning retained acres, excluded acres and the exclusion reason
 - [ ] T021 [P] [US1] Write jurisdiction tests in `pipeline/tests/test_jurisdiction.py` — sums reconcile to perimeter acres; a fully federal burn yields the `no_retained_area` finding, not an empty order
-- [ ] T022 [US1] Implement MTBS severity read in `pipeline/src/seedshed/severity.py` selecting class 4 = High, rejecting fires outside 2018–2023 with a stated reason (research.md R4)
-- [ ] T023 [US1] Implement the zone × elevation partition in `pipeline/src/seedshed/partition.py` — intersect the 85 Buck 1970 seed zones with 500-foot bands derived from the DEM, splitting areas that straddle a band boundary
+- [ ] T022 [US1] Implement MTBS severity read in `pipeline/src/bushel/severity.py` selecting class 4 = High, rejecting fires outside 2018–2023 with a stated reason (research.md R4)
+- [ ] T023 [US1] Implement the zone × elevation partition in `pipeline/src/bushel/partition.py` — intersect the 85 Buck 1970 seed zones with 500-foot bands derived from the DEM, splitting areas that straddle a band boundary
 - [ ] T024 [P] [US1] Write no-merge tests in `pipeline/tests/test_no_merge.py` asserting zero merged cells across at least five multi-zone fires (SC-007)
-- [ ] T025 [US1] Implement species allocation in `pipeline/src/seedshed/species.py` from LEMMA 2023.1 dominant species by basal area, filtered to the 15 species of interest, recording `allocation_source` per cell
-- [ ] T026 [US1] Emit the `no_conifer` finding in `pipeline/src/seedshed/species.py` when no conifer species is present, rather than a zero-quantity order
-- [ ] T027 [US1] Wire the per-fire build in `pipeline/src/seedshed/build.py` producing `fires/{id}.json` and `fires/index.json`
-- [ ] T028 [US1] Emit `fires/{id}.geojson` in `pipeline/src/seedshed/build.py` with `layer` tags for perimeter, retained, high_severity and cell
-- [ ] T029 [US1] Emit `reference/factors.json` in `pipeline/src/seedshed/build.py` from the registries in T009–T012
-- [ ] T030 [US1] Select and build the demo fire set in `pipeline/src/seedshed/build.py` — California fires from 2018–2023 only (the MTBS severity window), each stamped with `perimeter_source_date`.
+- [ ] T025 [US1] Implement species allocation in `pipeline/src/bushel/species.py` from LEMMA 2023.1 dominant species by basal area, filtered to the 15 species of interest, recording `allocation_source` per cell
+- [ ] T026 [US1] Emit the `no_conifer` finding in `pipeline/src/bushel/species.py` when no conifer species is present, rather than a zero-quantity order
+- [ ] T027 [US1] Wire the per-fire build in `pipeline/src/bushel/build.py` producing `fires/{id}.json` and `fires/index.json`
+- [ ] T028 [US1] Emit `fires/{id}.geojson` in `pipeline/src/bushel/build.py` with `layer` tags for perimeter, retained, high_severity and cell
+- [ ] T029 [US1] Emit `reference/factors.json` in `pipeline/src/bushel/build.py` from the registries in T009–T012
+- [ ] T030 [US1] Select and build the demo fire set in `pipeline/src/bushel/build.py` — California fires from 2018–2023 only (the MTBS severity window), each stamped with `perimeter_source_date`.
   **Separately, ingest 2024 perimeters for the acreage check only**: 2024 contributes 142,456 acres, **9.45% of the published acres-burned total**, so omitting it puts SC-005 at the edge of its own 10% tolerance before any pipeline error exists. Perimeters need no severity raster, so this costs one extra fetch and no new stage
 
 ### Web — conversion
@@ -115,12 +115,12 @@ Two deliverables separated by the precompute boundary, per plan.md:
 
 **Independent test**: Display any fire and confirm the acres beyond natural seeding distance are visually distinct and smaller in area than the full burn.
 
-- [ ] T046 [US2] Implement the seed-limited interior in `pipeline/src/seedshed/interior.py` as a Euclidean distance transform inward from high-severity patch edges at a 90 m threshold, using `scipy.ndimage.distance_transform_edt`
-- [ ] T047 [US2] Record `threshold_m`, `threshold_source` and the computed `interior_fraction` in `pipeline/src/seedshed/interior.py`, alongside Baker's 0.219 as `baker_reference_fraction`
-- [ ] T048 [US2] Emit the `no_interior` finding in `pipeline/src/seedshed/interior.py` when every burned acre lies within seeding distance — a stated result, not an error (edge case)
-- [ ] T049 [US2] Insert the interior stage between severity and partition in `pipeline/src/seedshed/build.py` so the order covers only the interior
+- [ ] T046 [US2] Implement the seed-limited interior in `pipeline/src/bushel/interior.py` as a Euclidean distance transform inward from high-severity patch edges at a 90 m threshold, using `scipy.ndimage.distance_transform_edt`
+- [ ] T047 [US2] Record `threshold_m`, `threshold_source` and the computed `interior_fraction` in `pipeline/src/bushel/interior.py`, alongside Baker's 0.219 as `baker_reference_fraction`
+- [ ] T048 [US2] Emit the `no_interior` finding in `pipeline/src/bushel/interior.py` when every burned acre lies within seeding distance — a stated result, not an error (edge case)
+- [ ] T049 [US2] Insert the interior stage between severity and partition in `pipeline/src/bushel/build.py` so the order covers only the interior
 - [ ] T050 [P] [US2] Write interior tests in `pipeline/tests/test_interior.py` — interior never exceeds high-severity acres; computed fraction is compared to 0.219 as a cross-check; **assert no code path multiplies by 0.219** (research.md R3)
-- [ ] T051 [US2] Add the `interior` layer to `fires/{id}.geojson` in `pipeline/src/seedshed/build.py`
+- [ ] T051 [US2] Add the `interior` layer to `fires/{id}.geojson` in `pipeline/src/bushel/build.py`
 - [ ] T052 [US2] Render the interior as the visually dominant layer in `web/src/components/BurnMap.tsx` — distinct from the rest of the burn, legible within 10 seconds (SC-006)
 - [ ] T053 [US2] Display the threshold statement in `web/src/components/BurnMap.tsx` — 90 m, Baker (2023), the published estimate least favourable to this conclusion (FR-005)
 - [ ] T054 [P] [US2] Write the interior browser test in `web/tests/e2e/interior.spec.ts` (quickstart Scenario 5)
@@ -136,10 +136,10 @@ Two deliverables separated by the precompute boundary, per plan.md:
 
 **Independent test**: Run the calculation across the benchmark period and jurisdiction, and compare the aggregate to the published figure.
 
-- [ ] T056 [US3] Implement **period-aware** upstream acreage checks in `pipeline/src/seedshed/validate.py` — acres burned compared over **2018–2024**, high severity over **2018–2023**, each within 10% of its own published figure. Comparing either against the wrong window is a defect, not a tolerance failure (FR-020, SC-005, analysis F1)
-- [ ] T057 [US3] Implement the benchmark roll-up in `pipeline/src/seedshed/validate.py` aggregating per-fire bushels across the **severity-covered window (2018–2023)** and reporting the percentage difference from 55,978, stating on the comparison that the published total's severity input stops at 2023
-- [ ] T058 [US3] Implement gap attribution in `pipeline/src/seedshed/validate.py` naming the assumptions most plausibly responsible, including the two documented contributors — CAL FIRE's internal timberland boundary and the AON's non-exclusion of privately-owned industrial land (FR-023, research.md Residual risks)
-- [ ] T059 [US3] Report partial coverage as partial in `pipeline/src/seedshed/validate.py` rather than suppressing the comparison
+- [ ] T056 [US3] Implement **period-aware** upstream acreage checks in `pipeline/src/bushel/validate.py` — acres burned compared over **2018–2024**, high severity over **2018–2023**, each within 10% of its own published figure. Comparing either against the wrong window is a defect, not a tolerance failure (FR-020, SC-005, analysis F1)
+- [ ] T057 [US3] Implement the benchmark roll-up in `pipeline/src/bushel/validate.py` aggregating per-fire bushels across the **severity-covered window (2018–2023)** and reporting the percentage difference from 55,978, stating on the comparison that the published total's severity input stops at 2023
+- [ ] T058 [US3] Implement gap attribution in `pipeline/src/bushel/validate.py` naming the assumptions most plausibly responsible, including the two documented contributors — CAL FIRE's internal timberland boundary and the AON's non-exclusion of privately-owned industrial land (FR-023, research.md Residual risks)
+- [ ] T059 [US3] Report partial coverage as partial in `pipeline/src/bushel/validate.py` rather than suppressing the comparison
 - [ ] T060 [P] [US3] Write validation tests in `pipeline/tests/test_validate.py` asserting the comparison always carries attribution, never a bare number
 - [ ] T061 [US3] Build the validation view in `web/src/components/Validation.tsx` showing the computed total beside 55,978 with the difference and its attributed causes
 
