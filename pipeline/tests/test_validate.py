@@ -134,7 +134,7 @@ def test_comparison_always_carries_attribution(with_records):
     for must in (
         "timberland",
         "privately-owned industrial land",
-        "Partial fire coverage",
+        "Fire coverage: the high-severity check covers",
         "not published by CAL FIRE",
         "2026-04-09",
         "2018-2024",

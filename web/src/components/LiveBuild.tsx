@@ -139,12 +139,12 @@ export default function LiveBuild({
 
   const typed = query.trim().length >= 2
   const local = useMemo(() => (typed ? matchFires(prebuilt, query) : []), [prebuilt, query, typed])
-  // A live result duplicates a pre-built fire when the ids match apart from the `live-` prefix.
+  // A live result duplicates a pre-built fire when the ids match apart from the `live-` prefix. Those are
+  // still offered: rebuilding one live and comparing it with the pre-built record is the proof that
+  // "pre-built" means built by the same pipeline, not made up.
   const prebuiltIds = useMemo(() => new Set(prebuilt.map((f) => f.id)), [prebuilt])
-  const remote =
-    server.status === 'online' && typed && found
-      ? found.filter((f) => !prebuiltIds.has(f.id.replace(/^live-/, '')))
-      : []
+  const remote = server.status === 'online' && typed && found ? found : []
+  const isPrebuilt = (f: Found) => prebuiltIds.has(f.id.replace(/^live-/, ''))
   const live = server.status === 'online'
   const busy = build.status === 'running'
   const [lo, hi] = live ? server.health.years : [2018, 2023]
@@ -194,13 +194,15 @@ export default function LiveBuild({
                 <span>
                   {f.name} <span className="live-quiet">{f.year}</span>
                 </span>
-                <span className="live-quiet">Build live · {fmtAcres(f.gis_acres)} ac</span>
+                <span className="live-quiet">
+                  {isPrebuilt(f) ? 'Rebuild live' : 'Build live'} · {fmtAcres(f.gis_acres)} ac
+                </span>
               </button>
             </li>
           ))}
         </ul>
       )}
-      {typed && local.length === 0 && remote.length === 0 && (
+      {typed && local.length === 0 && remote.length === 0 && (found !== null || !live) && (
         <p className="live-small">
           No {lo}–{hi} fire by that name{live ? '' : ' among the pre-built fires'}.
         </p>

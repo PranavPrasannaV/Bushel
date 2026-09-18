@@ -31,7 +31,6 @@ from bushel.factors import factors
 from bushel.fetch import (
     CRS,
     DEFAULT_CACHE,
-    demo_fires,
     fortypba_lut,
     lemma_lookup,
     lemma_lut,
@@ -336,9 +335,10 @@ def attributed_gap(
 ) -> list[str]:
     """The assumptions most plausibly responsible for any difference. Never empty."""
     d = {u["name"]: u["default_value"] for u in f["unpublished"]}
-    fires = demo_fires()
-    years = sorted(x["year"] for x in fires)
+    fires = high["fires"]
+    years = sorted(x["year"] for x in fires) or [None]
     n_roll = len(roll["fires_included"])
+    partial = high["coverage"] != "full" or roll["coverage"] != "full"
     gaps = [
         "CAL FIRE's timberland boundary: the AON restricts its domain to productive conifer "
         "forestland using a timberlands boundary 'mapped internally by CAL FIRE'. Bushel does not "
@@ -347,15 +347,6 @@ def attributed_gap(
         "privately-owned industrial land and so, in its own words, somewhat overestimates need. "
         "Bushel does not exclude it either, so a total that matched 55,978 would share that "
         "overestimate.",
-        "Partial fire coverage: the high-severity check covers "
-        f"{len(high['fires'])} demo fires ({(high['coverage_fraction'] or 0) * 100:.1f}% of "
-        f"the burned SRA acreage in {high['period']}) and the bushel roll-up "
-        + (
-            f"covers {n_roll} fires ({(roll['coverage_fraction'] or 0) * 100:.1f}%)."
-            if n_roll
-            else "covers none yet (no per-fire records)."
-        )
-        + " The published figures cover every fire in their windows, statewide.",
         "Unpublished nursery factors: seeds_per_pot, nursery_survival_rate and "
         "probability_of_tree_in_nursery are not published by CAL FIRE (the AON takes them from "
         "internal LAMRC nursery datasets). Bushel's defaults "
@@ -366,13 +357,27 @@ def attributed_gap(
         f"was last edited {sra_edit or 'on an unrecorded date'} and is applied to fires from "
         "2018 onward; the SRA boundary in force when each fire burned may differ.",
         f"Scope: the published acres-burned figure covers every fire {acres['period']} and the "
-        f"high-severity figure every fire {high['period']}, statewide; Bushel's per-fire set is "
-        f"{len(fires)} demo fires from {years[0]}-{years[-1]}.",
+        f"high-severity figure every fire {high['period']}, statewide, whatever its size. "
+        f"Bushel's per-fire set is {len(fires)} fires from {years[0]}-{years[-1]}: CAL FIRE "
+        "perimeters of 1,000+ acres with an MTBS assessment, because MTBS maps no smaller fire "
+        "in the West.",
         "What 55,978 measures: the AON sizes the need to reforest 25% of productive conifer "
         "forest on non-federal land, statewide, driven by wildfire plus insect/disease mortality "
         "plus timber harvest. The target is not a per-burn figure, so a sum over burns alone is "
         "not expected to equal it.",
     ]
+    if partial:
+        gaps.append(
+            "Fire coverage: the high-severity check covers "
+            f"{len(fires)} fires ({(high['coverage_fraction'] or 0) * 100:.1f}% of the burned SRA "
+            f"acreage in {high['period']}) and the bushel roll-up "
+            + (
+                f"covers {n_roll} fires ({(roll['coverage_fraction'] or 0) * 100:.1f}%)."
+                if n_roll
+                else "covers none yet (no per-fire records)."
+            )
+            + " The published figures cover every fire in their windows, statewide."
+        )
     if lra_acres is not None:
         gaps.append(
             "SRA only: Bushel retains State Responsibility Area, while the AON's jurisdiction is "
@@ -518,9 +523,10 @@ def conifer_burned_by_year(cache: Path, strip_rows: int = 2048) -> dict[str, dic
     return out
 
 
-def demo_high_severity(cache: Path) -> list[dict]:
+def fire_high_severity(cache: Path, fires: list[dict]) -> list[dict]:
+    """High-severity and burned-SRA acres for every built fire ({id, year}), from its stack."""
     out = []
-    for fire in demo_fires():
+    for fire in fires:
         arrays, _ = load_stack(fire["id"], cache)
         hs = (arrays["mtbs"] == 4) & arrays["perimeter"] & arrays["sra"]
         conifer = "species" in arrays  # never default a missing species layer to "no conifer"
@@ -568,9 +574,9 @@ def main() -> None:
     sra_by_year, lra_by_year = burned["SRA"], burned["LRA"]
     print("Conifer share of burned SRA (statewide LEMMA 2023.1, streamed) ...")
     conifer = conifer_burned_by_year(args.cache)
-    print("High-severity acres on the demo-fire stacks ...")
-    fires = demo_high_severity(args.cache)
     records = load_records(args.out)
+    print(f"High-severity acres on the {len(records)} built fires' stacks ...")
+    fires = fire_high_severity(args.cache, [r["fire"] for r in records])
 
     acres = acres_burned_check(
         conifer["treeplba"], benchmark, all_cover=sra_by_year, two_species=conifer["fortypba"]

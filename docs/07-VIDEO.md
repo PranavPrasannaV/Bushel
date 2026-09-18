@@ -1,9 +1,8 @@
 # Bushel — demo video script
 
 **Target 4:30, hard cap 5:00.** About 620 spoken words at a calm pace. One peak: the interior
-lighting up. Numbers marked ⟨statewide⟩ are filled from `web/public/data/reference/validation.json`
-and `reference/statewide.json` after the statewide build; every other figure is from the North
-Complex record at default factors.
+lighting up. Statewide figures come from `web/public/data/reference/validation.json` and
+`reference/statewide.json`; every other figure is from the North Complex record at default factors.
 
 Record the site at 1440×900 in a normal browser window. Record the live build in a terminal beside
 the app, running `python -m bushel.serve`.
@@ -20,8 +19,8 @@ the app, running `python -m bushel.serve`.
 > pine, red fir and white fir have to be ordered by the 31st of October. From order to planting is
 > about eighteen months.
 >
-> CAL FIRE publishes how much seed the state needs — once a year, for the whole state. Nobody works
-> it out for one fire. That's Bushel.
+> CAL FIRE publishes how much seed the state needs — once a year, for the whole state. That number
+> can't tell a forester what one fire needs. That's what Bushel does.
 
 ## 0:30 — The peak (on screen: open the site; North Complex loads by itself)
 
@@ -67,22 +66,24 @@ the app, running `python -m bushel.serve`.
 >
 > First, like for like. A peer-reviewed study measured how much of a high-severity burn is more than
 > 90 metres from live seed: 21.9 percent. We compute the same thing pixel by pixel, across
-> ⟨statewide: N fires⟩: ⟨statewide: pooled %⟩.
+> {{N_FIRES}} fires: {{POOLED_PCT}}.
 >
 > Second, CAL FIRE's own total. We built every fire in the state's own assessment window —
-> ⟨statewide: N⟩ fires — and put our total beside theirs, with the reasons they differ: the state's
+> {{N_FIRES}} fires — and put our total beside theirs, with the reasons they differ: the state's
 > figure also covers insect die-off and timber harvest, and it uses an internal boundary it doesn't
 > publish.
 
-## 3:20 — Live (on screen: terminal + the "Build any fire" panel)
+## 3:20 — Live (on screen: terminal + the "Find a fire" panel, Live badge)
 
 > The site ships with every fire from 2018 to 2023 already built. But Bushel isn't a recording.
-> Name a fire — *(type "Monument")* — and it fetches that fire's perimeter, jurisdiction, seed zones,
-> burn severity and elevation from the agency services right now, and runs the same pipeline.
+> Pick one — *(type "Monument", choose "Rebuild live")* — and it fetches that fire's perimeter,
+> jurisdiction, seed zones, burn severity and elevation from the agency services right now, and runs
+> the same pipeline.
 >
-> *(the build finishes; the fire opens, interior lit)*
+> *(the build finishes; the live copy opens, interior lit; switch to the pre-built one)*
 >
-> A live build of a fire we'd already built comes out identical, field for field.
+> Same acres, same interior, same order — identical, field for field. Pre-built means built by this
+> pipeline, not made up.
 
 ## 4:00 — Close (on screen: zoom out to California, every interior lit)
 
