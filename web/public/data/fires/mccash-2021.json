@@ -1,0 +1,43 @@
+{
+  "fire": {
+    "id": "mccash-2021",
+    "name": "Mccash",
+    "year": 2021,
+    "discovery_date": "2021-08-01",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 94970.4843,
+    "retained_acres": 222.7393,
+    "excluded_acres": 94747.7449,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 19.3484,
+    "conifer_acres": 169.0201
+  },
+  "planting": {
+    "interior_acres": 0.4448,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.022988981001013,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "301_1000",
+      "seed_zone": "301",
+      "elevation_band": "1000–1500 ft",
+      "planting_acres": 0.4448,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 0.4448
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/mccash-2021.geojson"
+}

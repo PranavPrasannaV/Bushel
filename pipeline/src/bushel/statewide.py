@@ -131,6 +131,19 @@ def _polygons(geom) -> list:
     return [p for g in getattr(geom, "geoms", []) for p in _polygons(g)]
 
 
+def _clean(geom):
+    """Polygons only, each made valid on its own. Map geometry is simplified, so it may self-touch,
+    and a feature can mix polygons with stray lines, which make_valid refuses as a whole."""
+    parts = []
+    for poly in _polygons(geom):
+        try:
+            fixed = make_valid(poly)
+        except Exception:  # GEOS rejects some degenerate rings outright; buffer(0) repairs them
+            fixed = poly.buffer(0)
+        parts += _polygons(fixed)
+    return MultiPolygon(parts) if parts else Polygon()
+
+
 def _coarse(geom, close_m: float, min_ha: float, simplify_m: float):
     """Merge specks closer than close_m, drop parts under min_ha, simplify. EPSG:3310 in and out."""
     if close_m:
@@ -184,10 +197,11 @@ def overview(out: Path, cache: Path | None = None) -> dict:
         marker = None
         for layer, how in OVERVIEW.items():
             geoms = [
-                make_valid(shape(f["geometry"]))  # map geometry is simplified, so may self-touch
+                _clean(shape(f["geometry"]))
                 for f in fc["features"]
                 if f["properties"].get("layer") == layer
             ]
+            geoms = [g for g in geoms if not g.is_empty]
             if not geoms:
                 continue
             g = gpd.GeoSeries([unary_union(geoms)], crs="EPSG:4326").to_crs(CRS).iloc[0]

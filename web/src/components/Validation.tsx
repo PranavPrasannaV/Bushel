@@ -119,7 +119,7 @@ function InteriorCheck({ check }: { check: InteriorCrosscheck }) {
       <h4 className="caps">Like-for-like: the seed-limited interior</h4>
       <div className="validation-totals">
         <div className="validation-total">
-          <p className="caps">Bushel, {check.fires.length} fires</p>
+          <p className="caps">Bushel, statewide</p>
           <p className="validation-figure">{share(check.computed_fraction)}</p>
           <p className="validation-unit">of high-severity acres</p>
         </div>

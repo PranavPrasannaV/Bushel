@@ -1,0 +1,106 @@
+{
+  "fire": {
+    "id": "zogg-2020",
+    "name": "Zogg",
+    "year": 2020,
+    "discovery_date": "2020-09-27",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 56338.0832,
+    "retained_acres": 55180.9403,
+    "excluded_acres": 1157.1429,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 577.5594,
+    "conifer_acres": 1949.2908
+  },
+  "planting": {
+    "interior_acres": 85.8444,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.1486330237201576,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "332_1000",
+      "seed_zone": "332",
+      "elevation_band": "1000–1500 ft",
+      "planting_acres": 23.1291,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Ponderosa Pine",
+          "acres": 16.4572
+        },
+        {
+          "species": "Douglas Fir",
+          "acres": 5.1151
+        },
+        {
+          "species": "Knobcone Pine",
+          "acres": 1.5568
+        }
+      ]
+    },
+    {
+      "cell_id": "332_1500",
+      "seed_zone": "332",
+      "elevation_band": "1500–2000 ft",
+      "planting_acres": 26.465,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Ponderosa Pine",
+          "acres": 21.7947
+        },
+        {
+          "species": "Douglas Fir",
+          "acres": 4.4479
+        },
+        {
+          "species": "Knobcone Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "332_2000",
+      "seed_zone": "332",
+      "elevation_band": "2000–2500 ft",
+      "planting_acres": 32.0249,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Ponderosa Pine",
+          "acres": 27.7994
+        },
+        {
+          "species": "Douglas Fir",
+          "acres": 4.2255
+        }
+      ]
+    },
+    {
+      "cell_id": "332_2500",
+      "seed_zone": "332",
+      "elevation_band": "2500–3000 ft",
+      "planting_acres": 4.2255,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Ponderosa Pine",
+          "acres": 3.5583
+        },
+        {
+          "species": "Douglas Fir",
+          "acres": 0.6672
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/zogg-2020.geojson"
+}

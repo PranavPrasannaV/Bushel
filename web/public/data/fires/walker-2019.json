@@ -1,0 +1,81 @@
+{
+  "fire": {
+    "id": "walker-2019",
+    "name": "Walker",
+    "year": 2019,
+    "discovery_date": "2019-09-04",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 54614.8992,
+    "retained_acres": 930.9186,
+    "excluded_acres": 53683.9806,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 110.7526,
+    "conifer_acres": 650.5049
+  },
+  "planting": {
+    "interior_acres": 9.563,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.08634560272174198,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "523_5000",
+      "seed_zone": "523",
+      "elevation_band": "5000–5500 ft",
+      "planting_acres": 6.8942,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 4.0031
+        },
+        {
+          "species": "White Fir",
+          "acres": 1.7792
+        },
+        {
+          "species": "Incense Cedar",
+          "acres": 1.112
+        }
+      ]
+    },
+    {
+      "cell_id": "523_5500",
+      "seed_zone": "523",
+      "elevation_band": "5500–6000 ft",
+      "planting_acres": 2.4463,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "White Fir",
+          "acres": 2.2239
+        },
+        {
+          "species": "Douglas Fir",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "523_6000",
+      "seed_zone": "523",
+      "elevation_band": "6000–6500 ft",
+      "planting_acres": 0.2224,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 0.2224
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/walker-2019.geojson"
+}

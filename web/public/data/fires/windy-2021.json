@@ -1,0 +1,90 @@
+{
+  "fire": {
+    "id": "windy-2021",
+    "name": "Windy",
+    "year": 2021,
+    "discovery_date": "2021-09-09",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 97528.2763,
+    "retained_acres": 2011.6033,
+    "excluded_acres": 95516.673,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 146.3358,
+    "conifer_acres": 1019.2356
+  },
+  "planting": {
+    "interior_acres": 2.8911,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.01975661458098428,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "540_5500",
+      "seed_zone": "540",
+      "elevation_band": "5500–6000 ft",
+      "planting_acres": 0.2224,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Incense Cedar",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "550_5000",
+      "seed_zone": "550",
+      "elevation_band": "5000–5500 ft",
+      "planting_acres": 0.8896,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Incense Cedar",
+          "acres": 0.8896
+        }
+      ]
+    },
+    {
+      "cell_id": "550_6500",
+      "seed_zone": "550",
+      "elevation_band": "6500–7000 ft",
+      "planting_acres": 0.6672,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Incense Cedar",
+          "acres": 0.4448
+        },
+        {
+          "species": "Jeffrey Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "550_7000",
+      "seed_zone": "550",
+      "elevation_band": "7000–7500 ft",
+      "planting_acres": 1.112,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Jeffrey Pine",
+          "acres": 0.8896
+        },
+        {
+          "species": "Incense Cedar",
+          "acres": 0.2224
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/windy-2021.geojson"
+}

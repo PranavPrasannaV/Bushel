@@ -1,0 +1,31 @@
+{
+  "fire": {
+    "id": "south-2019",
+    "name": "South",
+    "year": 2019,
+    "discovery_date": "2019-09-05",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 5333.9685,
+    "retained_acres": 1124.2722,
+    "excluded_acres": 4209.6963,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 32.4696,
+    "conifer_acres": 308.9064
+  },
+  "planting": {
+    "interior_acres": 0.0,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.0,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [],
+  "geometry_ref": "fires/south-2019.geojson",
+  "result": "no_interior",
+  "message": "All burned acres lie within natural seeding distance. No planting order required."
+}

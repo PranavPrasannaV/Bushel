@@ -1,0 +1,76 @@
+{
+  "fire": {
+    "id": "north-2018",
+    "name": "North",
+    "year": 2018,
+    "discovery_date": "2018-09-03",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 1119.7725,
+    "retained_acres": 356.2001,
+    "excluded_acres": 763.5724,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 169.4649,
+    "conifer_acres": 341.1537
+  },
+  "planting": {
+    "interior_acres": 22.6843,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.13385839781571288,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "525_4500",
+      "seed_zone": "525",
+      "elevation_band": "4500–5000 ft",
+      "planting_acres": 4.2255,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "White Fir",
+          "acres": 3.5583
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 0.4448
+        },
+        {
+          "species": "Jeffrey Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "525_6000",
+      "seed_zone": "525",
+      "elevation_band": "6000–6500 ft",
+      "planting_acres": 18.4588,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "White Fir",
+          "acres": 15.1228
+        },
+        {
+          "species": "Red Fir",
+          "acres": 1.7792
+        },
+        {
+          "species": "Incense Cedar",
+          "acres": 0.8896
+        },
+        {
+          "species": "Jeffrey Pine",
+          "acres": 0.6672
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/north-2018.geojson"
+}

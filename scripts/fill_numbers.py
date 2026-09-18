@@ -3,7 +3,7 @@
     python scripts/fill_numbers.py [--check]
 
 Reads web/public/data/reference/validation.json, reference/statewide.json and fires/index.json, and
-replaces each {{TOKEN}} in docs/06-DEVPOST.md and docs/07-VIDEO.md. No figure is typed by hand.
+replaces each {{TOKEN}} in README.md, docs/06-DEVPOST.md and docs/07-VIDEO.md. No figure is typed by hand.
 --check lists the values and any token left unfilled, and writes nothing.
 """
 
@@ -14,7 +14,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "web" / "public" / "data"
-DOCS = [ROOT / "docs" / "06-DEVPOST.md", ROOT / "docs" / "07-VIDEO.md"]
+DOCS = [ROOT / "README.md", ROOT / "docs" / "06-DEVPOST.md", ROOT / "docs" / "07-VIDEO.md"]
 
 
 def signed(value: float, unit: str) -> str:
@@ -30,6 +30,9 @@ def values() -> dict[str, str]:
         "N_FIRES": f"{s['built']:,}",
         "N_NOT_BUILT": f"{len(s['not_built']):,}",
         "POOLED_PCT": f"{ic['computed_fraction'] * 100:.1f}%",
+        "N_HS_FIRES": f"{len(ic['fires']):,}",
+        "INTERIOR_ACRES": f"{ic['interior_acres']:,.0f}",
+        "HS_ACRES": f"{ic['high_severity_acres']:,.0f}",
         "POOLED_DIFF": f"{signed(ic['difference_pts'], ' points')} from the published figure",
         "HS_COMPUTED": f"{high['computed']:,.0f} acres",
         "HS_DIFF": signed(high["difference_pct"], "%"),
@@ -41,6 +44,7 @@ def values() -> dict[str, str]:
 
 
 def main() -> None:
+    sys.stdout.reconfigure(encoding="utf-8")  # the true minus sign, on a Windows console
     check = "--check" in sys.argv
     vals = values()
     for k, val in vals.items():

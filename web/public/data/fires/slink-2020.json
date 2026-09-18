@@ -1,0 +1,72 @@
+{
+  "fire": {
+    "id": "slink-2020",
+    "name": "Slink",
+    "year": 2020,
+    "discovery_date": "2020-08-29",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 26751.8005,
+    "retained_acres": 4282.9509,
+    "excluded_acres": 22468.8495,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 206.8272,
+    "conifer_acres": 1105.9696
+  },
+  "planting": {
+    "interior_acres": 50.706,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.24516117802687462,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "781_7000",
+      "seed_zone": "781",
+      "elevation_band": "7000–7500 ft",
+      "planting_acres": 42.255,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "White Fir",
+          "acres": 37.1399
+        },
+        {
+          "species": "Red Fir",
+          "acres": 4.2255
+        },
+        {
+          "species": "Jeffrey Pine",
+          "acres": 0.6672
+        },
+        {
+          "species": "Lodgepole Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "781_7500",
+      "seed_zone": "781",
+      "elevation_band": "7500–8000 ft",
+      "planting_acres": 8.451,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "White Fir",
+          "acres": 6.4495
+        },
+        {
+          "species": "Red Fir",
+          "acres": 2.0016
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/slink-2020.geojson"
+}

@@ -1,0 +1,176 @@
+{
+  "fire": {
+    "id": "antelope-2021",
+    "name": "Antelope",
+    "year": 2021,
+    "discovery_date": "2021-08-01",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 145631.75,
+    "retained_acres": 22411.4981,
+    "excluded_acres": 123220.2519,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 3680.4123,
+    "conifer_acres": 20085.1455
+  },
+  "planting": {
+    "interior_acres": 647.169,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.175841440373406,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "741_4500",
+      "seed_zone": "741",
+      "elevation_band": "4500–5000 ft",
+      "planting_acres": 0.2224,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "White Fir",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "741_5000",
+      "seed_zone": "741",
+      "elevation_band": "5000–5500 ft",
+      "planting_acres": 54.4867,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "White Fir",
+          "acres": 31.3577
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 16.2348
+        },
+        {
+          "species": "Red Fir",
+          "acres": 2.6687
+        },
+        {
+          "species": "Incense Cedar",
+          "acres": 2.4463
+        },
+        {
+          "species": "Knobcone Pine",
+          "acres": 1.7792
+        }
+      ]
+    },
+    {
+      "cell_id": "741_5500",
+      "seed_zone": "741",
+      "elevation_band": "5500–6000 ft",
+      "planting_acres": 199.4882,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Ponderosa Pine",
+          "acres": 101.6344
+        },
+        {
+          "species": "White Fir",
+          "acres": 53.1524
+        },
+        {
+          "species": "Red Fir",
+          "acres": 24.241
+        },
+        {
+          "species": "Knobcone Pine",
+          "acres": 19.5707
+        },
+        {
+          "species": "Lodgepole Pine",
+          "acres": 0.6672
+        },
+        {
+          "species": "Incense Cedar",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "741_6000",
+      "seed_zone": "741",
+      "elevation_band": "6000–6500 ft",
+      "planting_acres": 210.8303,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Ponderosa Pine",
+          "acres": 102.0792
+        },
+        {
+          "species": "White Fir",
+          "acres": 56.2659
+        },
+        {
+          "species": "Red Fir",
+          "acres": 44.2566
+        },
+        {
+          "species": "Knobcone Pine",
+          "acres": 6.6718
+        },
+        {
+          "species": "Lodgepole Pine",
+          "acres": 1.5568
+        }
+      ]
+    },
+    {
+      "cell_id": "741_6500",
+      "seed_zone": "741",
+      "elevation_band": "6500–7000 ft",
+      "planting_acres": 173.0232,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Red Fir",
+          "acres": 120.7604
+        },
+        {
+          "species": "White Fir",
+          "acres": 41.3654
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 10.675
+        },
+        {
+          "species": "Western White Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "741_7000",
+      "seed_zone": "741",
+      "elevation_band": "7000–7500 ft",
+      "planting_acres": 9.1182,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Red Fir",
+          "acres": 8.6734
+        },
+        {
+          "species": "White Fir",
+          "acres": 0.4448
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/antelope-2021.geojson"
+}

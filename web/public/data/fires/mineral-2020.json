@@ -1,0 +1,43 @@
+{
+  "fire": {
+    "id": "mineral-2020",
+    "name": "Mineral",
+    "year": 2020,
+    "discovery_date": "2020-07-13",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 29666.9518,
+    "retained_acres": 16633.923,
+    "excluded_acres": 13033.0288,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 6.2271,
+    "conifer_acres": 32.692
+  },
+  "planting": {
+    "interior_acres": 0.4448,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.07142971848854202,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "163_3000",
+      "seed_zone": "163",
+      "elevation_band": "3000–3500 ft",
+      "planting_acres": 0.4448,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Big-Cone Douglas Fir",
+          "acres": 0.4448
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/mineral-2020.geojson"
+}

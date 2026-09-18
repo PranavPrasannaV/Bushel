@@ -66,10 +66,10 @@ the app, running `python -m bushel.serve`.
 >
 > First, like for like. A peer-reviewed study measured how much of a high-severity burn is more than
 > 90 metres from live seed: 21.9 percent. We compute the same thing pixel by pixel, across
-> {{N_FIRES}} fires: {{POOLED_PCT}}.
+> 237 fires: 22.4%.
 >
 > Second, CAL FIRE's own total. We built every fire in the state's own assessment window —
-> {{N_FIRES}} fires — and put our total beside theirs, with the reasons they differ: the state's
+> 237 fires — and put our total beside theirs, with the reasons they differ: the state's
 > figure also covers insect die-off and timber harvest, and it uses an internal boundary it doesn't
 > publish.
 

@@ -216,8 +216,10 @@ def now_iso() -> str:
     return dt.datetime.now(dt.UTC).replace(microsecond=0).isoformat()
 
 
-def get(url: str, params: dict, tries: int = 3) -> requests.Response:
-    """GET with a browser-ish User-Agent, retrying transient failures (flaky TLS/5xx)."""
+def get(url: str, params: dict, tries: int = 5) -> requests.Response:
+    """GET with a browser-ish User-Agent, retrying transient failures (flaky TLS, 5xx, and the
+    connection resets the MTBS image server gives under load) with exponential backoff: 5, 10, 20
+    and 40 s between tries."""
     for i in range(tries):
         try:
             r = requests.get(url, params=params, headers=HEADERS, timeout=600)
@@ -226,7 +228,7 @@ def get(url: str, params: dict, tries: int = 3) -> requests.Response:
         except requests.RequestException:
             if i == tries - 1:
                 raise
-            time.sleep(5 * (i + 1))
+            time.sleep(5 * 2**i)
 
 
 def get_json(url: str, params: dict | None = None) -> dict:

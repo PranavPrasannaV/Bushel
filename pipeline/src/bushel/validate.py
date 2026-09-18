@@ -319,8 +319,9 @@ def interior_crosscheck(records: list[dict]) -> dict:
         "high_severity_acres": round(high, 1),
         "fires": fires,
         "note": (
-            f"Pooled over {len(fires)} fires: total interior acres divided by total high-severity "
-            "acres on retained non-federal conifer land. Baker's figure is an average over ~56M ha "
+            f"Pooled over the {len(fires)} fires with high-severity conifer ground on retained "
+            "non-federal land (a fire without any adds nothing to either side): total interior "
+            "acres divided by total high-severity acres. Baker's figure is an average over ~56M ha "
             "and these are California fires, so agreement is corroboration, not proof. A "
             "cross-check, never a multiplier."
         ),

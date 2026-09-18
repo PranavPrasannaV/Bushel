@@ -1,0 +1,124 @@
+{
+  "fire": {
+    "id": "apple-2020",
+    "name": "Apple",
+    "year": 2020,
+    "discovery_date": "2020-07-31",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 33235.8191,
+    "retained_acres": 6539.7883,
+    "excluded_acres": 26696.0308,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 431.0012,
+    "conifer_acres": 1373.7329
+  },
+  "planting": {
+    "interior_acres": 40.4759,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.0939113394579876,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "994_6000",
+      "seed_zone": "994",
+      "elevation_band": "6000–6500 ft",
+      "planting_acres": 0.2224,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "White Fir",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "994_6500",
+      "seed_zone": "994",
+      "elevation_band": "6500–7000 ft",
+      "planting_acres": 1.5568,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "White Fir",
+          "acres": 0.8896
+        },
+        {
+          "species": "Sugar Pine",
+          "acres": 0.6672
+        }
+      ]
+    },
+    {
+      "cell_id": "994_7000",
+      "seed_zone": "994",
+      "elevation_band": "7000–7500 ft",
+      "planting_acres": 8.2286,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "White Fir",
+          "acres": 7.339
+        },
+        {
+          "species": "Sugar Pine",
+          "acres": 0.8896
+        }
+      ]
+    },
+    {
+      "cell_id": "994_7500",
+      "seed_zone": "994",
+      "elevation_band": "7500–8000 ft",
+      "planting_acres": 9.1182,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "White Fir",
+          "acres": 7.5614
+        },
+        {
+          "species": "Sugar Pine",
+          "acres": 1.5568
+        }
+      ]
+    },
+    {
+      "cell_id": "994_8000",
+      "seed_zone": "994",
+      "elevation_band": "8000–8500 ft",
+      "planting_acres": 17.7916,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "White Fir",
+          "acres": 14.0109
+        },
+        {
+          "species": "Sugar Pine",
+          "acres": 3.7807
+        }
+      ]
+    },
+    {
+      "cell_id": "994_8500",
+      "seed_zone": "994",
+      "elevation_band": "8500–9000 ft",
+      "planting_acres": 3.5583,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "White Fir",
+          "acres": 3.5583
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/apple-2020.geojson"
+}

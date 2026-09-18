@@ -1,0 +1,101 @@
+{
+  "fire": {
+    "id": "hog-2020",
+    "name": "Hog",
+    "year": 2020,
+    "discovery_date": "2020-07-18",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 9566.3589,
+    "retained_acres": 6591.711,
+    "excluded_acres": 2974.6478,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 912.7084,
+    "conifer_acres": 5882.1212
+  },
+  "planting": {
+    "interior_acres": 23.1291,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.025341171397129686,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "732_5000",
+      "seed_zone": "732",
+      "elevation_band": "5000–5500 ft",
+      "planting_acres": 3.5583,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Jeffrey Pine",
+          "acres": 1.3344
+        },
+        {
+          "species": "Incense Cedar",
+          "acres": 1.112
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 0.8896
+        },
+        {
+          "species": "Lodgepole Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "732_5500",
+      "seed_zone": "732",
+      "elevation_band": "5500–6000 ft",
+      "planting_acres": 12.8989,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Incense Cedar",
+          "acres": 8.451
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 1.7792
+        },
+        {
+          "species": "Douglas Fir",
+          "acres": 1.5568
+        },
+        {
+          "species": "Jeffrey Pine",
+          "acres": 0.8896
+        },
+        {
+          "species": "Lodgepole Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "732_6000",
+      "seed_zone": "732",
+      "elevation_band": "6000–6500 ft",
+      "planting_acres": 6.6718,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Ponderosa Pine",
+          "acres": 6.4495
+        },
+        {
+          "species": "White Fir",
+          "acres": 0.2224
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/hog-2020.geojson"
+}

@@ -1,0 +1,115 @@
+{
+  "fire": {
+    "id": "kincade-2019",
+    "name": "Kincade",
+    "year": 2019,
+    "discovery_date": "2019-10-23",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 77762.1318,
+    "retained_acres": 73203.9736,
+    "excluded_acres": 4558.1582,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 1398.1964,
+    "conifer_acres": 5373.2818
+  },
+  "planting": {
+    "interior_acres": 325.1413,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.23254336801324907,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "352_1000",
+      "seed_zone": "352",
+      "elevation_band": "1000–1500 ft",
+      "planting_acres": 0.6672,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 0.6672
+        }
+      ]
+    },
+    {
+      "cell_id": "352_1500",
+      "seed_zone": "352",
+      "elevation_band": "1500–2000 ft",
+      "planting_acres": 2.2239,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 1.7792
+        },
+        {
+          "species": "Coast Redwood",
+          "acres": 0.4448
+        }
+      ]
+    },
+    {
+      "cell_id": "352_2000",
+      "seed_zone": "352",
+      "elevation_band": "2000–2500 ft",
+      "planting_acres": 139.2192,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 137.2176
+        },
+        {
+          "species": "Coast Redwood",
+          "acres": 2.0016
+        }
+      ]
+    },
+    {
+      "cell_id": "352_2500",
+      "seed_zone": "352",
+      "elevation_band": "2500–3000 ft",
+      "planting_acres": 146.5582,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 144.5566
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 1.7792
+        },
+        {
+          "species": "Coast Redwood",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "352_3000",
+      "seed_zone": "352",
+      "elevation_band": "3000–3500 ft",
+      "planting_acres": 36.4728,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 30.4681
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 6.0047
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/kincade-2019.geojson"
+}

@@ -1,0 +1,56 @@
+{
+  "fire": {
+    "id": "scu-lightning-complex-2020",
+    "name": "Scu Lightning Complex",
+    "year": 2020,
+    "discovery_date": "2020-08-16",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 396824.6148,
+    "retained_acres": 395098.4172,
+    "excluded_acres": 1726.1976,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 53.8196,
+    "conifer_acres": 708.55
+  },
+  "planting": {
+    "interior_acres": 2.2239,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.041321377342083555,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "161_1000",
+      "seed_zone": "161",
+      "elevation_band": "1000–1500 ft",
+      "planting_acres": 2.0016,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 2.0016
+        }
+      ]
+    },
+    {
+      "cell_id": "162_2000",
+      "seed_zone": "162",
+      "elevation_band": "2000–2500 ft",
+      "planting_acres": 0.2224,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Coast Redwood",
+          "acres": 0.2224
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/scu-lightning-complex-2020.geojson"
+}

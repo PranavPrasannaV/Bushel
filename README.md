@@ -113,7 +113,7 @@ Anyone can build a calculator that produces a number. The question is whether th
 
 **Bushel reimplements CAL FIRE's own published method rather than inventing one.** The formula is lifted verbatim from the state's 2025 Assessment of Needs, which is included in this repo as a PDF.
 
-**The like-for-like check comes first.** Baker (2023) measured the share of high-severity burn area more than 90 m from a live seed edge: 21.9%, averaged over ~56M ha. Bushel computes the same quantity pixel by pixel. Pooled over its eight California fires, it gets **23.7%** (29,329 of 123,966 high-severity acres): **1.8 points** from the published figure, by an independent computation. Eight fires are not 56M ha, so that is corroboration, not proof, and the 21.9% is never used as a multiplier.
+**The like-for-like check comes first.** Baker (2023) measured the share of high-severity burn area more than 90 m from a live seed edge: 21.9%, averaged over ~56M ha. Bushel computes the same quantity pixel by pixel. Pooled across all 237 California fires — 53,638 seed-limited acres out of 239,581 high-severity acres, from the 99 fires with high-severity conifer ground on state land — it gets **22.4%** (+0.5 points from the published figure), by an independent computation. California's fires are not Baker's 56M ha, so that is corroboration, not proof, and the 21.9% is never used as a multiplier.
 
 **Then it is checked against the state's own answer.** Run it across the fires in the state's period and compare the total to 55,978, stated as a percentage difference with its likely causes. The two are not expected to match: the state's figure also covers insect and disease mortality and timber harvest, and Local Responsibility Area land. That's not a claim of accuracy — it's a comparison anyone can check in public.
 
@@ -317,7 +317,17 @@ cd ../pipeline && python -m bushel.serve        # http://127.0.0.1:8787
 
 Type a fire name into **Build any fire**. Each build fetches that fire's layers from the agency services (about 30 s for a large fire) and adds it to the fire list under "Built live this session". During development, `npm run dev` proxies `/api` to the same server.
 
-The artifacts in `web/public/data/` come from this build for eight fires: Camp and Carr (2018), North Complex and Creek (2020), Caldor and Dixie (2021), Mosquito and McKinney (2022). Details of the LEMMA download are in [`docs/04-DATA-SOURCES.md`](docs/04-DATA-SOURCES.md) §6.
+The artifacts in `web/public/data/` cover **every** CAL FIRE perimeter from 2018 to 2023 of 1,000+ acres with an MTBS assessment (237 fires; `reference/statewide.json` lists any not built and why). They come from the statewide batch, which reuses the same per-fire pipeline, resumes where it stopped and records every outcome:
+
+```bash
+cd pipeline
+python -m bushel.statewide --out ../web/public/data --workers 3   # every fire; ~2 h; resumable
+python -m bushel.statewide --out ../web/public/data --retry-failed --workers 2
+python -m bushel.validate --out ../web/public/data                # statewide checks
+python ../scripts/fill_numbers.py                                   # copy figures into the docs
+```
+
+Details of the LEMMA download are in [`docs/04-DATA-SOURCES.md`](docs/04-DATA-SOURCES.md) §6.
 
 After the build, the pre-built fires run fully offline; only live builds need the network. Validation scenarios are in [`specs/001-post-fire-seed-order/quickstart.md`](specs/001-post-fire-seed-order/quickstart.md).
 

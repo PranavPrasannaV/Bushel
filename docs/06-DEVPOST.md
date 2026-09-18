@@ -62,8 +62,8 @@ Open the site and you are already looking at the result: the North Complex fire 
 
 ## How we built it
 
-**Every fire, not a chosen few.** The pipeline built **{{N_FIRES}} fires** — every CAL FIRE perimeter
-from 2018 to 2023 of 1,000+ acres with a burn-severity assessment ({{N_NOT_BUILT}} more were attempted
+**Every fire, not a chosen few.** The pipeline built **237 fires** — every CAL FIRE perimeter
+from 2018 to 2023 of 1,000+ acres with a burn-severity assessment (5 more were attempted
 and are listed with their reasons). The site covers the state's whole assessment window.
 
 **One pipeline, run ahead of time or live.** A Python pipeline (geopandas, shapely, rasterio, NumPy,
@@ -107,11 +107,13 @@ the interior is visible on a phone, with no input, on first load.
 
 - **Like for like.** Baker (2023) measured the share of high-severity burn area more than 90 m from live
   seed across ~56 million hectares: **21.9%**. Bushel computes the same quantity pixel by pixel. Pooled
-  over {{N_FIRES}} California fires it gets **{{POOLED_PCT}}** ({{POOLED_DIFF}}). An independent computation
+  across all 237 California fires (53,638 of 239,581 high-severity acres, from the
+  99 fires with high-severity conifer ground on state land) it gets **22.4%**
+  (+0.5 points from the published figure). An independent computation
   landing near a published figure is corroboration — and 21.9% is never used as a multiplier.
 - **Against CAL FIRE's own totals.** High-severity acres on non-federal conifer land, 2018–2023: Bushel
-  **{{HS_COMPUTED}}** against the state's 359,182 ({{HS_DIFF}}, {{HS_COVERAGE}} of burned state land covered).
-  Bushel's total order: **{{ROLLUP}} bushels of cones** beside the state's 55,978. They are not expected to
+  **239,581 acres** against the state's 359,182 (−33.3%, 96.7% of burned state land covered).
+  Bushel's total order: **2,143.8 bushels of cones** beside the state's 55,978. They are not expected to
   match: the state's figure also covers insect and disease die-off and timber harvest, and uses a
   timberland boundary it maps internally and does not publish. The panel lists every known cause.
 

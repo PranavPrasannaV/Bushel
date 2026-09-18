@@ -1,0 +1,56 @@
+{
+  "fire": {
+    "id": "lake-2020",
+    "name": "Lake",
+    "year": 2020,
+    "discovery_date": "2020-08-12",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 30999.4058,
+    "retained_acres": 3945.8627,
+    "excluded_acres": 27053.5431,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 24.0186,
+    "conifer_acres": 56.2659
+  },
+  "planting": {
+    "interior_acres": 0.4448,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.018518981122963036,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "992_3500",
+      "seed_zone": "992",
+      "elevation_band": "3500–4000 ft",
+      "planting_acres": 0.2224,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Big-Cone Douglas Fir",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "992_4000",
+      "seed_zone": "992",
+      "elevation_band": "4000–4500 ft",
+      "planting_acres": 0.2224,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Incense Cedar",
+          "acres": 0.2224
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/lake-2020.geojson"
+}
