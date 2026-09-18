@@ -350,23 +350,31 @@ export default function BurnMap(props: {
           fireName && <h2 className="burn-map__name">{fireName}</h2>
         )}
 
+        {/* Each key leads with what it means on the ground; the technical name sits under it (and in the
+            tooltip, since the compact strip drops the sub-lines). */}
         <ul className="burn-map__keys" aria-label="Map legend">
-          <li>
+          <li title="Seed-limited interior: high-severity burn more than 90 m from ground that did not burn severely">
             <span className="burn-map__swatch burn-map__swatch--interior" aria-hidden="true" />
             <span>
-              Seed-limited interior
-              <span className="burn-map__sub">more than 90 m inside high-severity burn</span>
+              Too far from surviving trees to reseed
+              <span className="burn-map__sub">Seed-limited interior: more than 90 m inside high-severity burn</span>
             </span>
           </li>
           {!inOverview && (
             <>
-              <li>
+              <li title="Rest of high-severity burn: within 90 m of surviving trees">
                 <span className="burn-map__swatch burn-map__swatch--severity" aria-hidden="true" />
-                Rest of high-severity burn
+                <span>
+                  Burned badly, but near enough to reseed
+                  <span className="burn-map__sub">Rest of high-severity burn</span>
+                </span>
               </li>
-              <li>
+              <li title="Non-federal land in CAL FIRE's State Responsibility Area">
                 <span className="burn-map__swatch burn-map__swatch--retained" aria-hidden="true" />
-                Retained non-federal (State Responsibility Area)
+                <span>
+                  Land the state is responsible for
+                  <span className="burn-map__sub">Non-federal, State Responsibility Area: the order's scope</span>
+                </span>
               </li>
             </>
           )}
@@ -375,9 +383,12 @@ export default function BurnMap(props: {
             Fire perimeter
           </li>
           {!inOverview && (
-            <li>
+            <li title="Seed zone × 500 ft elevation band: seed must come from the same zone and band">
               <span className="burn-map__swatch burn-map__swatch--cell" aria-hidden="true" />
-              Seed zone × elevation band cell
+              <span>
+                Each patch needs its own local seed
+                <span className="burn-map__sub">Seed zone × 500 ft elevation band</span>
+              </span>
             </li>
           )}
         </ul>
@@ -395,11 +406,13 @@ export default function BurnMap(props: {
         ) : planting ? (
           <p className="burn-map__fraction">
             <span>
-              Computed interior: {fraction === null ? '—' : pct(fraction)} of high-severity conifer acres on
-              non-federal land
+              {fraction === null ? '—' : pct(fraction)} of the badly burned conifer forest the state is responsible for can't
+              reseed itself
             </span>
             <span className="burn-map__sub">
-              Baker reference {pct(planting.baker_reference_fraction)} (cross-check, not a multiplier)
+              Computed interior {fraction === null ? '—' : pct(fraction)} of high-severity conifer acres on
+              non-federal land. Published estimate: Baker {pct(planting.baker_reference_fraction)} (cross-check, not
+              a multiplier)
             </span>
           </p>
         ) : (

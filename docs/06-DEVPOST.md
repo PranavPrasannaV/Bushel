@@ -145,6 +145,34 @@ the interior is visible on a phone, with no input, on first load.
 
 ## What we learned
 
+**Where we started.** Our earlier hackathon projects were web apps built on documents: Reclaim drafts
+appeals against insurance claim denials, and FoolProof is a scam-training simulator. Neither touched a
+map. Bushel is the first time either of us worked with geospatial data: rasters, projections, polygon
+geometry, a web map.
+
+**What was new to us, and what it taught us:**
+
+- **Coordinate systems.** A degree of longitude is not a fixed distance, so nothing can be measured in
+  latitude and longitude. Every layer is reprojected to California Albers (EPSG:3310), an equal-area
+  projection in metres, before a single acre or a 90 m distance is computed.
+- **Grids versus shapes.** Burn severity is a 30 m grid; perimeters, ownership and seed zones are
+  polygons. We learned when to switch between them. The 90 m threshold is three pixels in a distance
+  transform, measured from every surviving patch at once.
+- **Real geometry is messy.** Merging agency polygons produces slivers, self-intersections and mixed
+  shape collections that crash later steps. Repairing geometry became a pipeline step of its own.
+- **Public services fail.** We learned to page, tile and retry with backoff. 18 of the statewide builds
+  still died on dropped connections; a resumable retry finished them.
+- **Web maps and performance.** Drawing layers in MapLibre, and why a map fitted before its container
+  settles comes out blank on phones. Loading the map code on demand cut first-load JavaScript from
+  1,283 kB to 267 kB; dropping shapes too small to see cut the map data from 24 MB to 14 MB, and a test
+  now caps the shipped data size.
+
+**How we worked.** We wrote the spec, data contracts and task list first (Spec Kit), then built with an
+AI coding agent (Claude Code). Code came quickly, which moved the hard part to deciding what is true and
+proving it. Every figure traces to a source table, and a test fails if a unit drifts.
+
+**What the research taught us:**
+
 - Ask what a number counts — its units, population, jurisdiction and year — before it goes anywhere.
   Several claims we were sure of fell apart under that question.
 - Read agency documents in full: the 200 trees-per-acre figure is in the state's report; a "180" figure

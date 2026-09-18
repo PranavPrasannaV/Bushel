@@ -66,19 +66,23 @@ test('the interior is drawn as the luminous layer, with the threshold statement 
   const map = page.locator('.burn-map')
   await expect(map.locator('canvas.maplibregl-canvas')).toBeVisible()
 
-  // The legend names the interior first, apart from the rest of the burn.
+  // The legend names the interior first, apart from the rest of the burn: plain words first, the technical
+  // name under them.
   const legend = page.getByRole('list', { name: 'Map legend' })
+  await expect(legend.getByRole('listitem').first()).toContainText('Too far from surviving trees to reseed')
   await expect(legend.getByRole('listitem').first()).toContainText('Seed-limited interior')
   await expect(legend).toContainText('Rest of high-severity burn')
   await expect(legend).toContainText('Fire perimeter')
+  await expect(legend).not.toContainText('Retained non-federal')
 
   // FR-005: the statement, exactly. Never "most conservative".
   await expect(page.getByText(THRESHOLD, { exact: true })).toBeVisible()
   await expect(page.getByText(/most conservative/i)).toHaveCount(0)
 
   // The computed fraction beside Baker's reference, as a cross-check. Fixture: 517 / 1000 acres = 51.7%.
-  await expect(map).toContainText('Computed interior: 51.7%')
-  await expect(map).toContainText('Baker reference 21.9% (cross-check, not a multiplier)')
+  await expect(map).toContainText("51.7% of the badly burned conifer forest the state is responsible for can't reseed itself")
+  await expect(map).toContainText('Computed interior 51.7% of high-severity conifer acres')
+  await expect(map).toContainText('Published estimate: Baker 21.9% (cross-check, not a multiplier)')
 
   // The one peak: after the rest of the burn draws, the interior rises and lights up the canvas.
   await expect(map).toHaveAttribute('data-peak', 'revealed', { timeout: 10_000 })
