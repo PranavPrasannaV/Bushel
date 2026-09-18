@@ -272,7 +272,18 @@ bushel/
 
 ### Running it
 
-**One manual step first: LEMMA.** Its download form asks for a name, organisation and email, so no script fetches it. At <https://lemmadownload.forestry.oregonstate.edu>, request GNN.2023.1, attributes `TREEPLBA` and `FORTYPBA`, model years 2017 and 2021, area preset "California". Put the four rasters and the two code tables in `data/cache/lemma/` (git-ignored), with these names:
+**Just the app:** the built data is committed in `web/public/data`, so `cd web && npm install && npm run dev` is all you need.
+
+**Team shortcut for the pipeline:** the whole `data/cache/` (statewide layers, the 8 per-fire stacks, and LEMMA) is attached to the private release `data-2026-09-17` (1.06 GB). It is not in git, because the LEMMA rasters exceed GitHub's 100 MB per-file limit. From the repo root:
+
+```bash
+gh release download data-2026-09-17 -R PranavPrasannaV/Bushel
+tar -xzf bushel-cache.tar.gz -C data/   # -> data/cache/
+```
+
+Then skip straight to `bushel.build` / `bushel.validate` below; no network and no LEMMA form needed.
+
+**From scratch, one manual step first: LEMMA.** Its download form asks for a name, organisation and email, so no script fetches it. At <https://lemmadownload.forestry.oregonstate.edu>, request GNN.2023.1, attributes `TREEPLBA` and `FORTYPBA`, model years 2017 and 2021, area preset "California". Put the four rasters and the two code tables in `data/cache/lemma/` (git-ignored), with these names:
 
 ```
 data/cache/lemma/
