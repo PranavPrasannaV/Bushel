@@ -18,7 +18,7 @@ FALLBACK = ["Knobcone Pine", "Lodgepole Pine", "Subalpine Fir", "Western White P
 def doc(tmp_path_factory):
     out = tmp_path_factory.mktemp("data")
     write_reference(out)
-    text = (out / "reference/factors.json").read_text()
+    text = (out / "reference/factors.json").read_text(encoding="utf-8")
     d = json.loads(text)
     d["_text"] = text
     d["_by_name"] = {e["name"]: e for e in d["published"] + d["unpublished"]}

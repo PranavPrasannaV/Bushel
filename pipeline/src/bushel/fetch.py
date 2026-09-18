@@ -303,7 +303,7 @@ def fetch_vectors(cache: Path, refresh: bool = False) -> dict:
 
 def read_manifest(cache: Path) -> dict:
     p = cache / "manifest.json"
-    return json.loads(p.read_text()) if p.exists() else {}
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
 
 
 def write_manifest(cache: Path, manifest: dict) -> None:
@@ -502,7 +502,7 @@ def load_stack(fire_id: str, cache_dir: Path | str = DEFAULT_CACHE) -> tuple[dic
     d = Path(cache_dir) / "fires" / fire_id
     with np.load(d / "stack.npz") as z:
         arrays = {k: z[k] for k in z.files}
-    return arrays, json.loads((d / "meta.json").read_text())
+    return arrays, json.loads((d / "meta.json").read_text(encoding="utf-8"))
 
 
 def load_fire_vectors(fire_id: str, cache_dir: Path | str = DEFAULT_CACHE) -> tuple:

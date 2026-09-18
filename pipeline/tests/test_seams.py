@@ -39,7 +39,7 @@ WEB_INDEX_KEYS = {
 
 
 def test_species_index_order_is_the_pinned_order():
-    section = NOTES.read_text().split("## Species — canonical names", 1)[1]
+    section = NOTES.read_text(encoding="utf-8").split("## Species — canonical names", 1)[1]
     block = section.split("```", 2)[1]
     pinned = [s.strip() for s in block.replace("\n", " ").split(",") if s.strip()]
     assert list(SPECIES) == pinned
@@ -49,7 +49,7 @@ def test_species_index_order_is_the_pinned_order():
 
 
 def test_shared_web_fixture_is_a_valid_contract_record():
-    record = json.loads(WEB_FIRE.read_text())
+    record = json.loads(WEB_FIRE.read_text(encoding="utf-8"))
     validate_fire(record)
     for c in record["cells"]:
         low = int(c["cell_id"].split("_")[1])
@@ -68,7 +68,7 @@ def test_record_from_real_stack_validates_and_indexes(fire_id, tmp_path):
     # Only the record's shape is under test; cells come from the shared web fixture.
     hs = (a["mtbs"] == 4) & a["perimeter"] & a["sra"] & (a["species"] >= 0)
     high = float(hs.sum() * RES * RES / ACRE)
-    shared = json.loads(WEB_FIRE.read_text())
+    shared = json.loads(WEB_FIRE.read_text(encoding="utf-8"))
     fire_keys = ("id", "name", "year", "discovery_date", "perimeter_source_date", "provisional")
     record = {
         "fire": {k: meta[k] for k in fire_keys},
@@ -86,6 +86,6 @@ def test_record_from_real_stack_validates_and_indexes(fire_id, tmp_path):
     assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", meta["discovery_date"])
     write_fire(tmp_path, record, {"type": "FeatureCollection", "features": []})
     write_index(tmp_path, [record])
-    index = json.loads((tmp_path / "fires" / "index.json").read_text())
+    index = json.loads((tmp_path / "fires" / "index.json").read_text(encoding="utf-8"))
     assert set(index["fires"][0]) == WEB_INDEX_KEYS
     assert index["coverage_years"] == [2018, 2023]

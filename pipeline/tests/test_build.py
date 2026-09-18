@@ -93,7 +93,7 @@ def test_geojson_has_every_layer_in_wgs84(with_species):
 def test_write_fire_round_trip(with_species, tmp_path):
     record, geojson = build_fire(SMALL)
     write_fire(tmp_path, record, geojson)
-    assert json.loads((tmp_path / "fires" / f"{SMALL}.json").read_text()) == record
+    assert json.loads((tmp_path / "fires" / f"{SMALL}.json").read_text(encoding="utf-8")) == record
     assert (tmp_path / "fires" / f"{SMALL}.geojson").stat().st_size < 3_000_000
 
 
@@ -169,7 +169,7 @@ def test_build_all_writes_records_and_index(with_species, monkeypatch, tmp_path)
         build, "demo_fires", lambda: [{"id": SMALL, "year": 2022}, {"id": "mckinney-2022"}]
     )
     records = build_all(tmp_path)
-    index = json.loads((tmp_path / "fires" / "index.json").read_text())
+    index = json.loads((tmp_path / "fires" / "index.json").read_text(encoding="utf-8"))
     assert index["coverage_years"] == [2018, 2023]
     assert [f["id"] for f in index["fires"]] == [SMALL, "mckinney-2022"]
     for r, entry in zip(records, index["fires"], strict=True):

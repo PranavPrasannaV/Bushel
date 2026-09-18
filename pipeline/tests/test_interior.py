@@ -142,7 +142,7 @@ def _is_baker(node) -> bool:
 def test_no_code_path_multiplies_by_0219():
     offenders = []
     for path in sorted(SRC.glob("*.py")):
-        text = path.read_text()
+        text = path.read_text(encoding="utf-8")
         for n, line in enumerate(text.splitlines(), 1):
             if "0.219" in line and not line.startswith("BAKER_REFERENCE_FRACTION = 0.219"):
                 offenders.append(f"{path.name}:{n}: {line.strip()}")
@@ -156,7 +156,11 @@ def test_no_code_path_multiplies_by_0219():
                     offenders.append(f"{path.name}:{node.lineno}: arithmetic with Baker's 0.219")
     assert not offenders, "0.219 is a reference, never a multiplier:\n" + "\n".join(offenders)
     # The constant is defined exactly once, in interior.py.
-    defs = [p.name for p in SRC.glob("*.py") if "BAKER_REFERENCE_FRACTION = 0.219" in p.read_text()]
+    defs = [
+        p.name
+        for p in SRC.glob("*.py")
+        if "BAKER_REFERENCE_FRACTION = 0.219" in p.read_text(encoding="utf-8")
+    ]
     assert defs == ["interior.py"]
 
 

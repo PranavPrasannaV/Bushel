@@ -203,9 +203,11 @@ def test_empty_result_with_nonzero_interior_fails():
 
 def test_write_fire_writes_both_files(tmp_path):
     write_fire(tmp_path, valid_record(), GEOJSON)
-    assert json.loads((tmp_path / "fires/test_fire.json").read_text())["cells"][0]["cell_id"]
+    assert json.loads((tmp_path / "fires/test_fire.json").read_text(encoding="utf-8"))["cells"][0][
+        "cell_id"
+    ]
     assert (
-        json.loads((tmp_path / "fires/test_fire.geojson").read_text())["type"]
+        json.loads((tmp_path / "fires/test_fire.geojson").read_text(encoding="utf-8"))["type"]
         == "FeatureCollection"
     )
 
@@ -225,7 +227,7 @@ def test_write_fire_refuses_unknown_geojson_layer(tmp_path):
 
 def test_write_index(tmp_path):
     write_index(tmp_path, [valid_record(), empty_record()])
-    index = json.loads((tmp_path / "fires/index.json").read_text())
+    index = json.loads((tmp_path / "fires/index.json").read_text(encoding="utf-8"))
     assert index["coverage_years"] == [2018, 2023]
     assert index["severity_source"] == "MTBS thematic burn severity, class 4 = High"
     assert index["fires"][0] == {

@@ -122,11 +122,21 @@ def test_benchmark_periods_per_figure():
 
 def test_write_reference(tmp_path):
     write_reference(tmp_path)
-    assert json.loads((tmp_path / "reference/factors.json").read_text()) == f.factors()
-    assert json.loads((tmp_path / "reference/benchmark.json").read_text()) == benchmark()
+    assert (
+        json.loads((tmp_path / "reference/factors.json").read_text(encoding="utf-8")) == f.factors()
+    )
+    assert (
+        json.loads((tmp_path / "reference/benchmark.json").read_text(encoding="utf-8"))
+        == benchmark()
+    )
 
 
 def test_committed_reference_artifacts_are_current():
     """Re-run `python -m bushel.build --out ../web/public/data` if this fails."""
-    assert json.loads((WEB_DATA / "reference/factors.json").read_text()) == f.factors()
-    assert json.loads((WEB_DATA / "reference/benchmark.json").read_text()) == benchmark()
+    assert (
+        json.loads((WEB_DATA / "reference/factors.json").read_text(encoding="utf-8")) == f.factors()
+    )
+    assert (
+        json.loads((WEB_DATA / "reference/benchmark.json").read_text(encoding="utf-8"))
+        == benchmark()
+    )
