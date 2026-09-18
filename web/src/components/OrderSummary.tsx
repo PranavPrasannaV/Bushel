@@ -2,6 +2,7 @@
 // (FR-002); every result carries its perimeter date and, where it applies, the provisional flag (FR-024).
 // An empty-result fire shows its finding as a stated result, not an error and not a blank.
 import { GAP_MESSAGE } from '../convert/computeOrder.ts'
+import type { CSSProperties } from 'react'
 import type { FireIndexEntry, FireRecord, Order } from '../convert/types.ts'
 import { fmtAcres, fmtInt, fmtQty, fmtUsd } from './OrderTable.tsx'
 import './OrderSummary.css'
@@ -24,6 +25,11 @@ export default function OrderSummary({
   const known = (v: number | null) => (t.lines === 0 ? null : v)
   const tpa = order.assumptions_used.find((a) => a.name === 'stocking_tpa')?.current_value
   const gapSpecies = [...new Set(order.lines.filter((l) => l.gap !== null).map((l) => l.species))]
+  // Each funnel row's bar is its acres as a share of the perimeter, so the fire visibly narrows to the interior.
+  const share = (acres: number | undefined): CSSProperties | undefined =>
+    r && r.perimeter_acres > 0 && acres !== undefined
+      ? ({ '--share': Math.min(1, Math.max(0, acres / r.perimeter_acres)) } as CSSProperties)
+      : undefined
 
   return (
     <section className="summary" aria-label="Order summary">
@@ -48,44 +54,9 @@ export default function OrderSummary({
         </div>
       )}
 
-      {r && (
-        <dl className="acreage">
-          <div>
-            <dt>Perimeter</dt>
-            <dd>{fmtAcres(r.perimeter_acres)} ac</dd>
-          </div>
-          <div>
-            <dt>Retained: inside State Responsibility Area</dt>
-            <dd data-testid="retained-acres">{fmtAcres(r.retained_acres)} ac</dd>
-          </div>
-          <div className="is-excluded">
-            <dt>Excluded: {r.excluded_reason}</dt>
-            <dd data-testid="excluded-acres">{fmtAcres(r.excluded_acres)} ac</dd>
-          </div>
-          {r.conifer_acres !== undefined && (
-            <div>
-              <dt>Retained conifer forest</dt>
-              <dd>{fmtAcres(r.conifer_acres)} ac</dd>
-            </div>
-          )}
-          <div>
-            <dt>High severity (retained conifer)</dt>
-            <dd>{fmtAcres(r.high_severity_acres)} ac</dd>
-          </div>
-          {p && (
-            <div className="is-interior">
-              <dt>
-                <span className="interior-swatch" aria-hidden="true" />
-                Seed-limited interior: more than {p.threshold_m} m inside high-severity patches
-              </dt>
-              <dd>{fmtAcres(p.interior_acres)} ac</dd>
-            </div>
-          )}
-        </dl>
-      )}
-
       {!order.finding && (
         <div className="totals">
+          <p className="caps">Seed order to replant it</p>
           <div className="headline">
             <p className="headline-figure" data-testid="total-bushels">
               {fmtQty(known(t.bushels.value))}
@@ -117,6 +88,49 @@ export default function OrderSummary({
               totals above.
             </p>
           )}
+        </div>
+      )}
+      {r && (
+        <div className="funnel">
+          <p className="caps">From the fire to the order</p>
+          <dl className="acreage">
+            <div style={share(r.perimeter_acres)}>
+              <dt>Perimeter</dt>
+              <dd>{fmtAcres(r.perimeter_acres)} ac</dd>
+            </div>
+            <div style={share(r.retained_acres)}>
+              <dt>Retained: inside State Responsibility Area</dt>
+              <dd data-testid="retained-acres">{fmtAcres(r.retained_acres)} ac</dd>
+            </div>
+            <div className="is-excluded" style={share(r.excluded_acres)}>
+              <dt>Excluded: {r.excluded_reason}</dt>
+              <dd data-testid="excluded-acres">{fmtAcres(r.excluded_acres)} ac</dd>
+            </div>
+            {r.conifer_acres !== undefined && (
+              <div style={share(r.conifer_acres)}>
+                <dt>Retained conifer forest</dt>
+                <dd>{fmtAcres(r.conifer_acres)} ac</dd>
+              </div>
+            )}
+            <div className="is-severity" style={share(r.high_severity_acres)}>
+              <dt>High severity (retained conifer)</dt>
+              <dd>{fmtAcres(r.high_severity_acres)} ac</dd>
+            </div>
+            {p && (
+              <div className="is-interior" style={share(p.interior_acres)}>
+                <dt>
+                  <span className="interior-swatch" aria-hidden="true" />
+                  <span>
+                    Too far from surviving trees to reseed
+                    <span className="acreage-sub">
+                      Seed-limited interior: more than {p.threshold_m} m inside high-severity patches
+                    </span>
+                  </span>
+                </dt>
+                <dd>{fmtAcres(p.interior_acres)} ac</dd>
+              </div>
+            )}
+          </dl>
         </div>
       )}
     </section>

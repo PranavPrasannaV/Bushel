@@ -2,7 +2,7 @@
 // Burn map (T052, T053). Draws one fire's GeoJSON on a plain background: no basemap tiles, fully offline.
 // The seed-limited interior is the one luminous layer and the one animation on screen (SC-006).
 // The threshold and Baker's reference are fixed. Nothing here changes them (FR-006).
-import { useEffect, useRef, useState, type JSX } from 'react'
+import { useEffect, useRef, useState, type CSSProperties, type JSX } from 'react'
 import {
   LngLatBounds,
   Map as MapLibreMap,
@@ -409,6 +409,14 @@ export default function BurnMap(props: {
               {fraction === null ? '—' : pct(fraction)} of the badly burned conifer forest the state is responsible for can't
               reseed itself
             </span>
+            {fraction !== null && (
+              // The same split as a bar: lit interior against the rest of the badly burned forest.
+              <span
+                className="burn-map__share"
+                style={{ '--share': Math.min(1, Math.max(0, fraction)) } as CSSProperties}
+                aria-hidden="true"
+              />
+            )}
             <span className="burn-map__sub">
               Computed interior {fraction === null ? '—' : pct(fraction)} of high-severity conifer acres on
               non-federal land. Published estimate: Baker {pct(planting.baker_reference_fraction)} (cross-check, not

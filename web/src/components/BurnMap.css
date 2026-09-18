@@ -119,6 +119,20 @@
   color: var(--color-text-muted);
 }
 
+/* Interior against the rest of the high-severity burn, in the map's own two colours. */
+.burn-map__share {
+  display: block;
+  flex: none;
+  width: 100%;
+  height: 6px;
+  border-radius: var(--radius-sm);
+  background:
+    linear-gradient(var(--map-interior-fill), var(--map-interior-fill)) left / calc(var(--share, 0) * 100%) 100%
+      no-repeat,
+    color-mix(in srgb, var(--map-high-severity-fill) 85%, var(--map-canvas));
+  box-shadow: 0 0 6px var(--regen-glow);
+}
+
 @media (max-width: 900px) {
   .burn-map__legend {
     left: var(--space-2);
