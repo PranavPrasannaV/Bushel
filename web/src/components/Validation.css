@@ -204,3 +204,10 @@
   font-size: var(--text-xs);
   line-height: var(--leading-snug);
 }
+
+/* The interior cross-check leads the panel: it is the like-for-like comparison. */
+.validation-interior {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}

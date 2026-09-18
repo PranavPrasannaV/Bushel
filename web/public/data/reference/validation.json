@@ -121,6 +121,59 @@
       "note": "MTBS class 4 (High) inside the perimeter and State Responsibility Area, 2018-2023 fires only. Covers 8 demo fires, 21.8% of the burned SRA acreage in 2018-2023; the published figure covers every fire in that window statewide, so no 10% verdict is given on partial coverage. Conifer-filtered (LEMMA 2023.1)."
     }
   },
+  "interior_crosscheck": {
+    "stage": "Seed-limited interior as a share of high-severity acres",
+    "threshold_m": 90,
+    "reference_fraction": 0.219,
+    "reference_source": "Baker 2023, Climate 11(11):214, a 90 m inward buffer across ~56M ha",
+    "computed_fraction": 0.2366,
+    "difference_pts": 1.8,
+    "interior_acres": 29328.8,
+    "high_severity_acres": 123966.2,
+    "fires": [
+      {
+        "id": "caldor-2021",
+        "interior_acres": 2239.1,
+        "high_severity_acres": 9786.9
+      },
+      {
+        "id": "camp-2018",
+        "interior_acres": 334.5,
+        "high_severity_acres": 4168.3
+      },
+      {
+        "id": "carr-2018",
+        "interior_acres": 3713.5,
+        "high_severity_acres": 15002.5
+      },
+      {
+        "id": "creek-2020",
+        "interior_acres": 593.6,
+        "high_severity_acres": 4495.3
+      },
+      {
+        "id": "dixie-2021",
+        "interior_acres": 5781.8,
+        "high_severity_acres": 42589.3
+      },
+      {
+        "id": "mckinney-2022",
+        "interior_acres": 1772.9,
+        "high_severity_acres": 4938.9
+      },
+      {
+        "id": "mosquito-2022",
+        "interior_acres": 1386.0,
+        "high_severity_acres": 4548.9
+      },
+      {
+        "id": "north-complex-2020",
+        "interior_acres": 13507.4,
+        "high_severity_acres": 38436.1
+      }
+    ],
+    "note": "Pooled over 8 fires: total interior acres divided by total high-severity acres on retained non-federal conifer land. Baker's figure is an average over ~56M ha and these are eight California fires, so agreement is corroboration, not proof. A cross-check, never a multiplier."
+  },
   "attributed_gap": [
     "CAL FIRE's timberland boundary: the AON restricts its domain to productive conifer forestland using a timberlands boundary 'mapped internally by CAL FIRE'. Bushel does not have that layer, so it cannot apply it, and its retained acreage can exceed the AON's.",
     "Known overestimate in the benchmark: the AON does not explicitly exclude privately-owned industrial land and so, in its own words, somewhat overestimates need. Bushel does not exclude it either, so a total that matched 55,978 would share that overestimate.",

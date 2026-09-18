@@ -110,4 +110,31 @@ describe('rendered copy', () => {
     expect(html).toContain('55,978')
     expect(html).toContain('validation-footnote')
   })
+
+  it('leads with the like-for-like interior cross-check, before the bushel roll-up', () => {
+    const html = render({
+      ...validation,
+      interior_crosscheck: {
+        stage: 'Seed-limited interior as a share of high-severity acres',
+        threshold_m: 90,
+        reference_fraction: 0.219,
+        reference_source: 'Baker 2023, Climate 11(11):214, a 90 m inward buffer across ~56M ha',
+        computed_fraction: 0.2366,
+        difference_pts: 1.8,
+        interior_acres: 29329,
+        high_severity_acres: 123966,
+        fires: [{ id: 'a', interior_acres: 29329, high_severity_acres: 123966 }],
+        note: 'A cross-check, never a multiplier.',
+      },
+    })
+    expect(html).toContain('23.7%')
+    expect(html).toContain('21.9%')
+    expect(html).toContain('+1.8 pts')
+    expect(html.indexOf('interior-crosscheck')).toBeLessThan(html.indexOf('55,978'))
+    expect(html).toContain('Not like-for-like')
+  })
+
+  it('omits the interior cross-check when validation.json predates it', () => {
+    expect(render(validation)).not.toContain('interior-crosscheck')
+  })
 })

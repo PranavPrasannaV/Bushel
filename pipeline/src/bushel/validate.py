@@ -40,6 +40,7 @@ from bushel.fetch import (
     load_stack,
     open_lemma,
 )
+from bushel.interior import BAKER_REFERENCE_FRACTION, THRESHOLD_M, THRESHOLD_SOURCE
 
 ACRE_M2 = 4046.8564224
 PX_ACRES = 900 / ACRE_M2
@@ -283,6 +284,50 @@ def rollup(records: list[dict], f: dict, benchmark: dict, burned_by_year: dict[i
     }
 
 
+# ---- Interior cross-check: the computed seed-limited fraction beside Baker's published one -------
+
+
+def interior_crosscheck(records: list[dict]) -> dict:
+    """Pooled seed-limited interior as a share of high-severity acres, beside Baker (2023).
+
+    Unlike the bushel roll-up, this is like-for-like: Baker's 21.9% is the share of high-severity
+    area more than 90 m from a live seed edge, which is exactly what the interior step computes.
+    It stays a cross-check. Nothing downstream multiplies by either fraction.
+    """
+    base = {
+        "stage": "Seed-limited interior as a share of high-severity acres",
+        "threshold_m": THRESHOLD_M,
+        "reference_fraction": BAKER_REFERENCE_FRACTION,
+        "reference_source": f"{THRESHOLD_SOURCE}, a 90 m inward buffer across ~56M ha",
+    }
+    fires = [
+        {
+            "id": r["fire"]["id"],
+            "interior_acres": round(r["planting"]["interior_acres"], 1),
+            "high_severity_acres": round(r["retained"]["high_severity_acres"], 1),
+        }
+        for r in records
+        if r.get("planting") and r["retained"].get("high_severity_acres")
+    ]
+    high = sum(x["high_severity_acres"] for x in fires)
+    if not high:
+        return base | {"computed_fraction": None, "difference_pts": None, "fires": []}
+    fraction = sum(x["interior_acres"] for x in fires) / high
+    return base | {
+        "computed_fraction": round(fraction, 4),
+        "difference_pts": round((fraction - BAKER_REFERENCE_FRACTION) * 100, 1),
+        "interior_acres": round(sum(x["interior_acres"] for x in fires), 1),
+        "high_severity_acres": round(high, 1),
+        "fires": fires,
+        "note": (
+            f"Pooled over {len(fires)} fires: total interior acres divided by total high-severity "
+            "acres on retained non-federal conifer land. Baker's figure is an average over ~56M ha "
+            "and these are California fires, so agreement is corroboration, not proof. A "
+            "cross-check, never a multiplier."
+        ),
+    }
+
+
 # ---- T058: gap attribution ---------------------------------------------------------------------
 
 
@@ -362,7 +407,14 @@ def attributed_gap(
 # ---- T059 + assembly ---------------------------------------------------------------------------
 
 
-def build_result(acres: dict, high: dict, roll: dict, gaps: list[str], benchmark: dict) -> dict:
+def build_result(
+    acres: dict,
+    high: dict,
+    roll: dict,
+    gaps: list[str],
+    benchmark: dict,
+    interior: dict | None = None,
+) -> dict:
     """data-model.md ValidationResult. Refuses to emit a number without its attribution."""
     result = {
         "generated_at": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -372,6 +424,7 @@ def build_result(acres: dict, high: dict, roll: dict, gaps: list[str], benchmark
         "coverage": roll["coverage"],
         "rollup": roll,
         "acreage_check": {"acres_burned": acres, "high_severity": high},
+        "interior_crosscheck": interior,
         "attributed_gap": gaps,
         "scope_note": benchmark["scope_note"],
         "known_overestimate": benchmark["known_overestimate"],
@@ -489,7 +542,7 @@ def demo_high_severity(cache: Path) -> list[dict]:
 
 def load_records(out_dir: Path) -> list[dict]:
     paths = sorted((out_dir / "fires").glob("*.json"))
-    return [json.loads(p.read_text()) for p in paths if p.name != "index.json"]
+    return [json.loads(p.read_text(encoding="utf-8")) for p in paths if p.name != "index.json"]
 
 
 def main() -> None:
@@ -503,9 +556,11 @@ def main() -> None:
         raise SystemExit(
             f"{bench_path} missing: run `python -m bushel.build --out {args.out}` first"
         )
-    benchmark = json.loads(bench_path.read_text())
+    benchmark = json.loads(bench_path.read_text(encoding="utf-8"))
     manifest_path = args.cache / "manifest.json"
-    manifest = json.loads(manifest_path.read_text()) if manifest_path.exists() else {}
+    manifest = (
+        json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else {}
+    )
     f = factors()
 
     print("Burned SRA acres by year (statewide FRAP perimeters) ...")
@@ -526,7 +581,12 @@ def main() -> None:
     lra = sum(v for y, v in lra_by_year.items() if lo <= y <= hi)
     sra_edit = manifest.get("sra", {}).get("source_last_edit")
     result = build_result(
-        acres, high, roll, attributed_gap(acres, high, roll, f, sra_edit, lra), benchmark
+        acres,
+        high,
+        roll,
+        attributed_gap(acres, high, roll, f, sra_edit, lra),
+        benchmark,
+        interior_crosscheck(records),
     )
 
     path = args.out / "reference" / "validation.json"

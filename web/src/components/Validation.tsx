@@ -2,9 +2,13 @@
 // cones, with the difference and its attributed causes; the upstream acreage checks, each over its OWN
 // published period; coverage stated as partial when it is partial; the known-overestimate caveat; and the
 // AON's cones-versus-seed self-contradiction as a footnote (FR-019, FR-020, FR-023, SC-004, SC-005).
+// Leads with the interior cross-check (computed seed-limited share beside Baker's 21.9%), because that
+// is the like-for-like comparison; the bushel roll-up follows with its scope stated, since CAL FIRE's
+// total covers far more than fire.
 // Reads reference/validation.json (written by `python -m bushel.validate`) and reference/benchmark.json.
 import { useEffect, useState } from 'react'
 import { getData } from '../data.ts'
+import type { InteriorCrosscheck } from '../convert/types.ts'
 import './Validation.css'
 
 export interface Benchmark {
@@ -39,6 +43,8 @@ export interface AcreageCheck {
   note: string
 }
 
+export type { InteriorCrosscheck }
+
 export interface ValidationResult {
   generated_at: string
   computed_total_bushels: number | null
@@ -55,6 +61,7 @@ export interface ValidationResult {
     statement: string
   }
   acreage_check: { acres_burned: AcreageCheck; high_severity: AcreageCheck }
+  interior_crosscheck?: InteriorCrosscheck | null
   attributed_gap: string[]
 }
 
@@ -86,6 +93,13 @@ export function verdict(
     : { tone: 'fail', label: `Outside ${check.tolerance_pct}%` }
 }
 
+/** "+1.8 pts", "−0.4 pts" (true minus sign), or "—". */
+export function formatPts(pts: number | null): string {
+  if (pts === null) return '—'
+  const sign = pts > 0 ? '+' : pts < 0 ? '−' : ''
+  return `${sign}${Math.abs(pts).toFixed(1)} pts`
+}
+
 export function coverageLabel(coverage: Coverage, fraction?: number | null): string {
   if (coverage === 'none') return 'Coverage: none yet'
   if (coverage === 'full') return 'Coverage: full'
@@ -93,9 +107,46 @@ export function coverageLabel(coverage: Coverage, fraction?: number | null): str
 }
 
 const fmt = (n: number) => n.toLocaleString('en-US', { maximumFractionDigits: 0 })
+const share = (f: number) => `${(f * 100).toFixed(1)}%`
 const period = (p: string) => p.replace('-', '–')
 
 // ---- View ----------------------------------------------------------------------------------------
+
+function InteriorCheck({ check }: { check: InteriorCrosscheck }) {
+  if (check.computed_fraction === null) return null
+  return (
+    <div className="validation-interior" data-testid="interior-crosscheck">
+      <h4 className="caps">Like-for-like: the seed-limited interior</h4>
+      <div className="validation-totals">
+        <div className="validation-total">
+          <p className="caps">Bushel, {check.fires.length} fires</p>
+          <p className="validation-figure">{share(check.computed_fraction)}</p>
+          <p className="validation-unit">of high-severity acres</p>
+        </div>
+        <div className="validation-total">
+          <p className="caps">Baker (2023)</p>
+          <p className="validation-figure">{share(check.reference_fraction)}</p>
+          <p className="validation-unit">published, ~56M ha</p>
+        </div>
+        <div className="validation-total">
+          <p className="caps">Difference</p>
+          <p className="validation-figure">{formatPts(check.difference_pts)}</p>
+        </div>
+      </div>
+      <p className="detail">
+        The same measurement two ways: high-severity ground more than {check.threshold_m} m from a live seed
+        edge.
+        {check.interior_acres != null && check.high_severity_acres != null && (
+          <>
+            {' '}
+            {fmt(check.interior_acres)} of {fmt(check.high_severity_acres)} high-severity acres, pooled.
+          </>
+        )}
+      </p>
+      {check.note && <p className="validation-small">{check.note}</p>}
+    </div>
+  )
+}
 
 function Check({ label, check }: { label: string; check: AcreageCheck }) {
   const v = verdict(check)
@@ -143,13 +194,26 @@ export function ValidationView({
     <section className="validation" aria-labelledby="validation-title">
       <div className="validation-head">
         <p className="caps">Validation</p>
-        <h3 id="validation-title">Against CAL FIRE's own total</h3>
+        <h3 id="validation-title">Checked against published figures</h3>
+      </div>
+
+      {validation?.interior_crosscheck && <InteriorCheck check={validation.interior_crosscheck} />}
+
+      <div className="validation-head">
+        <h4 className="caps">Against CAL FIRE's own total</h4>
         {roll && (
           <span className="validation-coverage" data-coverage={roll.coverage}>
             {coverageLabel(roll.coverage, roll.coverage_fraction)}
           </span>
         )}
       </div>
+      <p className="detail">
+        Not like-for-like, and not expected to match. The published figure is sized to reforest{' '}
+        {benchmark.scope_note}
+        {roll && roll.fires_included.length > 0 && (
+          <> A roll-up of {roll.fires_included.length} fires' orders sits far below it by design.</>
+        )}
+      </p>
 
       <div className="validation-totals">
         <div className="validation-total">
@@ -210,7 +274,7 @@ export function ValidationView({
         <strong>Known overestimate.</strong> {benchmark.known_overestimate}
       </p>
       <p className="validation-small">
-        The published figure is sized to reforest {benchmark.scope_note} Source: {benchmark.source_ref}.
+        Source: {benchmark.source_ref}.
       </p>
 
       <p className="validation-footnote" id="validation-footnote">

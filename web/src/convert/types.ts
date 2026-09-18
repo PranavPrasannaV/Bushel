@@ -201,3 +201,17 @@ export interface Order {
   assumptions_used: AssumptionUse[]
   finding: Finding | null
 }
+
+/** reference/validation.json interior_crosscheck: pooled interior share beside Baker's 21.9%. */
+export interface InteriorCrosscheck {
+  stage: string
+  threshold_m: number
+  reference_fraction: number
+  reference_source: string
+  computed_fraction: number | null
+  difference_pts: number | null
+  interior_acres?: number
+  high_severity_acres?: number
+  fires: { id: string; interior_acres: number; high_severity_acres: number }[]
+  note?: string
+}

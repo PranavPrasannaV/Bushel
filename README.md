@@ -79,7 +79,7 @@ Add it up: **roughly eighteen months from placing an order to having something y
 
 ### The fire
 
-Take the **Camp Fire** — Butte County, ignited 8 November 2018, **153,335 acres**. Those figures come straight from CAL FIRE's own perimeter record, which is one of the live data sources this project reads.
+Take the **North Complex** — discovered 17 August 2020, **318,797 acres** inside its perimeter. That figure comes straight from CAL FIRE's own perimeter record, one of the agency sources the pipeline reads when it builds a fire.
 
 ### What she does today
 
@@ -95,13 +95,15 @@ She clicks the fire.
 
 **Then it reads how badly each acre burned**, and keeps only the high-severity ground — the acres where the trees actually died.
 
-**Then the moment that matters.** It measures inward from every edge where living forest survived, and lights up the interior — the acres beyond seeding range. *They are not the whole fire.* Usually they're a minority of it. This is the difference between ordering seed for 153,335 acres and ordering it for the acres that genuinely need it.
+**Then the moment that matters.** It measures inward from every edge where living forest survived, and lights up the interior — the acres beyond seeding range. *They are not the whole fire.* Usually they're a minority of it. For the North Complex, 38,436 acres of retained conifer forest burned at high severity, and **13,507** of them are more than 90 m from a living seed tree. This is the difference between ordering seed for a 318,797-acre fire and ordering it for the acres that genuinely need it.
 
 **Then it splits the fire.** Not one job — one job per seed zone per 500-foot elevation band, with species assigned from what was growing there before the fire. The tool refuses to merge those cells together to make the number tidier. That refusal has a name in this codebase: **Provenance Lock**.
 
 **Then it converts, showing its work.** Acres to trees. Trees to pounds of seed. Pounds to cone bushels. Pounds to dollars, off the seed price list. Every single factor displayed next to the CAL FIRE table it came from — and three of them flagged in amber, for a reason that's the most interesting thing in this project (Part 4).
 
-**And it is checked against the state's own number.** Bushel's roll-up across fires, beside California's 55,978.
+**And it ends on an order.** For the North Complex at default factors: **637 bushels of cones, 575 lb of clean seed, $182,072** at the state's seed prices, enough for about 2.7 million trees at 200 per acre. Two species (knobcone and lodgepole pine) have no published seed price, so their lines show trees and say so instead of borrowing a figure.
+
+**And it is checked against published figures.** First against Baker's seed-limited share (below), then against California's statewide 55,978.
 
 ---
 
@@ -111,7 +113,9 @@ Anyone can build a calculator that produces a number. The question is whether th
 
 **Bushel reimplements CAL FIRE's own published method rather than inventing one.** The formula is lifted verbatim from the state's 2025 Assessment of Needs, which is included in this repo as a PDF.
 
-**Which means it can be checked against the state's own answer.** Run it across the fires in the state's period and compare the total to 55,978, stated as a percentage difference with its likely causes. The two are not expected to match: the state's figure also covers insect and disease mortality and timber harvest, and Local Responsibility Area land. That's not a claim of accuracy — it's a comparison anyone can check in public.
+**The like-for-like check comes first.** Baker (2023) measured the share of high-severity burn area more than 90 m from a live seed edge: 21.9%, averaged over ~56M ha. Bushel computes the same quantity pixel by pixel. Pooled over its eight California fires, it gets **23.7%** (29,329 of 123,966 high-severity acres): **1.8 points** from the published figure, by an independent computation. Eight fires are not 56M ha, so that is corroboration, not proof, and the 21.9% is never used as a multiplier.
+
+**Then it is checked against the state's own answer.** Run it across the fires in the state's period and compare the total to 55,978, stated as a percentage difference with its likely causes. The two are not expected to match: the state's figure also covers insect and disease mortality and timber harvest, and Local Responsibility Area land. That's not a claim of accuracy — it's a comparison anyone can check in public.
 
 **There are upstream checks too**, so early stages can be verified before the conversion chain is even involved:
 

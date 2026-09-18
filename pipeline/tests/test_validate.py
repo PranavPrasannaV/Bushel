@@ -19,6 +19,7 @@ from bushel.validate import (
     build_result,
     fire_bushels,
     high_severity_check,
+    interior_crosscheck,
     parse_period,
     rollup,
 )
@@ -73,7 +74,9 @@ def test_periods_come_from_the_published_benchmark():
     assert parse_period(BENCH["high_severity_period"]) == (2018, 2023)
     shipped = WEB_DATA / "reference" / "benchmark.json"
     if shipped.exists():
-        assert json.loads(shipped.read_text())["high_severity_period"] == "2018-2023"
+        assert (
+            json.loads(shipped.read_text(encoding="utf-8"))["high_severity_period"] == "2018-2023"
+        )
 
 
 def test_high_severity_comparison_never_includes_2024_fires():
@@ -211,7 +214,7 @@ def test_shipped_validation_json_is_consistent_if_present():
     path = WEB_DATA / "reference" / "validation.json"
     if not path.exists():
         pytest.skip("validation.json not generated yet")
-    shipped = json.loads(path.read_text())
+    shipped = json.loads(path.read_text(encoding="utf-8"))
     assert_attributed(shipped, BENCH)
 
 
@@ -227,3 +230,43 @@ def test_conifer_filter_reports_unfiltered_and_two_species_but_compares_single_d
     gaps = attributed_gap(acres, high, rollup([], F, BENCH, BURNED_2024), F, None, None)
     assert any(g.startswith("Conifer definition") for g in gaps)
     assert not any("No conifer-forest filter on the statewide" in g for g in gaps)
+
+
+def with_interior(fid: str, interior: float, high: float) -> dict:
+    return {
+        "fire": {"id": fid, "year": 2020},
+        "retained": {"high_severity_acres": high},
+        "planting": {"interior_acres": interior},
+    }
+
+
+def test_interior_crosscheck_pools_acres_rather_than_averaging_fractions():
+    # 10/100 and 90/300 average to 20% per fire, but pool to 100/400 = 25%.
+    c = interior_crosscheck([with_interior("a", 10, 100), with_interior("b", 90, 300)])
+    assert c["computed_fraction"] == 0.25
+    assert c["reference_fraction"] == 0.219
+    assert c["difference_pts"] == pytest.approx(3.1)
+    assert c["threshold_m"] == 90
+    assert "never a multiplier" in c["note"]
+
+
+def test_interior_crosscheck_with_no_fires_states_nothing_rather_than_zero():
+    c = interior_crosscheck([])
+    assert c["computed_fraction"] is None and c["fires"] == []
+
+
+def test_shipped_interior_crosscheck_matches_the_shipped_fire_records():
+    path = WEB_DATA / "reference" / "validation.json"
+    shipped = (
+        json.loads(path.read_text(encoding="utf-8")).get("interior_crosscheck")
+        if path.exists()
+        else None
+    )
+    if not shipped:
+        pytest.skip("validation.json has no interior cross-check yet")
+    records = [
+        json.loads(p.read_text(encoding="utf-8"))
+        for p in sorted((WEB_DATA / "fires").glob("*.json"))
+        if p.name != "index.json"
+    ]
+    assert shipped["computed_fraction"] == interior_crosscheck(records)["computed_fraction"]

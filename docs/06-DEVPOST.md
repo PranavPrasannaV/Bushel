@@ -90,8 +90,12 @@ severity data it had, and Bushel reads severity from the same source.
      from another source.
    - The order exports as JSON and CSV. The export includes every factor's source and status, and the
      default and current value of each assumption.
-7. **The benchmark.** A validation panel shows Bushel's roll-up next to CAL FIRE's 55,978 bushels of
-   cones, with the difference and a list of the most likely causes. Bushel's roll-up at the default
+7. **The benchmark.** The validation panel leads with the like-for-like check: pooled over the eight
+   demo fires, the seed-limited interior is 23.7% of high-severity acres (29,329 of 123,966), against
+   Baker's published 21.9%, a difference of 1.8 points. Eight fires are not Baker's ~56M ha, so this
+   corroborates rather than proves, and 21.9% is still never a multiplier. Below it, the panel shows
+   Bushel's roll-up next to CAL FIRE's 55,978 bushels of cones, labelled not like-for-like, with the
+   difference and a list of the most likely causes. Bushel's roll-up at the default
    factors is 1,334.8 bushels of cones over the eight demo fires (Camp, Carr, North Complex, Creek,
    Caldor, Dixie, Mosquito, McKinney), -97.6% against 55,978. The panel marks this partial and gives
    no pass or fail: those fires hold 21.8% of the burned SRA acreage in 2018–2023, and 55,978 also
