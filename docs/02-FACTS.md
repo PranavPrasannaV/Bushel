@@ -17,6 +17,41 @@ Source: *2025 Assessment of Needs for the State Seed Bank*, CAL FIRE Reforestati
 - Collection priority index: >100 bushels = priority 1 (red); 11–100 = priority 2 (orange); ≤10 = priority 3 (yellow).
 - Uses **MTBS** for high-severity burn patches, wildfires ≥1,000 acres.
 
+### Planting density — 200 trees per acre (published)
+
+Verbatim, AON §E: *"An average stocking requirement of 200 trees per acre (TPA) was applied to
+targeted reforestation acres for all species found above. This number was derived as an
+acceptable average carrying capacity for forestlands relative to CA Forest Practice Rule (FPR)
+requirements that can range between 50 and 200 TPA depending on location and forest management
+prescriptions ... with the assumption of each acre needing maximum stocking in the worst-case
+hypothetical scenario."*
+
+**Carry the caveat.** 200 TPA is a maximum-stocking worst case, not a point estimate. A "180
+TPA" figure circulating in search results is **not in the document** — do not use it.
+
+### Vegetation source — LEMMA 2023.1
+
+Verbatim: *"we used most recent vegetation data hosted by the Landscape Ecology, Modeling,
+Mapping, and Analysis (LEMMA) program at Oregon State University ... This data maps current
+vegetation type, an attribute that identifies up to two dominant tree species based on basal
+area."* The 2025 edition switched to LEMMA from USFS CalVeg. **Not LANDFIRE, not CWHR/FVEG.**
+
+### Species of interest — 15, of which 11 have conversion factors
+
+Big-Cone Douglas Fir · Coast Redwood · Coulter Pine · Douglas Fir · Giant Sequoia · Incense
+Cedar · Jeffrey Pine · **Knobcone Pine** · **Lodgepole Pine** · Ponderosa Pine · Red Fir ·
+**Subalpine Fir** · Sugar Pine · **Western White Pine** · White Fir
+
+The four in bold are absent from Table 2 and fall under the agency's stated fallback of
+**1 bushel = 1 lb**. Every line relying on it must be marked.
+
+### Severity data currency
+
+The AON states *"2023 is the most recent year of tree mortality and wildfire severity data
+available at the time of publication."* Severity mapping runs 1–2 years behind, so 2025–2026
+fires have none. The window 2018–2024 was chosen as *"more recent (and larger) fires that still
+have reforestation potential."*
+
 ### Table 1 — disturbance statistics (see `data/aon_disturbance_table1.csv`)
 
 **Total 2018–2024: 1,507,830 acres burned on non-federal conifer forestland, 359,182 at high severity, 22.5 million trees lost to insects and disease.**

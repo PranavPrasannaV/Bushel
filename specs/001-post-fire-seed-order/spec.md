@@ -172,9 +172,11 @@ the same quantities, cell breakdown, factor sources and unpublished-assumption m
 - **FR-004**: System MUST identify, within the retained area, the acres that lie beyond
   natural conifer seeding distance from surviving forest, and MUST base the order on those
   acres only.
-- **FR-005**: System MUST use the published estimate least favourable to the conclusion that
-  planting is required as its default for the proportion of severely burned area that is
-  seed-limited, and MUST state that choice in the interface.
+- **FR-005**: System MUST derive the seed-limited area by computing distance from surviving
+  seed source, using the distance threshold from the published study least favourable to the
+  conclusion that planting is required, and MUST state that threshold and its source in the
+  interface. System MUST NOT additionally scale the result by that study's reported area
+  fraction; the fraction is a cross-check on the computed result, not a multiplier.
 - **FR-006**: System MUST NOT offer a control that changes the headline quantity by switching
   between competing scientific estimates during a demonstration; alternative estimates MAY be
   inspectable but MUST NOT be the primary result.
@@ -300,20 +302,26 @@ the same quantities, cell breakdown, factor sources and unpublished-assumption m
 - **The deliverable is an interactive application** a user operates directly, because the
   primary result is spatial and must be legible at a glance. A batch report generator would not
   satisfy SC-006.
-- **Fire selection is from a list or map of California fires** drawn from published incident
-  and perimeter records, covering both active incidents and historical perimeters. Users do not
-  draw or upload their own perimeters in this version.
-- **Planting density (trees per acre) is treated as a disclosed assumption**, not a published
-  fact. No authoritative per-site density has been verified, so it carries a default, is marked
-  as an assumption, and is adjustable — the same treatment the constitution requires for the
-  agency's three unpublished nursery factors.
-- **Species allocation from pre-fire vegetation uses a disclosed lookup.** The published
-  assessment does not specify its own mapping in reproducible detail, so the mapping used here
+- **Fire selection is from a curated list of California fires** within the window where burn
+  severity data exists and the benchmark applies. Severity mapping runs one to two years behind
+  the fire season, so currently burning fires are out of scope for this version; ordering seed
+  years after a fire is the normal case, so this costs nothing operationally. Users do not draw
+  or upload their own perimeters.
+- **Planting density is published, not assumed.** Phase 0 research located the figure in the
+  agency's own method: a stocking requirement applied uniformly, derived from the state's forest
+  practice range, and explicitly framed by the agency as a maximum-stocking worst case. It is
+  therefore a cited factor rather than a disclosed assumption — but the worst-case framing MUST
+  be stated, or an upper bound is silently presented as a point estimate. It remains adjustable
+  across the published range.
+- **Species allocation uses the same vegetation source the benchmark was computed from**, which
+  carries dominant tree species directly rather than requiring an interpretive step from a
+  vegetation type name. Where allocation within a cell still requires judgement, that judgement
   is stated in the interface rather than presented as the agency's.
-- **Species coverage targets the eleven species in the published conversion table**, with a
-  documented fallback for species absent from it, matching the agency's own substitution rule.
-  A reduced set of four species is acceptable for an initial release provided the fallback
-  behaviour and the cell partition are unaffected.
+- **Species coverage targets the fifteen conifer species of interest** named in the published
+  assessment. Only eleven have published cones-to-seed conversion factors; the remaining four
+  use the agency's own stated fallback, and every line relying on it is marked. A reduced set
+  of four species is acceptable for an initial release provided the fallback behaviour and the
+  cell partition are unaffected.
 - **No user accounts, no persistence between sessions, and no personal data.** Exports are the
   only durable output.
 - **Results are advisory.** The tool produces an order for a professional to review and submit;

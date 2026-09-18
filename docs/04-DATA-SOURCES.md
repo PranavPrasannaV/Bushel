@@ -88,9 +88,20 @@ MTBS maps high-severity burn patches for fires ≥1,000 acres, 30 m, 1984–pres
 
 ---
 
-## 6. Pre-fire vegetation — LANDFIRE
+## 6. Pre-fire vegetation — LEMMA 2023.1
 
-LANDFIRE Existing Vegetation Type (EVT). Used to allocate species within each seed-zone × elevation cell.
+**LEMMA** (Landscape Ecology, Modeling, Mapping and Analysis, Oregon State University),
+**version 2023.1**. Maps current vegetation type, carrying **up to two dominant tree species
+by basal area** — which is the attribute the species allocation actually needs.
+
+**Use this and nothing else.** The AON's 2025 edition switched from USFS CalVeg to LEMMA
+specifically so its whole area of interest derived from one vegetation source. A different
+layer guarantees divergence from the total we are checked against.
+
+Earlier drafts of this file named LANDFIRE EVT. That was a guess and it was wrong: EVT gives a
+vegetation *type name* and reaching species from it requires an uncited interpretive step.
+CWHR/FVEG names dominant species and is CAL FIRE's own layer, but the agency did not use it
+here.
 
 ---
 
