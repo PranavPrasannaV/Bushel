@@ -167,7 +167,9 @@ Every entry in `unpublished` MUST render visually distinct from `published` and 
 {
   "total_bushels": 55978,
   "unit": "bushels of conifer cones",
-  "period": "2018-2024",
+  "acres_burned_period": "2018-2024",
+  "high_severity_period": "2018-2023",
+  "period_note": "The two published totals cover different windows. AON Table 1 carries no 2024 severity value, and the six years 2018-2023 sum to exactly 359,182. Compare each figure against its own period; comparing either against the wrong window is a defect, not a tolerance failure.",
   "jurisdiction": "Non-federal (SRA and LRA)",
   "scope_note": "25% of productive conifer forest on non-federal land, statewide - not 25% of burned acres. Driven by wildfire plus insect/disease mortality plus timber harvest.",
   "acres_burned": 1507830,

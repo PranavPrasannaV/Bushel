@@ -138,17 +138,19 @@ Asserts, as code rather than convention:
 ## Scenario 8 — It reproduces the state's own total (US3, SC-004, SC-005)
 
 ```bash
-cd pipeline && python -m seedshed.validate --period 2018-2024
+cd pipeline && python -m seedshed.validate   # periods are per-figure; see benchmark.json
 ```
 
 **Expected output**: computed total in bushels beside the published **55,978**, with the percentage difference stated.
 
 Upstream checks first, so early stages are verifiable independently of the conversion chain:
 
-| Stage | Published | Tolerance |
-|---|---|---|
-| Acres burned, non-federal conifer forestland | 1,507,830 | within 10% |
-| High-severity acres | 359,182 | within 10% |
+| Stage | Published | Period | Tolerance |
+|---|---|---|---|
+| Acres burned, non-federal conifer forestland | 1,507,830 | **2018–2024** | within 10% |
+| High-severity acres | 359,182 | **2018–2023** | within 10% |
+
+**The two figures cover different windows.** AON Table 1 has no 2024 severity value, and 2018–2023 sums to exactly 359,182. The 2024 acreage alone is 142,456 — **9.45%** of the acres-burned total — so comparing a 2018–2023 computation against 1,507,830 sits at the edge of the tolerance before any pipeline error exists.
 
 If the totals diverge, the output MUST name the assumptions most plausibly responsible rather than report the number alone. Two known contributors are documented in [research.md](./research.md): CAL FIRE's internal timberland boundary may not be publicly reproducible, and the AON itself does not exclude privately-owned industrial land and so overestimates need.
 

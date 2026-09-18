@@ -55,9 +55,11 @@ Two deliverables separated by the precompute boundary, per plan.md:
 - [ ] T014 Implement the artifact writer in `pipeline/src/seedshed/build.py` emitting the schemas in `contracts/pipeline-output.md`
 - [ ] T015 Implement the contract invariant validator in `pipeline/src/seedshed/build.py` — acreage sums, interior ≤ high severity, cell species sums, unique cell ids, valid species — failing the build rather than emitting a violating artifact
 - [ ] T016 [P] Write invariant tests in `pipeline/tests/test_invariants.py` covering every guarantee listed in `contracts/pipeline-output.md`
-- [ ] T017 Write `reference/benchmark.json` from the verified figures in `docs/02-FACTS.md` — 55,978 bushels, 2018–2024, non-federal, 1,507,830 acres, 359,182 high severity, plus the scope note, the known-overestimate caveat and the agency self-contradiction note
+- [ ] T017 Write `reference/benchmark.json` from the verified figures in `docs/02-FACTS.md` — 55,978 bushels, non-federal, plus the scope note, the known-overestimate caveat and the agency self-contradiction note.
+  **Carry a period per figure, not one period for all**: acres burned 1,507,830 covers **2018–2024**; high-severity 359,182 covers **2018–2023 only** — AON Table 1 has no 2024 severity value, and the six years 2018–2023 sum to exactly 359,182. Record `acres_burned_period` and `high_severity_period` separately and state the asymmetry in a `period_note`
 - [ ] T018 Build the web app shell in `web/src/App.tsx` that loads `fires/index.json` and `reference/factors.json` with no backend call
-- [ ] T019 **GATE** Run the `design-stack` skill and commit a design system before any component work — Layer 1 is not optional (plan.md Implementation gates; Design is a sixth of the rubric)
+- [ ] T019 **GATE** Run the `design-stack` skill and commit a design system before any component work — Layer 1 is not optional (plan.md Implementation gates; Design is a sixth of the rubric).
+  **Exit criterion**: `web/src/styles/tokens.css` exists and is committed, containing a named color scale, a type scale, and a spacing scale. No file under `web/src/components/` may be created before it.
 
 ---
 
@@ -79,7 +81,8 @@ Two deliverables separated by the precompute boundary, per plan.md:
 - [ ] T027 [US1] Wire the per-fire build in `pipeline/src/seedshed/build.py` producing `fires/{id}.json` and `fires/index.json`
 - [ ] T028 [US1] Emit `fires/{id}.geojson` in `pipeline/src/seedshed/build.py` with `layer` tags for perimeter, retained, high_severity and cell
 - [ ] T029 [US1] Emit `reference/factors.json` in `pipeline/src/seedshed/build.py` from the registries in T009–T012
-- [ ] T030 [US1] Select and build the demo fire set in `pipeline/src/seedshed/build.py` — California fires from 2018–2023 only, each stamped with `perimeter_source_date`
+- [ ] T030 [US1] Select and build the demo fire set in `pipeline/src/seedshed/build.py` — California fires from 2018–2023 only (the MTBS severity window), each stamped with `perimeter_source_date`.
+  **Separately, ingest 2024 perimeters for the acreage check only**: 2024 contributes 142,456 acres, **9.45% of the published acres-burned total**, so omitting it puts SC-005 at the edge of its own 10% tolerance before any pipeline error exists. Perimeters need no severity raster, so this costs one extra fetch and no new stage
 
 ### Web — conversion
 
@@ -121,6 +124,7 @@ Two deliverables separated by the precompute boundary, per plan.md:
 - [ ] T052 [US2] Render the interior as the visually dominant layer in `web/src/components/BurnMap.tsx` — distinct from the rest of the burn, legible within 10 seconds (SC-006)
 - [ ] T053 [US2] Display the threshold statement in `web/src/components/BurnMap.tsx` — 90 m, Baker (2023), the published estimate least favourable to this conclusion (FR-005)
 - [ ] T054 [P] [US2] Write the interior browser test in `web/tests/e2e/interior.spec.ts` (quickstart Scenario 5)
+- [ ] T055 [US2] Write a control-absence test in `web/tests/no-estimate-toggle.test.ts` asserting **no user-facing control mutates `threshold_m` or `baker_reference_fraction`** — FR-006 is a negative requirement implementation can silently violate, and T053 renders the threshold statement, which is exactly where a toggle gets added
 
 **Checkpoint**: The order now covers only acres that will not regenerate unaided, and the division is the primary visual.
 
@@ -132,12 +136,12 @@ Two deliverables separated by the precompute boundary, per plan.md:
 
 **Independent test**: Run the calculation across the benchmark period and jurisdiction, and compare the aggregate to the published figure.
 
-- [ ] T055 [US3] Implement upstream acreage checks in `pipeline/src/seedshed/validate.py` — computed versus published acres burned and high-severity acres, within 10% (FR-020, SC-005)
-- [ ] T056 [US3] Implement the benchmark roll-up in `pipeline/src/seedshed/validate.py` aggregating per-fire bushels across 2018–2024 and reporting the percentage difference from 55,978
-- [ ] T057 [US3] Implement gap attribution in `pipeline/src/seedshed/validate.py` naming the assumptions most plausibly responsible, including the two documented contributors — CAL FIRE's internal timberland boundary and the AON's non-exclusion of privately-owned industrial land (FR-023, research.md Residual risks)
-- [ ] T058 [US3] Report partial coverage as partial in `pipeline/src/seedshed/validate.py` rather than suppressing the comparison
-- [ ] T059 [P] [US3] Write validation tests in `pipeline/tests/test_validate.py` asserting the comparison always carries attribution, never a bare number
-- [ ] T060 [US3] Build the validation view in `web/src/components/Validation.tsx` showing the computed total beside 55,978 with the difference and its attributed causes
+- [ ] T056 [US3] Implement **period-aware** upstream acreage checks in `pipeline/src/seedshed/validate.py` — acres burned compared over **2018–2024**, high severity over **2018–2023**, each within 10% of its own published figure. Comparing either against the wrong window is a defect, not a tolerance failure (FR-020, SC-005, analysis F1)
+- [ ] T057 [US3] Implement the benchmark roll-up in `pipeline/src/seedshed/validate.py` aggregating per-fire bushels across the **severity-covered window (2018–2023)** and reporting the percentage difference from 55,978, stating on the comparison that the published total's severity input stops at 2023
+- [ ] T058 [US3] Implement gap attribution in `pipeline/src/seedshed/validate.py` naming the assumptions most plausibly responsible, including the two documented contributors — CAL FIRE's internal timberland boundary and the AON's non-exclusion of privately-owned industrial land (FR-023, research.md Residual risks)
+- [ ] T059 [US3] Report partial coverage as partial in `pipeline/src/seedshed/validate.py` rather than suppressing the comparison
+- [ ] T060 [P] [US3] Write validation tests in `pipeline/tests/test_validate.py` asserting the comparison always carries attribution, never a bare number
+- [ ] T061 [US3] Build the validation view in `web/src/components/Validation.tsx` showing the computed total beside 55,978 with the difference and its attributed causes
 
 **Checkpoint**: The output is checkable against a state agency's own published total, in its own units.
 
@@ -149,9 +153,9 @@ Two deliverables separated by the precompute boundary, per plan.md:
 
 **Independent test**: Produce an order, export it, and confirm quantities, cell breakdown, factor sources and unpublished markings are all preserved.
 
-- [ ] T061 [US4] Implement export in `web/src/export/exportOrder.ts` preserving per-cell breakdown, each factor's `source_ref` and `status`, and `used_fallback` per line
-- [ ] T062 [US4] Record both `default_value` and `current_value` for every assumption in `web/src/export/exportOrder.ts` (FR-027)
-- [ ] T063 [P] [US4] Write export tests in `web/tests/export.test.ts` — an export from defaults is distinguishable from an adjusted one by its contents alone
+- [ ] T062 [US4] Implement export in `web/src/export/exportOrder.ts` preserving per-cell breakdown, each factor's `source_ref` and `status`, and `used_fallback` per line
+- [ ] T063 [US4] Record both `default_value` and `current_value` for every assumption in `web/src/export/exportOrder.ts` (FR-027)
+- [ ] T064 [P] [US4] Write export tests in `web/tests/export.test.ts` — an export from defaults is distinguishable from an adjusted one by its contents alone
 
 **Checkpoint**: All four user stories complete.
 
@@ -159,13 +163,14 @@ Two deliverables separated by the precompute boundary, per plan.md:
 
 ## Phase 7: Polish & Cross-Cutting Concerns
 
-- [ ] T064 Verify every edge case in spec.md produces a stated finding in `web/src/components/OrderSummary.tsx` — no errors, no blank results, no silently zeroed quantities (SC-009)
-- [ ] T065 Surface the AON's cones-versus-seed self-contradiction in `web/src/components/Validation.tsx` — the agency's own document disagrees with itself and we follow its methodology (FR-023)
-- [ ] T066 **GATE** Audit all shipped copy against `docs/03-DO-NOT-CLAIM.md` — UI strings, README, and the writeup. Principle I is non-negotiable and excluded from the Complexity Tracking exception path
-- [ ] T067 [P] Verify every displayed figure exists in `docs/02-FACTS.md` with a source (FR-022)
-- [ ] T068 [P] Measure assumption-adjustment recompute time in `web/tests/perf.test.ts` — under 100 ms for a fire with up to ~2,000 cell-species lines
-- [ ] T069 Run the full validation suite in [quickstart.md](./quickstart.md) and confirm every scenario passes
-- [ ] T070 Write the Devpost submission page declaring what was built before versus during the event, per the rules in `docs/01-EVENT.md`
+- [ ] T065 Verify every edge case in spec.md produces a stated finding in `web/src/components/OrderSummary.tsx` — no errors, no blank results, no silently zeroed quantities (SC-009)
+- [ ] T066 Surface the AON's cones-versus-seed self-contradiction in `web/src/components/Validation.tsx` — the agency's own document disagrees with itself and we follow its methodology (FR-023)
+- [ ] T067 **GATE** Audit all shipped copy against `docs/03-DO-NOT-CLAIM.md` — UI strings, README, and the writeup. Principle I is non-negotiable and excluded from the Complexity Tracking exception path.
+  **Also audit the two exclusions**: confirm no module, dependency or screen reads seed availability, nursery inventory or purchasable supply (FR-025, Constitution IV), and confirm the app has no accounts, no authentication and stores no personal data (FR-026)
+- [ ] T068 [P] Verify every displayed figure exists in `docs/02-FACTS.md` with a source (FR-022)
+- [ ] T069 [P] Measure assumption-adjustment recompute time in `web/tests/perf.test.ts` — under 100 ms for a fire with up to ~2,000 cell-species lines
+- [ ] T070 Run the full validation suite in [quickstart.md](./quickstart.md) and confirm every scenario passes
+- [ ] T071 Write the Devpost submission page declaring what was built before versus during the event, per the rules in `docs/01-EVENT.md`
 
 ---
 
@@ -189,7 +194,7 @@ Phase 7 Polish
 
 **Story independence**: US1 is fully deliverable alone. US2 refines US1's input acreage from high-severity to seed-limited interior. US3 depends on US1 producing orders to aggregate. US4 depends on US1 producing an order to export. US2, US3 and US4 do not depend on each other.
 
-**T019 blocks all component work** (T036–T045, T052–T054, T060). The design system comes before components, not after.
+**T019 blocks all component work** (T036–T045, T052–T054, T061). The design system comes before components, not after.
 
 ---
 
@@ -203,7 +208,7 @@ Phase 7 Polish
 
 **Phase 3 cross-cutting** — the pipeline block (T020–T030) and the web conversion block (T031–T035) touch different trees and can proceed in parallel once the contract in `contracts/pipeline-output.md` is fixed. That is the point of the precompute boundary.
 
-**Phase 7** — T067 and T068 are independent.
+**Phase 7** — T068 and T069 are independent.
 
 ---
 

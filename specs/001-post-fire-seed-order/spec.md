@@ -284,9 +284,10 @@ the same quantities, cell breakdown, factor sources and unpublished-assumption m
 - **SC-004**: Aggregating the tool's per-fire results across the benchmark's period and
   jurisdiction produces a total that can be stated as a percentage difference from the state's
   published figure, with the unpublished assumptions responsible for the gap identified.
-- **SC-005**: Retained acreage and severely burned acreage computed for the benchmark period
-  fall within 10% of the corresponding published figures, verifying the early stages
-  independently of the conversion chain.
+- **SC-005**: Retained acreage and severely burned acreage fall within 10% of the
+  corresponding published figures, **each compared over its own published period** — the two
+  benchmark totals do not cover the same window — verifying the early stages independently of
+  the conversion chain.
 - **SC-006**: A first-time viewer can identify which acres will not regenerate naturally, and
   distinguish them from the rest of the burn, within 10 seconds of the result appearing.
 - **SC-007**: Orders spanning multiple seed zones or elevation bands are always issued as
