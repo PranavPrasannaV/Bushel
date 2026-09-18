@@ -82,7 +82,7 @@ Put this in the writeup as a footnote — *the agency's own document disagrees w
 
 Source: *Seed and Seedlings Terms of Sale and Ordering Process*, CAL FIRE Reforestation Services Program, L.A. Moran Reforestation Center (LAMRC), Davis CA. Local copy: `reference/cal_fire_terms_of_sale_feb2026.pdf` (10 pp).
 
-### The deadline (this is what passes the gate)
+### The deadline
 
 - Seed order form open **1 September – 31 December**.
 - **Sugar Pine, Red Fir and White Fir must be ordered by 31 October** due to longer stratification needs.
@@ -130,7 +130,7 @@ CAL FIRE matches orders *"with seeds from the same seed zone and elevation as th
 
 ### The counter-argument — goes inside the product
 
-**Baker 2023, *Climate*** (~56M ha analysed): seed-limited interior area averages only **21.9%** of high-severity burn area, arguing regeneration failure is overstated. Single-author, MDPI, minority position — and entirely quotable by a judge.
+**Baker 2023, *Climate*** (~56M ha analysed): seed-limited interior area averages only **21.9%** of high-severity burn area, arguing regeneration failure is overstated. Single-author, MDPI, minority position — the strongest published counter-argument, which is why Bushel adopts its threshold.
 
 **The 90 m threshold.** Verbatim, abstract (verified 2026-09-17 via FRAMES catalog 68660; MDPI blocks automated fetch): *"The vulnerable interior area averaged only 21.9% of total high-severity fire area, as 78.1% of burned area was within 90 m of live seed sources where successful tree regeneration is likely."* Scope: ~56 million ha, 11 western US states, 2000–2020. Citation: Baker, W.L. 2023. *Climate* 11(11):214.
 

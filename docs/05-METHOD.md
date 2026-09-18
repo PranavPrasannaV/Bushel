@@ -36,7 +36,7 @@ fire perimeter (WFIGS active, or FRAP historic polygon)
   │       Euclidean distance transform inward from high-severity patch edges
   │       threshold 90 m (Baker 2023) — least-favourable published estimate
   │       21.9% is a CROSS-CHECK on the computed fraction, NEVER a multiplier
-  │       ** THIS IS THE DEMO PEAK — the interior lights up **
+  │       ** the visual centrepiece: the interior lights up **
   │
   ├─4─ PARTITION: 85 seed zones × 500-ft elevation bands ──► cells
   │       species allocated per cell from LEMMA 2023.1 pre-fire vegetation

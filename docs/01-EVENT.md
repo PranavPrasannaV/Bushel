@@ -1,7 +1,7 @@
 # NextStep Hacks 2026 — event constraints
 
 Devpost: https://nextstep2026.devpost.com
-Organiser: HackAlphaX. Judges listed only as "HackAlphaX Team" — no bios, so no judge-bio arbitrage.
+Organiser: HackAlphaX. Judges listed as "HackAlphaX Team".
 
 ## Hard facts
 
@@ -39,7 +39,7 @@ Bushel's writeup should hit its clauses by name: **protect ecosystems** (forest 
 
 ## What this rubric means for the build
 
-**There is no Impact criterion and no Feasibility criterion.** Business model, market size, who pays, and how many people it helps all score **zero**. Do not spend video seconds on them.
+**There is no Impact criterion and no Feasibility criterion.** Business model, market size, who pays, and how many people it helps all score **zero**, so the effort goes into the product itself.
 
 The scoring weight sits on **Originality** (has this been done before) and **Technology** (did it make you go wow). Those two are what the build must serve.
 

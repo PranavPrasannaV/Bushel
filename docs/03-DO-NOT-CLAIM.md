@@ -38,7 +38,7 @@ Six claims died during idea selection because nobody asked what a number was act
 - ❌ "Seed *has to* match the zone and elevation." CAL FIRE's own Terms of Sale permit *"the most-suitable alternative according to the Climate-Adapted Seed Tool."* Write **"is matched to."**
 - ❌ **"Seed transfer zones are species-specific."** False in both jurisdictions — California is one grid of 85 zones (Buck 1970), federal Bower is also a single generalized map. Species-specific maps exist only in OR/WA. *This was the stated Technology differentiator for four rounds and it was never true.*
 
-## Prior art — name it before a judge finds it
+## Prior art — name it first
 
 - ❌ "Nobody has built a seed bill of materials." **CAL FIRE does, annually.** The honest differentiator is *annual and statewide vs per-fire and on demand*.
 - ❌ "CAL FIRE does this by hand." The AON is a **GIS spatial analysis** — *"developed using a spatial approach… exported for further analytics."* Falsifiable by anyone who opens the PDF.
