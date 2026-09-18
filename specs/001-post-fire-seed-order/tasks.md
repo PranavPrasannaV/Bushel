@@ -174,6 +174,88 @@ Two deliverables separated by the precompute boundary, per plan.md:
 
 ---
 
+## Phase 7b: Post-review changes (done 2026-09-17)
+
+- [X] T072 Lead validation with the like-for-like interior cross-check: `interior_crosscheck()` in `pipeline/src/bushel/validate.py`, shipped in `web/public/data/reference/validation.json`, rendered first in `web/src/components/Validation.tsx` — *pooled 23.7% vs Baker 21.9% (+1.8 pts); the CAL FIRE roll-up is now labelled not like-for-like*
+- [X] T073 Move the flagship example from Camp (12.8 bushels) to North Complex (637 bushels, 575 lb, $182,072) in `README.md` and `docs/06-DEVPOST.md`
+- [X] T074 Live builds: `pipeline/src/bushel/live.py` (FRAP search, per-fire bbox fetch, MTBS match by overlap) and `pipeline/src/bushel/serve.py` (stdlib server: app + `/api`), tests in `pipeline/tests/test_live.py` — *live Caldor matches the pre-built perimeter and retained acres exactly; real-LEMMA numbers not yet verified (T082)*
+- [X] T075 `web/src/components/LiveBuild.tsx`: a Live "Build any fire" panel when the server answers, and a Pre-built label (date and sources) when it does not; the selector groups "Pre-built" and "Built live this session"
+- [X] T076 Compact legend strip for small map panes (`web/src/components/BurnMap.tsx`, `BurnMap.css`); UTF-8 reads and path separators so both suites pass on Windows
+
+---
+
+## Phase 8: Judge-readiness hardening
+
+**Purpose**: The product is met through a link, a video and maybe the repo, by judges working 20–25 Sep with no one present to explain it. See plan.md §Phase 8 for the evidence, principles, cut line and risk register.
+
+**Owner key**: **U** = you (decisions and outward-facing actions), **T** = teammate (holds the data cache and LEMMA), **C** = Claude.
+
+### P0 — the submission is broken without these (finish by 19 Sep 12:00 PDT)
+
+- [ ] T077 **GATE [U]** Remove named competitor intelligence from the repo tree: strip the "Competitive context" section of `docs/01-EVENT.md` down to one neutral line, and keep the named analysis outside the repo. It is also in git history (commits af20b47 and 8f20161), so choose: (a) rewrite history with T's agreement, or (b) publish a fresh repo from a squashed snapshot. Done when a search of the published history for the competitor names and verdicts in the team's private notes returns nothing
+- [ ] T078 **[U]** Make the repository public after T077 (`gh repo edit PranavPrasannaV/Bushel --visibility public --accept-visibility-change-consequences`). The data release stays private. Before flipping: `git grep -n -i -E "api[_-]?key|token|secret|password"` is clean, and README links resolve
+- [ ] T079 [P] **[C]** Deploy `web/` as a static site on Vercel or Cloudflare Pages (serves at the root, so no Vite `base` change): build `npm run build`, output `web/dist`. The site must not depend on `/api`; it shows the Pre-built label. Done when a cold load of the deployed URL shows the first frame within 3 s, and the URL is in `README.md` and `docs/06-DEVPOST.md`
+- [ ] T080 [P] **[C]** Fix the blank map on phones: in `web/src/components/BurnMap.tsx`, the ResizeObserver must call `map.resize()` and refit when the container changes (reproduced at 375×812: the fire draws only after a window resize). At ≤760 px, place the fire selector above the map (`web/src/App.tsx`, `web/src/styles/app.css`). Add `web/tests/e2e/mobile.spec.ts`: at 375×812 the interior is visible without scrolling
+- [ ] T081 **[C]** First frame is the peak: with no `?fire=` parameter, open on the featured fire (North Complex), with the interior reveal running. Sync the selection to `?fire=<id>` for deep links. Order the pre-built list by interior acres, largest first. Add `web/tests/e2e/first-frame.spec.ts`: the interior is drawn within 3 s with no input
+- [ ] T082 **[T]** Verify real live-build numbers with real LEMMA: run `python -m bushel.serve`, then live-build two fires that are not pre-built (e.g. Monument 2021 and one 2023 fire). Record interior acres and bushels in `docs/02-FACTS.md` with the build date. Also live-build Caldor and confirm its record equals `web/public/data/fires/caldor-2021.json` field for field, apart from the id
+- [ ] T083 **[T]** On a fresh clone: pipeline pytest, vitest, and Playwright e2e (13 existing + T080 + T081), all green. The deployed URL shows zero console errors across all fires
+- [ ] T084 [P] **[C]** Six Devpost gallery images from the deployed site: first frame, interior close-up, order summary, factor trail, the amber unpublished factors, and the validation panel. Save to `docs/gallery/`
+- [ ] T085 **[U]** Record the video from `docs/07-VIDEO.md` (4:30 target, 5:00 hard cap), then fill the Devpost video, repo and site fields
+- [ ] T086 **[C]** Write `docs/07-VIDEO.md`: a word-for-word script under 650 words, with on-screen actions and a fallback clip if the live build is slow. Beats:
+  - 0:00 the problem in one scene: a forester, a burned parcel, the 31 Oct order deadline
+  - 0:30 open the site: the interior lights up on North Complex
+  - 1:15 the order: bushels of cones, pounds and dollars, each factor next to its source
+  - 2:00 slide an amber factor: the order recalculates, and the page says why the factor is amber
+  - 2:40 validation: 23.7% vs Baker's 21.9%, then the CAL FIRE total with its scope
+  - 3:20 live: build a fire the viewer could name (terminal + panel)
+  - 4:00 close: "every other entry tells you where to act; Bushel tells you what to order"
+- [ ] T087 **[C]** Fill the prior-work declaration in `docs/06-DEVPOST.md`: the submission window runs 20 Aug 21:00 PDT to 20 Sep 14:00 PDT; ideation ran 16–17 Sep; the first commit is 17 Sep; all code and data builds are from the event. List third-party data and libraries
+- [ ] T088 **[C]** Rewrite `docs/06-DEVPOST.md` to the plain-language standard:
+  - The first line names the category (nobody else is in reforestation seed).
+  - Use the theme's words: protect ecosystems, biodiversity, resilient communities.
+  - One quotable line per technical choice.
+  - A data-sources table with each source's status.
+  - Limits stated before a judge finds them.
+  - Replace every `[fill …]` and `[confirm …]` marker.
+- [ ] T089 **GATE [C]** Re-run the T067 audit against `docs/03-DO-NOT-CLAIM.md` on the final UI copy, README, writeup and video script. Every displayed number traces to `docs/02-FACTS.md` or `validation.json`
+
+### P1 — large score gains once P0 is safe (cut line: 19 Sep 12:00 PDT for T092)
+
+- [ ] T090 **[C]** `pipeline/src/bushel/statewide.py`:
+  - Enumerate MTBS California fires 2018–2023 (the MapServer layer in `fetch.VECTORS["mtbs_perimeters"]`; 257 on 17 Sep).
+  - Match each to its FRAP perimeter by overlap in the same year, not by name.
+  - Build each through the `live.py` path into `web/public/data/fires/`, with static ids `{slug}-{year}`.
+  - Resumable. Writes `data/cache/statewide_manifest.json` with every success, failure and reason, and never aborts the batch on one fire.
+  - Tests in `pipeline/tests/test_statewide.py` (offline, faked services).
+- [ ] T091 [P] **[C]** Geometry budget: a simplify tolerance scaled by fire size, so the largest `.geojson` stays under 3 MB and the whole of `web/public/data` under 60 MB. Enforce it with a size test in `pipeline/tests/test_invariants.py`
+- [ ] T092 **[T]** Run T090 on the machine with the cache (about 2 h at ~30 s a fire); rebuild `fires/index.json`; commit the artifacts and the manifest
+- [ ] T093 **[C]** Fire search over the pre-built index, working offline, in `web/src/components/LiveBuild.tsx`: pre-built hits first, live builds second when the server answers. Replaces scrolling a 250-option select
+- [ ] T094 **[T]** Re-run `python -m bushel.validate` at statewide coverage. The high-severity check gets a real tolerance verdict, the roll-up covers the full window, and the interior cross-check pools every fire. README and Devpost numbers are copied from `validation.json` only
+- [ ] T095 **[C]** A statewide overview frame: every fire's interior, lit at once over California, before the featured fire zooms in. Uses a heavily simplified `web/public/data/statewide.geojson`. Only if T092 completes
+
+### P2 — only with P0 and P1 green
+
+- [ ] T096 [P] **[C]** Code-split MapLibre with a dynamic import, to clear the 500 kB chunk warning; measure first load before and after
+- [ ] T097 [P] **[C]** Add a README "Hard questions" section: why California, why 90 m, why acres burned is −45%, the three unpublished factors, cones versus seed, and prior art (CAST, Seedlot Selection Tool, Climate-Smart Restoration Tool, Regenmapper, Terraware)
+- [ ] T098 [P] **[C]** Add a README "What's next" section: the national extension against Dobrowski et al. 2024 (Bower seed zones, LANDFIRE, PAD-US), and CAL FIRE publishing the three LAMRC factors
+- [ ] T099 **[U]** Rename the local folder `seedshed` to `bushel` (needs the editor closed)
+
+**Explicitly not doing**: the national extension as a feature (two days out, new data layers); a hosted live server (free tiers cannot hold ~1 GB of cache or the memory bursts); any AI or chat surface.
+
+### Phase 8 schedule (deadline 20 Sep 14:00 PDT)
+
+| When (PDT) | Work |
+|---|---|
+| 18 Sep morning | T077–T078 decision and publish · T080 · T081 · T090–T091 · T082 (T) |
+| 18 Sep afternoon | T079 deploy · T083 (T) · start the T092 batch (T) |
+| 18 Sep evening | T086 script · T087–T088 writeup · T093 |
+| 19 Sep 12:00 | **Cut line**: T092 done, or ship what built · T094 (T) |
+| 19 Sep 18:00 | **Feature freeze**: T095 only if already green · T084 images · T089 audit |
+| 20 Sep morning | T085 record the video and fill the Devpost fields |
+| 20 Sep 12:00 | **Submit**, two hours of buffer before the 14:00 close |
+
+---
+
 ## Dependencies
 
 ```
@@ -189,7 +271,11 @@ Phase 5 US3 (P3)             │
     ↓                        │
 Phase 6 US4 (P4) ────────────┘
     ↓
-Phase 7 Polish
+Phase 7 Polish → Phase 7b post-review (done)
+    ↓
+Phase 8 hardening:  T077 → T078 → (T079 ∥ T080 ∥ T081) → T083 → T085
+                    T090 → T092 → T094 → T095
+                    T082 before T085 (the video shows a live build)
 ```
 
 **Story independence**: US1 is fully deliverable alone. US2 refines US1's input acreage from high-severity to seed-limited interior. US3 depends on US1 producing orders to aggregate. US4 depends on US1 producing an order to export. US2, US3 and US4 do not depend on each other.

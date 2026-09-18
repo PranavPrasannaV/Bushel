@@ -48,7 +48,7 @@ Assumption adjustment recomputes and repaints in under 100 ms for a fire with up
 cell-species lines. Pipeline build for the demo fire set completes in a single run without
 manual intervention.
 
-**Constraints**: No backend at demonstration time. No generative or probabilistic component
+**Constraints**: No backend at demonstration time for the deployed site (live builds run through the optional local server `bushel.serve`; see Phase 8). No generative or probabilistic component
 anywhere in the numeric path. Every displayed figure traceable to a recorded primary source.
 Fire selection restricted to 2018–2023, the window where MTBS severity exists and the
 benchmark applies.
@@ -113,7 +113,9 @@ pipeline/
 │   ├── species.py                 # LEMMA 2023.1 dominant-species allocation
 │   ├── factors.py                 # Published factors and unpublished assumptions
 │   ├── build.py                   # Emit artifacts per contracts/pipeline-output.md
-│   └── validate.py                # Benchmark comparison with gap attribution
+│   ├── validate.py                # Benchmark comparison with gap attribution
+│   ├── live.py                    # Build any 2018-2023 fire on request (Phase 8 groundwork)
+│   └── serve.py                   # Local server: app + live-build API
 └── tests/
     ├── test_jurisdiction.py
     ├── test_interior.py
@@ -181,3 +183,71 @@ partition and the Table 2 fallback. Cut nothing from steps 1–3.
   fallbacks.
 - **The AON's own known overestimate** — it does not exclude privately-owned industrial land —
   is a fixed caveat on every benchmark comparison, not a defect to fix.
+
+---
+
+## Phase 8 — Judge-readiness hardening (added 2026-09-18)
+
+All 71 tasks in Phases 1–7 are complete. Phase 8 is about how the product is *met*: a judge clicks a
+link, watches a video of five minutes or less, maybe opens the repo, and scores six unweighted
+criteria. Judging runs 20–25 September, so everything must still work days after submission, with
+no one present to explain it. The tasks are in [tasks.md](./tasks.md) as T077 onward.
+
+### What the field taught us
+
+Evidence from auditing 27 competing repositories and opening the strongest entries' live sites on
+17 September. Named competitor detail stays out of this public repo.
+
+| Observed in the strongest entries | Consequence for a judge | Our countermeasure |
+|---|---|---|
+| A hosted demo on a free tier slept, and took about 40 s to wake behind a "service waking up" page | The first impression is a loading screen | Static deploy on an always-on CDN (Vercel or Cloudflare Pages). No backend in the judged path (T079) |
+| Most strong entries open on an empty map or a form that needs typing (an address, coordinates, a street) before anything appears | Nothing to see until the judge does work | Open on the featured fire, with the interior already rising (T081) |
+| The most polished entry paints real data on the very first frame | Sets the bar for Design | Same: the first frame is North Complex's seed-limited interior |
+| The strongest technical entry states that its site "serves stored results… nothing is computed while you watch" | "Live" is a differentiator only when it is true and shown | Live build shown in the video; the deployed site labels itself Pre-built honestly (done, T075) |
+| Three of the five strongest entries are urban-heat tools | They split each other's Originality marks | Name our category in the first line of the writeup: nobody else is in reforestation or seed |
+| The best writeup explains every technical choice in plain language, with one quotable line | Technology gets scored from the page, not the code | Rewrite the writeup to that standard (T088) |
+| Several strong entries carry undeclared prior work or reuse | A judge who checks marks Completion and Originality down | Declare precisely; everything was built 16–20 Sep inside the 20 Aug – 20 Sep window (T087) |
+| Several strong entries report honest limits | Honesty alone no longer differentiates | Lead with the external check (23.7% vs Baker's 21.9%), not with humility |
+
+### Hardening principles
+
+1. **The judged path has no moving parts.** A static site, pre-built data, no cold start, no API key,
+   no dependency on an agency server being up during judging week.
+2. **The first frame is the peak.** The interior lighting up is visible within about 3 s of opening
+   the link, with no input needed.
+3. **Every claim is checkable, and the check is on screen.** The like-for-like cross-check leads, and
+   the statewide roll-up follows with its scope stated.
+4. **Coverage beats curation.** Pre-build every MTBS-assessed California fire in the benchmark window,
+   rather than eight chosen ones (T092). Validation moves from "partial (21.8%)" towards full coverage.
+5. **Live is proven in the video, not depended on in the site.** Free container hosts cannot hold the
+   ~1 GB cache and the memory bursts (research: free Docker Spaces need a paid plan, and Render free has
+   512 MB of RAM and sleeps), so a hosted live server is out of scope.
+
+### Priorities and cut line
+
+- **P0 — the submission is broken without these.** Repo public and clean, site deployed, mobile map
+  fixed, first-frame peak, real live numbers verified, video, writeup, declaration, final audit.
+- **P1 — large score gains, once P0 is safe.** Statewide pre-build (every fire in the window), fire
+  search over the pre-built set, a statewide overview frame, and statewide validation.
+- **P2 — only with P0 and P1 green.** Performance code-splitting, hostile-question FAQ, repo folder rename.
+- **Cut, with reasons.** National "Bushel West" extension (new data layers two days out; recorded under
+  "What's next" with the Dobrowski et al. 2024 benchmark instead). A hosted live server (billing and
+  memory). Any AI or chat surface (off-thesis, and a common pattern in the field).
+
+**Cut line:** if the statewide batch (T092) has not finished by **19 Sep 12:00 PDT**, ship the fires
+that built, state the count, and move on. Feature freeze is **19 Sep 18:00 PDT**. Submit by
+**20 Sep 12:00 PDT**, two hours before the 14:00 PDT close.
+
+### Risk register
+
+| Risk | Likelihood | Mitigation |
+|---|---|---|
+| The repo link 404s because it is private | Certain today | T077–T078: clean, then make public, before recording the video |
+| Internal competitor notes become public with the repo | Certain if not handled | T077: remove them from the tree, and decide on history before publishing |
+| A judge opens on a phone and sees a blank map | Reproduced on 17 Sep at 375 px | T080: resize and refit when the container changes |
+| A judge picks the smallest fire first (Camp: 12.8 bushels) | Medium | T081: open on the featured fire; order the list by interior acres |
+| Validation numbers read as failure | Medium | Like-for-like first (done); statewide coverage (T094) |
+| The statewide batch hits odd fires (multi-part, name mismatch, no SRA) | High for a few | Match FRAP by overlap, not name; record failures in a manifest; never abort the whole batch |
+| Video over 5 minutes, or no live build in it | Medium | T086: script to 4:30 with a timed beat sheet |
+| A claim slips past DO-NOT-CLAIM | Medium | T089: re-run the T067 audit on the final copy and the video script |
+
