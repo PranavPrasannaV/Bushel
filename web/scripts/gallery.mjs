@@ -16,7 +16,7 @@ const peak = () => page.locator('.burn-map').getAttribute('data-peak')
 async function open(query) {
   await page.goto(new URL(query, base).href)
   await page.waitForFunction(() => document.querySelector('.burn-map')?.dataset.peak === 'revealed', null, {
-    timeout: 20_000,
+    timeout: 45_000,
   })
   await page.waitForTimeout(400)
 }
@@ -40,13 +40,21 @@ await page.locator('.factor-trail').first().screenshot({ path: file('04-factor-t
 // 5. The three factors CAL FIRE doesn't publish, in amber.
 await page.locator('.assumptions, .assumption-panel').first().screenshot({ path: file('05-unpublished-factors.png') })
 
-// 6. Validation: the like-for-like check first.
-await page.locator('.validation').screenshot({ path: file('06-validation.png') })
+// 6. Validation: the like-for-like check first. The panel is taller than the viewport inside a scrolling
+// column, so scroll its top into view and clip the viewport rather than shooting the whole element.
+const panel = page.locator('.validation')
+await panel.evaluate((el) => el.scrollIntoView({ block: 'start' }))
+await page.waitForTimeout(300)
+const box = await panel.boundingBox()
+await page.screenshot({
+  path: file('06-validation.png'),
+  clip: { x: box.x, y: Math.max(box.y, 0), width: box.width, height: Math.min(box.height, 900 - Math.max(box.y, 0)) },
+})
 
 // 7. All fires over California.
 await page.goto(new URL('?view=all', base).href)
 await page.waitForFunction(() => document.querySelector('.burn-map')?.dataset.view === 'overview', null, {
-  timeout: 20_000,
+  timeout: 45_000,
 })
 await page.waitForTimeout(6000) // the overview draws after its data and the map chunk arrive
 await page.screenshot({ path: file('07-all-fires.png') })

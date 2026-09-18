@@ -222,6 +222,10 @@ def write_reference(out_dir: Path) -> None:
 # ---- Per-fire build (T027, T028, T030, T049, T051) ----------------------------------------------
 
 SIMPLIFY_M = 45  # map geometry only: 1.5 pixels, keeps each .geojson small; acreages use pixels
+# Map geometry only: raster specks under this are not drawn (acreages still count every pixel).
+# Specks are most of the vertices and none of the picture: dropping them halves a large fire's file.
+# The lit interior keeps more of its detail than the muted burn behind it.
+MIN_DRAWN_HA = {"high_severity": 0.5, "interior": 0.2, "cell": 0.2}
 TO_WGS84 = Transformer.from_crs("EPSG:3310", "EPSG:4326", always_xy=True)
 
 
@@ -244,6 +248,12 @@ def _feature(geom, properties: dict) -> dict | None:
     simplification)."""
     if geom is None or geom.is_empty:
         return None
+    min_ha = MIN_DRAWN_HA.get(properties.get("layer"), 0)
+    if min_ha:
+        parts = list(getattr(geom, "geoms", [geom]))
+        # A feature never disappears: every cell in the order keeps a shape on the map (§3).
+        kept = [p for p in parts if p.area >= min_ha * 1e4] or [max(parts, key=lambda p: p.area)]
+        geom = MultiPolygon(kept)
     geom = geom.simplify(SIMPLIFY_M)
 
     def to_wgs84(xy):

@@ -44,11 +44,31 @@ class MapBoundary extends Component<{ children: ReactNode }, { error: string | n
 
 const renderTrail = (line: OrderLine) => <FactorTrail line={line} />
 
-// MapLibre is most of the JavaScript. Loading it as its own chunk lets the order panel paint first.
-const BurnMap = lazy(() => import('./components/BurnMap.tsx'))
-
-/** The fire the app opens on: the demo's strongest order. The first frame is the peak, with no input. */
+/** The fire the app opens on: the strongest order. The first frame is the peak, with no input. */
 export const FEATURED_FIRE = 'north-complex-2020'
+
+// MapLibre is most of the JavaScript. It is its own chunk, so the order panel paints first, but the download
+// starts now, when this module runs, rather than after the first render: the two arrive in parallel.
+const burnMapChunk = import('./components/BurnMap.tsx')
+const BurnMap = lazy(() => burnMapChunk)
+
+/** A fire's two files, fetched once. The opening fire is asked for before the index arrives. */
+type FireFiles = { record: Promise<FireRecord>; geojson: Promise<GeoJSON.FeatureCollection> }
+const fireFiles = new Map<string, FireFiles>()
+function fetchFire(id: string): FireFiles {
+  let files = fireFiles.get(id)
+  if (!files) {
+    files = { record: getFireData<FireRecord>(id, 'json'), geojson: getFireData(id, 'geojson') }
+    // A failed prefetch is retried on selection, never cached as the answer.
+    files.record.catch(() => fireFiles.delete(id))
+    files.geojson.catch(() => fireFiles.delete(id))
+    fireFiles.set(id, files)
+  }
+  return files
+}
+// The opening fire: the deep-linked one, else the featured one. Its files start downloading immediately.
+fetchFire(new URLSearchParams(window.location.search).get('fire') ?? FEATURED_FIRE)
+
 
 /** The fire to open: `?fire=` if it names a pre-built fire, else the featured one, else the largest interior. */
 export function initialFire(index: FireIndex, search: string): string | null {
@@ -110,11 +130,11 @@ export default function App() {
     }
     setFire({ status: 'loading', id })
     let mapError: string | null = null
+    const files = fetchFire(id)
     Promise.all([
-      getFireData<FireRecord>(id, 'json', ctrl.signal),
+      files.record,
       // The order does not depend on the map layers; a missing geojson is reported, not fatal.
-      getFireData<GeoJSON.FeatureCollection>(id, 'geojson', ctrl.signal).catch((err: unknown) => {
-        if (ctrl.signal.aborted) throw err
+      files.geojson.catch((err: unknown) => {
         mapError = errorText(err)
         return null
       }),

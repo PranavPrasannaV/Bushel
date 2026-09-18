@@ -188,7 +188,7 @@ def high_severity_check(
         "conifer_filter": conifer,
         "note": (
             f"MTBS class 4 (High) inside the perimeter and State Responsibility Area, {lo}-{hi} "
-            f"fires only. Covers {len(inside)} demo fires, "
+            f"fires only. Covers {len(inside)} fires, "
             f"{(fraction or 0) * 100:.1f}% of the burned SRA acreage in {lo}-{hi}; the published "
             "figure covers every fire in that window statewide, so no 10% verdict is given on "
             "partial coverage. "
