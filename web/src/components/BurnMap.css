@@ -147,3 +147,39 @@
     margin: var(--space-2);
   }
 }
+
+/* Compact (BurnMap.tsx: pane narrower than 760px or shorter than 520px, with the map still beside the
+   order panel): the legend becomes one strip along the bottom edge. Keys run in a row, their
+   sub-lines and the fire name drop (the name heads the order panel), and the threshold statement
+   stays in full. The fire is fitted above the strip. */
+@media (min-width: 761px) {
+  .burn-map[data-compact='true'] .burn-map__legend {
+    right: var(--space-2);
+    left: var(--space-2);
+    bottom: var(--space-2);
+    max-width: none;
+    padding: var(--space-2) var(--space-3);
+    gap: var(--space-2);
+    font-size: var(--text-xs);
+  }
+  .burn-map[data-compact='true'] .burn-map__name,
+  .burn-map[data-compact='true'] .burn-map__keys .burn-map__sub,
+  .burn-map[data-compact='true'] .burn-map__method .caps {
+    display: none;
+  }
+  .burn-map[data-compact='true'] .burn-map__keys {
+    flex-flow: row wrap;
+    gap: var(--space-1) var(--space-3);
+  }
+  .burn-map[data-compact='true'] .burn-map__method {
+    padding-top: var(--space-2);
+  }
+  .burn-map[data-compact='true'] .burn-map__threshold {
+    font-size: var(--text-sm);
+  }
+  .burn-map[data-compact='true'] .burn-map__fraction {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0 var(--space-2);
+  }
+}

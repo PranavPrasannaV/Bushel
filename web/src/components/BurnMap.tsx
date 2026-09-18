@@ -117,6 +117,10 @@ function boundsOf(fc: GeoJSON.FeatureCollection): LngLatBounds | null {
 
 const pct = (fraction: number) => `${(fraction * 100).toFixed(1)}%`
 
+/** Below either size the full legend would cover the fire. */
+const COMPACT_WIDTH = 760
+const COMPACT_HEIGHT = 520
+
 export default function BurnMap(props: {
   geojson: GeoJSON.FeatureCollection | null
   planting: FireRecord['planting'] | null
@@ -127,6 +131,18 @@ export default function BurnMap(props: {
   const canvasRef = useRef<HTMLDivElement>(null)
   const legendRef = useRef<HTMLDivElement>(null)
   const [map, setMap] = useState<MapLibreMap | null>(null)
+  // Compact: the map pane is too small for the fire to sit beside the full legend, so the legend becomes
+  // a strip along the bottom and the fire is fitted above it instead of underneath it.
+  const [compact, setCompact] = useState(false)
+
+  useEffect(() => {
+    const root = rootRef.current!
+    const measure = () => setCompact(root.clientWidth < COMPACT_WIDTH || root.clientHeight < COMPACT_HEIGHT)
+    const observer = new ResizeObserver(measure)
+    observer.observe(root)
+    measure()
+    return () => observer.disconnect()
+  }, [])
 
   // Create the map once. The style is a single background layer: no tiles, no network.
   useEffect(() => {
@@ -161,20 +177,28 @@ export default function BurnMap(props: {
     }
   }, [])
 
+  // Fit the fire clear of the legend: beside it when there is room, above the bottom strip when compact.
+  useEffect(() => {
+    const root = rootRef.current
+    const bounds = geojson && boundsOf(geojson)
+    if (!map || !root || !bounds) return
+    const legend = legendRef.current
+    const stacked = legend ? getComputedStyle(legend).position === 'static' : false
+    const padding = { top: 40, right: 40, bottom: 40, left: 40 }
+    if (legend && !stacked && compact) padding.bottom = legend.offsetHeight + 32
+    else if (legend && !stacked) {
+      const beside = legend.offsetWidth + 64
+      if (root.clientWidth - beside >= 360) padding.left = beside
+    }
+    map.fitBounds(bounds, { padding, duration: 0 })
+  }, [map, geojson, compact])
+
   // Draw the selected fire: the rest of the burn first, then the interior rises once the map is idle.
   useEffect(() => {
     const root = rootRef.current
     if (!map || !root) return
     map.getSource<GeoJSONSource>(SOURCE)?.setData(geojson ?? EMPTY)
     setPeak(map, 0, 0)
-
-    const bounds = geojson && boundsOf(geojson)
-    if (bounds) {
-      // Keep the fire clear of the legend when that still leaves it a useful width.
-      const legend = (legendRef.current?.offsetWidth ?? 0) + 64
-      const left = root.clientWidth - legend >= 360 ? legend : 40
-      map.fitBounds(bounds, { padding: { top: 40, right: 40, bottom: 40, left }, duration: 0 })
-    }
 
     const hasInterior = !!geojson?.features.some((f) => f.properties?.layer === 'interior')
     root.dataset.peak = hasInterior ? 'drawing' : 'none'
@@ -198,7 +222,7 @@ export default function BurnMap(props: {
   const fraction = planting && Number.isFinite(planting.interior_fraction) ? planting.interior_fraction : null
 
   return (
-    <div className="burn-map" ref={rootRef} data-peak="none">
+    <div className="burn-map" ref={rootRef} data-peak="none" data-compact={compact}>
       <div className="burn-map__canvas" ref={canvasRef} />
 
       <div className="burn-map__legend" ref={legendRef}>
