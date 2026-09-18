@@ -11,6 +11,7 @@ const SRC = new URL('../src/', import.meta.url)
 const FIXED = /threshold_m|baker_reference_fraction|thresholdM|bakerReference|bakerFraction/i
 
 const tsxFiles = (readdirSync(SRC, { recursive: true }) as string[])
+  .map((f) => f.replace(/\\/g, '/')) // readdirSync yields backslashes on Windows
   .filter((f) => f.endsWith('.tsx'))
   .map((f) => ({ file: f, text: readFileSync(new URL(f, SRC), 'utf8') }))
 
