@@ -9,7 +9,7 @@ import OrderTable from './components/OrderTable.tsx'
 import Validation from './components/Validation.tsx'
 import { computeOrder } from './convert/computeOrder.ts'
 import type { Assumptions, Factors, FireIndex, FireIndexEntry, FireRecord, OrderLine } from './convert/types.ts'
-import { getData, getFireData } from './data.ts'
+import { getData, getFireData, isLive } from './data.ts'
 import { downloadOrderExport } from './export/exportOrder.ts'
 
 type Load =
@@ -45,6 +45,19 @@ class MapBoundary extends Component<{ children: ReactNode }, { error: string | n
 
 const renderTrail = (line: OrderLine) => <FactorTrail line={line} />
 
+/** The fire the app opens on: the demo's strongest order. The first frame is the peak, with no input. */
+export const FEATURED_FIRE = 'north-complex-2020'
+
+/** The fire to open: `?fire=` if it names a pre-built fire, else the featured one, else the largest interior. */
+export function initialFire(index: FireIndex, search: string): string | null {
+  const want = new URLSearchParams(search).get('fire')
+  const has = (id: string | null) => !!id && index.fires.some((f) => f.id === id)
+  if (has(want)) return want
+  if (has(FEATURED_FIRE)) return FEATURED_FIRE
+  const largest = [...index.fires].sort((a, b) => b.interior_acres - a.interior_acres)[0]
+  return largest?.id ?? null
+}
+
 export default function App() {
   const [load, setLoad] = useState<Load>({ status: 'loading' })
   const [fireId, setFireId] = useState('')
@@ -62,7 +75,11 @@ export default function App() {
       getData<FireIndex>('fires/index.json', ctrl.signal),
       getData<Factors>('reference/factors.json', ctrl.signal),
     ])
-      .then(([index, factors]) => setLoad({ status: 'ready', index, factors }))
+      .then(([index, factors]) => {
+        setLoad({ status: 'ready', index, factors })
+        const first = initialFire(index, window.location.search)
+        if (first) selectFire(first)
+      })
       .catch((err: unknown) => {
         if (ctrl.signal.aborted) return
         setLoad({ status: 'error', message: errorText(err) })
@@ -79,6 +96,12 @@ export default function App() {
     fireCtrl.current = ctrl
     setFireId(id)
     setSelectedKey(null)
+    // Every pre-built fire has its own link. A live-built fire exists only while its server runs.
+    if (!isLive(id)) {
+      const url = new URL(window.location.href)
+      url.searchParams.set('fire', id)
+      window.history.replaceState(null, '', url)
+    }
     setFire({ status: 'loading', id })
     let mapError: string | null = null
     Promise.all([

@@ -25,7 +25,7 @@ export default function FireSelector({
           Choose a fire…
         </option>
         <optgroup label="Pre-built">
-          {fires.map((f) => (
+          {[...fires].sort((a, b) => b.interior_acres - a.interior_acres).map((f) => (
             <option key={f.id} value={f.id}>
               {label(f)}
             </option>

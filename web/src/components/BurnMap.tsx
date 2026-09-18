@@ -134,12 +134,20 @@ export default function BurnMap(props: {
   // Compact: the map pane is too small for the fire to sit beside the full legend, so the legend becomes
   // a strip along the bottom and the fire is fitted above it instead of underneath it.
   const [compact, setCompact] = useState(false)
+  // The canvas's own size. MapLibre only tracks window resizes, so a container that settles after the map
+  // was created (the stacked phone layout) left the fire fitted to a stale size and drawn off-screen.
+  const [box, setBox] = useState('')
 
   useEffect(() => {
     const root = rootRef.current!
-    const measure = () => setCompact(root.clientWidth < COMPACT_WIDTH || root.clientHeight < COMPACT_HEIGHT)
+    const canvas = canvasRef.current!
+    const measure = () => {
+      setCompact(root.clientWidth < COMPACT_WIDTH || root.clientHeight < COMPACT_HEIGHT)
+      setBox(`${canvas.clientWidth}x${canvas.clientHeight}`)
+    }
     const observer = new ResizeObserver(measure)
     observer.observe(root)
+    observer.observe(canvas)
     measure()
     return () => observer.disconnect()
   }, [])
@@ -182,6 +190,7 @@ export default function BurnMap(props: {
     const root = rootRef.current
     const bounds = geojson && boundsOf(geojson)
     if (!map || !root || !bounds) return
+    map.resize()
     const legend = legendRef.current
     const stacked = legend ? getComputedStyle(legend).position === 'static' : false
     const padding = { top: 40, right: 40, bottom: 40, left: 40 }
@@ -191,7 +200,7 @@ export default function BurnMap(props: {
       if (root.clientWidth - beside >= 360) padding.left = beside
     }
     map.fitBounds(bounds, { padding, duration: 0 })
-  }, [map, geojson, compact])
+  }, [map, geojson, compact, box])
 
   // Draw the selected fire: the rest of the burn first, then the interior rises once the map is idle.
   useEffect(() => {

@@ -130,14 +130,44 @@ button {
   .shell-header .tagline {
     font-size: var(--text-xs);
   }
-  .shell-main {
+  /* Stacked, the fire picker leads: it moves above the map so a phone never has to scroll past the map
+     and its legend to change fire. The order panel's other children follow the map in source order. */
+  .shell {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: minmax(55vh, 1fr) auto;
+  }
+  .shell-main {
+    display: flex;
+    flex-direction: column;
+    row-gap: var(--space-4);
+    min-width: 0;
   }
   .order-region {
-    overflow: visible;
-    border-left: 0;
-    border-top: 1px solid var(--color-border);
+    display: contents;
+  }
+  .order-region > .fire-selector {
+    order: -2;
+    margin-bottom: calc(-1 * var(--space-4));
+    padding: var(--space-3) var(--space-4);
+    background: var(--color-surface);
+  }
+  .map-region {
+    order: -1;
+    min-height: 55vh;
+    border-block: 1px solid var(--color-border);
+  }
+  .order-region > :not(.fire-selector) {
+    margin-inline: var(--space-4);
+  }
+  .order-region > :last-child {
+    margin-bottom: var(--space-5);
+  }
+}
+
+/* Between the two stacked breakpoints the map is not yet stacking its own legend, so it needs a definite
+   height to fill. */
+@media (min-width: 761px) and (max-width: 900px) {
+  .map-region {
+    height: 60vh;
   }
 }
 
