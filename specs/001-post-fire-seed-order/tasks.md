@@ -198,8 +198,8 @@ Two deliverables separated by the precompute boundary, per plan.md:
 - [X] T080 [P] **[C]** Fix the blank map on phones: in `web/src/components/BurnMap.tsx`, the ResizeObserver must call `map.resize()` and refit when the container changes (reproduced at 375×812: the fire draws only after a window resize). At ≤760 px, place the fire selector above the map (`web/src/App.tsx`, `web/src/styles/app.css`). Add `web/tests/e2e/mobile.spec.ts`: at 375×812 the interior is visible without scrolling — *map resizes and refits on container change; picker above the map ≤900 px; long labels no longer widen the page. Covered by `web/tests/e2e/first-frame.spec.ts` (phone case) rather than a separate mobile spec*
 - [X] T081 **[C]** First frame is the peak: with no `?fire=` parameter, open on the featured fire (North Complex), with the interior reveal running. Sync the selection to `?fire=<id>` for deep links. Order the pre-built list by interior acres, largest first. Add `web/tests/e2e/first-frame.spec.ts`: the interior is drawn within 3 s with no input — *featured fire on first frame, `?fire=` deep links, list ordered by interior acres; `web/tests/e2e/first-frame.spec.ts`*
 - [X] T082 **[T]** Verify real live-build numbers with real LEMMA: run `python -m bushel.serve`, then live-build two fires that are not pre-built (e.g. Monument 2021 and one 2023 fire). Record interior acres and bushels in `docs/02-FACTS.md` with the build date. Also live-build Caldor and confirm its record equals `web/public/data/fires/caldor-2021.json` field for field, apart from the id — *real LEMMA: live Caldor equals the pre-built record field for field; Monument 2021 and August Complex 2020 built live (190 s, 290 s)*
-- [ ] T083 **[T]** On a fresh clone: pipeline pytest, vitest, and Playwright e2e (13 existing + T080 + T081), all green. The deployed URL shows zero console errors across all fires
-- [ ] T084 [P] **[C]** Six Devpost gallery images from the deployed site: first frame, interior close-up, order summary, factor trail, the amber unpublished factors, and the validation panel. Save to `docs/gallery/`
+- [X] T083 **[T]** On a fresh clone: pipeline pytest, vitest, and Playwright e2e (13 existing + T080 + T081), all green. The deployed URL shows zero console errors across all fires — *fresh public clone: vitest 92, tsc + build, Playwright 17 on its own server, pipeline 117 + 16 skipped (cache-dependent); with the cache, pipeline 168. Deployed site: Lighthouse mobile Accessibility 100, Best Practices 100 (no console errors), SEO 100*
+- [X] T084 [P] **[C]** Six Devpost gallery images from the deployed site: first frame, interior close-up, order summary, factor trail, the amber unpublished factors, and the validation panel. Save to `docs/gallery/` — *seven images in `docs/gallery/`, captured from the deployed site by `web/scripts/gallery.mjs`*
 - [ ] T085 **[U]** Record the video from `docs/07-VIDEO.md` (4:30 target, 5:00 hard cap), then fill the Devpost video, repo and site fields
 - [X] T086 **[C]** Write `docs/07-VIDEO.md`: a word-for-word script under 650 words, with on-screen actions and a fallback clip if the live build is slow. Beats: — *`docs/07-VIDEO.md`; statewide figures are tokens filled from `validation.json`*
   - 0:00 the problem in one scene: a forester, a burned parcel, the 31 Oct order deadline
@@ -210,14 +210,14 @@ Two deliverables separated by the precompute boundary, per plan.md:
   - 3:20 live: build a fire the viewer could name (terminal + panel)
   - 4:00 close: "every other entry tells you where to act; Bushel tells you what to order"
 - [X] T087 **[C]** Fill the prior-work declaration in `docs/06-DEVPOST.md`: the submission window runs 20 Aug 21:00 PDT to 20 Sep 14:00 PDT; ideation ran 16–17 Sep; the first commit is 17 Sep; all code and data builds are from the event. List third-party data and libraries — *resolved in `docs/06-DEVPOST.md`: everything built 16–20 Sep, inside the 20 Aug – 20 Sep window*
-- [ ] T088 **[C]** Rewrite `docs/06-DEVPOST.md` to the plain-language standard:
+- [X] T088 **[C]** Rewrite `docs/06-DEVPOST.md` to the plain-language standard: — *`docs/06-DEVPOST.md` rewritten; every statewide figure filled from `validation.json` by `scripts/fill_numbers.py`*
   - The first line names the category (nobody else is in reforestation seed).
   - Use the theme's words: protect ecosystems, biodiversity, resilient communities.
   - One quotable line per technical choice.
   - A data-sources table with each source's status.
   - Limits stated before a judge finds them.
   - Replace every `[fill …]` and `[confirm …]` marker.
-- [ ] T089 **GATE [C]** Re-run the T067 audit against `docs/03-DO-NOT-CLAIM.md` on the final UI copy, README, writeup and video script. Every displayed number traces to `docs/02-FACTS.md` or `validation.json`
+- [X] T089 **GATE [C]** Re-run the T067 audit against `docs/03-DO-NOT-CLAIM.md` on the final UI copy, README, writeup and video script. Every displayed number traces to `docs/02-FACTS.md` or `validation.json` — *scripted scan of README, writeup, video script and every `.tsx` against the list: no violations; absolute 'nobody else / every other tool' wording softened*
 
 ### P1 — large score gains once P0 is safe (cut line: 19 Sep 12:00 PDT for T092)
 
@@ -227,10 +227,10 @@ Two deliverables separated by the precompute boundary, per plan.md:
   - Build each through the `live.py` path into `web/public/data/fires/`, with static ids `{slug}-{year}`.
   - Resumable. Writes `data/cache/statewide_manifest.json` with every success, failure and reason, and never aborts the batch on one fire.
   - Tests in `pipeline/tests/test_statewide.py` (offline, faked services).
-- [ ] T091 [P] **[C]** Geometry budget: a simplify tolerance scaled by fire size, so the largest `.geojson` stays under 3 MB and the whole of `web/public/data` under 60 MB. Enforce it with a size test in `pipeline/tests/test_invariants.py`
-- [ ] T092 **[T]** Run T090 on the machine with the cache (about 2 h at ~30 s a fire); rebuild `fires/index.json`; commit the artifacts and the manifest
+- [X] T091 [P] **[C]** Geometry budget: a simplify tolerance scaled by fire size, so the largest `.geojson` stays under 3 MB and the whole of `web/public/data` under 60 MB. Enforce it with a size test in `pipeline/tests/test_invariants.py` — *specks under 0.5 ha (burn) / 0.2 ha (interior, cells) not drawn, every feature keeps its largest part; 24 → 14 MB; budget enforced in `tests/test_invariants.py`*
+- [X] T092 **[T]** Run T090 on the machine with the cache (about 2 h at ~30 s a fire); rebuild `fires/index.json`; commit the artifacts and the manifest — *237 of 242 candidates built (the 5 without an MTBS assessment listed with reasons); 18 transient image-server failures rebuilt with `--retry-failed`*
 - [X] T093 **[C]** Fire search over the pre-built index, working offline, in `web/src/components/LiveBuild.tsx`: pre-built hits first, live builds second when the server answers. Replaces scrolling a 250-option select — *the Live panel became "Find a fire": offline search over the pre-built index, live builds (and live rebuilds) when the server answers*
-- [ ] T094 **[T]** Re-run `python -m bushel.validate` at statewide coverage. The high-severity check gets a real tolerance verdict, the roll-up covers the full window, and the interior cross-check pools every fire. README and Devpost numbers are copied from `validation.json` only
+- [X] T094 **[T]** Re-run `python -m bushel.validate` at statewide coverage. The high-severity check gets a real tolerance verdict, the roll-up covers the full window, and the interior cross-check pools every fire. README and Devpost numbers are copied from `validation.json` only — *coverage 21.8% → 96.7%; pooled interior 22.4% vs Baker 21.9% (+0.5 pts); high severity 239,581 vs 359,182 (−33.3%); roll-up 2,143.8 bushels beside 55,978*
 - [X] T095 **[C]** A statewide overview frame: every fire's interior, lit at once over California, before the featured fire zooms in. Uses a heavily simplified `web/public/data/statewide.geojson`. Only if T092 completes — *"All fires" toggle and `?view=all`; `reference/statewide.geojson` coarsened to ~115 kB per 8 fires; click a fire to open it*
 
 ### P2 — only with P0 and P1 green
@@ -238,7 +238,7 @@ Two deliverables separated by the precompute boundary, per plan.md:
 - [X] T096 [P] **[C]** Code-split MapLibre with a dynamic import, to clear the 500 kB chunk warning; measure first load before and after — *first-load JS 1,283 kB → 267 kB*
 - [X] T097 [P] **[C]** Add a README "Hard questions" section: why California, why 90 m, why acres burned is −45%, the three unpublished factors, cones versus seed, and prior art (CAST, Seedlot Selection Tool, Climate-Smart Restoration Tool, Regenmapper, Terraware) — *README "Hard questions"*
 - [X] T098 [P] **[C]** Add a README "What's next" section: the national extension against Dobrowski et al. 2024 (Bower seed zones, LANDFIRE, PAD-US), and CAL FIRE publishing the three LAMRC factors — *README "What's next"; Dobrowski et al. 2024 recorded in `docs/02-FACTS.md`*
-- [ ] T099 **[U]** Rename the local folder `seedshed` to `bushel` (needs the editor closed)
+- [X] T099 **[U]** Rename the local folder `seedshed` to `bushel` (needs the editor closed) — *folder renamed to `bushel` once the editor released it; venv recreated*
 
 **Explicitly not doing**: the national extension as a feature (two days out, new data layers); a hosted live server (free tiers cannot hold ~1 GB of cache or the memory bursts); any AI or chat surface.
 
