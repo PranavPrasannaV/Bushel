@@ -1,0 +1,137 @@
+{
+  "generated_at": "2026-09-18T04:24:04Z",
+  "benchmark_ref": "reference/benchmark.json",
+  "computed_total_bushels": 1334.8,
+  "difference_pct": -97.6,
+  "coverage": "partial",
+  "rollup": {
+    "published_total_bushels": 55978,
+    "unit": "bushels of cones",
+    "window": "2018-2023",
+    "window_note": "The published total's severity input stops at 2023: the AON states that 2023 is the most recent year of tree mortality and wildfire severity data available at the time of publication. The roll-up therefore aggregates 2018-2023 fires only.",
+    "fires_included": [
+      "caldor-2021",
+      "camp-2018",
+      "carr-2018",
+      "creek-2020",
+      "dixie-2021",
+      "mckinney-2022",
+      "mosquito-2022",
+      "north-complex-2020"
+    ],
+    "fires_excluded": [],
+    "computed_total_bushels": 1334.8,
+    "difference_pct": -97.6,
+    "coverage": "partial",
+    "coverage_fraction": 0.2177,
+    "gap_acres": 62.5,
+    "statement": "Partial: 8 fires, 21.8% of the burned SRA acreage in 2018-2023, at default factors. The published total covers every fire in its window statewide. Acres of species with no Terms of Sale row are counted as gap acres, not bushels."
+  },
+  "acreage_check": {
+    "acres_burned": {
+      "stage": "Acres burned on non-federal conifer forestland",
+      "published": 1507830,
+      "period": "2018-2024",
+      "computed": 830010.7,
+      "unit": "acres",
+      "difference_pct": -45.0,
+      "tolerance_pct": 10.0,
+      "within_tolerance": false,
+      "status": "fail",
+      "coverage": "full",
+      "missing_years": [],
+      "by_year": {
+        "2018": 112101.7,
+        "2019": 7503.8,
+        "2020": 324717.4,
+        "2021": 272355.0,
+        "2022": 38614.6,
+        "2023": 3373.1,
+        "2024": 71345.2
+      },
+      "conifer_filter": true,
+      "two_species_sensitivity": 906744.7,
+      "note": "Every CAL FIRE (FRAP) perimeter 2018-2024, unioned per year so overlapping records count once, intersected with State Responsibility Area in EPSG:3310. Then restricted to 30 m pixels whose pre-fire LEMMA 2023.1 dominant species (by basal area) is one of the 15 species of interest: model year 2017 for 2018-2021 fires, 2021 for 2022-2024 fires. Burned SRA before the conifer filter: 3,394,990 acres. Counting a pixel when either of its two dominant species (LEMMA FORTYPBA, the 'up to two dominant tree species' attribute the AON describes) is one of the 15: 906,745 acres (-39.9%)."
+    },
+    "high_severity": {
+      "stage": "High-severity acres on non-federal conifer forestland",
+      "published": 359182,
+      "period": "2018-2023",
+      "computed": 123966.2,
+      "unit": "acres",
+      "difference_pct": -65.5,
+      "tolerance_pct": 10.0,
+      "within_tolerance": null,
+      "status": "partial",
+      "coverage": "partial",
+      "coverage_fraction": 0.2177,
+      "window_burned_sra_acres": 2871718.6,
+      "fires": [
+        {
+          "id": "camp-2018",
+          "year": 2018,
+          "high_severity_acres": 4168.3,
+          "burned_sra_acres": 105161.4
+        },
+        {
+          "id": "carr-2018",
+          "year": 2018,
+          "high_severity_acres": 15002.5,
+          "burned_sra_acres": 92336.0
+        },
+        {
+          "id": "north-complex-2020",
+          "year": 2020,
+          "high_severity_acres": 38436.1,
+          "burned_sra_acres": 115707.6
+        },
+        {
+          "id": "creek-2020",
+          "year": 2020,
+          "high_severity_acres": 4495.3,
+          "burned_sra_acres": 23173.1
+        },
+        {
+          "id": "caldor-2021",
+          "year": 2021,
+          "high_severity_acres": 9786.9,
+          "burned_sra_acres": 40060.4
+        },
+        {
+          "id": "dixie-2021",
+          "year": 2021,
+          "high_severity_acres": 42589.3,
+          "burned_sra_acres": 205026.7
+        },
+        {
+          "id": "mosquito-2022",
+          "year": 2022,
+          "high_severity_acres": 4548.9,
+          "burned_sra_acres": 22907.8
+        },
+        {
+          "id": "mckinney-2022",
+          "year": 2022,
+          "high_severity_acres": 4938.9,
+          "burned_sra_acres": 20888.6
+        }
+      ],
+      "excluded": [],
+      "conifer_filter": true,
+      "note": "MTBS class 4 (High) inside the perimeter and State Responsibility Area, 2018-2023 fires only. Covers 8 demo fires, 21.8% of the burned SRA acreage in 2018-2023; the published figure covers every fire in that window statewide, so no 10% verdict is given on partial coverage. Conifer-filtered (LEMMA 2023.1)."
+    }
+  },
+  "attributed_gap": [
+    "CAL FIRE's timberland boundary: the AON restricts its domain to productive conifer forestland using a timberlands boundary 'mapped internally by CAL FIRE'. Bushel does not have that layer, so it cannot apply it, and its retained acreage can exceed the AON's.",
+    "Known overestimate in the benchmark: the AON does not explicitly exclude privately-owned industrial land and so, in its own words, somewhat overestimates need. Bushel does not exclude it either, so a total that matched 55,978 would share that overestimate.",
+    "Partial fire coverage: the high-severity check covers 8 demo fires (21.8% of the burned SRA acreage in 2018-2023) and the bushel roll-up covers 8 fires (21.8%). The published figures cover every fire in their windows, statewide.",
+    "Unpublished nursery factors: seeds_per_pot, nursery_survival_rate and probability_of_tree_in_nursery are not published by CAL FIRE (the AON takes them from internal LAMRC nursery datasets). Bushel's defaults (2, 0.9, 0.9) are general placeholders, not CAL FIRE's, and every pound and bushel depends on them directly.",
+    "A current jurisdiction boundary on past fires: the State Responsibility Area layer used was last edited 2026-04-09 and is applied to fires from 2018 onward; the SRA boundary in force when each fire burned may differ.",
+    "Scope: the published acres-burned figure covers every fire 2018-2024 and the high-severity figure every fire 2018-2023, statewide; Bushel's per-fire set is 8 demo fires from 2018-2022.",
+    "What 55,978 measures: the AON sizes the need to reforest 25% of productive conifer forest on non-federal land, statewide, driven by wildfire plus insect/disease mortality plus timber harvest. The target is not a per-burn figure, so a sum over burns alone is not expected to equal it.",
+    "SRA only: Bushel retains State Responsibility Area, while the AON's jurisdiction is SRA plus Local Responsibility Area. LRA land inside 2018-2024 perimeters adds 134,963 acres (all cover types) that Bushel leaves out.",
+    "Conifer definition: Bushel counts a 30 m pixel as conifer forest when LEMMA's single dominant species by basal area (TREEPLBA) is one of the 15. The AON describes LEMMA's vegetation type as 'an attribute that identifies up to two dominant tree species based on basal area'. Counting a pixel when either of the two is one of the 15 gives 906,745 acres burned (-39.9%) instead of 830,011: the difference is stands whose dominant tree is not one of the 15 but whose second is."
+  ],
+  "scope_note": "25% of productive conifer forest on non-federal land, statewide - not 25% of burned acres. Driven by wildfire plus insect/disease mortality plus timber harvest.",
+  "known_overestimate": "The AON does not explicitly exclude privately-owned industrial land and therefore somewhat overestimates need."
+}

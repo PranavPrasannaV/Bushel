@@ -1,0 +1,148 @@
+.order-table-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.order-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.order-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+}
+
+.order-table caption {
+  padding: var(--space-2) var(--space-2);
+  caption-side: top;
+  text-align: left;
+  color: var(--color-text);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.table-intro {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+.order-table th,
+.order-table td {
+  padding: var(--space-1) 5px;
+  text-align: left;
+  vertical-align: baseline;
+}
+
+.order-table th:first-child,
+.order-table td:first-child {
+  padding-left: var(--space-2);
+}
+
+.order-table th:last-child,
+.order-table td:last-child {
+  padding-right: var(--space-2);
+}
+
+.order-table thead th {
+  background: var(--color-surface-raised);
+  color: var(--color-text-subtle);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  vertical-align: bottom;
+}
+
+.order-table abbr {
+  text-decoration: none;
+}
+
+.order-table .num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.order-table thead .num {
+  white-space: normal;
+}
+
+/* One tbody per cell (seed zone × band): visual grouping, never a sum. */
+.order-table .cell-group {
+  border-top: 1px solid var(--color-border-strong);
+  content-visibility: auto;
+  contain-intrinsic-size: auto 3rem;
+}
+
+.order-row {
+  cursor: pointer;
+}
+
+.order-row:hover {
+  background: var(--color-surface-raised);
+}
+
+.order-row.is-selected {
+  background: var(--color-selected-bg);
+}
+
+.order-row .col-zone {
+  font-weight: var(--weight-semibold);
+}
+
+.order-row .col-band {
+  white-space: nowrap;
+  color: var(--color-text-muted);
+}
+
+/* Later lines in the same cell repeat zone and band, quietly. */
+.order-row.is-continued .col-zone,
+.order-row.is-continued .col-band {
+  color: var(--color-text-subtle);
+  font-weight: var(--weight-regular);
+}
+
+.line-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--color-text);
+  font-size: inherit;
+  font-weight: var(--weight-medium);
+  text-align: left;
+  text-decoration: underline dotted var(--color-text-subtle);
+  text-underline-offset: 3px;
+}
+
+.order-row.is-selected .line-button {
+  text-decoration-color: var(--color-accent);
+}
+
+.col-priority {
+  text-align: center;
+}
+
+.gap-cell {
+  color: var(--color-text-subtle);
+  font-size: var(--text-xs);
+  font-style: italic;
+}
+
+.trail-row > td {
+  padding: 0;
+  background: var(--color-surface-sunken);
+}
+
+.table-legend {
+  color: var(--color-text-subtle);
+  font-size: var(--text-xs);
+}
+
+.table-legend .priority-badge {
+  min-width: 1.1rem;
+  padding: 0 var(--space-1);
+}

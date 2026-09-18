@@ -1,0 +1,206 @@
+/* Validation panel (T061, T066). Secondary to the map: compact, neutral ash tones only. Verdicts are
+ * told apart by label and border style, never by the reserved regen / amber / priority colours. */
+
+.validation {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface-raised);
+  font-size: var(--text-sm);
+}
+
+.validation h4 {
+  margin: var(--space-2) 0 0;
+}
+
+.validation-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-3);
+}
+
+.validation-head .caps {
+  flex-basis: 100%;
+}
+
+.validation-head h3 {
+  font-size: var(--text-lg);
+}
+
+/* Coverage badge: solid = full, dashed = partial, dotted = none. Partial is shown, never hidden. */
+.validation-coverage {
+  padding: 0 var(--space-2);
+  border: 1px solid var(--ash-300);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-semibold);
+}
+.validation-coverage[data-coverage='partial'] {
+  border-style: dashed;
+}
+.validation-coverage[data-coverage='none'] {
+  border-style: dotted;
+  color: var(--color-text-muted);
+}
+
+.validation-totals {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-block: 1px solid var(--color-border);
+}
+
+.validation-total {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.validation-figure {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  color: var(--color-text);
+}
+
+.validation-figure[data-pending='true'] {
+  font-size: var(--text-md);
+  color: var(--color-text-muted);
+}
+
+.validation-figure sup {
+  font-size: var(--text-xs);
+}
+
+.validation-unit {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+}
+
+.validation-missing {
+  padding: var(--space-3);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+  color: var(--color-text-muted);
+}
+
+.validation-checks,
+.validation-causes {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+}
+
+.validation-checks {
+  list-style: none;
+}
+
+.validation-causes {
+  padding-left: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+}
+
+.validation-check {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
+}
+
+.validation-check-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-2);
+}
+
+.validation-check-name {
+  font-weight: var(--weight-semibold);
+}
+
+.validation-period {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+/* Pass / fail / partial: text label plus border style, neutral colour. */
+.validation-verdict {
+  margin-left: auto;
+  padding: 0 var(--space-2);
+  border: 1px solid var(--ash-400);
+  border-radius: var(--radius-sm);
+  color: var(--color-text);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-semibold);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+}
+.validation-verdict[data-tone='pass'] {
+  border-color: var(--ash-200);
+}
+.validation-verdict[data-tone='fail'] {
+  border-width: 2px;
+  border-color: var(--ash-100);
+}
+.validation-verdict[data-tone='partial'] {
+  border-style: dashed;
+}
+.validation-verdict[data-tone='none'] {
+  border-style: dotted;
+  color: var(--color-text-muted);
+}
+
+.validation-figures {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  justify-content: start;
+  gap: 0 var(--space-4);
+  margin: 0;
+}
+
+.validation-figures dt {
+  color: var(--color-text-subtle);
+  font-size: var(--text-2xs);
+}
+
+.validation-figures dd {
+  margin: 0;
+  font-weight: var(--weight-medium);
+}
+
+.validation-small {
+  color: var(--color-text-subtle);
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+}
+
+.validation-caveat {
+  padding: var(--space-2) var(--space-3);
+  border-left: 3px solid var(--ash-200);
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.validation-footnote {
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+}

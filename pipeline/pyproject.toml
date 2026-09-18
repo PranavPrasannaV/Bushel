@@ -1,0 +1,34 @@
+[project]
+name = "bushel"
+version = "0.1.0"
+description = "Offline geospatial pipeline for Bushel: per-fire cell tables for the post-fire seed order"
+requires-python = ">=3.11"
+dependencies = [
+    "geopandas>=1.0",
+    "rasterio>=1.4",
+    "shapely>=2.0",
+    "pyproj>=3.6",
+    "numpy>=1.26",
+    "scipy>=1.12",
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/bushel"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
