@@ -15,6 +15,12 @@ Organiser: HackAlphaX. Judges listed only as "HackAlphaX Team" — no bios, so n
 | Prizes | 1st $1,000 + Claude credits + YC final-round interview; 2nd $500; 3rd $250. **No track prizes.** |
 | Prior work | Allowed **only if** the submission page declares what was built before vs during |
 
+## Theme statement — verbatim
+
+> Our planet is facing unprecedented environmental challenges—from climate change and pollution to biodiversity loss and resource depletion. As these issues continue to grow, so does the need for innovative solutions that protect ecosystems, promote sustainability, and build more resilient communities. This year's theme, Earth Forward, invites participants to use technology to create meaningful environmental impact.
+
+Bushel's writeup should hit its clauses by name: **protect ecosystems** (forest recovery after fire), **biodiversity loss** (species-by-species, provenance-matched replanting), **resilient communities** (the forests communities depend on), **meaningful environmental impact** (a physical seed order, not a dashboard).
+
 ## Submission requirements (from the rules page)
 
 - A video demonstration / pitch **no longer than 5 minutes**
