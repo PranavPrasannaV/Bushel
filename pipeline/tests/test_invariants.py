@@ -2,6 +2,7 @@
 
 import copy
 import json
+from pathlib import Path
 
 import pytest
 
@@ -247,3 +248,23 @@ def test_write_index_rejects_fire_outside_coverage(tmp_path):
     with pytest.raises(ContractViolation, match="coverage"):
         write_index(tmp_path, [valid_record(), r])
     assert not (tmp_path / "fires/index.json").exists()
+
+
+# T091: the shipped data stays small enough for a static host and a phone.
+MAX_FIRE_GEOJSON_MB = 4.0  # largest single fire; lazy-loaded, ~1 MB gzipped
+MAX_DATA_MB = 60.0  # everything under web/public/data
+MAX_OVERVIEW_MB = 4.0  # reference/statewide.geojson, loaded on "All fires"
+
+
+def test_shipped_data_fits_its_size_budget():
+    data = Path(__file__).resolve().parents[2] / "web" / "public" / "data"
+    if not (data / "fires" / "index.json").exists():
+        pytest.skip("no shipped data")
+    mb = lambda p: p.stat().st_size / 1e6  # noqa: E731
+    largest = max((data / "fires").glob("*.geojson"), key=mb)
+    assert mb(largest) <= MAX_FIRE_GEOJSON_MB, f"{largest.name}: {mb(largest):.2f} MB"
+    total = sum(mb(p) for p in data.rglob("*") if p.is_file())
+    assert total <= MAX_DATA_MB, f"web/public/data is {total:.1f} MB"
+    overview = data / "reference" / "statewide.geojson"
+    if overview.exists():
+        assert mb(overview) <= MAX_OVERVIEW_MB, f"statewide.geojson: {mb(overview):.2f} MB"

@@ -11,9 +11,10 @@ figures.
 
 ## The short version
 
-Every other tool tells you where a fire burned. **Bushel tells you what to order to bring the forest
-back.** It is a reforestation tool — protecting forest ecosystems after fire — and as far as we could
-find, nobody else in this event, or anywhere, turns one fire's perimeter into a seed order.
+Fire maps tell you where a fire burned. **Bushel tells you what to order to bring the forest
+back.** It is a reforestation tool — protecting forest ecosystems after fire. We looked for another
+tool that turns one fire's perimeter into a seed order and found none; the nearest tools, named under
+Prior art, answer different questions.
 
 ## Inspiration
 
@@ -147,6 +148,14 @@ the interior is visible on a phone, with no input, on first load.
 - Read agency documents in full: the 200 trees-per-acre figure is in the state's report; a "180" figure
   circulating online is not.
 - Put the contested estimate inside the product, and pick the one least favourable to you.
+
+## Prior art
+
+CAL FIRE's own *Assessment of Needs* does this calculation once a year for the whole state. Climate-
+adapted seed matching is CAST (CAL FIRE, USFS and UC Davis); the Seedlot Selection Tool and the
+Climate-Smart Restoration Tool handle climate-adjusted provenance; Terraware covers nursery operations;
+Regenmapper takes a burn perimeter but asks whether it will regenerate on its own. Bushel does none of
+those things. It starts from one fire and ends with a quantity of cones.
 
 ## What's next for Bushel
 

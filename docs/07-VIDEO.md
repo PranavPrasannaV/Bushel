@@ -87,7 +87,7 @@ the app, running `python -m bushel.serve`.
 
 ## 4:00 — Close (on screen: zoom out to California, every interior lit)
 
-> Every other tool tells you where a fire burned. Bushel tells you what to order to bring the forest
+> Fire maps tell you where a fire burned. Bushel tells you what to order to bring the forest
 > back — which species, from which seed zone, how many bushels, by when — and shows you its working.
 >
 > Bushel. Built for NextStep Hacks 2026, Earth Forward.
