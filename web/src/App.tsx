@@ -1,6 +1,5 @@
-import { Component, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
+import { Component, lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from 'react'
 import AssumptionPanel from './components/AssumptionPanel.tsx'
-import BurnMap from './components/BurnMap.tsx'
 import FactorTrail from './components/FactorTrail.tsx'
 import FireSelector from './components/FireSelector.tsx'
 import LiveBuild from './components/LiveBuild.tsx'
@@ -44,6 +43,9 @@ class MapBoundary extends Component<{ children: ReactNode }, { error: string | n
 }
 
 const renderTrail = (line: OrderLine) => <FactorTrail line={line} />
+
+// MapLibre is most of the JavaScript. Loading it as its own chunk lets the order panel paint first.
+const BurnMap = lazy(() => import('./components/BurnMap.tsx'))
 
 /** The fire the app opens on: the demo's strongest order. The first frame is the peak, with no input. */
 export const FEATURED_FIRE = 'north-complex-2020'
@@ -152,7 +154,9 @@ export default function App() {
   const map = useMemo(
     () => (
       <MapBoundary>
-        <BurnMap geojson={geojson} planting={planting} fireName={fireName} />
+        <Suspense fallback={<div className="placeholder">Loading the map…</div>}>
+          <BurnMap geojson={geojson} planting={planting} fireName={fireName} />
+        </Suspense>
       </MapBoundary>
     ),
     [geojson, planting, fireName],
@@ -200,7 +204,12 @@ export default function App() {
 
           <aside className="order-region" aria-label="Seed order">
             <FireSelector fires={load.index.fires} liveFires={liveFires} value={fireId} onChange={selectFire} />
-            <LiveBuild prebuilt={load.index.fires.length} generatedAt={load.index.generated_at} onBuilt={onBuilt} />
+            <LiveBuild
+              prebuilt={load.index.fires}
+              generatedAt={load.index.generated_at}
+              onPick={selectFire}
+              onBuilt={onBuilt}
+            />
 
             {fire.status === 'idle' && (
               <div className="order-intro">

@@ -242,7 +242,7 @@ Both CAL FIRE PDFs are committed to `reference/` along with the AON's extracted 
 
 Not timidity — verifiability. California is where the ground truth lives: a published benchmark denominated in the same unit as the output, with the conversion table, the price list, and the operational seed-zone system all from the same agency.
 
-Nationally, none of that exists in one place. Gap figures are published in seedlings or acres, never in pounds of conifer seed; the federal seed-zone system is a different, generalized map; and there is no equivalent published total to check against. Going national would produce a bigger-sounding claim and remove the only thing that makes the number verifiable.
+Nationally, none of that exists in one place. Gap figures are published in seedlings or acres, never in pounds of conifer seed, and the federal seed-zone system is a different, generalized map. The closest thing to a benchmark is a peer-reviewed estimate of the West's reforestation need in hectares (Dobrowski et al. 2024), which checks the interior step but not the order. Going national now would produce a bigger-sounding claim and remove the one total that makes the order itself verifiable. How it would extend is under [What's next](#whats-next).
 
 The method generalises. The ground truth doesn't — yet. See Part 4.
 
@@ -278,7 +278,7 @@ bushel/
 
 **Just the app:** the built data is committed in `web/public/data`, so `cd web && npm install && npm run dev` is all you need.
 
-**Team shortcut for the pipeline:** the whole `data/cache/` (statewide layers, the 8 per-fire stacks, and LEMMA) is attached to the private release `data-2026-09-17` (1.06 GB). It is not in git, because the LEMMA rasters exceed GitHub's 100 MB per-file limit. From the repo root:
+**Team shortcut for the pipeline:** the whole `data/cache/` (statewide layers, the 8 per-fire stacks, and LEMMA) is attached to the release `data-2026-09-17` (1.06 GB). It is not in git, because the LEMMA rasters exceed GitHub's 100 MB per-file limit. From the repo root:
 
 ```bash
 gh release download data-2026-09-17 -R PranavPrasannaV/Bushel
@@ -340,10 +340,43 @@ Before adding anything user-facing, read [`docs/03-DO-NOT-CLAIM.md`](docs/03-DO-
 
 ## Prior art, named up front
 
-- **CAL FIRE's Assessment of Needs** already produces this artifact — annually, statewide, as a GIS analysis. Bushel's contribution is doing it per fire, on demand. Nobody has computed it per fire.
+- **CAL FIRE's Assessment of Needs** already produces this artifact — annually, statewide, as a GIS analysis. Bushel's contribution is doing it per fire, on demand. We found no tool that computes it per fire.
 - **Seedlot Selection Tool** (St.Clair et al. 2022) and **Climate-Smart Restoration Tool** (USFS RMRS) already do climate-adjusted provenance matching. Bushel does not claim that capability.
 - **CAST**, the Climate-Adapted Seed Tool, is CAL FIRE's own, built with USFS and UC Davis. It's what the agency uses when an exact zone match isn't available.
 - **Terraware** covers reforestation and nursery operations.
 - **Regenmapper** takes a burn perimeter but answers a different question: will this regenerate unaided?
 
 None of them chains burn perimeter → seed-limited interior → zone and elevation → species → quantity. That chain is the gap.
+
+---
+
+## Hard questions
+
+**Why only California?** Because that is where the result can be checked. CAL FIRE publishes the benchmark, the cone-to-seed table, the seed prices and the seed-zone system, all in one set of units. See [Scope](#scope-and-why-its-california).
+
+**Why 90 m, not 100 m or 200 m?** Baker (2023) measured the share of high-severity burn area more than 90 m from a live seed edge and found it averages 21.9%, the published estimate least favourable to the conclusion that planting is needed. Gill et al. (2022) put most wind-dispersed conifer seed within 200 m and non-serotinous seed rarely much beyond 100 m. We take the threshold that hurts our case, fix it (no control on screen can change it), and show our computed share next to Baker's as a check.
+
+**Your acres-burned check is 45% low. Isn't the tool wrong?** That check compares every 2018–2024 fire perimeter, clipped to State Responsibility Area and filtered to conifer forest, with the AON's 1,507,830 acres. Three sizeable causes are known, and the validation panel lists them. The AON counts Local Responsibility Area land and Bushel keeps State Responsibility Area only. The AON restricts to a timberland boundary CAL FIRE maps internally and does not publish. And "conifer" depends on which of LEMMA's dominant-species attributes you read. It is an upstream acreage check, and it is not an input to any order.
+
+**Why doesn't your total match 55,978 bushels?** It isn't meant to. The AON's figure is sized to reforest 25% of all productive conifer forest on non-federal land, and it covers insect and disease mortality and timber harvest as well as fire. Bushel adds up fire orders only. The like-for-like check is the interior share against Baker's 21.9%, and it leads the validation panel.
+
+**Aren't the three amber numbers just guesses?** They are placeholders for figures CAL FIRE uses but does not publish: seeds per pot, nursery survival to a two-year seedling, and the probability of a tree in the nursery. They are shown in amber, labelled "Not published by CAL FIRE", bounded, and adjustable, and the formula they sit in stays on screen. Every pound and bushel depends on them, and the page says so.
+
+**Bushels of seed or bushels of cones?** Cones. The AON's methodology and Table 2 work in bushels of cones, although its conclusion says "bushels of conifer seed". Bushel follows the methodology and footnotes the contradiction.
+
+**Isn't this what CAST or the Seedlot Selection Tool does?** No. Those match seed to a site's future climate. Bushel does not do climate matching. It starts from one fire's perimeter and ends with a quantity of cones. See [Prior art](#prior-art-named-up-front).
+
+**Is the site live, or a recording?** Both, and the page says which. The deployed site serves fires built ahead of time by the pipeline, and labels them Pre-built. `python -m bushel.serve` builds any other 2018–2023 California fire from the agency services on request. A live build of a pre-built fire comes out identical, field for field.
+
+**Why not this year's fires?** MTBS burn severity runs one to two years behind, and the AON's own severity data stops at 2023. Bushel refuses a fire outside 2018–2023 and says why, rather than reading severity from a different product.
+
+**Where's the AI?** There is no model anywhere in the numeric path. Every quantity is deterministic arithmetic over public data, and it is unit-tested. The implementation was written with Claude Code, from a written spec and task list.
+
+## What's next
+
+- **Publish three numbers, and this becomes reproducible anywhere.** CAL FIRE's formula needs seeds per pot, nursery survival and the probability of a tree in the nursery. With them public, every step from a price list to a bushel count would be public.
+- **The rest of the West.** Every California-only layer has a public national counterpart: provisional seed transfer zones (Bower et al. 2014), LANDFIRE existing vegetation type, and PAD-US land ownership, beside MTBS and 3DEP, which are already national. Dobrowski et al. (2024) estimated the reforestation need of 11 western states with the same seed-limited-interior idea, so the interior step would have a peer-reviewed total to check against there too. The order would stop at hectares until each state publishes its own conversion factors.
+- **Current fires.** MTBS runs one to two years behind. Rapid post-fire severity products exist, but they would need their own validation before they fed an order.
+- **Close the acres-burned gap.** Add Local Responsibility Area land, and use CAL FIRE's timberland boundary if it is published.
+- **87 zone codes, not 85.** Buck (1970) and the AON describe 85 seed zones; the California Seed Zones layer holds 87 distinct codes. Find out why.
+

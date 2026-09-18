@@ -153,3 +153,15 @@ CAL FIRE matches orders *"with seeds from the same seed zone and elevation as th
 
 - Conifer seed commonly germinates above 90% under nursery conditions.
 - Bareroot **field** survival runs roughly 80–90% with proper handling — this is survival *after outplanting*, which is **not** the AON's nursery survival factor.
+
+---
+
+## Dobrowski et al. 2024 — the western US reforestation gap (What's next only)
+
+Dobrowski, S.Z. et al. 2024. "Mind the gap — reforestation needs vs. reforestation capacity in the western United States." *Frontiers in Forests and Global Change* 7:1402124. doi:10.3389/ffgc.2024.1402124. Fetched from the full text on 17 September 2026.
+
+- **Scope:** 11 western states (AZ, CA, CO, ID, MT, NV, NM, OR, UT, WA, WY), MTBS fires over 4 km², 1984–2021.
+- **Method:** reforestation need is high-severity area farther than about 100 m from a live seed source, estimated with an area-to-perimeter relationship (Collins et al. 2017). This is a statistical estimate, not a per-fire raster computation.
+- **Headline:** 2.4M ha of reforestation need; a cumulative gap of 1.5M ha; a projected gap of about 3.3M ha by 2050.
+- Used only in README "What's next". It is not an input to, or a check on, any California order.
+

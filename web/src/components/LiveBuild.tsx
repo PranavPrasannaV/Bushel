@@ -1,7 +1,8 @@
-// Live builds: search CAL FIRE's perimeter service for any 2018-2023 fire and build its order on request,
-// through `python -m bushel.serve`. Without that server (a static deploy), this states plainly that the
-// listed fires were pre-built, when, and from which services. It never implies live data it does not have.
-import { useEffect, useRef, useState } from 'react'
+// Find a fire: search the pre-built fires instantly (works offline), and, when `python -m bushel.serve`
+// answers, build any other 2018-2023 California fire live from the agency services. Without that server
+// (a static deploy) it states plainly that the fires were pre-built, when, and from which services. It
+// never implies live data it does not have.
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { FireIndexEntry } from '../convert/types.ts'
 import { getApi } from '../data.ts'
 import { fmtAcres } from './OrderTable.tsx'
@@ -34,16 +35,28 @@ type Build =
   | { status: 'done'; fire: Found; builtAt: string }
 
 const POLL_MS = 700
+const SHOWN = 6
 const SOURCES = 'CAL FIRE perimeters, State Responsibility Area and seed zones; MTBS; USGS 3DEP'
 const message = (err: unknown) => (err instanceof Error ? err.message : String(err))
+
+/** Pre-built fires whose name (or year) matches every word of the query, largest interior first. */
+export function matchFires(fires: FireIndexEntry[], query: string): FireIndexEntry[] {
+  const words = query.toLowerCase().split(/\s+/).filter(Boolean)
+  if (!words.length) return []
+  return fires
+    .filter((f) => words.every((w) => f.name.toLowerCase().includes(w) || String(f.year) === w))
+    .sort((a, b) => b.interior_acres - a.interior_acres)
+}
 
 export default function LiveBuild({
   prebuilt,
   generatedAt,
+  onPick,
   onBuilt,
 }: {
-  prebuilt: number
+  prebuilt: FireIndexEntry[]
   generatedAt: string
+  onPick: (id: string) => void
   onBuilt: (entry: FireIndexEntry) => void
 }) {
   const [server, setServer] = useState<Server>({ status: 'checking' })
@@ -66,7 +79,7 @@ export default function LiveBuild({
     }
   }, [])
 
-  // Debounced live search against CAL FIRE's perimeter service.
+  // Debounced live search against CAL FIRE's perimeter service, only when a server can build.
   useEffect(() => {
     if (server.status !== 'online' || query.trim().length < 2) return
     const ctrl = new AbortController()
@@ -113,81 +126,78 @@ export default function LiveBuild({
     }
   }
 
-  if (server.status !== 'online') {
-    return (
-      <p className="live-provenance" data-testid="data-provenance">
-        <span className="live-badge" data-mode="prebuilt">
-          Pre-built
-        </span>{' '}
-        These {prebuilt} fires were built by Bushel's pipeline on {generatedAt.slice(0, 10)} from the agency
-        services ({SOURCES}) and LEMMA vegetation.
-        {server.status === 'offline' && (
-          <>
-            {' '}
-            To build any California fire from 2018 to 2023 live, run <code>python -m bushel.serve</code>.
-          </>
-        )}
-      </p>
-    )
-  }
-
-  const { health } = server
+  const typed = query.trim().length >= 2
+  const local = useMemo(() => (typed ? matchFires(prebuilt, query) : []), [prebuilt, query, typed])
+  // A live result duplicates a pre-built fire when the ids match apart from the `live-` prefix.
+  const prebuiltIds = useMemo(() => new Set(prebuilt.map((f) => f.id)), [prebuilt])
+  const remote =
+    server.status === 'online' && typed && found
+      ? found.filter((f) => !prebuiltIds.has(f.id.replace(/^live-/, '')))
+      : []
+  const live = server.status === 'online'
   const busy = build.status === 'running'
-  const shown = query.trim().length >= 2 ? found : null
+  const [lo, hi] = live ? server.health.years : [2018, 2023]
+
   return (
-    <section className="live-build" aria-labelledby="live-build-title" data-testid="live-build">
+    <section className="live-build" aria-labelledby="find-fire-title" data-testid="find-fire">
       <div className="live-build-head">
-        <span className="live-badge" data-mode="live">
-          Live
+        <span className="live-badge" data-mode={live ? 'live' : 'prebuilt'}>
+          {live ? 'Live' : 'Pre-built'}
         </span>
-        <h3 id="live-build-title">Build any fire</h3>
+        <h3 id="find-fire-title">Find a fire</h3>
       </div>
-      <p className="live-small">
-        Searches CAL FIRE's perimeter service, then fetches the fire's perimeter, jurisdiction, seed zones, MTBS
-        severity and 3DEP elevation at build time. LEMMA vegetation is read from the local download: it has no
-        public service.
-      </p>
 
-      {!health.lemma && (
-        <p className="live-note" role="status">
-          Builds need the LEMMA files in <code>data/cache/lemma</code>. Search works; a build will say what is
-          missing.
-        </p>
-      )}
-
-      <label className="live-label" htmlFor="live-search">
-        California fire, {health.years[0]}–{health.years[1]}
+      <label className="live-label" htmlFor="fire-search">
+        {prebuilt.length} California fires, {lo}–{hi}
       </label>
       <input
-        id="live-search"
+        id="fire-search"
         className="live-input"
         type="search"
-        placeholder="Fire name, e.g. Monument"
+        placeholder="Fire name, e.g. Caldor"
         value={query}
         autoComplete="off"
         disabled={busy}
         onChange={(e) => setQuery(e.target.value)}
       />
 
-      {searchError && (
-        <p className="live-note" role="alert">
-          {searchError}
-        </p>
+      {typed && local.length > 0 && (
+        <ul className="live-results" aria-label="Pre-built fires found">
+          {local.slice(0, SHOWN).map((f) => (
+            <li key={f.id}>
+              <button type="button" disabled={busy} onClick={() => onPick(f.id)}>
+                <span>
+                  {f.name} <span className="live-quiet">{f.year}</span>
+                </span>
+                <span className="live-quiet">{fmtAcres(f.interior_acres)} ac interior</span>
+              </button>
+            </li>
+          ))}
+        </ul>
       )}
-      {shown && shown.length === 0 && <p className="live-small">No 2018–2023 California fire by that name.</p>}
-      {shown && shown.length > 0 && (
-        <ul className="live-results" aria-label="Fires found">
-          {shown.slice(0, 6).map((f) => (
+      {remote.length > 0 && (
+        <ul className="live-results" aria-label="Fires to build live">
+          {remote.slice(0, SHOWN).map((f) => (
             <li key={f.id}>
               <button type="button" disabled={busy} onClick={() => void start(f)}>
                 <span>
                   {f.name} <span className="live-quiet">{f.year}</span>
                 </span>
-                <span className="live-quiet">{fmtAcres(f.gis_acres)} ac</span>
+                <span className="live-quiet">Build live · {fmtAcres(f.gis_acres)} ac</span>
               </button>
             </li>
           ))}
         </ul>
+      )}
+      {typed && local.length === 0 && remote.length === 0 && (
+        <p className="live-small">
+          No {lo}–{hi} fire by that name{live ? '' : ' among the pre-built fires'}.
+        </p>
+      )}
+      {searchError && (
+        <p className="live-note" role="alert">
+          {searchError}
+        </p>
       )}
 
       {build.status === 'running' && (
@@ -206,6 +216,30 @@ export default function LiveBuild({
           Built {build.fire.name} ({build.fire.year}) live at{' '}
           {new Date(build.builtAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}. It is selected
           above.
+        </p>
+      )}
+
+      {live ? (
+        <p className="live-small">
+          Fires not yet built are fetched at build time from the agency services ({SOURCES}). LEMMA vegetation is
+          read from the local download: it has no public service.
+          {!server.health.lemma && (
+            <>
+              {' '}
+              Builds need the LEMMA files in <code>data/cache/lemma</code>.
+            </>
+          )}
+        </p>
+      ) : (
+        <p className="live-provenance" data-testid="data-provenance">
+          Every fire here was built by Bushel's pipeline on {generatedAt.slice(0, 10)} from the agency services (
+          {SOURCES}) and LEMMA vegetation.
+          {server.status === 'offline' && (
+            <>
+              {' '}
+              To build a fire live, run <code>python -m bushel.serve</code>.
+            </>
+          )}
         </p>
       )}
     </section>
