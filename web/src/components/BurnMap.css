@@ -183,3 +183,11 @@
     gap: 0 var(--space-2);
   }
 }
+
+/* The overview's title has no other place on screen, so the compact strip keeps it. */
+@media (min-width: 761px) {
+  .burn-map[data-compact='true'][data-view='overview'] .burn-map__name {
+    display: block;
+    font-size: var(--text-md);
+  }
+}

@@ -66,10 +66,14 @@ export default function App() {
   const [fire, setFire] = useState<FireLoad>({ status: 'idle' })
   // Fires built live this session (python -m bushel.serve), listed after the pre-built set.
   const [liveFires, setLiveFires] = useState<FireIndexEntry[]>([])
+  // Every fire at once over California. Loaded the first time it is shown; `?view=all` opens on it.
+  const [showAll, setShowAll] = useState(() => new URLSearchParams(window.location.search).get('view') === 'all')
+  const [overview, setOverview] = useState<GeoJSON.FeatureCollection | null>(null)
   // Only what the user changed; computeOrder fills in defaults and clamps to bounds.
   const [overrides, setOverrides] = useState<Assumptions>({})
   const [selectedKey, setSelectedKey] = useState<string | null>(null)
   const fireCtrl = useRef<AbortController | null>(null)
+  const selectFireRef = useRef<(id: string) => void>(() => {})
 
   useEffect(() => {
     const ctrl = new AbortController()
@@ -123,10 +127,31 @@ export default function App() {
       })
   }
 
+  selectFireRef.current = selectFire
+
   function onBuilt(built: FireIndexEntry) {
     setLiveFires((list) => [...list.filter((f) => f.id !== built.id), built])
     selectFire(built.id)
   }
+
+  useEffect(() => {
+    if (!showAll || overview) return
+    const ctrl = new AbortController()
+    getData<GeoJSON.FeatureCollection>('reference/statewide.geojson', ctrl.signal)
+      .then(setOverview)
+      .catch(() => {
+        if (!ctrl.signal.aborted) setShowAll(false) // no overview built: stay on the fire
+      })
+    return () => ctrl.abort()
+  }, [showAll, overview])
+
+  const toggleAll = useCallback((all: boolean) => {
+    setShowAll(all)
+    const url = new URL(window.location.href)
+    if (all) url.searchParams.set('view', 'all')
+    else url.searchParams.delete('view')
+    window.history.replaceState(null, '', url)
+  }, [])
 
   const factors = load.status === 'ready' ? load.factors : null
   const record = fire.status === 'ready' ? fire.record : null
@@ -151,15 +176,29 @@ export default function App() {
   const planting = record?.planting ?? null
 
   // Memoised elements: moving a slider re-renders the order, not the map or the validation panel.
+  const pickFromOverview = useCallback(
+    (id: string) => {
+      toggleAll(false)
+      selectFireRef.current(id)
+    },
+    [toggleAll],
+  )
   const map = useMemo(
     () => (
       <MapBoundary>
         <Suspense fallback={<div className="placeholder">Loading the map…</div>}>
-          <BurnMap geojson={geojson} planting={planting} fireName={fireName} />
+          <BurnMap
+            geojson={geojson}
+            planting={planting}
+            fireName={fireName}
+            overview={overview}
+            showOverview={showAll}
+            onPickFire={pickFromOverview}
+          />
         </Suspense>
       </MapBoundary>
     ),
-    [geojson, planting, fireName],
+    [geojson, planting, fireName, overview, showAll, pickFromOverview],
   )
   const validation = useMemo(() => <Validation />, [])
 
@@ -195,6 +234,14 @@ export default function App() {
         <main className="shell-main">
           <section className="map-region" aria-label="Burn map">
             {map}
+            <button
+              type="button"
+              className="map-toggle"
+              aria-pressed={showAll}
+              onClick={() => toggleAll(!showAll)}
+            >
+              {showAll ? `Back to ${fireName || 'the fire'}` : 'All fires'}
+            </button>
             {fire.status === 'ready' && fire.mapError && (
               <p className="map-note" role="status">
                 Map layers not loaded: {fire.mapError}

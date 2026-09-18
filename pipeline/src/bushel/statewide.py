@@ -20,6 +20,9 @@ from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
 import geopandas as gpd
+from shapely import make_valid
+from shapely.geometry import MultiPolygon, Polygon, mapping, shape
+from shapely.ops import unary_union
 
 from bushel.build import build_fire, write_fire, write_index
 from bushel.fetch import CRS, DEFAULT_CACHE, build_stack, load_layers, now_iso, read_manifest
@@ -114,6 +117,79 @@ def build_one(cand: dict, cache: str, out: str) -> dict:
         }
 
 
+# One view of California, not a fire view: display geometry only. Acres come from the records.
+OVERVIEW = {
+    "interior": {"close_m": 60, "min_ha": 20, "simplify_m": 200},
+    "perimeter": {"close_m": 0, "min_ha": 0, "simplify_m": 500},
+}
+
+
+def _polygons(geom) -> list:
+    """Every Polygon inside a geometry, however it is nested."""
+    if geom.geom_type == "Polygon":
+        return [geom]
+    return [p for g in getattr(geom, "geoms", []) for p in _polygons(g)]
+
+
+def _coarse(geom, close_m: float, min_ha: float, simplify_m: float):
+    """Merge specks closer than close_m, drop parts under min_ha, simplify. EPSG:3310 in and out."""
+    if close_m:
+        geom = geom.buffer(close_m).buffer(-close_m)
+    # make_valid can leave stray lines and points beside the polygons; keep polygons only.
+    parts = [p for p in _polygons(geom) if p.area >= min_ha * 1e4]
+    geom = MultiPolygon(parts) if len(parts) > 1 else (parts[0] if parts else Polygon())
+    return geom.simplify(simplify_m)
+
+
+def _rounded(coords):
+    """Four decimal places of a degree is about 11 m: finer than the 200 m simplification."""
+    if isinstance(coords, (list, tuple)) and coords and isinstance(coords[0], (int, float)):
+        return [round(c, 4) for c in coords]
+    return [_rounded(c) for c in coords]
+
+
+def overview(out: Path) -> dict:
+    """reference/statewide.geojson: every built fire's interior and perimeter, coarsened for one
+    view of California. Built from the shipped per-fire artifacts, so it cannot disagree."""
+    index = json.loads((out / "fires" / "index.json").read_text(encoding="utf-8"))
+    features = []
+    for entry in index["fires"]:
+        fc = json.loads((out / "fires" / f"{entry['id']}.geojson").read_text(encoding="utf-8"))
+        for layer, how in OVERVIEW.items():
+            geoms = [
+                make_valid(shape(f["geometry"]))  # map geometry is simplified, so may self-touch
+                for f in fc["features"]
+                if f["properties"].get("layer") == layer
+            ]
+            if not geoms:
+                continue
+            g = gpd.GeoSeries([unary_union(geoms)], crs="EPSG:4326").to_crs(CRS).iloc[0]
+            g = _coarse(g, **how)
+            if g.is_empty:
+                continue
+            g = mapping(gpd.GeoSeries([g], crs=CRS).to_crs("EPSG:4326").iloc[0])
+            features.append(
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "layer": layer,
+                        "id": entry["id"],
+                        "name": entry["name"],
+                        "year": entry["year"],
+                        "interior_acres": round(entry["interior_acres"], 1),
+                    },
+                    "geometry": {"type": g["type"], "coordinates": _rounded(g["coordinates"])},
+                }
+            )
+    return {"type": "FeatureCollection", "features": features}
+
+
+def write_overview(out: Path) -> Path:
+    path = out / "reference" / "statewide.geojson"
+    path.write_text(json.dumps(overview(out), separators=(",", ":")) + "\n", encoding="utf-8")
+    return path
+
+
 def summary(cands: list[dict], results: dict) -> dict:
     built = [c for c in cands if results.get(c["id"], {}).get("status") == "built"]
     failed = [c for c in cands if results.get(c["id"], {}).get("status") == "failed"]
@@ -150,7 +226,13 @@ def main() -> None:
     ap.add_argument("--workers", type=int, default=3)
     ap.add_argument("--limit", type=int, default=0, help="build only the N largest (0 = all)")
     ap.add_argument("--retry-failed", action="store_true")
+    ap.add_argument(
+        "--overview-only", action="store_true", help="rewrite reference/statewide.geojson only"
+    )
     args = ap.parse_args()
+    if args.overview_only:
+        print(f"wrote {write_overview(args.out)}")
+        return
 
     manifest_path = args.cache / MANIFEST
     results = (
@@ -192,7 +274,7 @@ def main() -> None:
     write_index(args.out, records)
     ref = args.out / "reference" / "statewide.json"
     ref.write_text(json.dumps(summary(cands, results), indent=2) + "\n", encoding="utf-8")
-    print(f"index: {len(records)} fires; summary at {ref}")
+    print(f"index: {len(records)} fires; summary at {ref}; overview at {write_overview(args.out)}")
 
 
 if __name__ == "__main__":

@@ -58,3 +58,16 @@ test.describe('on a phone', () => {
     expect(canvas!.y).toBeLessThan(812)
   })
 })
+
+test('All fires shows every interior over California, and picking one opens its order', async ({ page }) => {
+  await page.goto('/?view=all')
+  const map = page.locator('.burn-map')
+  await expect(map).toHaveAttribute('data-view', 'overview', { timeout: 8000 })
+  await expect(page.getByRole('heading', { name: 'California, 2018–2023' })).toBeVisible()
+  await expect(page.getByText(/fires, each one's seed-limited interior lit/)).toBeVisible()
+  await expect.poll(() => interiorPixels(page), { timeout: 8000 }).toBeGreaterThan(10)
+
+  await page.getByRole('button', { name: /^Back to / }).click()
+  await expect(map).toHaveAttribute('data-view', 'fire')
+  await expect(page).not.toHaveURL(/view=all/)
+})
