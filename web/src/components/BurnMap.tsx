@@ -27,7 +27,7 @@ const SOURCE = 'fire'
 const OVERVIEW = 'statewide'
 const EMPTY: GeoJSON.FeatureCollection = { type: 'FeatureCollection', features: [] }
 const FIRE_LAYERS = ['retained', 'high-severity', 'perimeter', 'interior-glow', 'interior-fill', 'cells', 'interior-edge']
-const OVERVIEW_LAYERS = ['sw-hit', 'sw-perimeter', 'sw-interior', 'sw-interior-edge']
+const OVERVIEW_LAYERS = ['sw-state', 'sw-hit', 'sw-perimeter', 'sw-interior', 'sw-interior-edge', 'sw-marker']
 
 // Layers that rise together as the one peak, and the opacity each reaches. They start at 0.
 // Cells lie only inside the interior, so their divisions are drawn over it and rise with it.
@@ -100,7 +100,15 @@ function overviewLayers(token: (name: string) => string): LayerSpecification[] {
   const on = (layer: string): FilterSpecification => ['==', ['get', 'layer'], layer]
   const hidden = { visibility: 'none' as const }
   return [
-    // Invisible fill under each perimeter, so a click anywhere inside a fire opens it.
+    {
+      id: 'sw-state',
+      type: 'line',
+      source: OVERVIEW,
+      filter: on('state'),
+      layout: hidden,
+      paint: { 'line-color': token('--map-cell-line'), 'line-width': 1, 'line-opacity': 0.7 },
+    },
+    // A faint fill under each perimeter, so a click anywhere inside a fire opens it.
     {
       id: 'sw-hit',
       type: 'fill',
@@ -133,6 +141,24 @@ function overviewLayers(token: (name: string) => string): LayerSpecification[] {
       layout: hidden,
       paint: { 'line-color': token('--map-interior-line'), 'line-width': 0.75, 'line-opacity': 0.8 },
     },
+    // One glow per fire, its area proportional to the fire's seed-limited acres. At state scale the
+    // interiors are specks; the markers carry the picture, and fade out as the view zooms in.
+    {
+      id: 'sw-marker',
+      type: 'circle',
+      source: OVERVIEW,
+      filter: on('marker'),
+      layout: hidden,
+      paint: {
+        'circle-color': token('--map-interior-fill'),
+        'circle-radius': ['interpolate', ['linear'], ['sqrt', ['get', 'interior_acres']], 0, 1.5, 120, 16],
+        'circle-blur': 0.35,
+        'circle-opacity': ['interpolate', ['linear'], ['zoom'], 6, 0.85, 8.5, 0],
+        'circle-stroke-color': token('--map-interior-line'),
+        'circle-stroke-width': 0.5,
+        'circle-stroke-opacity': ['interpolate', ['linear'], ['zoom'], 6, 0.8, 8.5, 0],
+      },
+    },
   ]
 }
 
@@ -144,7 +170,7 @@ function setPeak(map: MapLibreMap, level: 0 | 1, ms: number) {
   }
 }
 
-/** Bounds of the perimeter features (or of everything, if there is no perimeter). */
+/** Bounds of the state outline, else the perimeter features, else everything. */
 function boundsOf(fc: GeoJSON.FeatureCollection): LngLatBounds | null {
   const bounds = new LngLatBounds()
   const walk = (c: unknown): void => {
@@ -152,8 +178,9 @@ function boundsOf(fc: GeoJSON.FeatureCollection): LngLatBounds | null {
     if (typeof c[0] === 'number') bounds.extend([c[0], c[1] as number])
     else c.forEach(walk)
   }
+  const state = fc.features.filter((f) => f.properties?.layer === 'state')
   const perimeter = fc.features.filter((f) => f.properties?.layer === 'perimeter')
-  for (const f of perimeter.length ? perimeter : fc.features) {
+  for (const f of state.length ? state : perimeter.length ? perimeter : fc.features) {
     if (f.geometry && 'coordinates' in f.geometry) walk(f.geometry.coordinates)
   }
   return bounds.isEmpty() ? null : bounds
@@ -223,6 +250,8 @@ export default function BurnMap(props: {
       maxPitch: 0,
     })
     m.touchZoomRotate.disableRotation()
+    if (import.meta.env.DEV) (window as unknown as { __bushelMap?: MapLibreMap }).__bushelMap = m
+    m.on('error', (e) => console.error('map error:', e.error?.message ?? e))
     m.on('load', () => {
       m.addSource(SOURCE, { type: 'geojson', data: EMPTY })
       for (const layer of mapLayers(token)) m.addLayer(layer)
@@ -360,7 +389,7 @@ export default function BurnMap(props: {
 
         {inOverview ? (
           <p className="burn-map__fraction burn-map__sub" role="status">
-            {new Set(overview!.features.map((f) => f.properties?.id)).size} fires, each one's seed-limited interior
+            {new Set(overview!.features.map((f) => f.properties?.id).filter(Boolean)).size} fires, each one's seed-limited interior
             lit. Select a fire to open its order.
           </p>
         ) : planting ? (

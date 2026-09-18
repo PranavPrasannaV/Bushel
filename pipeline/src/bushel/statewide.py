@@ -148,13 +148,40 @@ def _rounded(coords):
     return [_rounded(c) for c in coords]
 
 
-def overview(out: Path) -> dict:
+STATE_SIMPLIFY_M = 2000
+
+
+def state_outline(cache: Path) -> dict | None:
+    """California's outline: the union of CAL FIRE's own seed-zone layer, which covers the state,
+    so the overview needs no further data source. None when the layer is not cached."""
+    path = cache / "seed_zones.geojson"
+    if not path.exists():
+        return None
+    zones = gpd.read_file(path).to_crs(CRS)
+    g = make_valid(unary_union(list(zones.geometry.make_valid()))).buffer(500).buffer(-500)
+    g = gpd.GeoSeries([g.simplify(STATE_SIMPLIFY_M)], crs=CRS).to_crs("EPSG:4326").iloc[0]
+    return {
+        "type": "Feature",
+        "properties": {"layer": "state"},
+        "geometry": {
+            "type": mapping(g)["type"],
+            "coordinates": _rounded(mapping(g)["coordinates"]),
+        },
+    }
+
+
+def overview(out: Path, cache: Path | None = None) -> dict:
     """reference/statewide.geojson: every built fire's interior and perimeter, coarsened for one
-    view of California. Built from the shipped per-fire artifacts, so it cannot disagree."""
+    view of California, plus one marker per fire sized by its interior and the state outline.
+    Built from the shipped per-fire artifacts, so it cannot disagree with them."""
     index = json.loads((out / "fires" / "index.json").read_text(encoding="utf-8"))
     features = []
+    outline = state_outline(cache or DEFAULT_CACHE)
+    if outline:
+        features.append(outline)
     for entry in index["fires"]:
         fc = json.loads((out / "fires" / f"{entry['id']}.geojson").read_text(encoding="utf-8"))
+        marker = None
         for layer, how in OVERVIEW.items():
             geoms = [
                 make_valid(shape(f["geometry"]))  # map geometry is simplified, so may self-touch
@@ -164,6 +191,8 @@ def overview(out: Path) -> dict:
             if not geoms:
                 continue
             g = gpd.GeoSeries([unary_union(geoms)], crs="EPSG:4326").to_crs(CRS).iloc[0]
+            if marker is None and not g.is_empty:
+                marker = g.representative_point()  # interior first, else the perimeter
             g = _coarse(g, **how)
             if g.is_empty:
                 continue
@@ -179,6 +208,21 @@ def overview(out: Path) -> dict:
                         "interior_acres": round(entry["interior_acres"], 1),
                     },
                     "geometry": {"type": g["type"], "coordinates": _rounded(g["coordinates"])},
+                }
+            )
+        if marker is not None:
+            pt = gpd.GeoSeries([marker], crs=CRS).to_crs("EPSG:4326").iloc[0]
+            features.append(
+                {
+                    "type": "Feature",
+                    "properties": {
+                        "layer": "marker",
+                        "id": entry["id"],
+                        "name": entry["name"],
+                        "year": entry["year"],
+                        "interior_acres": round(entry["interior_acres"], 1),
+                    },
+                    "geometry": {"type": "Point", "coordinates": [round(pt.x, 4), round(pt.y, 4)]},
                 }
             )
     return {"type": "FeatureCollection", "features": features}

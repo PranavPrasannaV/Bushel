@@ -48,7 +48,7 @@ await page.goto(new URL('?view=all', base).href)
 await page.waitForFunction(() => document.querySelector('.burn-map')?.dataset.view === 'overview', null, {
   timeout: 20_000,
 })
-await page.waitForTimeout(1500)
+await page.waitForTimeout(6000) // the overview draws after its data and the map chunk arrive
 await page.screenshot({ path: file('07-all-fires.png') })
 
 console.log(`peak on last fire view: ${await peak()}; images in ${file('')}`)
