@@ -2,6 +2,7 @@ import { Component, lazy, Suspense, useCallback, useEffect, useMemo, useRef, use
 import AssumptionPanel from './components/AssumptionPanel.tsx'
 import FactorTrail from './components/FactorTrail.tsx'
 import FireSelector from './components/FireSelector.tsx'
+import FirstRun from './components/FirstRun.tsx'
 import LiveBuild from './components/LiveBuild.tsx'
 import { LiveProgress, LiveSources } from './components/LivePanel.tsx'
 import type { FirePoints } from './components/NationMap.tsx'
@@ -14,6 +15,7 @@ import { computeOrder } from './convert/computeOrder.ts'
 import type { Assumptions, Factors, FireIndex, FireIndexEntry, FireRecord, OrderLine } from './convert/types.ts'
 import { getData, getFireData, isLive } from './data.ts'
 import { downloadOrderExport } from './export/exportOrder.ts'
+import { getHomeCounty, hasBeenAsked, markAsked, setHomeCounty } from './geo/homeCounty.ts'
 import { countyAt, firesNear, fmt, type Address, type Counties, type NearFire } from './geo/places.ts'
 import { coverage } from './geo/coverage.ts'
 import { firesAround, STATE_SINCE, stateFires, type NationalFire } from './national/api.ts'
@@ -111,6 +113,9 @@ export default function App() {
   const fireCtrl = useRef<AbortController | null>(null)
   const [live, setLive] = useState<LiveState | null>(null)
   const [liveTry, setLiveTry] = useState(0)
+  // The county this person works in, kept on their device. Asked once, on the first visit.
+  const [homeFips, setHomeFips] = useState<string | null>(() => getHomeCounty())
+  const [asked, setAsked] = useState(() => hasBeenAsked())
 
   const regional = route.view === 'state' || route.view === 'county' || route.view === 'place'
   // A California fire is drawn inside its county lines too.
@@ -229,6 +234,21 @@ export default function App() {
     },
     [navigate],
   )
+
+  const chooseHome = useCallback(
+    (fips: string) => {
+      setHomeCounty(fips)
+      markAsked()
+      setHomeFips(fips)
+      setAsked(true)
+      openCounty(fips)
+    },
+    [openCounty],
+  )
+  const dismissFirstRun = useCallback(() => {
+    markAsked()
+    setAsked(true)
+  }, [])
 
   function onBuilt(built: FireIndexEntry) {
     setLiveFires((list) => [...list.filter((f) => f.id !== built.id), built])
@@ -543,9 +563,17 @@ export default function App() {
         </div>
       )}
 
-      {load.status === 'ready' && view === 'nation' && (
+      {load.status === 'ready' && view === 'nation' && !asked && counties && (
+        <main className="shell-main">
+          <FirstRun counties={counties} onCounty={chooseHome} onOutside={dismissFirstRun} onSkip={dismissFirstRun} />
+        </main>
+      )}
+
+      {load.status === 'ready' && view === 'nation' && (asked || !counties) && (
         <main className="shell-main">
           <Home
+            homeCounty={homeFips && counties ? (counties.counties[homeFips] ?? null) : null}
+            onChangeHome={() => setAsked(false)}
             fires={prebuilt}
             counties={counties}
             states={states}

@@ -4,7 +4,7 @@ import type { FireIndexEntry } from '../convert/types.ts'
 import NationMap, { type FirePoints } from '../components/NationMap.tsx'
 import SearchBar from '../components/SearchBar.tsx'
 import { coverage, COVERAGE_COPY, type Coverage } from '../geo/coverage.ts'
-import { fmt, type Address, type Counties } from '../geo/places.ts'
+import { fmt, type Address, type Counties, type County } from '../geo/places.ts'
 import type { NationalFire } from '../national/api.ts'
 import './Home.css'
 
@@ -21,6 +21,8 @@ const STEPS: [string, string][] = [
 export default function Home({
   fires,
   counties,
+  homeCounty,
+  onChangeHome,
   states,
   points,
   onState,
@@ -31,6 +33,9 @@ export default function Home({
 }: {
   fires: FireIndexEntry[]
   counties: Counties | null
+  /** The county this person said they work in, if they have said. */
+  homeCounty?: County | null
+  onChangeHome?: () => void
   states: GeoJSON.FeatureCollection | null
   points: FirePoints | null
   onState: (postal: string) => void
@@ -53,6 +58,24 @@ export default function Home({
     <div className="home">
       <section className="home-hero">
         <div className="home-copy">
+          {homeCounty && (
+            <div className="home-yours">
+              <span className="caps">Your county</span>
+              <button type="button" className="home-yours-name" onClick={() => onCounty(homeCounty.fips)}>
+                {homeCounty.name} County
+              </button>
+              <span className="home-yours-meta">
+                {homeCounty.totals.interior_acres >= 0.5
+                  ? `${fmt(homeCounty.totals.interior_acres)} acres can’t reseed`
+                  : 'no seed order needed'}
+              </span>
+              {onChangeHome && (
+                <button type="button" onClick={onChangeHome}>
+                  Change
+                </button>
+              )}
+            </div>
+          )}
           <p className="caps">Post-fire reforestation · seed orders</p>
           <h1 className="home-title">
             After a wildfire, which forest can&rsquo;t grow back on its own, and what seed will it take?

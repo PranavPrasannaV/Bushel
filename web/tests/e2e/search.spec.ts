@@ -50,6 +50,17 @@ async function stubMtbs(page: Page) {
 }
 
 
+// A returning visitor: the county question has already been answered (see first-run.spec.ts for the first visit).
+test.beforeEach(async ({ page }) => {
+  await page.addInitScript(() => {
+    try {
+      localStorage.setItem('bushel.asked-home-county', 'yes')
+    } catch {
+      // storage blocked: the app just asks again, which these tests don't exercise
+    }
+  })
+})
+
 // The relief and water tiles are scenery from a public server; tests draw without them.
 test.beforeEach(async ({ page }) => {
   await page.route(/basemap\.nationalmap\.gov\//, (route) => route.abort())
