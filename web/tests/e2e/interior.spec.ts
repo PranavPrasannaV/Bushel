@@ -60,8 +60,8 @@ test('the interior is drawn as the luminous layer, with the threshold statement 
     [`fires/${id}.json`]: fire,
     [`fires/${id}.geojson`]: fixture('fire.geojson'),
   })
-  await page.goto('/')
-  await page.getByLabel('Fire', { exact: true }).selectOption(id)
+  await page.goto(`/?fire=${id}`)
+  await expect(page.getByLabel('Fire', { exact: true })).toHaveValue(id)
 
   const map = page.locator('.burn-map')
   await expect(map.locator('canvas.maplibregl-canvas')).toBeVisible()
@@ -88,12 +88,9 @@ test('the interior is drawn as the luminous layer, with the threshold statement 
   await expect(map).toHaveAttribute('data-peak', 'revealed', { timeout: 10_000 })
   expect(await interiorPixels(page)).toBeGreaterThan(500)
 
-  // FR-006: nothing on the map can change the threshold or the reference fraction. Its one control is the
-  // "All fires" view toggle, which changes what is shown, never a value.
+  // FR-006: nothing on the map can change the threshold or the reference fraction: no control on it at all.
   const region = page.locator('.map-region')
-  await expect(region.locator('input, select, textarea, [role="slider"]')).toHaveCount(0)
-  await expect(region.locator('button')).toHaveCount(1)
-  await expect(region.locator('button')).toHaveText('All fires')
+  await expect(region.locator('input, select, textarea, button, [role="slider"]')).toHaveCount(0)
 })
 
 test('a fire with no interior shows its perimeter and says so, without crashing', async ({ page }) => {
@@ -118,8 +115,8 @@ test('a fire with no interior shows its perimeter and says so, without crashing'
     [`fires/${id}.json`]: JSON.stringify(record),
     [`fires/${id}.geojson`]: JSON.stringify(geo),
   })
-  await page.goto('/')
-  await page.getByLabel('Fire', { exact: true }).selectOption(id)
+  await page.goto(`/?fire=${id}`)
+  await expect(page.getByLabel('Fire', { exact: true })).toHaveValue(id)
 
   const map = page.locator('.burn-map')
   await expect(map.locator('canvas.maplibregl-canvas')).toBeVisible()

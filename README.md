@@ -89,7 +89,7 @@ Then check her arithmetic, because an error here doesn't show up for eighteen mo
 
 ### What she does with Bushel
 
-She clicks the fire.
+She types the fire's name, or her county, into Bushel's search. (She could also start from the national map, open California, and pick the fire off the map.)
 
 **First, the tool throws away everything it isn't allowed to count.** The state's assessment covers only non-federal land (State and Local Responsibility Areas); Bushel clips the perimeter to State Responsibility Area. The excluded acreage is reported, not silently dropped — if two-thirds of your fire was on National Forest land, you need to know that, not just get a smaller number with no explanation.
 
@@ -178,8 +178,26 @@ Four things fall out of that split:
 
 - **Adjusting an assumption is instant.** It's a local recalculation over a small payload, not a server round-trip.
 - **The numeric path is trivially testable.** It's a pure function with no dependencies.
-- **The deployed artifact can be static.** Eight fires ship pre-built, so a static deploy has no backend to fall over while someone is looking at it, and it says on screen that they are pre-built and when.
+- **The deployed artifact can be static.** Every fire in the window (237) ships pre-built, so a static deploy has no backend to fall over while someone is looking at it, and it says on screen that they are pre-built and when.
 - **Any other fire can be built live.** `python -m bushel.serve` searches CAL FIRE's perimeter service for any 2018–2023 California fire and runs the same pipeline on it at request time: perimeter, jurisdiction, seed zones, MTBS severity and 3DEP elevation all fetched from the agency services then and there. Only LEMMA comes from the local download, because it has no public service. The app shows a **Live** panel when that server is running and a **Pre-built** label when it isn't.
+
+### How the app is organised
+
+Bushel opens on a map of the United States, drawn state by state. California is built. The ten western states that Dobrowski et al. (2024) assessed alongside it are marked as next, because every California-only input has a public national counterpart and there is a published seed-limited need to check an order against. The rest are greyed out: Bushel will not show a figure it cannot check.
+
+From there it works like any map application, one level at a time, and every level has its own link:
+
+| Level | Link | What it shows |
+|---|---|---|
+| Nation | `/` | Coverage by state, one dot per built fire, and the search |
+| California | `?view=state` | Every fire and every county; counties ranked by ground that can't reseed |
+| County | `?county=06063` | The county's fires, each fire's share inside the county line, and the county's share of the order |
+| Address | `?at=39.760,-121.622` | The county the point falls in, whether it lies inside a fire's perimeter, and the nearest fires |
+| Fire | `?fire=north-complex-2020` | The seed order, its assumptions, every order line and its factor trail |
+
+One search covers all of it. Counties and fires match on the device. Addresses are looked up as you type with OpenStreetMap's Photon geocoder, the only request the app makes to a service it doesn't host. A searched address never goes into a link: the link carries the point, rounded to about 100 m.
+
+County figures come from `python -m bushel.geo`. It measures each fire's perimeter and seed-limited interior inside each of California's 58 counties (Census boundaries, California Albers), and splits each fire's default-factor order by its interior's share. So a county's order is an estimate by share, and it is labelled as one. A test holds the county roll-up to the fire index: each fire's county shares add back up to the whole fire, except any part that crossed into Oregon or Nevada, which the test measures; and the county acres add up to the statewide total.
 
 ### Pipeline stages
 
@@ -235,6 +253,8 @@ Everything is public and keyless. All but LEMMA are free of registration and ver
 | Pre-fire vegetation | LEMMA GNN.2023.1 (Oregon State University): 2017 map for 2018–2021 fires, 2021 map for 2022 fires |
 | Conversion factors | CAL FIRE 2025 Assessment of Needs, Table 2 |
 | Prices | CAL FIRE Seed and Seedlings Terms of Sale, Feb 2026 |
+| State and county boundaries | US Census cartographic boundary files, 2023 |
+| Address search (in the browser) | OpenStreetMap, through the Photon geocoder |
 
 Both CAL FIRE PDFs are committed to `reference/` along with the AON's extracted text, so every figure can be re-checked without a network call.
 
@@ -315,7 +335,7 @@ cd web && npm run build
 cd ../pipeline && python -m bushel.serve        # http://127.0.0.1:8787
 ```
 
-Type a fire name into **Build any fire**. Each build fetches that fire's layers from the agency services (about 30 s for a large fire) and adds it to the fire list under "Built live this session". During development, `npm run dev` proxies `/api` to the same server.
+Open California and type a fire name under **Build a fire from the agency services**. Each build fetches that fire's layers from the agency services (about 2 minutes for a mid-sized fire, up to 5 for the largest), opens its order, and adds it to the fire list under "Built live this session". During development, `npm run dev` proxies `/api` to the same server.
 
 The artifacts in `web/public/data/` cover **every** CAL FIRE perimeter from 2018 to 2023 of 1,000+ acres with an MTBS assessment (237 fires; `reference/statewide.json` lists any not built and why). They come from the statewide batch, which reuses the same per-fire pipeline, resumes where it stopped and records every outcome:
 
@@ -324,6 +344,7 @@ cd pipeline
 python -m bushel.statewide --out ../web/public/data --workers 3   # every fire; ~2 h; resumable
 python -m bushel.statewide --out ../web/public/data --retry-failed --workers 2
 python -m bushel.validate --out ../web/public/data                # statewide checks
+python -m bushel.geo --out ../web/public/data                     # national map, counties, each county's fires
 python ../scripts/fill_numbers.py                                   # copy figures into the docs
 ```
 

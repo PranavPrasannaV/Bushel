@@ -1,0 +1,185 @@
+/* State, county and place briefs: the sheet beside the map, and their report tables. */
+
+.region {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding: var(--space-5);
+}
+
+.region-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.region-name {
+  font-size: var(--text-xl);
+  line-height: 1.05;
+}
+
+.region-ledger > div[data-key] dt,
+.region-ledger > div[data-key] dd {
+  color: var(--sprout-800);
+  font-weight: var(--weight-medium);
+}
+
+.region-empty,
+.region-note {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+}
+
+/* A searched place leads the sheet. */
+.region-place {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-bottom: var(--space-5);
+  border-bottom: 1.5px dashed var(--color-border-strong);
+}
+
+.region-place-name {
+  font-size: var(--text-lg);
+  line-height: 1.15;
+}
+
+.region-place-detail {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--color-text-subtle);
+}
+
+.region-verdict {
+  margin-top: var(--space-1);
+  padding: var(--space-3);
+  border-left: 2px solid var(--color-text);
+  background: var(--color-surface-sunken);
+  font-size: var(--text-sm);
+}
+
+.region-verdict[data-inside] {
+  border-left-color: var(--sprout-700);
+  background: var(--sprout-100);
+}
+
+/* Ranked lists: a row per item, a bar under each sized against the first. */
+.ranked {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.ranked-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-rule);
+}
+
+.ranked-list li {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.ranked-list button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--space-1) var(--space-3);
+  width: 100%;
+  padding: var(--space-2) 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.ranked-list button::after {
+  content: '';
+  grid-column: 1 / -1;
+  width: max(2px, calc(var(--share, 0) * 100%));
+  height: 3px;
+  background: var(--sprout-500);
+}
+
+.ranked-list button:hover .ranked-label {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.ranked-label {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}
+
+.ranked-year {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--color-text-subtle);
+}
+
+.ranked-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+/* Report tables */
+.region-report {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+}
+
+.region-table-wrap {
+  overflow-x: auto;
+  margin-top: var(--space-2);
+  border-top: 1.5px solid var(--color-rule);
+  border-bottom: 1.5px solid var(--color-rule);
+}
+
+.region-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+}
+
+.region-table th,
+.region-table td {
+  padding: var(--space-2);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.region-table th:first-child {
+  padding-left: 0;
+}
+
+.region-table td:last-child,
+.region-table th:last-child {
+  padding-right: 0;
+}
+
+.region-table thead th {
+  padding-top: var(--space-3);
+  border-bottom: 1px solid var(--color-rule);
+  color: var(--color-text-subtle);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-regular);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.region-table tbody th {
+  font-weight: var(--weight-regular);
+}
+
+.region-table .num {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  text-align: right;
+  white-space: nowrap;
+}

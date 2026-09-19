@@ -1,0 +1,367 @@
+/* Home: the sheet's cover. Copy and search on the left, the national map on the right, then the figures,
+   where Bushel works, how an order is made, and fires to start with. */
+
+.home {
+  max-width: 90rem;
+  margin: 0 auto;
+  padding: 0 var(--space-6) var(--space-8);
+}
+
+.home-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 34rem) minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-7);
+  min-height: calc(100svh - var(--header-height) - 7rem);
+  padding: var(--space-7) 0 var(--space-6);
+}
+
+.home-copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.home-title {
+  font-size: clamp(2.5rem, 4.2vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.home-lede {
+  max-width: 32rem;
+  color: var(--color-text-muted);
+  font-size: var(--text-md);
+  line-height: var(--leading-normal);
+}
+
+.home-try {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.home-try .caps {
+  margin-right: var(--space-1);
+}
+
+.home-try button {
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  font-size: var(--text-xs);
+  transition:
+    border-color var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
+}
+
+.home-try button:hover {
+  border-color: var(--color-text);
+  background: var(--color-surface);
+}
+
+.home-map {
+  position: relative;
+  min-width: 0;
+}
+
+.home-map-wait {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 975 / 610;
+  color: var(--color-text-subtle);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+}
+
+/* A state called out on the map: a small sheet laid over the map's lower right. */
+.home-notice {
+  position: absolute;
+  right: 0;
+  bottom: 3rem;
+  z-index: var(--z-overlay);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  width: min(22rem, 100%);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sheet);
+}
+
+.home-notice button {
+  align-self: flex-start;
+}
+
+.home-notice .home-notice-close {
+  position: absolute;
+  top: var(--space-2);
+  right: var(--space-2);
+  width: 1.75rem;
+  height: 1.75rem;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  font-size: var(--text-lg);
+  line-height: 1;
+  color: var(--color-text-muted);
+}
+
+.home-notice .home-notice-close:hover {
+  background: var(--color-surface-sunken);
+  color: var(--color-text);
+}
+
+.home-notice-name {
+  font-size: var(--text-xl);
+  line-height: 1;
+}
+
+.home-notice-address {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.home-notice-detail {
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+}
+
+.home-notice--plain {
+  font-size: var(--text-sm);
+}
+
+/* Figures: one ruled strip. */
+.home-figures dl {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 0;
+  border-top: 1.5px solid var(--color-rule);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+.home-figures dl > div {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: var(--space-1);
+  padding: var(--space-4) var(--space-5) var(--space-4) 0;
+}
+
+.home-figures dl > div + div {
+  padding-left: var(--space-5);
+  border-left: 1px solid var(--color-border);
+}
+
+.home-figures dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.home-figures dd {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.home-figures div[data-key] dd {
+  color: var(--sprout-800);
+}
+
+.home-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  padding-top: var(--space-8);
+}
+
+.home-h2 {
+  font-size: var(--text-xl);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-rule);
+}
+
+/* Where it works: three tiers side by side. */
+.home-tiers {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+
+.home-tier {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: var(--space-3);
+  border-top: 3px solid var(--paper-300);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+}
+
+.home-tier[data-status='covered'] {
+  border-top-color: var(--ink-900);
+}
+
+.home-tier[data-status='next'] {
+  border-image: repeating-linear-gradient(45deg, var(--umber-300) 0 3px, var(--umber-200) 3px 6px) 1;
+}
+
+.home-tier h3 {
+  font-size: var(--text-lg);
+  color: var(--color-text);
+}
+
+.home-tier button {
+  align-self: flex-start;
+  margin-top: var(--space-2);
+}
+
+.home-tier-list {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--color-text-subtle);
+}
+
+/* How an order is made: four numbered steps. */
+.home-steps {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-steps li {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.home-steps h3 {
+  font-size: var(--text-lg);
+}
+
+.home-steps p {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+}
+
+/* Start with a fire: a ranked list with a bar under each name. */
+.home-fires {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: 52rem;
+}
+
+.home-fires li {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.home-fires button {
+  display: grid;
+  grid-template-columns: 14rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  padding: var(--space-3) 0;
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+
+.home-fires button:hover .home-fire-name {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.home-fire-name {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+}
+
+.home-fire-bar {
+  height: 6px;
+  background: var(--sprout-500);
+}
+
+.home-fire-value {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.home-foot {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-8);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--color-rule);
+  color: var(--color-text-subtle);
+  font-size: var(--text-xs);
+}
+
+@media (max-width: 1100px) {
+  .home-hero {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+  .home-figures dl,
+  .home-steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .home-figures dl > div:nth-child(3) {
+    padding-left: 0;
+    border-left: 0;
+  }
+  .home-tiers {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 760px) {
+  .home {
+    padding: 0 var(--space-4) var(--space-7);
+  }
+  .home-hero {
+    gap: var(--space-5);
+    padding-top: var(--space-5);
+  }
+  .home-title {
+    font-size: 2.25rem;
+  }
+  .home-notice {
+    position: static;
+    width: auto;
+    margin-top: var(--space-3);
+  }
+  .home-figures dl,
+  .home-steps {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .home-figures dl > div + div {
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid var(--color-border);
+  }
+  .home-fires button {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .home-fire-bar {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}

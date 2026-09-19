@@ -6,6 +6,7 @@ import { useEffect, useRef, useState, type CSSProperties, type JSX } from 'react
 import {
   LngLatBounds,
   Map as MapLibreMap,
+  Marker,
   setWorkerUrl,
   type FilterSpecification,
   type GeoJSONSource,
@@ -28,6 +29,8 @@ const OVERVIEW = 'statewide'
 const EMPTY: GeoJSON.FeatureCollection = { type: 'FeatureCollection', features: [] }
 const FIRE_LAYERS = ['retained', 'high-severity', 'perimeter', 'interior-glow', 'interior-fill', 'cells', 'interior-edge']
 const OVERVIEW_LAYERS = ['sw-state', 'sw-hit', 'sw-perimeter', 'sw-interior', 'sw-interior-edge', 'sw-marker']
+const COUNTIES = 'counties'
+const COUNTY_LAYERS = ['ct-fill', 'ct-line', 'ct-focus']
 
 // Layers that rise together as the one peak, and the opacity each reaches. They start at 0.
 // Cells lie only inside the interior, so their divisions are drawn over it and rise with it.
@@ -162,6 +165,38 @@ function overviewLayers(token: (name: string) => string): LayerSpecification[] {
   ]
 }
 
+/** California's counties, under the overview's fires: a hover tint, hairlines, and the chosen county in ink. */
+function countyLayers(token: (name: string) => string): LayerSpecification[] {
+  const hidden = { visibility: 'none' as const }
+  return [
+    {
+      id: 'ct-fill',
+      type: 'fill',
+      source: COUNTIES,
+      layout: hidden,
+      paint: {
+        'fill-color': token('--map-county-hover'),
+        'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 0.5, 0],
+      },
+    },
+    {
+      id: 'ct-line',
+      type: 'line',
+      source: COUNTIES,
+      layout: hidden,
+      paint: { 'line-color': token('--map-county-line'), 'line-width': 0.75 },
+    },
+    {
+      id: 'ct-focus',
+      type: 'line',
+      source: COUNTIES,
+      layout: hidden,
+      filter: ['==', ['get', 'fips'], ''],
+      paint: { 'line-color': token('--map-county-focus'), 'line-width': 2 },
+    },
+  ]
+}
+
 /** Set the peak layers to `level` (0 hidden, 1 full) over `ms` milliseconds. */
 function setPeak(map: MapLibreMap, level: 0 | 1, ms: number) {
   for (const [id, prop, full] of PEAK) {
@@ -200,8 +235,29 @@ export default function BurnMap(props: {
   overview?: GeoJSON.FeatureCollection | null
   showOverview?: boolean
   onPickFire?: (id: string) => void
+  /** California's counties, drawn under the overview; a click on one (off any fire) picks it. */
+  counties?: GeoJSON.FeatureCollection | null
+  focusCounty?: string | null
+  onPickCounty?: (fips: string) => void
+  /** Fit the overview to this box [west, south, east, north] instead of the whole state. */
+  fitBox?: [number, number, number, number] | null
+  /** A searched address, pinned on the overview. */
+  pin?: [number, number] | null
+  overviewTitle?: string
 }): JSX.Element {
-  const { geojson, planting, fireName, overview = null, showOverview = false, onPickFire } = props
+  const {
+    geojson,
+    planting,
+    overview = null,
+    showOverview = false,
+    onPickFire,
+    counties = null,
+    focusCounty = null,
+    onPickCounty,
+    fitBox = null,
+    pin = null,
+    overviewTitle = 'California, 2018–2023',
+  } = props
   const inOverview = showOverview && !!overview
   const rootRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLDivElement>(null)
@@ -255,6 +311,8 @@ export default function BurnMap(props: {
     m.on('load', () => {
       m.addSource(SOURCE, { type: 'geojson', data: EMPTY })
       for (const layer of mapLayers(token)) m.addLayer(layer)
+      m.addSource(COUNTIES, { type: 'geojson', data: EMPTY, promoteId: 'fips' })
+      for (const layer of countyLayers(token)) m.addLayer(layer)
       m.addSource(OVERVIEW, { type: 'geojson', data: EMPTY })
       for (const layer of overviewLayers(token)) m.addLayer(layer)
       setMap(m)
@@ -273,6 +331,61 @@ export default function BurnMap(props: {
     for (const id of FIRE_LAYERS) map.setLayoutProperty(id, 'visibility', inOverview ? 'none' : 'visible')
     rootRef.current!.dataset.view = inOverview ? 'overview' : 'fire'
   }, [map, overview, inOverview])
+
+  // Counties under the overview, the chosen one in ink.
+  useEffect(() => {
+    if (!map) return
+    map.getSource<GeoJSONSource>(COUNTIES)?.setData(counties ?? EMPTY)
+    const show = inOverview && !!counties
+    for (const id of COUNTY_LAYERS) map.setLayoutProperty(id, 'visibility', show ? 'visible' : 'none')
+    map.setFilter('ct-focus', ['==', ['get', 'fips'], focusCounty ?? ''])
+  }, [map, counties, focusCounty, inOverview])
+
+  // Hover tints a county; a click off any fire picks it.
+  useEffect(() => {
+    if (!map || !onPickCounty) return
+    let hovered: string | number | undefined
+    const clear = () => {
+      if (hovered !== undefined) map.setFeatureState({ source: COUNTIES, id: hovered }, { hover: false })
+      hovered = undefined
+    }
+    const move = (e: { features?: { id?: string | number }[] }) => {
+      const id = e.features?.[0]?.id
+      if (id === hovered) return
+      clear()
+      hovered = id
+      if (id !== undefined) map.setFeatureState({ source: COUNTIES, id }, { hover: true })
+      map.getCanvas().style.cursor = 'pointer'
+    }
+    const leave = () => {
+      clear()
+      map.getCanvas().style.cursor = ''
+    }
+    const pick = (e: { point: { x: number; y: number }; features?: { properties?: Record<string, unknown> }[] }) => {
+      if (map.queryRenderedFeatures([e.point.x, e.point.y], { layers: ['sw-hit'] }).length) return
+      const fips = e.features?.[0]?.properties?.fips
+      if (typeof fips === 'string') onPickCounty(fips)
+    }
+    map.on('mousemove', 'ct-fill', move)
+    map.on('mouseleave', 'ct-fill', leave)
+    map.on('click', 'ct-fill', pick)
+    return () => {
+      map.off('mousemove', 'ct-fill', move)
+      map.off('mouseleave', 'ct-fill', leave)
+      map.off('click', 'ct-fill', pick)
+    }
+  }, [map, onPickCounty])
+
+  // A searched address, as a pin.
+  useEffect(() => {
+    if (!map || !pin || !inOverview) return
+    const el = document.createElement('div')
+    el.className = 'burn-map__pin'
+    const marker = new Marker({ element: el, anchor: 'bottom' }).setLngLat(pin).addTo(map)
+    return () => {
+      marker.remove()
+    }
+  }, [map, pin, inOverview])
 
   // In the overview, a click inside a fire opens it.
   useEffect(() => {
@@ -298,7 +411,10 @@ export default function BurnMap(props: {
   useEffect(() => {
     const root = rootRef.current
     const target = inOverview ? overview : geojson
-    const bounds = target && boundsOf(target)
+    const bounds =
+      inOverview && fitBox
+        ? new LngLatBounds([fitBox[0], fitBox[1]], [fitBox[2], fitBox[3]])
+        : target && boundsOf(target)
     if (!map || !root || !bounds) return
     map.resize()
     const c = canvasRef.current!.getBoundingClientRect()
@@ -326,7 +442,7 @@ export default function BurnMap(props: {
     if (c.height - pad.top - pad.bottom < 220) pad.bottom = 24
     if (c.height - pad.top - pad.bottom < 180) pad.top = 24
     map.fitBounds(bounds, { padding: pad, duration: 0 })
-  }, [map, geojson, overview, inOverview, compact, box, fireName])
+  }, [map, geojson, overview, inOverview, compact, box, fitBox])
 
   // Draw the selected fire: the rest of the burn first, then the interior rises once the map is idle.
   useEffect(() => {
@@ -362,7 +478,7 @@ export default function BurnMap(props: {
 
       <div className="burn-map__legend" ref={legendRef}>
         {/* The fire's own name is set on the map as the stage's title block; the overview has no fire. */}
-        {inOverview && <h2 className="burn-map__name">California, 2018–2023</h2>}
+        {inOverview && <h2 className="burn-map__name">{overviewTitle}</h2>}
 
         {/* Each key leads with what it means on the ground; the technical name sits under it (and in the
             tooltip, since the compact strip drops the sub-lines). */}
@@ -414,8 +530,8 @@ export default function BurnMap(props: {
 
         {inOverview ? (
           <p className="burn-map__fraction burn-map__sub" role="status">
-            {new Set(overview!.features.map((f) => f.properties?.id).filter(Boolean)).size} fires, each one's seed-limited interior
-            lit. Select a fire to open its order.
+            {new Set(overview!.features.map((f) => f.properties?.id).filter(Boolean)).size} fires, each one&rsquo;s
+            seed-limited interior lit. Select a fire to open its order{counties ? ', or a county to see its fires' : ''}.
           </p>
         ) : planting ? (
           <p className="burn-map__fraction">

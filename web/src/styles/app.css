@@ -142,6 +142,58 @@ button {
   min-width: 0;
 }
 
+/* Breadcrumbs: where you are, from the nation down. */
+.crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 0;
+  padding: 0 0 0 var(--space-4);
+  list-style: none;
+  border-left: 1px solid var(--color-border-strong);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  min-width: 0;
+}
+
+.crumbs li {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.crumbs li + li::before {
+  content: '/';
+  margin: 0 var(--space-2);
+  color: var(--color-text-subtle);
+}
+
+.crumbs a {
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.crumbs a:hover {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.crumbs [aria-current='page'] {
+  color: var(--color-text);
+  font-weight: var(--weight-medium);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 18rem;
+}
+
+.topbar-search {
+  width: 22rem;
+  min-width: 0;
+}
+
 /* ---- Map stage: map, title block, slip ------------------------------------------- */
 
 .stage {
@@ -313,6 +365,35 @@ button {
   text-align: center;
 }
 
+/* A searched address on the map. */
+.burn-map__pin {
+  width: 1.125rem;
+  height: 1.125rem;
+  border: 2px solid var(--paper-50);
+  border-radius: 50% 50% 50% 0;
+  background: var(--ink-900);
+  box-shadow: 0 2px 6px rgb(22 25 21 / 0.4);
+  transform: rotate(-45deg);
+  transform-origin: center;
+}
+
+.region-live {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: var(--space-4);
+  border-top: 1.5px dashed var(--color-border-strong);
+}
+
+.region-live .live-field {
+  width: 100%;
+}
+
+.region-live .live-pop {
+  left: 0;
+  right: auto;
+}
+
 /* ---- Report: numbered sections with a contents rail -------------------------------- */
 
 .report {
@@ -322,6 +403,12 @@ button {
   max-width: 82rem;
   margin: 0 auto;
   padding: var(--space-8) var(--space-6) var(--space-9);
+}
+
+/* State and county reports have no contents rail: one column. */
+.report--single {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: 68rem;
 }
 
 .report-contents {
@@ -580,11 +667,25 @@ button {
 
 /* ---- Narrower screens -------------------------------------------------------------- */
 
+@media (max-width: 1280px) {
+  .crumbs li:not(:last-child):not(:first-child) {
+    display: none;
+  }
+  .crumbs li:first-child::after {
+    content: '/ …';
+    margin-left: var(--space-2);
+    color: var(--color-text-subtle);
+  }
+}
+
 @media (max-width: 1100px) {
   :root {
     --slip-width: 21rem;
   }
-  .topbar-tag {
+  .topbar-search {
+    width: 20rem;
+  }
+  .crumbs {
     display: none;
   }
   .report {
@@ -612,6 +713,9 @@ button {
     flex-direction: column;
     align-items: stretch;
     margin-left: 0;
+  }
+  .topbar-search {
+    width: 100%;
   }
   .stage {
     --cover-right: 0px;

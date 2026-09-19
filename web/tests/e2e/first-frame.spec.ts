@@ -1,10 +1,10 @@
-// T081 / T080 — the first frame is the peak, on a desktop and on a phone, against the real shipped data.
-// A judge opens the link and touches nothing: the featured fire must already be drawn, its interior lit.
+// T081 / T080: the first frames, on a desktop and on a phone, against the real shipped data. The home page is
+// the national map and one search; a fire's own link opens straight onto its lit interior and its order.
 import { expect, test, type Page } from '@playwright/test'
 
 const FEATURED = 'north-complex-2020'
 
-/** Pixels in the map canvas that read as the luminous interior (bright mint: high green, low red). */
+/** Pixels in the map canvas that read as the luminous interior (bright green: high green, low red). */
 async function interiorPixels(page: Page): Promise<number> {
   const shot = await page.locator('.burn-map__canvas canvas').screenshot({ mask: [page.locator('.burn-map__legend')] })
   return page.evaluate(async (b64) => {
@@ -23,12 +23,23 @@ async function interiorPixels(page: Page): Promise<number> {
   }, shot.toString('base64'))
 }
 
-test('with no input, the featured fire opens with its interior lit and its own link', async ({ page }) => {
+test('the home page is the national map: California built, the West next, and one search', async ({ page }) => {
   await page.goto('/')
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('which forest can’t grow back on its own')
+  await expect(page.getByRole('img', { name: /Map of the United States/ })).toBeVisible()
+  await expect(page.getByRole('link', { name: /Open California/ })).toBeVisible()
+  await expect(page.locator('.nation-dots circle')).toHaveCount(237)
+  await expect(page.locator('.nation-state[data-status="next"]')).toHaveCount(10)
+  await expect(page.getByRole('combobox', { name: 'Search a county, an address or a fire' })).toBeVisible()
+})
+
+test("a fire's own link opens with its interior lit and its order", async ({ page }) => {
+  await page.goto(`/?fire=${FEATURED}`)
   await expect(page.getByLabel('Fire', { exact: true })).toHaveValue(FEATURED)
   await expect(page.locator('.burn-map')).toHaveAttribute('data-peak', 'revealed', { timeout: 8000 })
   expect(await interiorPixels(page)).toBeGreaterThan(500)
-  await expect(page).toHaveURL(new RegExp(`\\?fire=${FEATURED}$`))
+  await expect(page.getByTestId('total-bushels')).toHaveText(/\d/)
+  await expect(page.getByRole('navigation', { name: 'Where you are' })).toContainText('North Complex')
 })
 
 test('a deep link opens that fire, and an unknown one falls back to the featured fire', async ({ page }) => {
@@ -44,7 +55,7 @@ test.describe('on a phone', () => {
   test('the interior is drawn without a resize, above the fold, and the page never scrolls sideways', async ({
     page,
   }) => {
-    await page.goto('/')
+    await page.goto(`/?fire=${FEATURED}`)
     await expect(page.locator('.burn-map')).toHaveAttribute('data-peak', 'revealed', { timeout: 8000 })
     expect(await interiorPixels(page)).toBeGreaterThan(300)
 
@@ -57,17 +68,28 @@ test.describe('on a phone', () => {
     expect(picker!.y).toBeLessThan(canvas!.y)
     expect(canvas!.y).toBeLessThan(812)
   })
+
+  test('the home page fits the phone: search first, then the map', async ({ page }) => {
+    await page.goto('/')
+    const search = await page.getByRole('combobox', { name: 'Search a county, an address or a fire' }).boundingBox()
+    const map = await page.getByRole('img', { name: /Map of the United States/ }).boundingBox()
+    expect(search!.y).toBeLessThan(map!.y)
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(375)
+  })
 })
 
-test('All fires shows every interior over California, and picking one opens its order', async ({ page }) => {
-  await page.goto('/?view=all')
+test('California shows every fire and its counties, and picking a county opens its brief', async ({ page }) => {
+  await page.goto('/?view=all') // the old overview link lands on California
   const map = page.locator('.burn-map')
   await expect(map).toHaveAttribute('data-view', 'overview', { timeout: 8000 })
   await expect(page.getByRole('heading', { name: 'California, 2018–2023' })).toBeVisible()
-  await expect(page.getByText(/fires, each one's seed-limited interior lit/)).toBeVisible()
+  await expect(page.getByText(/fires, each one’s seed-limited interior lit/)).toBeVisible()
   await expect.poll(() => interiorPixels(page), { timeout: 8000 }).toBeGreaterThan(10)
 
-  await page.getByRole('button', { name: /^Back to / }).click()
-  await expect(map).toHaveAttribute('data-view', 'fire')
-  await expect(page).not.toHaveURL(/view=all/)
+  await page.getByRole('button', { name: /^Butte County/ }).click()
+  await expect(page).toHaveURL(/county=06007/)
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Butte County')
+  await expect(page.locator('.region')).toContainText('Fires since 2018')
+  await page.goBack()
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('California')
 })

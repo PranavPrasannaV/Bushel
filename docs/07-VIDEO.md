@@ -22,8 +22,13 @@ the app, running `python -m bushel.serve`.
 > CAL FIRE publishes how much seed the state needs — once a year, for the whole state. That number
 > can't tell a forester what one fire needs. That's what Bushel does.
 
-## 0:30 — The peak (on screen: open the site; North Complex loads by itself)
+## 0:30 — The peak (on screen: the national map; search "Plumas", open the county, then North Complex)
 
+> Bushel opens on the country. California is built: 237 fires, one dot each. The western states are
+> next; the rest stay grey until there's a published figure to check an order against.
+>
+> *(type "Plumas" in the search; the county opens with its fires ranked; click North Complex)*
+>
 > This is the North Complex fire, 2020: 318,797 acres. Bushel keeps only state-responsibility land,
 > because that's CAL FIRE's jurisdiction, and reads how badly each acre burned from the federal
 > burn-severity record.
@@ -73,7 +78,7 @@ the app, running `python -m bushel.serve`.
 > figure also covers insect die-off and timber harvest, and it uses an internal boundary it doesn't
 > publish.
 
-## 3:20 — Live (on screen: terminal + the "Find a fire" search in the top bar, Live badge)
+## 3:20 — Live (on screen: terminal + California's "Build a fire from the agency services" field, Live badge)
 
 > The site ships with every fire from 2018 to 2023 already built. But Bushel isn't a recording.
 > Pick one — *(type "Monument", choose "Rebuild live")* — and it fetches that fire's perimeter,
@@ -85,7 +90,7 @@ the app, running `python -m bushel.serve`.
 > Same acres, same interior, same order — identical, field for field. Pre-built means built by this
 > pipeline, not made up.
 
-## 4:00 — Close (on screen: zoom out to California, every interior lit)
+## 4:00 — Close (on screen: breadcrumb back to California, then to the national map)
 
 > Fire maps tell you where a fire burned. Bushel tells you what to order to bring the forest
 > back — which species, from which seed zone, how many bushels, by when — and shows you its working.

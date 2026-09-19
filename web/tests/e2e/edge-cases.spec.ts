@@ -36,8 +36,8 @@ async function openFire(page: Page, id: string, record: Rec): Promise<string[]> 
   )
   const errors: string[] = []
   page.on('pageerror', (e) => errors.push(e.message))
-  await page.goto('/')
-  await page.getByLabel('Fire', { exact: true }).selectOption(id)
+  await page.goto(`/?fire=${id}`)
+  await expect(page.getByLabel('Fire', { exact: true })).toHaveValue(id)
   await expect(page.locator('.summary')).toBeVisible()
   return errors
 }

@@ -240,7 +240,20 @@ Two deliverables separated by the precompute boundary, per plan.md:
 - [X] T098 [P] **[C]** Add a README "What's next" section: the national extension against Dobrowski et al. 2024 (Bower seed zones, LANDFIRE, PAD-US), and CAL FIRE publishing the three LAMRC factors — *README "What's next"; Dobrowski et al. 2024 recorded in `docs/02-FACTS.md`*
 - [X] T099 **[U]** Rename the local folder `seedshed` to `bushel` (needs the editor closed) — *folder renamed to `bushel` once the editor released it; venv recreated*
 
-**Explicitly not doing**: the national extension as a feature (two days out, new data layers); a hosted live server (free tiers cannot hold ~1 GB of cache or the memory bursts); any AI or chat surface.
+### Phase 8b: A full application (done 2026-09-18)
+
+The app opened on one fire with no context. It now opens on the country and works down to a fire, with one
+search for any place. Design contract: `design-system/bushel/MASTER.md`.
+
+- [X] T100 **[C]** `pipeline/src/bushel/geo.py` (`python -m bushel.geo`): Census state and county boundaries; each fire's perimeter and interior measured inside each California county; `reference/us-states.geojson`, `ca-counties.geojson`, `counties.json`, `fire-points.json` — *58 counties, 55 with a built fire; county roll-up 53,638 ac and 2,144.0 bushels against the index's 53,639 ac and the roll-up's 2,143.8*
+- [X] T101 **[C]** `pipeline/tests/test_geo.py`: every fire lands in a county; each fire's county shares add up to its part in California, the rest measured outside the state line (Slater, Kelly, W-5 Cold Springs, North); the county acres add up to the index
+- [X] T102 **[C]** Home: `web/src/views/Home.tsx` + `components/NationMap.tsx`: the national map in Albers USA, California built with a dot per fire, the ten western states Dobrowski et al. (2024) assessed marked next, the rest greyed; coverage copy in `web/src/geo/coverage.ts` says what each tier lacks
+- [X] T103 **[C]** One search: `components/SearchBar.tsx`: counties and fires on the device, addresses through OpenStreetMap's Photon geocoder (CORS-open, keyless), keyboard combobox, "/" to focus
+- [X] T104 **[C]** Routes with their own links and working Back: nation, `?view=state`, `?county=`, `?at=` (the point only, rounded to ~100 m; never the address text), `?fire=`; breadcrumbs from the nation down — `web/src/route.ts`, `web/src/App.tsx`
+- [X] T105 **[C]** State, county and address briefs beside the map (`components/RegionPanel.tsx`): ranked counties, ranked fires with in-county shares, "inside the X fire's perimeter" or the nearest fires; the map draws county outlines, a focus county and an address pin (`BurnMap.tsx`; FR-006 guard extended to the new props)
+- [X] T106 **[C]** Browser tests for the new flows (`web/tests/e2e/search.spec.ts`, `first-frame.spec.ts`); fixture tests open fires by link — *24 browser tests*
+
+**Explicitly not doing**: the national extension as a feature (two days out, new data layers; the map shows it as next, not as built); a hosted live server (free tiers cannot hold ~1 GB of cache or the memory bursts); any AI or chat surface.
 
 ### Phase 8 schedule (deadline 20 Sep 14:00 PDT)
 

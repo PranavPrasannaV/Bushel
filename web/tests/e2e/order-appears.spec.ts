@@ -34,8 +34,8 @@ async function serveFixtures(page: Page) {
 
 test.beforeEach(async ({ page }) => {
   await serveFixtures(page)
-  await page.goto('/')
-  await page.getByLabel('Fire', { exact: true }).selectOption('fixture-fire')
+  await page.goto('/?fire=fixture-fire')
+  await expect(page.getByLabel('Fire', { exact: true })).toHaveValue('fixture-fire')
 })
 
 test('selecting a fire shows one line per cell × species with zone, band, species and bushels', async ({ page }) => {

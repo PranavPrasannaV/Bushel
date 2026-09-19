@@ -110,6 +110,9 @@
   --map-interior-fill: var(--sprout-500);
   --map-interior-line: var(--sprout-700);
   --map-interior-glow: rgb(22 191 132 / 0.35);
+  --map-county-line: var(--paper-500);
+  --map-county-hover: var(--paper-400);
+  --map-county-focus: var(--ink-900);
 
   /* ---- Typography ---------------------------------------------------------- */
 

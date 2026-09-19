@@ -35,8 +35,8 @@ const number = (text: string | null) => Number((text ?? '').replace(/,/g, ''))
 
 test.beforeEach(async ({ page }) => {
   await serveFixtures(page)
-  await page.goto('/')
-  await page.getByLabel('Fire', { exact: true }).selectOption('fixture-fire')
+  await page.goto('/?fire=fixture-fire')
+  await expect(page.getByLabel('Fire', { exact: true })).toHaveValue('fixture-fire')
   await expect(page.locator('tr.order-row')).toHaveCount(6)
 })
 

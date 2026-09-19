@@ -76,7 +76,7 @@ class Jobs:
 
 def make_handler(jobs: Jobs, web: Path):
     class Handler(SimpleHTTPRequestHandler):
-        # The OS type table decides otherwise (Windows serves .geojson as octet-stream), and the web app
+        # Left to the OS type table, Windows serves .geojson as octet-stream, and the web app
         # rejects any data file not typed as JSON.
         extensions_map = {
             **SimpleHTTPRequestHandler.extensions_map,

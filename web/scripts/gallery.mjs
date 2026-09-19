@@ -31,7 +31,13 @@ async function show(selector) {
   await page.waitForTimeout(300)
 }
 
-// 1. The first frame: the featured fire, its interior lit, the order slip on the map.
+// 0. Home: the national map, California built, the West next, one search.
+await page.goto(base)
+await page.waitForSelector('.nation-dots circle', { timeout: 45_000 })
+await page.waitForTimeout(600)
+await page.screenshot({ path: file('00-home.png') })
+
+// 1. A fire: its interior lit, the order slip on the map.
 await open('?fire=north-complex-2020')
 await page.screenshot({ path: file('01-first-frame.png') })
 
@@ -63,6 +69,12 @@ await page.waitForFunction(() => document.querySelector('.burn-map')?.dataset.vi
 })
 await page.waitForTimeout(6000) // the overview draws after its data and the map chunk arrive
 await page.screenshot({ path: file('07-all-fires.png') })
+
+// 8. A county: its fires ranked, its share of the order.
+await page.goto(new URL('?county=06063', base).href)
+await page.waitForSelector('.region-ledger', { timeout: 45_000 })
+await page.waitForTimeout(4000)
+await page.screenshot({ path: file('08-county.png') })
 
 console.log(`peak on last fire view: ${await peak()}; images in ${file('')}`)
 await browser.close()

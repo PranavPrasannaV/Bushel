@@ -1,0 +1,172 @@
+/* The national map. Covered is the one open sheet (paper, ink edge); next is hatched umber; the rest are
+   greyed paper. Fire dots use the interior's colour because each one is an interior. */
+
+.nation {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.nation-frame {
+  position: relative;
+}
+
+.nation-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.nation-state {
+  stroke: var(--paper-100);
+  stroke-width: 0.75;
+  cursor: pointer;
+  transition:
+    fill var(--duration-fast) var(--ease-out),
+    stroke var(--duration-fast) var(--ease-out);
+}
+
+.nation-state[data-status='later'] {
+  fill: var(--paper-300);
+}
+
+.nation-state[data-status='next'] {
+  fill: url(#nation-hatch);
+  stroke: var(--paper-50);
+}
+
+.nation-hatch-bg {
+  fill: var(--umber-200);
+}
+
+.nation-hatch-line {
+  stroke: var(--umber-300);
+  stroke-width: 2;
+}
+
+.nation-state[data-status='covered'] {
+  fill: var(--paper-50);
+  stroke: var(--ink-900);
+  stroke-width: 1.5;
+}
+
+.nation-state[data-hover],
+.nation-state[data-focus] {
+  stroke: var(--ink-900);
+  stroke-width: 1.5;
+}
+
+.nation-state[data-status='later'][data-hover] {
+  fill: var(--paper-400);
+}
+
+.nation-state[data-focus] {
+  stroke-dasharray: 4 3;
+}
+
+.nation-ca:focus-visible {
+  outline: none;
+}
+
+.nation-ca:focus-visible .nation-state,
+.nation-ca:hover .nation-state {
+  fill: var(--color-selected-bg);
+}
+
+.nation-dots circle {
+  fill: var(--sprout-500);
+  stroke: var(--sprout-800);
+  stroke-width: 0.6;
+  fill-opacity: 0.85;
+  pointer-events: none;
+}
+
+.nation-labels text {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  fill: var(--umber-700);
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+}
+
+.nation-tip {
+  position: absolute;
+  z-index: var(--z-tooltip);
+  min-width: 11rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sheet);
+  pointer-events: none;
+}
+
+.nation-tip-name {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  line-height: 1.1;
+}
+
+.nation-tip-status {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.nation-tip-status[data-status='covered'] {
+  color: var(--forest-700);
+}
+
+.nation-tip-cta {
+  margin-top: var(--space-1);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.nation-key {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-5);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--color-text-muted);
+}
+
+.nation-key-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.nation-swatch {
+  width: 0.875rem;
+  height: 0.625rem;
+  border: 1px solid var(--paper-100);
+}
+
+.nation-key-item[data-status='covered'] .nation-swatch {
+  background: var(--paper-50);
+  border-color: var(--ink-900);
+}
+
+.nation-key-item[data-status='next'] .nation-swatch {
+  background: repeating-linear-gradient(45deg, var(--umber-200) 0 2px, var(--umber-300) 2px 4px);
+}
+
+.nation-key-item[data-status='later'] .nation-swatch {
+  background: var(--paper-300);
+}
+
+.nation-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border: 1px solid var(--sprout-800);
+  border-radius: var(--radius-pill);
+  background: var(--sprout-500);
+}

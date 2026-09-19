@@ -43,16 +43,32 @@ describe('FR-006: threshold_m and baker_reference_fraction have no control', () 
     expect(offenders).toEqual([])
   })
 
-  it("BurnMap's props are data, plus one callback that only picks a fire", () => {
+  it("BurnMap's props are data, plus two callbacks that only pick a fire or a county", () => {
     const text = readFileSync(new URL('components/BurnMap.tsx', SRC), 'utf8')
     const sig = text.match(/export default function BurnMap\(\s*\w+\s*:\s*\{([\s\S]*?)\}\s*\)/)
     expect(sig, 'BurnMap signature not found').not.toBeNull()
     const props = sig![1]
     const keys = [...props.matchAll(/^\s*(\w+)\??\s*:/gm)].map((m) => m[1]).sort()
-    expect(keys).toEqual(['fireName', 'geojson', 'onPickFire', 'overview', 'planting', 'showOverview'])
-    // The one callback takes a fire id and nothing else: it cannot carry a threshold or a fraction.
+    expect(keys).toEqual([
+      'counties',
+      'fireName',
+      'fitBox',
+      'focusCounty',
+      'geojson',
+      'onPickCounty',
+      'onPickFire',
+      'overview',
+      'overviewTitle',
+      'pin',
+      'planting',
+      'showOverview',
+    ])
+    // The callbacks take a fire id or a county code and nothing else: neither can carry a threshold or a fraction.
     expect(props).toMatch(/onPickFire\?:\s*\(id: string\) => void/)
-    const rest = props.replace(/onPickFire\?:\s*\(id: string\) => void/, '')
+    expect(props).toMatch(/onPickCounty\?:\s*\(fips: string\) => void/)
+    const rest = props
+      .replace(/onPickFire\?:\s*\(id: string\) => void/, '')
+      .replace(/onPickCounty\?:\s*\(fips: string\) => void/, '')
     expect(rest).not.toMatch(/=>|\bon[A-Z]\w*|\bset[A-Z]\w*|Dispatch|SetStateAction/)
   })
 

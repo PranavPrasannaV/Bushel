@@ -36,7 +36,10 @@ forester what one fire needs. Bushel does the state's calculation for one fire, 
 
 ## What it does
 
-Open the site and you are already looking at the result: the North Complex fire (2020), 318,797 acres.
+Bushel opens on a map of the United States. California is built, one dot per fire; the ten western states
+with a published seed-limited need to check against are next; the rest are greyed out. One search finds
+any county, address or fire, and the app works down from there: California, a county, an address, a fire.
+Take the North Complex fire (2020), 318,797 acres:
 
 1. **Whose land.** The perimeter is clipped to CAL FIRE's State Responsibility Area, because that is the
    state's jurisdiction. The federal acres it leaves out are shown, not hidden.
@@ -57,8 +60,9 @@ Open the site and you are already looking at the result: the North Complex fire 
    internal nursery records. Bushel doesn't guess them silently: they're **amber**, labelled *"Not
    published by CAL FIRE"*, and adjustable. Slide one and the whole order recalculates instantly, in the
    browser.
-7. **All fires.** One click shows every fire at once over California, each seed-limited interior lit.
-   Click any fire to open its order, or search by name.
+7. **Any place.** Search a county and see its fires ranked by ground that can't reseed, with the county's
+   share of the order. Search an address and Bushel says which fire's perimeter it lies in, or how far the
+   nearest built fire is. Every view has its own link; a searched address never goes into one.
 
 ## How we built it
 
@@ -100,8 +104,10 @@ dollars          = pounds × price per lb                      CAL FIRE seed pri
 data. Units are enforced by tests, not convention: bushels are always *bushels of cones*; seeds per pound
 never stands in for seedlings per pound.
 
-**Tested end to end:** 170+ pipeline tests, 90+ unit tests and 17 browser tests, including one that checks
-the interior is visible on a phone, with no input, on first load.
+**Tested end to end:** 170+ pipeline tests, 90+ unit tests and 24 browser tests: the interior visible on a
+phone from a fire's own link, search from any page, an address inside a burn, and one outside California.
+A test also holds the county figures to the fire index: each fire's county shares add back up to the whole
+fire, except the part that crossed into Oregon or Nevada, which is measured.
 
 ## Is it right? Checked against published figures
 
@@ -220,6 +226,8 @@ task list (`specs/001-post-fire-seed-order/`).
 | Pre-fire vegetation | LEMMA GNN 2023.1, Oregon State University — the layer CAL FIRE's own assessment uses | download form; cited as the LEMMA team asks |
 | Stocking, conversion factors, benchmark | CAL FIRE 2025 Assessment of Needs (§E, Tables 1 and 2) | public PDF, in the repo |
 | Seed prices, seeds per pound, deadlines | CAL FIRE Seed and Seedlings Terms of Sale, Feb 2026 | public PDF, in the repo |
+| State and county boundaries | US Census cartographic boundary files, 2023 (1:20M states, 1:500k counties) | public download, keyless |
+| Address search | OpenStreetMap, through the Photon geocoder (komoot) | public service, keyless; only the typed query is sent |
 
 ## Built with
 

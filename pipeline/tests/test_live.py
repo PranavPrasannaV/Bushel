@@ -106,7 +106,7 @@ def test_health_reports_lemma_and_the_window(server):
 
 
 def test_prebuilt_map_data_is_served_as_json(server, tmp_path):
-    """The web app rejects data not typed as JSON; Windows' own type table calls .geojson octet-stream."""
+    """The app rejects data not typed as JSON; Windows' type table calls .geojson octet-stream."""
     fires = tmp_path / "data" / "fires"
     fires.mkdir(parents=True)
     (fires / "caldor-2021.geojson").write_text('{"type": "FeatureCollection", "features": []}')
