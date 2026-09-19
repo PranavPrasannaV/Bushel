@@ -5,7 +5,6 @@
 // The threshold and Baker's reference are fixed. Nothing here changes them (FR-006).
 import { useEffect, useRef, useState, type CSSProperties, type JSX } from 'react'
 import {
-  AttributionControl,
   LngLatBounds,
   Map as MapLibreMap,
   Marker,
@@ -31,9 +30,12 @@ const SOURCE = 'fire'
 const OVERVIEW = 'statewide'
 const EMPTY: GeoJSON.FeatureCollection = { type: 'FeatureCollection', features: [] }
 const FIRE_LAYERS = ['retained', 'high-severity', 'perimeter', 'interior-glow', 'interior-fill', 'cells', 'interior-edge']
-const OVERVIEW_LAYERS = ['sw-state', 'sw-hit', 'sw-perimeter', 'sw-interior', 'sw-interior-edge', 'sw-marker']
+const OVERVIEW_LAYERS = ['sw-state', 'sw-hit', 'sw-perimeter', 'sw-interior', 'sw-interior-edge', 'sw-marker', 'sw-fire']
 const COUNTIES = 'counties'
 const COUNTY_LAYERS = ['ct-fill', 'ct-line', 'ct-focus']
+const STATES = 'states'
+// The lower 48, with a margin: a state's map can be panned anywhere across the country, never off it.
+const LOWER_48: [number, number, number, number] = [-127.5, 23, -65, 50.5]
 
 // Layers that rise together as the one peak, and the opacity each reaches. They start at 0.
 // Cells lie only inside the interior, so their divisions are drawn over it and rise with it.
@@ -164,6 +166,54 @@ function overviewLayers(token: (name: string) => string): LayerSpecification[] {
         'circle-stroke-width': 0.5,
         'circle-stroke-opacity': ['interpolate', ['linear'], ['zoom'], 6, 0.8, 8.5, 0],
       },
+    },
+    // Outside California nothing is built until it is asked for: one dot per fire, its area proportional to the
+    // acres burned, in the burn's colour. The sprout green stays for ground that has been worked out.
+    {
+      id: 'sw-fire',
+      type: 'circle',
+      source: OVERVIEW,
+      filter: on('fire-point'),
+      layout: hidden,
+      paint: {
+        'circle-color': token('--map-high-severity-fill'),
+        'circle-radius': ['interpolate', ['linear'], ['sqrt', ['get', 'acres']], 30, 2.5, 700, 15],
+        'circle-opacity': ['interpolate', ['linear'], ['zoom'], 6, 0.7, 9, 0],
+        'circle-stroke-color': token('--map-perimeter-line'),
+        'circle-stroke-width': 0.75,
+        'circle-stroke-opacity': ['interpolate', ['linear'], ['zoom'], 6, 0.9, 9, 0],
+      },
+    },
+  ]
+}
+
+/** Every state's outline: hairlines, the others washed back, and a hover tint on a state you can move to. */
+function stateLayers(token: (name: string) => string): LayerSpecification[] {
+  const hidden = { visibility: 'none' as const }
+  return [
+    {
+      id: 'us-dim',
+      type: 'fill',
+      source: STATES,
+      layout: hidden,
+      paint: { 'fill-color': token('--map-canvas'), 'fill-opacity': 0.55 },
+    },
+    {
+      id: 'us-fill',
+      type: 'fill',
+      source: STATES,
+      layout: hidden,
+      paint: {
+        'fill-color': token('--map-county-hover'),
+        'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 0.45, 0],
+      },
+    },
+    {
+      id: 'us-line',
+      type: 'line',
+      source: STATES,
+      layout: hidden,
+      paint: { 'line-color': token('--map-state-line'), 'line-width': 0.9, 'line-opacity': 0.65 },
     },
   ]
 }
@@ -298,6 +348,11 @@ export default function BurnMap(props: {
   classes?: ClassRaster | null
   /** A live build outside California: the order's scope is non-federal land, not the state's area. */
   national?: boolean
+  /** Every state's outline, so the map sits in the country and another state is one click away. */
+  states?: GeoJSON.FeatureCollection | null
+  /** The state shown, by postal code: the rest are washed back. */
+  focusState?: string | null
+  onPickState?: (postal: string) => void
 }): JSX.Element {
   const {
     geojson,
@@ -313,6 +368,9 @@ export default function BurnMap(props: {
     overviewTitle = 'California, 2018–2023',
     classes = null,
     national = false,
+    states = null,
+    focusState = null,
+    onPickState,
   } = props
   const inOverview = showOverview && !!overview
   const rootRef = useRef<HTMLDivElement>(null)
@@ -357,7 +415,6 @@ export default function BurnMap(props: {
             tiles: [`${USGS}/USGSShadedReliefOnly/MapServer/tile/{z}/{y}/{x}`],
             tileSize: 256,
             maxzoom: 16,
-            attribution: 'Relief and water: USGS The National Map',
           },
           water: {
             type: 'raster',
@@ -394,7 +451,6 @@ export default function BurnMap(props: {
       maxPitch: 0,
     })
     m.touchZoomRotate.disableRotation()
-    m.addControl(new AttributionControl({ compact: true }), 'bottom-right')
     if (import.meta.env.DEV) (window as unknown as { __bushelMap?: MapLibreMap }).__bushelMap = m
     // A relief or water tile that fails is scenery missing, not an error worth reporting.
     m.on('error', (e) => {
@@ -406,6 +462,8 @@ export default function BurnMap(props: {
     // tiles, so a network that blocks the relief would otherwise leave the fire undrawn.
     const init = () => {
       if (m.getSource(SOURCE)) return
+      m.addSource(STATES, { type: 'geojson', data: EMPTY, promoteId: 'postal' })
+      for (const layer of stateLayers(token)) m.addLayer(layer)
       m.addSource(SOURCE, { type: 'geojson', data: EMPTY })
       for (const layer of mapLayers(token)) m.addLayer(layer)
       m.addSource(COUNTIES, { type: 'geojson', data: EMPTY, promoteId: 'fips' })
@@ -475,6 +533,48 @@ export default function BurnMap(props: {
     }
   }, [map, onPickCounty])
 
+  // Every state's outline; in an overview the others are washed back, and one click away.
+  useEffect(() => {
+    if (!map) return
+    map.getSource<GeoJSONSource>(STATES)?.setData(states ?? EMPTY)
+    map.setLayoutProperty('us-line', 'visibility', states ? 'visible' : 'none')
+    for (const id of ['us-dim', 'us-fill']) map.setLayoutProperty(id, 'visibility', states && inOverview ? 'visible' : 'none')
+    map.setFilter('us-dim', ['!=', ['get', 'postal'], focusState ?? ''])
+  }, [map, states, focusState, inOverview])
+
+  // In an overview, another state tints under the pointer, and a click there (off any fire or county) opens it.
+  useEffect(() => {
+    if (!map || !onPickState || !inOverview) return
+    let hovered: string | undefined
+    const other = (e: { features?: { properties?: Record<string, unknown> }[] }) => {
+      const postal = e.features?.[0]?.properties?.postal
+      return typeof postal === 'string' && postal !== focusState ? postal : undefined
+    }
+    const set = (postal: string | undefined) => {
+      if (postal === hovered) return
+      if (hovered) map.setFeatureState({ source: STATES, id: hovered }, { hover: false })
+      hovered = postal
+      if (postal) map.setFeatureState({ source: STATES, id: postal }, { hover: true })
+      map.getCanvas().style.cursor = postal ? 'pointer' : ''
+    }
+    const move = (e: { features?: { properties?: Record<string, unknown> }[] }) => set(other(e))
+    const leave = () => set(undefined)
+    const pick = (e: { point: { x: number; y: number }; features?: { properties?: Record<string, unknown> }[] }) => {
+      if (map.queryRenderedFeatures([e.point.x, e.point.y], { layers: ['sw-hit', 'sw-fire', 'ct-fill'] }).length) return
+      const postal = other(e)
+      if (postal) onPickState(postal)
+    }
+    map.on('mousemove', 'us-fill', move)
+    map.on('mouseleave', 'us-fill', leave)
+    map.on('click', 'us-fill', pick)
+    return () => {
+      set(undefined)
+      map.off('mousemove', 'us-fill', move)
+      map.off('mouseleave', 'us-fill', leave)
+      map.off('click', 'us-fill', pick)
+    }
+  }, [map, onPickState, inOverview, focusState])
+
   // A searched address, as a pin.
   useEffect(() => {
     if (!map || !pin || !inOverview) return
@@ -495,13 +595,17 @@ export default function BurnMap(props: {
     }
     const pointer = () => (map.getCanvas().style.cursor = 'pointer')
     const plain = () => (map.getCanvas().style.cursor = '')
-    map.on('click', 'sw-hit', pick)
-    map.on('mouseenter', 'sw-hit', pointer)
-    map.on('mouseleave', 'sw-hit', plain)
+    for (const id of ['sw-hit', 'sw-fire']) {
+      map.on('click', id, pick)
+      map.on('mouseenter', id, pointer)
+      map.on('mouseleave', id, plain)
+    }
     return () => {
-      map.off('click', 'sw-hit', pick)
-      map.off('mouseenter', 'sw-hit', pointer)
-      map.off('mouseleave', 'sw-hit', plain)
+      for (const id of ['sw-hit', 'sw-fire']) {
+        map.off('click', id, pick)
+        map.off('mouseenter', id, pointer)
+        map.off('mouseleave', id, plain)
+      }
     }
   }, [map, onPickFire])
 
@@ -540,18 +644,26 @@ export default function BurnMap(props: {
     if (c.width - pad.left - pad.right < 240) pad.left = pad.right = 24
     if (c.height - pad.top - pad.bottom < 220) pad.bottom = 24
     if (c.height - pad.top - pad.bottom < 180) pad.top = 24
-    // The leash: the map is locked to the frame it opens on. At that zoom it hardly moves; zoomed in, it pans
-    // anywhere inside the frame, never out of it and never further out than the frame.
+    // The leash. A fire is locked to the frame it opens on: at that zoom it hardly moves; zoomed in, it pans
+    // anywhere inside the frame, never out of it. A state or county map can travel the lower 48 and zoom out to
+    // all of it, but never off the country into empty paper.
     map.setMaxBounds(null)
     map.setMinZoom(0)
     map.fitBounds(bounds, { padding: pad, duration: 0 })
     const view = map.getBounds()
     const dx = (view.getEast() - view.getWest()) * 0.04
     const dy = (view.getNorth() - view.getSouth()) * 0.04
-    map.setMinZoom(Math.max(0, map.getZoom() - 0.1))
+    let [w, s, e, n] = [view.getWest() - dx, view.getSouth() - dy, view.getEast() + dx, view.getNorth() + dy]
+    let minZoom = map.getZoom() - 0.1
+    if (inOverview) {
+      ;[w, s, e, n] = [Math.min(w, LOWER_48[0]), Math.min(s, LOWER_48[1]), Math.max(e, LOWER_48[2]), Math.max(n, LOWER_48[3])]
+      const country = map.cameraForBounds([w, s, e, n], { padding: 0 })
+      if (country?.zoom !== undefined) minZoom = Math.min(minZoom, country.zoom)
+    }
+    map.setMinZoom(Math.max(0, minZoom))
     map.setMaxBounds([
-      [view.getWest() - dx, view.getSouth() - dy],
-      [view.getEast() + dx, view.getNorth() + dy],
+      [w, s],
+      [e, n],
     ])
   }, [map, geojson, overview, inOverview, compact, box, fitBox])
 
@@ -632,13 +744,23 @@ export default function BurnMap(props: {
         {/* Each key leads with what it means on the ground; the technical name sits under it (and in the
             tooltip, since the compact strip drops the sub-lines). */}
         <ul className="burn-map__keys" aria-label="Map legend">
-          <li title="Seed-limited interior: high-severity burn more than 90 m from ground that did not burn severely">
-            <span className="burn-map__swatch burn-map__swatch--interior" aria-hidden="true" />
-            <span>
-              Too far from surviving trees to reseed
-              <span className="burn-map__sub">Seed-limited interior: more than 90 m inside high-severity burn</span>
-            </span>
-          </li>
+          {inOverview && national ? (
+            <li title="MTBS burned-area boundaries, largest first">
+              <span className="burn-map__swatch burn-map__swatch--fire" aria-hidden="true" />
+              <span>
+                A fire, sized by the acres it burned
+                <span className="burn-map__sub">Not worked out yet: select it to build its order live</span>
+              </span>
+            </li>
+          ) : (
+            <li title="Seed-limited interior: high-severity burn more than 90 m from ground that did not burn severely">
+              <span className="burn-map__swatch burn-map__swatch--interior" aria-hidden="true" />
+              <span>
+                Too far from surviving trees to reseed
+                <span className="burn-map__sub">Seed-limited interior: more than 90 m inside high-severity burn</span>
+              </span>
+            </li>
+          )}
           {!inOverview && (
             <>
               <li title="Rest of high-severity burn: within 90 m of surviving trees">
@@ -679,10 +801,16 @@ export default function BurnMap(props: {
           <p className="burn-map__threshold">{THRESHOLD_STATEMENT}</p>
         </div>
 
-        {inOverview ? (
+        {inOverview && national ? (
+          <p className="burn-map__fraction burn-map__sub" role="status">
+            The {overview!.features.filter((f) => f.properties?.layer === 'fire-point').length} largest fires MTBS has
+            mapped here. Select one to build its order live{onPickState ? ', or another state to move there' : ''}.
+          </p>
+        ) : inOverview ? (
           <p className="burn-map__fraction burn-map__sub" role="status">
             {new Set(overview!.features.map((f) => f.properties?.id).filter(Boolean)).size} fires, each one&rsquo;s
-            seed-limited interior lit. Select a fire to open its order{counties ? ', or a county to see its fires' : ''}.
+            seed-limited interior lit. Select a fire to open its order{counties ? ', or a county to see its fires' : ''}
+            {onPickState ? ', or another state to move there' : ''}.
           </p>
         ) : planting ? (
           <p className="burn-map__fraction">
@@ -711,6 +839,7 @@ export default function BurnMap(props: {
               : 'Select a fire to draw its perimeter and seed-limited interior.'}
           </p>
         )}
+        <p className="burn-map__credit">Relief and water: USGS The National Map</p>
       </div>
     </div>
   )

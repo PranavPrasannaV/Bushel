@@ -19,13 +19,10 @@ export interface FirePoints {
 export default function NationMap({
   states,
   points,
-  focus,
   onState,
 }: {
   states: GeoJSON.FeatureCollection
   points: FirePoints | null
-  /** A state to call out (a searched address outside California), by postal code. */
-  focus?: string | null
   onState: (postal: string) => void
 }) {
   const [hover, setHover] = useState<{ postal: string; name: string; x: number; y: number } | null>(null)
@@ -79,20 +76,29 @@ export default function NationMap({
               <line x1="0" y1="0" x2="0" y2="6" className="nation-hatch-line" />
             </pattern>
           </defs>
+          {/* Every state is a link to its own map: the lower 48 list their fires to build live. */}
           <g>
             {shapes
               .filter((s) => s.postal !== 'CA')
               .map((s) => (
-                <path
+                <a
                   key={s.postal}
-                  d={s.d}
-                  className="nation-state"
-                  data-status={s.status}
-                  data-focus={focus === s.postal || undefined}
-                  data-hover={hover?.postal === s.postal || undefined}
-                  onPointerMove={track(s)}
-                  onClick={() => onState(s.postal)}
-                />
+                  href={`?state=${s.postal}`}
+                  className="nation-link"
+                  aria-label={`${s.name}: ${COVERAGE_COPY[s.status].label.toLowerCase()}`}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    onState(s.postal)
+                  }}
+                >
+                  <path
+                    d={s.d}
+                    className="nation-state"
+                    data-status={s.status}
+                    data-hover={hover?.postal === s.postal || undefined}
+                    onPointerMove={track(s)}
+                  />
+                </a>
               ))}
           </g>
           {/* California on top, as the one open sheet: a link into the state. */}
@@ -127,7 +133,7 @@ export default function NationMap({
               {COVERAGE_COPY[tip.status].label}
             </p>
             <p className="nation-tip-cta">
-              {tip.status === 'covered' ? 'Open California →' : tip.status === 'live' ? 'Pick a fire to build →' : 'Why not yet →'}
+              {tip.status === 'covered' ? 'Open California →' : tip.status === 'live' ? `Open ${tip.name}'s fires →` : 'Why not yet →'}
             </p>
           </div>
         )}

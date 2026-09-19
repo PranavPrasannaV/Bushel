@@ -1,3 +1,4 @@
+/// <reference types="geojson" />
 // The national services a live build reads, all public, keyless and open to browsers (CORS), each asked
 // for exactly one fire's extent at the moment of the build. Nothing here is bundled with the site.
 // This module is light (no raster decoding), so the search can use it from the main bundle.
@@ -163,20 +164,66 @@ export async function searchFires(query: string, signal?: AbortSignal): Promise<
   return body.features.map((f) => toFire(f.attributes))
 }
 
-/** The largest recent fires in a state, by postal code. */
-export async function largestInState(postal: string, signal?: AbortSignal): Promise<NationalFire[]> {
+/** Esri rings as GeoJSON: an outer ring runs clockwise and starts a polygon; the holes after it run the other way. */
+export function esriPolygon(rings: Ring[]): GeoJSON.MultiPolygon {
+  const polygons: Ring[][] = []
+  for (const ring of rings) {
+    let twice = 0
+    for (let i = 0; i < ring.length - 1; i++) twice += ring[i][0] * ring[i + 1][1] - ring[i + 1][0] * ring[i][1]
+    if (twice <= 0 || !polygons.length) polygons.push([ring])
+    else polygons[polygons.length - 1].push(ring)
+  }
+  return { type: 'MultiPolygon', coordinates: polygons }
+}
+
+/** The first year a state's map lists fires from. */
+export const STATE_SINCE = 2015
+
+/**
+ * A state's largest wildfires since STATE_SINCE, with their perimeters in lon/lat, simplified to ~400 m for a
+ * state-wide map: each as a perimeter feature and a point at its centre, both carrying the fire's id.
+ */
+export async function stateFires(
+  postal: string,
+  signal?: AbortSignal,
+): Promise<{ fires: NationalFire[]; features: GeoJSON.Feature[] }> {
   const body = await getJson<{ features: EsriFeature[] }>(
     `${SERVICES.perimeters.url}/query`,
     {
-      where: `${WILDFIRES} AND fire_id LIKE '${postal.replace(/[^A-Z]/g, '')}%' AND year>=2017`,
+      where: `${WILDFIRES} AND fire_id LIKE '${postal.replace(/[^A-Z]/g, '')}%' AND year>=${STATE_SINCE} AND acres>=1000`,
       outFields: FIELDS,
-      returnGeometry: 'false',
+      returnGeometry: 'true',
+      outSR: 4326,
+      maxAllowableOffset: 0.004,
+      geometryPrecision: 4,
       orderByFields: 'acres DESC',
-      resultRecordCount: 6,
+      resultRecordCount: 80,
     },
     signal,
   )
-  return body.features.map((f) => toFire(f.attributes))
+  const fires: NationalFire[] = []
+  const features: GeoJSON.Feature[] = []
+  for (const f of body.features) {
+    const fire = toFire(f.attributes)
+    fires.push(fire)
+    const rings = f.geometry?.rings
+    if (!rings?.length) continue
+    const properties = { id: fire.id, name: fire.name, year: fire.year, acres: fire.acres }
+    features.push({ type: 'Feature', properties: { ...properties, layer: 'perimeter' }, geometry: esriPolygon(rings) })
+    let [w, s, e, n] = [Infinity, Infinity, -Infinity, -Infinity]
+    for (const [x, y] of rings[0]) {
+      w = Math.min(w, x)
+      s = Math.min(s, y)
+      e = Math.max(e, x)
+      n = Math.max(n, y)
+    }
+    features.push({
+      type: 'Feature',
+      properties: { ...properties, layer: 'fire-point' },
+      geometry: { type: 'Point', coordinates: [(w + e) / 2, (s + n) / 2] },
+    })
+  }
+  return { fires, features }
 }
 
 /** Fires within ~`km` of a point, largest first. */

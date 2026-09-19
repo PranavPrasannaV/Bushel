@@ -198,7 +198,7 @@ button {
 
 .stage {
   /* What covers the map's right edge; the map key stops short of it. */
-  --cover-right: calc(var(--slip-width) + 2 * var(--space-5));
+  --cover-right: calc(var(--slip-width) + var(--space-5));
   position: relative;
   height: calc(100svh - var(--header-height));
   min-height: 36rem;
@@ -207,8 +207,9 @@ button {
 }
 
 .stage[data-view='overview'] {
-  --cover-right: 0px;
+  --cover-right: calc(var(--slip-width) + var(--space-5));
 }
+
 
 .map-region {
   position: absolute;
@@ -268,54 +269,128 @@ button {
   background: var(--sprout-500);
 }
 
+/* The sheet's margin. A survey quadrangle carries a collar beside its map: the neatline (a heavy rule with a
+   fine one outside it, ticked where the graticule meets it), then the marginal notes. The slip is that collar,
+   the full height of the map, never a card floating on it. The running title reads up its inner edge. */
 .slip-region {
   position: absolute;
-  top: var(--space-5);
-  right: var(--space-5);
+  top: 0;
+  right: 0;
+  bottom: 0;
   z-index: var(--z-panel);
   width: var(--slip-width);
-  max-height: calc(100% - 2 * var(--space-5));
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  border: 1px solid var(--color-rule);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  box-shadow: var(--shadow-sheet);
-  scrollbar-width: thin;
+  display: grid;
+  grid-template-columns: var(--rail-width) minmax(0, 1fr);
+  border-left: 2px solid var(--ink-900);
+  background: var(--paper-50);
+}
+
+/* The fine outer rule, and the graticule's ticks crossing it every 48 px, in step with the map's grid. */
+.slip-region::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -8px;
+  width: 1px;
+  background: var(--ink-900);
+  pointer-events: none;
+}
+
+.slip-region::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -14px;
+  width: 12px;
+  background: repeating-linear-gradient(to bottom, var(--ink-900) 0 1px, transparent 1px 48px);
+  pointer-events: none;
 }
 
 .slip-region[data-hidden='true'] {
   display: none;
 }
 
-.slip-region > .order-intro,
-.slip-region > .state-card {
+/* The running title, read bottom to top, with the sheet's number at the far end. */
+.slip-rail {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin: 0;
+  padding: var(--space-5) 0;
+  border-right: 1px solid var(--color-rule);
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  text-align: center;
+  line-height: var(--rail-width);
+  white-space: nowrap;
+  overflow: hidden;
+  color: var(--color-text-muted);
+  background: var(--paper-100);
+}
+
+.slip-rail span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slip-rail span:last-child {
+  flex: none;
+  color: var(--color-text-subtle);
+}
+
+.slip-body {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.slip-body > .order-intro,
+.slip-body > .state-card {
   margin: var(--space-5);
 }
 
+/* The action, as the collar's foot: a solid forest band across the full width, held at the bottom. */
 .slip-actions {
+  position: sticky;
+  bottom: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
-  padding: var(--space-4) var(--space-5) var(--space-5);
-  /* The perforation: the slip tears here. */
-  background:
-    radial-gradient(circle at 0 0, var(--color-bg) 0.45rem, transparent 0.5rem) left top / 1rem 1rem no-repeat,
-    radial-gradient(circle at 100% 0, var(--color-bg) 0.45rem, transparent 0.5rem) right top / 1rem 1rem no-repeat;
-  border-top: 1.5px dashed var(--color-border-strong);
+  margin-top: auto;
+  padding: var(--space-3) var(--space-3) var(--space-3) var(--space-5);
+  background: var(--forest-700);
+  color: var(--paper-50);
+}
+
+.slip-actions .button-primary {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--paper-50);
+  background: var(--paper-50);
+  color: var(--forest-700);
+}
+
+.slip-actions .button-primary:hover {
+  background: var(--paper-200);
 }
 
 .slip-more {
   font-family: var(--font-mono);
   font-size: var(--text-xs);
-  color: var(--color-text-muted);
+  color: var(--paper-300);
   text-decoration: none;
 }
 
 .slip-more:hover {
-  color: var(--color-text);
+  color: var(--paper-50);
 }
 
 /* "All fires" / "Back to <fire>": the one control on the map. */
@@ -739,14 +814,43 @@ button {
     top: var(--space-4);
     right: var(--space-4);
   }
+  /* On a phone the collar runs under the map: the neatline turns to lie along its top, the running title
+     becomes a strip above the sheet, and the action band follows the order. */
   .slip-region {
     position: relative;
     top: auto;
     right: auto;
+    bottom: auto;
     width: auto;
-    max-height: none;
-    margin: var(--space-4) var(--space-3) 0;
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 14px;
+    border-left: 0;
+    border-top: 2px solid var(--ink-900);
+  }
+  .slip-region::before {
+    top: -8px;
+    bottom: auto;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 1px;
+  }
+  .slip-region::after {
+    display: none;
+  }
+  .slip-rail {
+    writing-mode: horizontal-tb;
+    transform: none;
+    padding: 0 var(--space-4);
+    border-right: 0;
+    border-bottom: 1px solid var(--color-rule);
+    line-height: 2rem;
+  }
+  .slip-body {
     overflow: visible;
+  }
+  .slip-actions {
+    position: static;
   }
   .report {
     padding: var(--space-6) var(--space-4) var(--space-8);

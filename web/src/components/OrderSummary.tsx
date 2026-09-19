@@ -8,6 +8,9 @@ import type { FireIndexEntry, FireRecord, Order } from '../convert/types.ts'
 import { fmtAcres, fmtInt, fmtQty, fmtUsd } from './OrderTable.tsx'
 import './OrderSummary.css'
 
+/** The species in an order, darkest first: ink and burn tones, never the interior's green. */
+const MIX_TONES = ['var(--ink-900)', 'var(--umber-600)', 'var(--umber-300)', 'var(--paper-400)']
+
 export default function OrderSummary({
   entry,
   record,
@@ -24,12 +27,21 @@ export default function OrderSummary({
   const known = (v: number | null) => (t.lines === 0 ? null : v)
   const tpa = order.assumptions_used.find((a) => a.name === 'stocking_tpa')?.current_value
   const gapSpecies = [...new Set(order.lines.filter((l) => l.gap !== null).map((l) => l.species))]
+  // What the bushels are made of: the four largest species and the rest, as shares of the total.
+  const bySpecies = Object.entries(order.totals.by_species)
+    .map(([species, totals]) => ({ species, bushels: totals.bushels.value ?? 0 }))
+    .filter((x) => x.bushels > 0)
+    .sort((a, b) => b.bushels - a.bushels)
+  const allBushels = bySpecies.reduce((sum, x) => sum + x.bushels, 0)
+  const mix = bySpecies.slice(0, MIX_TONES.length)
+  const rest = bySpecies.slice(MIX_TONES.length).reduce((sum, x) => sum + x.bushels, 0)
+  if (rest > 0) mix.push({ species: `${bySpecies.length - MIX_TONES.length} more`, bushels: rest })
+  const pctOf = (v: number) => `${Math.max(1, Math.round((v / allBushels) * 100))}%`
 
   // The order as a requisition slip: what it is for, the headline figure, then the ledger.
   return (
     <section className="summary slip" aria-label="Order summary">
       <header className="slip-head">
-        <span className="slip-hole" aria-hidden="true" />
         <p className="slip-kind">Seed requisition</p>
         <h2 className="slip-fire">
           {fire?.name ?? entry.name} <span className="slip-year">{fire?.year ?? entry.year}</span>
@@ -55,11 +67,35 @@ export default function OrderSummary({
       {!order.finding && (
         <div className="totals">
           <div className="headline">
+            <p className="headline-label">To order</p>
             <p className="headline-figure" data-testid="total-bushels">
               {fmtQty(known(t.bushels.value))}
             </p>
             <p className="headline-unit">{t.bushels.unit}</p>
           </div>
+          {allBushels > 0 && (
+            <div className="mix">
+              <p className="headline-label">What the bushels are</p>
+              <p
+                className="mix-bar"
+                role="img"
+                aria-label={mix.map((m) => `${m.species} ${pctOf(m.bushels)}`).join(', ')}
+              >
+                {mix.map((m, i) => (
+                  <span key={m.species} style={{ flexGrow: m.bushels, background: MIX_TONES[i] } as CSSProperties} data-rest={i >= MIX_TONES.length || undefined} />
+                ))}
+              </p>
+              <ul className="mix-key">
+                {mix.map((m, i) => (
+                  <li key={m.species}>
+                    <span className="mix-swatch" style={{ background: MIX_TONES[i] } as CSSProperties} data-rest={i >= MIX_TONES.length || undefined} aria-hidden="true" />
+                    <span className="mix-name">{m.species}</span>
+                    <span className="mix-pct">{pctOf(m.bushels)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           <dl className="ledger">
             <div>
               <dt>Clean seed</dt>

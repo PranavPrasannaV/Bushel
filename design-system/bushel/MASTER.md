@@ -21,9 +21,9 @@ Tokens live in `web/src/styles/tokens.css`; this file is the reasoning they foll
 
 | Width | Top bar | Map stage | Slip | Report |
 |---|---|---|---|---|
-| ≥ 1100 px | wordmark · fire picker · find-a-fire · data mode | full width, `100vh − bar` | floats right, 376 px | margin contents + 46 rem column |
-| 761–1099 px | same, search narrower | full width, 72vh | floats right, 336 px | single column |
-| ≤ 760 px | wordmark row; picker + search row | 58vh, title overlaid | sheet under the map, overlapping it by 24 px | single column |
+| ≥ 1100 px | wordmark · crumbs · fire picker · search | full width, `100vh − bar` | the collar: full height at the right edge, 400 px | margin contents + 46 rem column |
+| 761–1099 px | same, search narrower | full width | the collar, 336 px | single column |
+| ≤ 760 px | wordmark row; picker + search row | 58vh, title overlaid | under the map: the neatline along its top, the running title as a strip | single column |
 
 ## Colour
 
@@ -52,12 +52,18 @@ Tokens live in `web/src/styles/tokens.css`; this file is the reasoning they foll
 
 - The map title block: fire name in display serif, then a mono stamp line (year · acres · data date)
   over a 1 px ink rule, like a USGS quadrangle title.
-- The requisition slip: a punched tag hole, mono header ("Seed requisition"), the 72 px figure, ledger
-  rows with dotted leaders, a perforated divider above the action.
+- The collar. The panel beside the map is the sheet's margin, not a card: full height at the right edge,
+  behind a neatline (2 px ink with a 1 px rule outside it) ticked every 48 px in step with the map's grid.
+  A running title reads up its inner edge in mono capitals ("Seed requisition — North Complex, 2020"), with
+  the sheet's place in the set (1 of 3 state, 2 of 3 county, 3 of 3 fire) at the far end. The figure to
+  order sits in a ruled band across the collar; what the bushels are is one stacked species bar in ink and
+  burn tones (never sprout); ledger rows keep their dotted leaders; the action is a solid forest band held
+  at the collar's foot. No radius, no shadow.
 - The survey grid under the map: faint 48 px graticule on the canvas, with USGS shaded relief and water
   laid over it at low opacity and no saturation, so every view sits in its landscape.
-- The leash: each map view is locked to the frame it opens on (fire, county or state); zooming in pans
-  within it, never out of it.
+- The leash: a fire is locked to the frame it opens on; zooming in pans within it, never out of it. A
+  state or county map can travel the lower 48 and zoom out to all of it, never off the country. State lines
+  sit under every map; in a state or county view the other states are washed back and one click away.
 - Numbered report sections (`01 —`) with a sticky contents rail.
 
 ## Motion
@@ -71,3 +77,6 @@ UI transitions are 150–240 ms on colour and transform. `prefers-reduced-motion
 - Mercury invoice: serif document title, labelled ledger columns.
 - Obvious report page: long-form report with a margin contents list and caps eyebrows.
 - Transit (iOS): one plain sentence over a single share bar.
+- Posh ticket checkout: the total set large in its own ruled column. Hers review drawer: a full-height panel
+  on the edge with a solid action band at its foot. komoot route planner: one stacked bar for a mix
+  (surfaces there, species here).

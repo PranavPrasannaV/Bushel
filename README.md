@@ -191,6 +191,7 @@ From there it works like any map application, one level at a time, and every lev
 |---|---|---|
 | Nation | `/` | Coverage by state, one dot per built fire, and the search |
 | California | `?view=state` | Every fire and every county; counties ranked by ground that can't reseed |
+| Any other state | `?state=OR` | The state's largest fires since 2015 from MTBS, drawn on its map; each one is built live when picked |
 | County | `?county=06063` | The county's fires, each fire's share inside the county line, and the county's share of the order |
 | Address | `?at=39.760,-121.622` | The county the point falls in, whether it lies inside a fire's perimeter, and the nearest fires |
 | Fire | `?fire=north-complex-2020` | The seed order, its assumptions, every order line and its factor trail |

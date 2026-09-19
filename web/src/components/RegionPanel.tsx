@@ -2,7 +2,9 @@
 // ranked list to open. Every in-county figure is the county's share of whole fires, and says so.
 import type { CSSProperties, ReactNode } from 'react'
 import type { FireIndexEntry } from '../convert/types.ts'
+import { COVERAGE_COPY, type Coverage } from '../geo/coverage.ts'
 import { fmt, OUTCOME, type Address, type Counties, type County, type CountyFire, type NearFire } from '../geo/places.ts'
+import { STATE_SINCE, type NationalFire } from '../national/api.ts'
 import './RegionPanel.css'
 
 const fmtKm = (km: number) => (km < 10 ? km.toFixed(1) : Math.round(km).toString())
@@ -45,6 +47,7 @@ function Ranked<T>({
   measure,
   onOpen,
   caption,
+  tone,
 }: {
   items: T[]
   label: (x: T) => ReactNode
@@ -52,10 +55,12 @@ function Ranked<T>({
   measure: (x: T) => number
   onOpen: (x: T) => void
   caption: string
+  /** 'burn' when the bars are acres burned: the sprout green is kept for ground that can't reseed. */
+  tone?: 'burn'
 }) {
   const top = Math.max(1, ...items.map(measure))
   return (
-    <div className="ranked">
+    <div className="ranked" data-tone={tone}>
       <p className="caps">{caption}</p>
       <ol className="ranked-list">
         {items.map((x, i) => (
@@ -101,7 +106,7 @@ export function StatePanel({
           ['Fires built', fmt(fires.length)],
           ['Counties with a built fire', `${list.length} of 58`],
           ["Ground that can't reseed", `${fmt(interior)} ac`, true],
-          ['Seed order, all fires', `${fmt(bushels)} bushels of cones`],
+          ['Seed order, all fires', `${fmt(bushels)} bushels`],
         ]}
       />
       {ranked.length > 0 && (
@@ -115,6 +120,107 @@ export function StatePanel({
         />
       )}
       {children}
+    </section>
+  )
+}
+
+/** A state outside California: nothing built ahead, so its largest fires, each one built live when picked. */
+export function NationalStatePanel({
+  name,
+  status,
+  fires,
+  error,
+  address,
+  near,
+  onFire,
+  onCalifornia,
+  onRetry,
+}: {
+  name: string
+  status: Coverage
+  /** The state's largest fires; null while MTBS is asked. */
+  fires: NationalFire[] | null
+  error?: string | null
+  /** A searched address in this state, and the fires near it. */
+  address?: string | null
+  near?: NationalFire[] | null
+  onFire: (f: NationalFire) => void
+  onCalifornia: () => void
+  onRetry: () => void
+}) {
+  const list = (items: NationalFire[], caption: string) => (
+    <Ranked
+      caption={caption}
+      items={items.slice(0, 10)}
+      label={(f: NationalFire) => (
+        <>
+          {f.name} <span className="ranked-year">{f.year}</span>
+        </>
+      )}
+      value={(f: NationalFire) => `${fmt(f.acres)} ac`}
+      measure={(f: NationalFire) => f.acres}
+      onOpen={onFire}
+      tone="burn"
+    />
+  )
+  return (
+    <section className="region" aria-label={name}>
+      <header className="region-head">
+        <p className="slip-kind">{COVERAGE_COPY[status].label}</p>
+        <h2 className="region-name">{name}</h2>
+        <p className="stamp">
+          <span>{status === 'live' ? `MTBS fires since ${STATE_SINCE}` : 'Outside the severity mosaic'}</span>
+          <span>{status === 'live' ? 'Not yet checked' : 'Lower 48 only'}</span>
+        </p>
+      </header>
+
+      {address && (
+        <p className="region-verdict">
+          {address} is in {name}. {status === 'live' ? 'Pick a fire near it to build its order live.' : ''}
+        </p>
+      )}
+
+      {status === 'later' ? (
+        <>
+          <p className="region-empty">{COVERAGE_COPY.later.detail}</p>
+          <button type="button" className="button-quiet" onClick={onCalifornia}>
+            Open California instead
+          </button>
+        </>
+      ) : error ? (
+        <div className="region-verdict" role="alert">
+          <p>MTBS did not answer: {error}</p>
+          <button type="button" className="button-quiet" onClick={onRetry}>
+            Ask again
+          </button>
+        </div>
+      ) : fires === null ? (
+        <p className="region-empty" role="status">
+          Asking MTBS for {name}&rsquo;s fires…
+        </p>
+      ) : (
+        <>
+          {address && near && near.length > 0 && list(near, 'Fires within 60 km · build one live')}
+          {fires.length > 0 ? (
+            <>
+              <Ledger
+                rows={[
+                  [`Fires of 1,000+ acres since ${STATE_SINCE}`, fmt(fires.length) + (fires.length >= 80 ? '+' : '')],
+                  ['Acres they burned', `${fmt(fires.reduce((s, f) => s + f.acres, 0))} ac`],
+                  ["Ground that can't reseed", 'when built'],
+                ]}
+              />
+              {list(fires, 'Largest fires · build one live')}
+            </>
+          ) : (
+            <p className="region-empty">
+              MTBS has mapped no wildfire of 1,000+ acres here since {STATE_SINCE}. Search a fire by name for older
+              ones.
+            </p>
+          )}
+          <p className="region-note">{COVERAGE_COPY.live.detail}</p>
+        </>
+      )}
     </section>
   )
 }

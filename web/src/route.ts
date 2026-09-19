@@ -1,6 +1,6 @@
 // Where the app is, as a URL. Every view has its own link, and the browser's back button walks the path.
 //   (none)                   the national map
-//   ?state=OR                the national map, with a state outside coverage called out
+//   ?state=OR                any other state: its largest fires on a map, each built live when picked
 //   ?view=state              California (?view=all, the old overview link, lands here too)
 //   ?county=06063            one county
 //   ?at=lat,lon             a searched address: the point only, rounded to ~100 m. The address text
@@ -10,7 +10,8 @@
 import type { Address } from './geo/places.ts'
 
 export type Route =
-  | { view: 'nation'; state?: string }
+  | { view: 'nation' }
+  | { view: 'region'; state: string }
   | { view: 'state' }
   | { view: 'county'; fips: string }
   | { view: 'place'; address: Address }
@@ -36,12 +37,14 @@ export function parseRoute(search: string): Route {
   const view = q.get('view')
   if (view === 'state' || view === 'all') return { view: 'state' }
   const state = q.get('state')?.toUpperCase()
-  return state && /^[A-Z]{2}$/.test(state) && state !== 'CA' ? { view: 'nation', state } : { view: 'nation' }
+  if (state === 'CA') return { view: 'state' }
+  return state && /^[A-Z]{2}$/.test(state) ? { view: 'region', state } : { view: 'nation' }
 }
 
 export function routeSearch(r: Route): string {
   const enc = encodeURIComponent
-  if (r.view === 'nation') return r.state ? `?state=${enc(r.state)}` : ''
+  if (r.view === 'nation') return ''
+  if (r.view === 'region') return `?state=${enc(r.state)}`
   if (r.view === 'state') return '?view=state'
   if (r.view === 'county') return `?county=${enc(r.fips)}`
   if (r.view === 'fire') return `?fire=${enc(r.id)}`

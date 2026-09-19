@@ -52,8 +52,7 @@
   stroke-width: 1.5;
 }
 
-.nation-state[data-hover],
-.nation-state[data-focus] {
+.nation-state[data-hover] {
   stroke: var(--ink-900);
   stroke-width: 1.5;
 }
@@ -66,12 +65,14 @@
   stroke: var(--ink-900);
 }
 
-.nation-state[data-focus] {
-  stroke-dasharray: 4 3;
+.nation-ca:focus-visible,
+.nation-link:focus-visible {
+  outline: none;
 }
 
-.nation-ca:focus-visible {
-  outline: none;
+.nation-link:focus-visible .nation-state {
+  stroke: var(--ink-900);
+  stroke-width: 2;
 }
 
 .nation-ca:focus-visible .nation-state,

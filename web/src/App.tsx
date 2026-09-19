@@ -7,7 +7,7 @@ import { LiveProgress, LiveSources } from './components/LivePanel.tsx'
 import type { FirePoints } from './components/NationMap.tsx'
 import OrderSummary, { AcreageFunnel } from './components/OrderSummary.tsx'
 import OrderTable from './components/OrderTable.tsx'
-import { CountiesReport, CountyPanel, CountyReport, StatePanel } from './components/RegionPanel.tsx'
+import { CountiesReport, CountyPanel, CountyReport, NationalStatePanel, StatePanel } from './components/RegionPanel.tsx'
 import SearchBar from './components/SearchBar.tsx'
 import Validation from './components/Validation.tsx'
 import { computeOrder } from './convert/computeOrder.ts'
@@ -15,7 +15,8 @@ import type { Assumptions, Factors, FireIndex, FireIndexEntry, FireRecord, Order
 import { getData, getFireData, isLive } from './data.ts'
 import { downloadOrderExport } from './export/exportOrder.ts'
 import { countyAt, firesNear, fmt, type Address, type Counties, type NearFire } from './geo/places.ts'
-import type { NationalFire } from './national/api.ts'
+import { coverage } from './geo/coverage.ts'
+import { firesAround, STATE_SINCE, stateFires, type NationalFire } from './national/api.ts'
 import type { NationalBuild, Step } from './national/build.ts'
 import { parseRoute, routeSearch, type Route } from './route.ts'
 import Home from './views/Home.tsx'
@@ -114,10 +115,10 @@ export default function App() {
   const regional = route.view === 'state' || route.view === 'county' || route.view === 'place'
   // A California fire is drawn inside its county lines too.
   const withCounties = regional || route.view === 'fire'
-  const national = route.view === 'nation' || route.view === 'place' || route.view === 'live'
   const counties = useReference<Counties>('reference/counties.json', true)
-  const states = useReference<GeoJSON.FeatureCollection>('reference/us-states.geojson', national)
-  const points = useReference<FirePoints>('reference/fire-points.json', national)
+  // Every map sits in the country: the state lines are drawn under all of them.
+  const states = useReference<GeoJSON.FeatureCollection>('reference/us-states.geojson', true)
+  const points = useReference<FirePoints>('reference/fire-points.json', route.view === 'nation')
   const outlines = useReference<GeoJSON.FeatureCollection>('reference/ca-counties.geojson', withCounties)
   const overview = useReference<GeoJSON.FeatureCollection>('reference/statewide.geojson', regional)
 
@@ -213,12 +214,14 @@ export default function App() {
   }, [routeLive, liveTry]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const openFire = useCallback((id: string) => navigate({ view: 'fire', id }), [navigate])
-  const openLive = useCallback((f: NationalFire) => navigate({ view: 'live', id: f.id }), [navigate])
+  const openLiveId = useCallback((id: string) => navigate({ view: 'live', id }), [navigate])
+  const openLive = useCallback((f: NationalFire) => openLiveId(f.id), [openLiveId])
   const openCounty = useCallback((fips: string) => navigate({ view: 'county', fips }), [navigate])
   const openState = useCallback(
-    (postal: string) => navigate(postal === 'CA' ? { view: 'state' } : { view: 'nation', state: postal }),
+    (postal: string) => navigate(postal === 'CA' ? { view: 'state' } : { view: 'region', state: postal }),
     [navigate],
   )
+  const openCalifornia = useCallback(() => openState('CA'), [openState])
   const openAddress = useCallback(
     (a: Address) => {
       setPlaceText(a)
@@ -285,7 +288,7 @@ export default function App() {
     [place, overview],
   )
 
-  // A searched address outside California goes to the national map, its state called out.
+  // A searched address outside California opens its state, with the fires near it.
   const outside = place && ((place.state && place.state !== 'California') || (outlines && !placeCounty)) ? place : null
   const stateByName = useMemo(() => {
     const m = new Map<string, { postal: string; name: string }>()
@@ -311,19 +314,64 @@ export default function App() {
   const county =
     route.view === 'county' ? counties?.counties[route.fips] : placeCounty ? counties?.counties[placeCounty] : undefined
 
-  const view = outside ? 'nation' : route.view
+  const outsideState = outside?.state ? stateByName.get(outside.state) : null
+  const view = outside ? (outsideState ? 'region' : 'nation') : route.view
   const isFire = view === 'fire' || view === 'live'
   const liveState = live && route.view === 'live' && live.id === route.id ? live : null
+  const liveStatePostal = liveBuild?.fire.state ?? (route.view === 'live' ? route.id.slice(0, 2) : null)
   const liveStateName = liveBuild ? stateByPostal.get(liveBuild.fire.state)?.name ?? liveBuild.fire.state : null
+
+  // A state outside California: its outline at once, then its largest fires from MTBS, asked for on arrival.
+  const regionPostal = route.view === 'region' ? route.state : view === 'region' ? (outsideState?.postal ?? null) : null
+  const regionName = regionPostal ? (stateByPostal.get(regionPostal)?.name ?? regionPostal) : ''
+  const regionStatus = regionPostal ? coverage(regionPostal) : null
+  const [regionFires, setRegionFires] = useState<{ postal: string; fires: NationalFire[]; features: GeoJSON.Feature[]; error?: string } | null>(null)
+  const [regionTry, setRegionTry] = useState(0)
+  useEffect(() => {
+    if (!regionPostal || regionStatus !== 'live') return
+    const ctrl = new AbortController()
+    const postal = regionPostal
+    stateFires(postal, ctrl.signal)
+      .then((r) => setRegionFires({ postal, ...r }))
+      .catch((err: unknown) => {
+        if (!ctrl.signal.aborted) setRegionFires({ postal, fires: [], features: [], error: errorText(err) })
+      })
+    return () => ctrl.abort()
+  }, [regionPostal, regionStatus, regionTry])
+  const shownRegion = regionFires?.postal === regionPostal ? regionFires : null
+  const nearKey = view === 'region' && outside ? `${outside.lon},${outside.lat}` : ''
+  const [regionNear, setRegionNear] = useState<{ key: string; fires: NationalFire[] } | null>(null)
+  useEffect(() => {
+    if (!nearKey || !outside || regionStatus !== 'live') return
+    const ctrl = new AbortController()
+    firesAround(outside.lon, outside.lat, 60, ctrl.signal)
+      .then((fires) => setRegionNear({ key: nearKey, fires }))
+      .catch(() => setRegionNear({ key: nearKey, fires: [] }))
+    return () => ctrl.abort()
+  }, [nearKey]) // eslint-disable-line react-hooks/exhaustive-deps
+  const regionOverview = useMemo<GeoJSON.FeatureCollection | null>(() => {
+    const outline = states?.features.find((f) => f.properties?.postal === regionPostal)
+    if (!outline) return null
+    return {
+      type: 'FeatureCollection',
+      features: [{ ...outline, properties: { ...outline.properties, layer: 'state' } }, ...(shownRegion?.features ?? [])],
+    }
+  }, [states, regionPostal, shownRegion])
 
   // One map for the state, county, place and fire views. Memoised: a slider moves the order, not the map.
   const fitBox = view === 'county' || view === 'place' ? (county?.bbox ?? null) : null
-  const pin = useMemo<[number, number] | null>(
-    () => (place && !outside ? [place.lon, place.lat] : null),
-    [place, outside],
-  )
-  const overviewTitle = view === 'state' ? 'California, 2018–2023' : county ? `${county.name} County` : 'California'
+  const pin = useMemo<[number, number] | null>(() => (place ? [place.lon, place.lat] : null), [place])
+  const overviewTitle =
+    view === 'region'
+      ? `${regionName}, fires since ${STATE_SINCE}`
+      : view === 'state'
+        ? 'California, 2018–2023'
+        : county
+          ? `${county.name} County`
+          : 'California'
   const focusCounty = county?.fips ?? null
+  const inRegion = view === 'region'
+  const focusState = inRegion ? regionPostal : isLiveView ? liveStatePostal : 'CA'
   const map = useMemo(
     () => (
       <MapBoundary>
@@ -332,17 +380,20 @@ export default function App() {
             geojson={geojson}
             planting={planting}
             fireName={fireName}
-            overview={overview}
+            overview={inRegion ? regionOverview : overview}
             showOverview={!isFire}
-            onPickFire={openFire}
-            counties={isLiveView ? null : outlines}
+            onPickFire={inRegion ? openLiveId : openFire}
+            counties={isLiveView || inRegion ? null : outlines}
             focusCounty={focusCounty}
             onPickCounty={openCounty}
             fitBox={fitBox}
             pin={pin}
             overviewTitle={overviewTitle}
             classes={classes}
-            national={isLiveView}
+            national={isLiveView || inRegion}
+            states={states}
+            focusState={focusState}
+            onPickState={openState}
           />
         </Suspense>
       </MapBoundary>
@@ -352,8 +403,11 @@ export default function App() {
       planting,
       fireName,
       overview,
+      regionOverview,
+      inRegion,
       isFire,
       openFire,
+      openLiveId,
       outlines,
       focusCounty,
       openCounty,
@@ -362,6 +416,9 @@ export default function App() {
       overviewTitle,
       classes,
       isLiveView,
+      states,
+      focusState,
+      openState,
     ],
   )
   const validation = useMemo(() => <Validation />, [])
@@ -371,7 +428,11 @@ export default function App() {
   const crumbs: [string, (() => void) | null][] = [
     ['United States', view === 'nation' ? null : () => navigate({ view: 'nation' })],
   ]
-  if (view === 'live' && liveStateName) crumbs.push([liveStateName, null])
+  if (view === 'live' && liveStatePostal) {
+    const postal = liveStatePostal
+    crumbs.push([stateByPostal.get(postal)?.name ?? postal, () => openState(postal)])
+  }
+  else if (view === 'region') crumbs.push([regionName, null])
   else if (view !== 'nation') crumbs.push(['California', view === 'state' ? null : () => navigate({ view: 'state' })])
   if (view === 'county' && county) crumbs.push([`${county.name} County`, null])
   if (view === 'place' && county) crumbs.push([`${county.name} County`, () => openCounty(county.fips)])
@@ -383,6 +444,16 @@ export default function App() {
   }
 
   const year = record?.fire?.year ?? entry?.year
+  // The margin's running title, read up the sheet's edge, and where the sheet sits in the set.
+  const railTitle =
+    view === 'fire' || view === 'live'
+      ? `Seed requisition — ${fireName || 'fire'}${year ? `, ${year}` : ''}`
+      : view === 'region'
+        ? `${regionStatus === 'live' ? 'Built live on request' : 'Not yet covered'} — ${regionName}`
+        : view === 'state'
+          ? 'State brief — California, 2018–2023'
+          : `County brief — ${county ? `${county.name} County` : 'California'}`
+  const railSheet = view === 'fire' || view === 'live' ? '3 of 3' : view === 'county' || view === 'place' ? '2 of 3' : '1 of 3'
   const perimeterAcres = record?.retained?.perimeter_acres ?? entry?.perimeter_acres
   const hasOrder = isFire && shownReady && !!order && !order.finding
   const sections = [
@@ -396,14 +467,6 @@ export default function App() {
     },
   ].filter((x) => x.show)
   const num = (id: string) => String(sections.findIndex((x) => x.id === id) + 1).padStart(2, '0')
-
-  const outsideState = outside?.state ? stateByName.get(outside.state) : null
-  const nationFocus =
-    outside && outsideState
-      ? { ...outsideState, address: placeShown?.label, lon: outside.lon, lat: outside.lat }
-      : route.view === 'nation' && route.state
-        ? (stateByPostal.get(route.state) ?? null)
-        : null
 
   return (
     <div className="shell" data-view={view}>
@@ -487,13 +550,11 @@ export default function App() {
             counties={counties}
             states={states}
             points={points}
-            focus={nationFocus}
             onState={openState}
             onCounty={openCounty}
             onFire={openFire}
             onAddress={openAddress}
             onLive={openLive}
-            onDismiss={() => navigate({ view: 'nation' })}
           />
         </main>
       )}
@@ -541,6 +602,21 @@ export default function App() {
                 </p>
               </div>
             )}
+            {view === 'region' && regionPostal && (
+              <div className="title-block">
+                <p className="title-kicker">United States · {regionStatus === 'live' ? 'built live on request' : 'not yet'}</p>
+                <h1 className="title-name">{regionName}</h1>
+                {shownRegion && shownRegion.fires.length > 0 && (
+                  <p className="title-stamp">
+                    <span>
+                      {shownRegion.fires.length}
+                      {shownRegion.fires.length >= 80 ? '+' : ''} fires since {STATE_SINCE}
+                    </span>
+                    <span>Pick one to build it live</span>
+                  </p>
+                )}
+              </div>
+            )}
             {(view === 'county' || view === 'place') && county && (
               <div className="title-block">
                 <p className="title-kicker">California</p>
@@ -558,80 +634,101 @@ export default function App() {
               </div>
             )}
 
+            {/* The sheet's margin: the collar a survey quadrangle carries beside its map, with the running title
+                set up its edge. */}
             <aside className="slip-region" aria-label={isFire ? 'Seed order' : 'Brief'}>
-              {view === 'live' && liveState && liveState.status !== 'ready' && (
-                <LiveProgress
-                  steps={liveState.steps}
-                  status={liveState.status}
-                  message={liveState.message}
-                  onRetry={() => setLiveTry((n) => n + 1)}
-                />
-              )}
-              {view === 'state' && (
-                <StatePanel counties={counties} fires={prebuilt} onCounty={openCounty}>
-                  <div className="region-live">
-                    <p className="caps">Build a fire from the agency services</p>
-                    <LiveBuild
-                      prebuilt={load.index.fires}
-                      generatedAt={load.index.generated_at}
-                      onPick={openFire}
-                      onBuilt={onBuilt}
-                    />
-                  </div>
-                </StatePanel>
-              )}
-              {(view === 'county' || view === 'place') &&
-                (county ? (
-                  <CountyPanel
-                    county={county}
-                    fires={allFires}
-                    onFire={openFire}
-                    place={view === 'place' ? (placeShown ?? undefined) : undefined}
-                    near={view === 'place' ? near : undefined}
+              <p className="slip-rail" aria-hidden="true">
+                <span>{railTitle}</span>
+                <span>Bushel · sheet {railSheet}</span>
+              </p>
+              <div className="slip-body">
+                {view === 'live' && liveState && liveState.status !== 'ready' && (
+                  <LiveProgress
+                    steps={liveState.steps}
+                    status={liveState.status}
+                    message={liveState.message}
+                    onRetry={() => setLiveTry((n) => n + 1)}
                   />
-                ) : (
+                )}
+                {view === 'state' && (
+                  <StatePanel counties={counties} fires={prebuilt} onCounty={openCounty}>
+                    <div className="region-live">
+                      <p className="caps">Build a fire from the agency services</p>
+                      <LiveBuild
+                        prebuilt={load.index.fires}
+                        generatedAt={load.index.generated_at}
+                        onPick={openFire}
+                        onBuilt={onBuilt}
+                      />
+                    </div>
+                  </StatePanel>
+                )}
+                {view === 'region' && regionPostal && regionStatus && (
+                  <NationalStatePanel
+                    name={regionName}
+                    status={regionStatus}
+                    fires={shownRegion ? shownRegion.fires : null}
+                    error={shownRegion?.error}
+                    address={outside ? placeShown?.label : null}
+                    near={regionNear?.key === nearKey ? regionNear.fires : null}
+                    onFire={openLive}
+                    onCalifornia={openCalifornia}
+                    onRetry={() => setRegionTry((n) => n + 1)}
+                  />
+                )}
+                {(view === 'county' || view === 'place') &&
+                  (county ? (
+                    <CountyPanel
+                      county={county}
+                      fires={allFires}
+                      onFire={openFire}
+                      place={view === 'place' ? (placeShown ?? undefined) : undefined}
+                      near={view === 'place' ? near : undefined}
+                    />
+                  ) : (
+                    <div className="order-intro" role="status">
+                      <div className="spinner" aria-hidden="true" />
+                      <p className="detail">{counties ? 'Finding the county…' : 'Loading California’s counties…'}</p>
+                    </div>
+                  ))}
+
+                {view === 'fire' && fire.status === 'loading' && (
                   <div className="order-intro" role="status">
                     <div className="spinner" aria-hidden="true" />
-                    <p className="detail">{counties ? 'Finding the county…' : 'Loading California’s counties…'}</p>
+                    <p className="detail">Loading this fire&rsquo;s cells…</p>
                   </div>
-                ))}
-
-              {view === 'fire' && fire.status === 'loading' && (
-                <div className="order-intro" role="status">
-                  <div className="spinner" aria-hidden="true" />
-                  <p className="detail">Loading this fire&rsquo;s cells…</p>
-                </div>
-              )}
-              {view === 'fire' && fire.status === 'error' && (
-                <div className="state-card state-card--error" role="alert">
-                  <h2>Could not load this fire</h2>
-                  <p className="detail">{fire.message}</p>
-                </div>
-              )}
-              {isFire && shownReady && record && order && entry && (
-                <>
-                  <OrderSummary entry={entry} record={record} order={order} />
-                  <div className="slip-actions">
-                    {!order.finding && (
-                      <button
-                        type="button"
-                        className="button-primary"
-                        onClick={() => downloadOrderExport(order, record, load.factors)}
-                      >
-                        Export order
-                      </button>
-                    )}
-                    <a className="slip-more" href={order.finding ? '#from-fire' : '#lines'}>
-                      {order.finding
-                        ? 'See the acreage'
-                        : order.lines.length === 1
-                          ? 'The order line'
-                          : `All ${order.lines.length} lines`}
-                      <span aria-hidden="true"> ↓</span>
-                    </a>
+                )}
+                {view === 'fire' && fire.status === 'error' && (
+                  <div className="state-card state-card--error" role="alert">
+                    <h2>Could not load this fire</h2>
+                    <p className="detail">{fire.message}</p>
                   </div>
-                </>
-              )}
+                )}
+                {isFire && shownReady && record && order && entry && (
+                  <>
+                    <OrderSummary entry={entry} record={record} order={order} />
+                    <div className="slip-actions">
+                      {!order.finding && (
+                        <button
+                          type="button"
+                          className="button-primary"
+                          onClick={() => downloadOrderExport(order, record, load.factors)}
+                        >
+                          Export order
+                        </button>
+                      )}
+                      <a className="slip-more" href={order.finding ? '#from-fire' : '#lines'}>
+                        {order.finding
+                          ? 'See the acreage'
+                          : order.lines.length === 1
+                            ? 'The order line'
+                            : `All ${order.lines.length} lines`}
+                        <span aria-hidden="true"> ↓</span>
+                      </a>
+                    </div>
+                  </>
+                )}
+              </div>
             </aside>
           </div>
 
