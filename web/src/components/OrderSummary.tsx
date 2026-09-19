@@ -129,7 +129,7 @@ export default function OrderSummary({
 
 /** From the fire to the order: each step's acres, with a bar sized to its share of the perimeter, so the fire
  *  visibly narrows to the one lit row. Retained and excluded acres are both stated (FR-002). */
-export function AcreageFunnel({ record }: { record: FireRecord }) {
+export function AcreageFunnel({ record, national = false }: { record: FireRecord; national?: boolean }) {
   const r = record.retained
   const p = record.planting
   if (!r) return null
@@ -151,7 +151,8 @@ export function AcreageFunnel({ record }: { record: FireRecord }) {
           <dd>{fmtAcres(r.perimeter_acres)} ac</dd>
         </div>
         <div style={share(r.retained_acres)}>
-          <dt>Retained: inside State Responsibility Area</dt>
+          {/* Outside California the order's scope is non-federal land (PAD-US), not the state's area. */}
+          <dt>{national ? 'Retained: non-federal land' : 'Retained: inside State Responsibility Area'}</dt>
           <dd data-testid="retained-acres">{fmtAcres(r.retained_acres)} ac</dd>
         </div>
         <div className="is-excluded" style={share(r.excluded_acres)}>

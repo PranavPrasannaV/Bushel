@@ -752,7 +752,7 @@ export default function App() {
                 {shownReady && record?.retained && (
                   <section className="report-section" id="from-fire">
                     <span className="report-num">{num('from-fire')}</span>
-                    <AcreageFunnel record={record} />
+                    <AcreageFunnel record={record} national={isLiveView} />
                   </section>
                 )}
 

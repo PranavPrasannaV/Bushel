@@ -142,6 +142,10 @@ test('a fire outside California is built live in the browser, step by step, into
   expect(await interiorPixels(page)).toBeGreaterThan(200)
   if (process.env.BUSHEL_SHOT) await page.screenshot({ path: process.env.BUSHEL_SHOT })
 
+  // Outside California the order covers non-federal land, and the funnel says so, not California's wording.
+  await expect(page.locator('#from-fire')).toContainText('Retained: non-federal land')
+  await expect(page.locator('#from-fire')).not.toContainText('State Responsibility Area')
+
   // The report says where every number came from, and that this is not a checked build.
   const sources = page.locator('.live-sources')
   await expect(sources).toContainText('Where these numbers came from')
