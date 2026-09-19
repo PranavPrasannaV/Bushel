@@ -103,6 +103,10 @@
   background: var(--sprout-500);
 }
 
+.ranked-list li[data-zero] button::after {
+  display: none;
+}
+
 .ranked-list button:hover .ranked-label {
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -182,4 +186,15 @@
   font-size: var(--text-xs);
   text-align: right;
   white-space: nowrap;
+}
+
+.region-outcome {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.region-outcome[data-result='order'] {
+  color: var(--sprout-800);
 }

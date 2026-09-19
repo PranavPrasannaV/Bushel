@@ -465,7 +465,11 @@ export default function App() {
                   <span>
                     {county.totals.fires} fire{county.totals.fires === 1 ? '' : 's'} since 2018
                   </span>
-                  <span className="title-stamp-key">{fmt(county.totals.interior_acres)} acres can&rsquo;t reseed</span>
+                  {county.totals.interior_acres >= 0.5 ? (
+                    <span className="title-stamp-key">{fmt(county.totals.interior_acres)} acres can&rsquo;t reseed</span>
+                  ) : (
+                    <span>No seed order needed</span>
+                  )}
                 </p>
               </div>
             )}

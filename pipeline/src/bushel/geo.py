@@ -151,6 +151,8 @@ def county_fires(counties: gpd.GeoDataFrame, out: Path) -> dict:
                     "perimeter_share": round(inside / perimeter.area, 4),
                     "interior_acres": round(entry["interior_acres"] * share, 1),
                     "bushels": round(bushels * share, 2),
+                    # Why a fire has no order: no_conifer, no_interior, no_retained_area, or "order".
+                    "result": record.get("result") or "order",
                 }
             )
     result = {}

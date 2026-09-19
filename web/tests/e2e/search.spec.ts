@@ -55,3 +55,11 @@ test('a greyed state explains what it would take', async ({ page }) => {
   await expect(page.locator('.home-notice')).toContainText('Texas')
   await expect(page.locator('.home-notice')).toContainText('Not yet')
 })
+
+test('a county whose fires need no seed says why, fire by fire', async ({ page }) => {
+  await page.goto('/?county=06059') // Orange County: chaparral and scrub
+  await expect(page.locator('.region-verdict')).toContainText('No seed order here')
+  await expect(page.locator('.region-verdict')).toContainText('burned no conifer forest')
+  await expect(page.locator('.ranked-list')).toContainText('no conifer forest')
+  await expect(page.locator('.title-stamp')).toContainText('No seed order needed')
+})

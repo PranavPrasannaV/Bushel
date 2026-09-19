@@ -2,10 +2,27 @@
 // ranked list to open. Every in-county figure is the county's share of whole fires, and says so.
 import type { CSSProperties, ReactNode } from 'react'
 import type { FireIndexEntry } from '../convert/types.ts'
-import { fmt, type Address, type Counties, type County, type NearFire } from '../geo/places.ts'
+import { fmt, OUTCOME, type Address, type Counties, type County, type CountyFire, type NearFire } from '../geo/places.ts'
 import './RegionPanel.css'
 
 const fmtKm = (km: number) => (km < 10 ? km.toFixed(1) : Math.round(km).toString())
+
+/** A county fire's figure: its acres that can't reseed here, or, when there are none, why. */
+const outcome = (f: CountyFire) =>
+  f.interior_acres >= 0.5 ? `${fmt(f.interior_acres)} ac` : f.result === 'order' ? 'planting is next door' : OUTCOME[f.result]
+
+/** Why a county with burned ground has no seed order, from its fires' outcomes. */
+function whyNoOrder(fires: CountyFire[]): string {
+  const n = (r: CountyFire['result']) => fires.filter((f) => f.result === r).length
+  const parts = [
+    n('order') && `${n('order')} needs planting only in a neighbouring county`,
+    n('no_conifer') && `${n('no_conifer')} burned no conifer forest (shrub, grass or oak, which regrow from their roots)`,
+    n('no_interior') && `${n('no_interior')} burned conifers that are all close enough to surviving trees to reseed`,
+    n('no_retained_area') && `${n('no_retained_area')} burned only federal land, which the Forest Service replants, not the state`,
+  ].filter(Boolean)
+  const of = fires.length === 1 ? 'The one fire here' : `Of the ${fires.length} fires here,`
+  return `${of} ${parts.join('; ')}.`
+}
 
 function Ledger({ rows }: { rows: [label: ReactNode, value: ReactNode, key?: boolean][] }) {
   return (
@@ -42,7 +59,7 @@ function Ranked<T>({
       <p className="caps">{caption}</p>
       <ol className="ranked-list">
         {items.map((x, i) => (
-          <li key={i} style={{ '--share': measure(x) / top } as CSSProperties}>
+          <li key={i} style={{ '--share': measure(x) / top } as CSSProperties} data-zero={measure(x) <= 0 || undefined}>
             <button type="button" onClick={() => onOpen(x)}>
               <span className="ranked-label">{label(x)}</span>
               <span className="ranked-value">{value(x)}</span>
@@ -173,6 +190,15 @@ export function CountyPanel({
         </p>
       </header>
 
+      {t.fires > 0 && t.interior_acres < 0.5 && (
+        <div className="region-verdict">
+          <p>
+            <strong>No seed order here.</strong> Bushel orders conifer seed for burned forest on land the state is
+            responsible for, where no surviving tree is close enough to reseed it. {whyNoOrder(county.fires)}
+          </p>
+        </div>
+      )}
+
       {t.fires === 0 ? (
         <p className="region-empty">
           No built fire burned here from 2018 to 2023: no CAL FIRE perimeter of 1,000+ acres with a burn-severity
@@ -192,7 +218,7 @@ export function CountyPanel({
             caption="Fires here, by ground that can’t reseed in the county"
             items={county.fires}
             label={(f) => name(f.id)}
-            value={(f) => `${fmt(f.interior_acres)} ac`}
+            value={outcome}
             measure={(f) => f.interior_acres}
             onOpen={(f) => onFire(f.id)}
           />
@@ -283,6 +309,7 @@ export function CountyReport({
                 <th scope="col" className="num">Can&rsquo;t reseed, here</th>
                 <th scope="col" className="num">Can&rsquo;t reseed, whole fire</th>
                 <th scope="col" className="num">≈ Bushels, here</th>
+                <th scope="col">Outcome</th>
               </tr>
             </thead>
             <tbody>
@@ -300,6 +327,9 @@ export function CountyReport({
                     <td className="num">{fmt(f.interior_acres)}</td>
                     <td className="num">{e ? fmt(e.interior_acres) : '—'}</td>
                     <td className="num">{f.bushels.toFixed(1)}</td>
+                    <td className="region-outcome" data-result={f.result}>
+                      {OUTCOME[f.result]}
+                    </td>
                   </tr>
                 )
               })}

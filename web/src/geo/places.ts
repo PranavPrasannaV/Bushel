@@ -11,6 +11,16 @@ export interface CountyFire {
   interior_acres: number
   /** The fire's default-factor order split the same way: an estimate by share. */
   bushels: number
+  /** Why a fire has no order, or "order" when it has one. */
+  result: 'order' | 'no_conifer' | 'no_interior' | 'no_retained_area'
+}
+
+/** Each outcome in plain words: why a fire needs no seed. */
+export const OUTCOME: Record<CountyFire['result'], string> = {
+  order: 'needs planting',
+  no_conifer: 'no conifer forest',
+  no_interior: 'reseeds on its own',
+  no_retained_area: 'federal land only',
 }
 
 export interface County {
