@@ -196,7 +196,7 @@ const captions = []
 let chapter = ''
 const now = () => (performance.now() - start) / 1000
 const sleep = (ms) => page.waitForTimeout(ms)
-const readMs = (text) => Math.max(3000, text.replace(/<[^>]+>/g, '').length * 70)
+const readMs = (text) => Math.max(3400, text.replace(/<[^>]+>/g, '').length * 82)
 
 /** Show a caption, run what happens under it, and keep it up long enough to read. */
 async function say(text, action, extra = 0) {
@@ -272,151 +272,110 @@ async function scrollTo(selector, ms = 1300, offset = 76) {
 const text = async (selector) => ((await page.locator(selector).first().textContent()) ?? '').replace(/\s+/g, ' ').trim()
 const num = (s) => (s.match(/[\d,.]+/) ?? [''])[0]
 
-// ---- The walkthrough -------------------------------------------------------------------------------------------
+// ---- The walkthrough: one county, one fire, one order ----------------------------------------------------
+// A cold open on the real first screen, then the story of a person who has to replant after a fire.
+// Captions are written to be spoken: short sentences, plain words, one idea each.
 await page.goto(BASE, { waitUntil: 'networkidle' })
 await page.evaluate(() => document.fonts.ready)
-await page.waitForSelector('.nation-svg')
-await page.evaluate(() =>
-  window.__demo.card(`
-    <p class="k">NextStep Hacks 2026 · Earth Forward</p>
-    <p class="t">Bushel</p>
-    <p class="s">After a wildfire, which forest can’t grow back on its own, and what will it take to replant it?</p>`),
-)
+await page.waitForSelector('.first-run-list li')
 await cdp.send('Page.startScreencast', { format: 'jpeg', quality: 92, maxWidth: 1920, maxHeight: 1080, everyNthFrame: 1 })
 await sleep(400)
 start = performance.now()
 recording = true
 
-setChapter('00', 'Bushel')
-await say('Bushel: the seed order to bring a burned forest back.', null, 1400)
-
-// Every figure below is sourced on the slide itself; docs/03-DO-NOT-CLAIM.md applies to all of it.
 const slide = (html) => page.evaluate((h) => window.__demo.card(h), html)
-setChapter('01', 'The problem')
-await say('In 2020 alone, wildfires burned more than ten million acres across the United States.', () =>
+
+setChapter('01', 'Where you work')
+await say('Bushel turns a burned forest into a seed order. It opens by asking where you work.', async () => {
+  await moveTo(W * 0.5, H * 0.62, 900)
+  await click(page.getByRole('combobox', { name: 'Which county do you work in?' }), 700)
+  await sleep(300)
+  await type('Plumas')
+  await page.getByRole('option', { name: /Plumas County/ }).first().waitFor()
+  await sleep(600)
+  await click(page.getByRole('option', { name: /Plumas County/ }).first(), 600)
+  await page.waitForSelector('.region .ranked-list li')
+}, 600)
+
+const countyInterior = num(await text('.title-stamp-key'))
+const countyFires = (await text('.title-stamp')).match(/\d+/)?.[0] ?? ''
+await say(`Say that’s Plumas County, California: ${countyFires} fires since 2018.`, () => hover(page.locator('.title-block'), 900))
+await say(`${countyInterior} acres here won’t grow back on their own. More than half of that from one fire.`, async () => {
+  await hover(page.locator('.region-ledger'), 900)
+  await sleep(1200)
+  await hover(page.locator('.region .ranked-list button').first(), 800)
+}, 600)
+
+setChapter('02', 'What waiting costs')
+await say('Leave it, and this is what the waiting costs.', () =>
   slide(`
-    <p class="k">01 · The scale</p>
-    <p class="big"><span data-count="10122336">0</span><span class="u">acres</span></p>
-    <p class="s wide">burned by wildfire in the United States in 2020.</p>
-    <p class="src">National Interagency Fire Center, total wildland fires and acres, 2020</p>`),
-)
-await say('Nearly all the money and attention goes to stopping the fire. A sliver goes to what comes after.', () =>
-  slide(`
-    <p class="k">02 · Where the effort goes</p>
-    <p class="s wide">Fighting the fire, against bringing the forest back.</p>
-    <div class="bars">
-      <div class="bar"><span class="lab">Federal firefighting, 2021</span><span class="track"><i style="--w:1"></i></span><span class="v">$4.39 billion</span></div>
-      <div class="bar"><span class="lab">Federal replanting, per year</span><span class="track"><i style="--w:0.028;--c:#7a5d4a;--d:900ms"></i></span><span class="v">$123 million</span></div>
-    </div>
-    <p class="src">NIFC federal suppression costs, 2021 · REPLANT Act (2021), average annual reforestation funding</p>`),
-  800,
-)
-await say('Seed from many conifers rarely travels much past 100 metres. Where a fire kills every tree, none arrives: in one major study, about a third of burned sites had no new conifers.', () =>
-  slide(`
-    <p class="k">03 · Why it doesn’t grow back</p>
-    <p class="big"><span data-count="100">0</span><span class="u">metres</span></p>
-    <p class="s wide">Seed from many conifers rarely travels much farther than 100 m. Where every tree died, the forest may not return on its own.</p>
-    <p class="src">Gill et al. 2022, BioScience (non-serotinous conifers) · Stevens-Rumann et al. 2018, Ecology Letters</p>`),
-)
-await say('The Forest Service lists more than four million acres that may need replanting. Before 2021 it could address only 6% of its fire-caused need.', () =>
-  slide(`
-    <p class="k">04 · The backlog</p>
-    <p class="big"><span data-count="4">0</span><span class="u">million acres +</span></p>
-    <p class="s wide">of national forest in potential need of replanting. Before 2021, the Forest Service could address only 6% of its wildfire-caused need.</p>
-    <p class="src">USDA Forest Service, Reforestation</p>`),
-)
-await say('And it isn’t only trees. The forest is habitat, and it guards the rivers: every rain after a fire washes ash and soil into the water that towns and farms rely on.', () =>
-  slide(`
-    <p class="k">05 · What a forest holds up</p>
+    <p class="k">If nobody plants</p>
     <div class="pair">
-      <div><b>Wildlife</b><span>Severe fire is turning Sierra Nevada forest into shrubland, taking habitat from the California spotted owl.</span></div>
-      <div><b>Rivers</b><span>“With every rain after the fires, sediment and ash flowed into the Poudre River.” Runoff harms fish and frogs downstream.</span></div>
-      <div><b>Water and farms</b><span>Forests cover 36% of US land but yield 50% of its surface water. The Sierra supplies over 60% of California’s developed water.</span></div>
+      <div><b>The forest doesn’t return</b><span>Severe fire is turning Sierra Nevada forest into shrubland, taking habitat from the California spotted owl.</span></div>
+      <div><b>The creek takes the ash</b><span>“With every rain after the fires, sediment and ash flowed into the Poudre River.” Runoff harms fish and frogs downstream.</span></div>
+      <div><b>Downstream drinks it</b><span>Forests are 36% of US land but yield half its surface water. The Sierra supplies over 60% of California’s developed water.</span></div>
     </div>
     <p class="src">US Fish &amp; Wildlife Service · Coalition for the Poudre River Watershed; USGS · Environ. Res. Lett. 2021; CA Water Resilience Portfolio 2020</p>`),
+  1500,
+)
+await say('Nobody argues about putting a fire out. The argument is what happens after it.', () =>
+  slide(`
+    <p class="k">Where the money goes</p>
+    <div class="bars">
+      <div class="bar"><span class="lab">Fighting fires, 2021</span><span class="track"><i style="--w:1"></i></span><span class="v">$4.39 billion</span></div>
+      <div class="bar"><span class="lab">Replanting, per year</span><span class="track"><i style="--w:0.028;--c:#7a5d4a;--d:900ms"></i></span><span class="v">$123 million</span></div>
+    </div>
+    <p class="src">NIFC federal suppression costs, 2021 · REPLANT Act (2021), average annual reforestation funding</p>`),
   1600,
 )
-await say('For tribal nations, these forests are homelands. California’s own seed program puts tribal and small family lands first in line.', () =>
+await say('Four million acres are already waiting in line.', () =>
   slide(`
-    <p class="k">06 · Whose forest</p>
-    <p class="big"><span data-count="18">0</span><span class="u">million acres</span></p>
-    <p class="s wide">of forest and woodland held in trust for tribal nations. CAL FIRE’s seed program serves tribal and small non-industrial lands first.</p>
-    <p class="src">Intertribal Timber Council · CAL FIRE Assessment of Needs 2025</p>`),
+    <p class="k">The backlog</p>
+    <p class="big"><span data-count="4">0</span><span class="u">million acres +</span></p>
+    <p class="s wide">of national forest that may need replanting. Before 2021, the Forest Service could reach 6% of what fire had burned.</p>
+    <p class="src">USDA Forest Service, Reforestation</p>`),
+  1200,
 )
-await say('Replanting is how a burned forest, and everything that depends on it, comes back. It starts with the right seed, ordered about 18 months ahead.', () =>
+await say('And seed runs on a clock. Order it about eighteen months before anyone plants it.', () =>
   slide(`
-    <p class="k">07 · Where recovery starts</p>
-    <p class="t" style="font-size:96px;max-width:14ch">It starts with a seed order.</p>
-    <p class="s wide">Which species, from which seed zone, how many bushels of cones: for every fire.</p>`),
+    <p class="k">The clock</p>
+    <p class="big"><span class="u" style="font-size:150px;font-style:normal;color:#161915">31 October</span></p>
+    <p class="s wide">Sugar pine, red fir and white fir must be ordered by the 31st of October. From order to planting is about 18 months.</p>
+    <p class="src">CAL FIRE nursery Terms of Sale, February 2026</p>`),
   400,
 )
+await say('So somebody has to write that order. That’s the job Bushel does.', null, 300)
 await page.evaluate(() => window.__demo.uncard())
 
-setChapter('02', 'Find a place')
-await say('Bushel works that order out. It opens on the whole country: California is built and checked, every fire from 2018 to 2023.', () =>
-  hover(page.locator('.nation-ca path'), 900),
-)
-await say('Every other state in the lower 48 is built live, on request, from national data.', () =>
-  hover(page.locator('a[href="?state=OR"] path'), 900),
-)
-await say('One search finds any county, address or fire. Try an address: Paradise, California.', async () => {
-  await click(page.getByRole('button', { name: 'Paradise, CA' }), 900)
-  await page.waitForSelector('.region-verdict')
-})
-const verdict = (await text('.region-verdict')).replace(/\s*\(\d{4}\)\.?$/, '').replace(/\.$/, '')
-await say(`${verdict}. The town is pinned on the map, with the nearest built fires listed beside it.`, () =>
-  hover(page.locator('.region-verdict'), 900),
-)
-await say('Step out to California: every built fire at once, each one’s seed-limited ground lit, and counties ranked by need.', async () => {
-  await click(page.getByRole('navigation', { name: 'Where you are' }).getByRole('link', { name: 'California' }), 800)
-  await page.waitForSelector('.burn-map[data-view="overview"]')
-  await sleep(600)
-  await moveTo(W * 0.3, H * 0.45, 900)
-  await sleep(600)
-  await hover(page.locator('.region .ranked-list').first(), 800)
-}, 400)
-const top = page.locator('.topbar-search [role="combobox"]')
-await click(page.locator('.region .ranked-list button', { hasText: 'Plumas County' }).first(), 800)
-await page.waitForSelector('.region .ranked-list li')
-const northRow = page.locator('.region .ranked-list button', { hasText: 'North Complex' }).first()
-await say('Plumas County: every fire since 2018, ranked by the ground that can’t reseed.', async () => {
-  await hover(page.locator('.region .ranked-list').first(), 900)
-  await sleep(1200)
-})
-
-setChapter('03', 'The fire')
-await click(northRow, 700)
-await page.waitForSelector('.title-block .title-name')
+setChapter('03', 'The Dixie fire')
+await say('Open Dixie, and Bushel starts where the bill does: the land the state is responsible for.', async () => {
+  await click(page.locator('.region .ranked-list button', { hasText: 'Dixie' }).first(), 800)
+  await page.waitForSelector('.title-block .title-name')
+  await moveTo(W * 0.3, H * 0.5, 900)
+}, 600)
 const burned = num(await text('.title-stamp span'))
-await say(`The North Complex Fire, 2020: ${burned} acres burned.`, async () => {
-  await page.locator('.burn-map').waitFor()
-  await moveTo(W * 0.3, H * 0.52, 900)
-})
-await say(
-  'Bushel keeps the land the state is responsible for, and reads how badly each acre burned from the federal burn-severity record.',
-  () => page.waitForSelector('.burn-map[data-peak="revealed"]', { timeout: 30_000 }),
+await say(`It reads how badly each of those ${burned} acres burned, then measures inward from every tree still standing.`, () =>
+  page.waitForSelector('.burn-map[data-peak="revealed"]', { timeout: 40_000 }),
 )
 const interior = num(await text('.title-stamp-key'))
 const share = (await text('.burn-map__fraction')).match(/[\d.]+%/)?.[0] ?? ''
-await say('Then it measures inward from every surviving tree. Everything more than 90 metres from live seed lights up.')
-await say(
-  `<em>${interior} acres</em> that will not come back on their own: ${share} of the badly burned conifer forest.`,
+await say(`Anything more than 90 metres from living seed lights up: <em>${interior} acres</em>, ${share} of the badly burned forest.`, () =>
+  hover(page.locator('.title-stamp-key'), 900),
 )
-await say('Each patch is split by seed zone and 500-foot elevation band, because seed is matched to where it grew.', async () => {
+await say('Why 90 metres? It’s the published figure least kind to our own case. If we’re wrong, we’re wrong against ourselves.', async () => {
   const box = await page.locator('.burn-map__canvas').boundingBox()
   const slip = await page.locator('.slip-region').boundingBox()
-  const cx = (box.x + slip.x) / 2
-  const cy = box.y + box.height * 0.55
-  await moveTo(cx, cy, 700)
+  await moveTo((box.x + slip.x) / 2, box.y + box.height * 0.55, 700)
+})
+await say('Zoom in and the ground splits by seed zone and elevation band, because seed is matched to where it grew.', async () => {
   for (let i = 0; i < 6; i++) {
     await page.mouse.wheel(0, -120)
     await sleep(260)
   }
-})
-await say('Ninety metres is the published estimate least favourable to this result. Bushel uses the number that works against it.', async () => {
+  await sleep(700)
   for (let i = 0; i < 6; i++) {
     await page.mouse.wheel(0, 120)
-    await sleep(200)
+    await sleep(180)
   }
 })
 
@@ -424,18 +383,15 @@ setChapter('04', 'The order')
 const bushels = await text('[data-testid="total-bushels"]')
 const pounds = num(await text('[data-testid="total-pounds"]'))
 const cost = await text('[data-testid="total-cost"]')
-await say(
-  `The order, in the state’s own units: <em>${bushels} bushels of cones</em>, ${pounds} lb of clean seed, ${cost} at CAL FIRE prices, species by species.`,
-  async () => {
-    await hover(page.locator('.headline'), 900)
-    await sleep(1400)
-    await hover(page.locator('.mix-bar'), 700)
-  },
-)
+await say(`And that’s the order: <em>${bushels} bushels of cones</em>, ${pounds} pounds of seed, ${cost} at the state’s own prices.`, async () => {
+  await hover(page.locator('.headline'), 900)
+  await sleep(1200)
+  await hover(page.locator('.mix-bar'), 700)
+})
 const lines = num(await text('.slip-more'))
 const downloads = []
 page.on('download', (d) => downloads.push(d))
-await say('Export it as CSV and JSON: every line, with each factor and the source it came from.', async () => {
+await say('Export it, and a nursery has what it needs.', async () => {
   await click(page.getByRole('button', { name: 'Export order' }), 800)
   for (let i = 0; i < 40 && !downloads.some((d) => d.suggestedFilename().endsWith('.csv')); i++) await sleep(100)
   const csv = downloads.find((d) => d.suggestedFilename().endsWith('.csv'))
@@ -443,43 +399,43 @@ await say('Export it as CSV and JSON: every line, with each factor and the sourc
   const split = (l) => (l.match(/("([^"]|"")*"|[^,]*)(,|$)/g) ?? []).map((c) => c.replace(/,$/, '').replace(/^"|"$/g, ''))
   const [head, ...data] = body.split(/\r?\n/).filter((l) => l && !l.startsWith('#')).map(split)
   const col = (name) => head.indexOf(name)
-  const bushelCol = 'bushels_of_cones'
   const pick = ['seed_zone', 'elevation_band', 'species', 'acres', 'trees', 'lb_clean_seed', 'bushels_of_cones', 'cost_usd'].filter((c) => col(c) >= 0)
   const top6 = data
-    .filter((r) => Number(r[col(bushelCol)]) > 0)
-    .sort((a, b) => Number(b[col(bushelCol)]) - Number(a[col(bushelCol)]))
+    .filter((r) => Number(r[col('bushels_of_cones')]) > 0)
+    .sort((a, b) => Number(b[col('bushels_of_cones')]) - Number(a[col('bushels_of_cones')]))
     .slice(0, 6)
   const isNum = (c) => c !== 'seed_zone' && c !== 'elevation_band' && c !== 'species'
   const cell = (c, v) =>
     `<td class="${isNum(c) ? 'n' : ''}">${isNum(c) && v !== '' ? Number(v).toLocaleString('en-US', { maximumFractionDigits: 2 }) : v}</td>`
-  const html =
+  await sleep(400)
+  await page.evaluate(
+    (h) => window.__demo.panel(h),
     `<p class="k">${csv.suggestedFilename()} · ${data.length} lines</p><p class="f">The order, as a nursery would receive it</p>` +
-    `<table><tr>${pick.map((c) => `<th class="${isNum(c) ? 'n' : ''}">${c.replace(/_/g, ' ')}</th>`).join('')}</tr>` +
-    top6.map((r) => `<tr>${pick.map((c) => cell(c, r[col(c)])).join('')}</tr>`).join('') +
-    `</table><p class="foot">The six largest lines by bushels. The file also carries every assumption, factor and source.</p>`
-  await sleep(500)
-  await page.evaluate((h) => window.__demo.panel(h), html)
-}, 2600)
+      `<table><tr>${pick.map((c) => `<th class="${isNum(c) ? 'n' : ''}">${c.replace(/_/g, ' ')}</th>`).join('')}</tr>` +
+      top6.map((r) => `<tr>${pick.map((c) => cell(c, r[col(c)])).join('')}</tr>`).join('') +
+      `</table><p class="foot">The six largest lines. The file also carries every assumption, factor and source.</p>`,
+  )
+}, 2800)
 await page.evaluate(() => window.__demo.unpanel())
 await sleep(400)
-await say(`The report walks from ${burned} acres burned to ${lines} order lines, each a seed zone, an elevation band and a species. Open any line to see every factor and its source.`, async () => {
-  await scrollTo('#from-fire', 1500)
-  await sleep(1800)
-  await scrollTo('#lines', 1500)
+await say(`Every one of the ${lines} lines shows its working: acres to trees, trees to pounds, pounds to bushels, each factor next to the table it came from.`, async () => {
+  await scrollTo('#from-fire', 1400)
+  await sleep(1500)
+  await scrollTo('#lines', 1400)
   await sleep(400)
   await click(page.locator('tr.order-row').first(), 800)
   await sleep(600)
-  await scrollTo('.factor-trail', 1200, 140)
-}, 2200)
+  await scrollTo('.factor-trail', 1100, 140)
+}, 1800)
 
-setChapter('05', 'The unknowns')
-const slider = page.locator('.assumption.unpublished input[type="range"]').first()
-await say('Three factors in CAL FIRE’s formula aren’t published. Bushel shows them in amber, labelled, and lets you change them.', async () => {
-  await scrollTo('#assumptions', 1500)
+setChapter('05', 'The three unknowns')
+await say('Three numbers in the state’s own formula aren’t published anywhere.', async () => {
+  await scrollTo('#assumptions', 1400)
   await sleep(500)
   await hover(page.locator('.assumption.unpublished').first(), 800)
 })
-await say('Change one and the whole order recalculates instantly, in the browser.', async () => {
+const slider = page.locator('.assumption.unpublished input[type="range"]').first()
+await say('We didn’t guess them quietly. They’re in amber, they’re labelled, and they’re yours to set.', async () => {
   const b = await slider.boundingBox()
   const [v, lo, hi] = await slider.evaluate((el) => [Number(el.value), Number(el.min), Number(el.max)])
   const x0 = b.x + b.width * ((v - lo) / (hi - lo))
@@ -487,56 +443,64 @@ await say('Change one and the whole order recalculates instantly, in the browser
   await moveTo(x0, y, 700)
   await page.mouse.down()
   for (let i = 1; i <= 30; i++) {
-    await page.mouse.move(x0 - (x0 - (b.x + b.width * 0.25)) * (i / 30), y)
     mx = x0 - (x0 - (b.x + b.width * 0.25)) * (i / 30)
+    await page.mouse.move(mx, y)
     await sleep(40)
   }
   await page.mouse.up()
-  await sleep(900)
+  await sleep(800)
   await click(page.locator('.assumptions-head button'), 700)
-}, 800)
+}, 600)
 
-setChapter('06', 'Is it right?')
-await scrollTo('#check', 1500)
+setChapter('06', 'Does it hold up?')
+await scrollTo('#check', 1400)
 const figures = await page.locator('[data-testid="interior-crosscheck"] .validation-figure').allTextContents()
 await say(
-  `Checked against published figures. Across every California fire, ${figures[0]} of high-severity ground is seed-limited; the published estimate is ${figures[1]}.`,
+  `Across every California fire, our share of ground that can’t reseed is ${figures[0]}. The published estimate is ${figures[1]}.`,
   () => hover(page.locator('[data-testid="interior-crosscheck"]'), 900),
-  600,
-)
-await say('CAL FIRE’s statewide total also covers insect die-off and timber harvest, so a fire-only order sits below it. The report says exactly why.', () =>
-  hover(page.getByText('Against CAL FIRE', { exact: false }).first(), 900),
+  900,
 )
 
-setChapter('07', 'Anywhere in the US')
-await scrollTo(0, 1200)
-await say('Outside California, any fire in the lower 48 is built live, in the browser, from national data.', async () => {
+setChapter('07', 'Every fire in the state')
+await scrollTo(0, 1100)
+await say('And Plumas is one county of fifty-eight. Every California fire since 2018 is already built and waiting.', async () => {
+  await click(page.getByRole('navigation', { name: 'Where you are' }).getByRole('link', { name: 'California' }), 800)
+  await page.waitForSelector('.burn-map[data-view="overview"]')
+  await sleep(900)
+  await moveTo(W * 0.3, H * 0.45, 900)
+  await sleep(900)
+  await hover(page.locator('.region .ranked-list').first(), 800)
+}, 1200)
+
+setChapter('08', 'Any fire, any state')
+const top = page.locator('.topbar-search [role="combobox"]')
+await say('Fires don’t stop at the state line.', async () => {
   await click(top, 800)
   await type('Beachie Creek')
   await page.getByRole('option', { name: /Beachie Creek/ }).first().waitFor({ timeout: 30_000 })
-  await sleep(600)
+  await sleep(500)
   await click(page.getByRole('option', { name: /Beachie Creek/ }).first(), 600)
-})
-await say('Burn severity, land ownership, forest type, tree species, seed zones and elevation, each fetched right now.', () =>
+}, 300)
+await say('So anywhere in the lower 48, Bushel builds the whole thing live, from national data, while you watch.', () =>
   hover(page.locator('.slip-region'), 800),
 )
 await page.locator('[data-testid="total-bushels"]').filter({ hasText: /\d/ }).waitFor({ timeout: 90_000 })
 await page.waitForSelector('.burn-map[data-peak="revealed"]', { timeout: 30_000 }).catch(() => {})
 const liveAcres = num(await text('.title-stamp-key'))
-await say(`Beachie Creek, Oregon: <em>${liveAcres} acres</em> that can’t reseed, and the order for them, built as you watch.`, () =>
+await say(`Beachie Creek, Oregon: <em>${liveAcres} acres</em> that can’t reseed, and the order for them.`, () =>
   moveTo(W * 0.32, H * 0.5, 900),
 )
-await say('It says where every number came from and how long each source took, and that this state has no published figure to check it against yet.', async () => {
-  await scrollTo('#check', 1600)
+await say('It lists every source it used, how long each took, and says plainly what it can’t check yet.', async () => {
+  await scrollTo('#check', 1500)
   await sleep(300)
   await hover(page.locator('.live-sources tbody'), 800)
-}, 800)
-await scrollTo(0, 1100)
-await say('Every state has its own map of fires, ready to build, and the map travels the whole country.', async () => {
+}, 600)
+
+await say('Oregon has its own map of fires, ready to build — and the map travels the whole country.', async () => {
+  await scrollTo(0, 1000)
   await click(page.getByRole('navigation', { name: 'Where you are' }).getByRole('link', { name: 'Oregon' }), 800)
   await page.waitForSelector('.region .ranked-list li', { timeout: 30_000 })
-  await moveTo(W * 0.35, H * 0.5, 900)
-  await sleep(900)
+  await sleep(700)
   await moveTo(W * 0.5, H * 0.5, 600)
   await page.mouse.down()
   for (let i = 1; i <= 40; i++) {
@@ -545,15 +509,18 @@ await say('Every state has its own map of fires, ready to build, and the map tra
     await sleep(22)
   }
   await page.mouse.up()
-  await sleep(500)
+  await sleep(600)
   await moveTo(W * 0.42, H * 0.45, 700)
-})
+}, 900)
 
-setChapter('08', 'Bushel')
-await say('Fire maps show where a fire burned. Bushel shows what to order to bring the forest back, and shows its working.', () =>
-  click(page.locator('a.wordmark'), 900),
-  600,
-)
+setChapter('09', 'Bushel')
+await scrollTo(0, 1000)
+await say('Come back tomorrow and it opens where you work.', async () => {
+  await click(page.locator('a.wordmark'), 900)
+  await page.waitForSelector('.home-yours')
+  await hover(page.locator('.home-yours'), 800)
+}, 600)
+await say('A fire map tells you where it burned. Bushel tells you what to put back.', null, 900)
 await page.evaluate(() =>
   window.__demo.card(`
     <p class="t">Bushel</p>
@@ -561,7 +528,7 @@ await page.evaluate(() =>
     <div class="r"></div>
     <p class="m"><span class="dot"></span>pranavprasannav.github.io/Bushel<br/>github.com/PranavPrasannaV/Bushel<br/>Built for NextStep Hacks 2026 · Earth Forward</p>`),
 )
-await say('Try it: pranavprasannav.github.io/Bushel', null, 1600)
+await say('Bushel. Built for NextStep Hacks 2026.', null, 1500)
 
 // ---- Finish ----------------------------------------------------------------------------------------------------
 recording = false
