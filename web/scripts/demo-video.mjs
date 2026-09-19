@@ -402,7 +402,7 @@ await say('Then it measures inward from every surviving tree. Everything more th
 await say(
   `<em>${interior} acres</em> that will not come back on their own: ${share} of the badly burned conifer forest.`,
 )
-await say('Each patch is split by seed zone and 500-foot elevation band, because seed has to come from where it grew.', async () => {
+await say('Each patch is split by seed zone and 500-foot elevation band, because seed is matched to where it grew.', async () => {
   const box = await page.locator('.burn-map__canvas').boundingBox()
   const slip = await page.locator('.slip-region').boundingBox()
   const cx = (box.x + slip.x) / 2
