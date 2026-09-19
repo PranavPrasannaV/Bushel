@@ -1,0 +1,31 @@
+{
+  "fire": {
+    "id": "saddle-ridge-2019",
+    "name": "Saddle Ridge",
+    "year": 2019,
+    "discovery_date": "2019-10-10",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 8799.3236,
+    "retained_acres": 3931.7384,
+    "excluded_acres": 4867.5852,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 0.8896,
+    "conifer_acres": 16.2348
+  },
+  "planting": {
+    "interior_acres": 0.0,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.0,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [],
+  "geometry_ref": "fires/saddle-ridge-2019.geojson",
+  "result": "no_interior",
+  "message": "All burned acres lie within natural seeding distance. No planting order required."
+}

@@ -1,0 +1,31 @@
+{
+  "fire": {
+    "id": "kerlin-2018",
+    "name": "Kerlin",
+    "year": 2018,
+    "discovery_date": "2018-09-04",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 1752.5685,
+    "retained_acres": 514.3178,
+    "excluded_acres": 1238.2507,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 24.4634,
+    "conifer_acres": 302.457
+  },
+  "planting": {
+    "interior_acres": 0.0,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.0,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [],
+  "geometry_ref": "fires/kerlin-2018.geojson",
+  "result": "no_interior",
+  "message": "All burned acres lie within natural seeding distance. No planting order required."
+}

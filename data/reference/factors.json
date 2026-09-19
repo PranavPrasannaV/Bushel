@@ -1,0 +1,183 @@
+{
+  "published": [
+    {
+      "name": "stocking_tpa",
+      "value": 200,
+      "unit": "trees/acre",
+      "status": "published",
+      "source_ref": "CAL FIRE AON 2025 §E",
+      "adjustable": true,
+      "min": 50,
+      "max": 200,
+      "caveat": "A maximum-stocking worst case, not a point estimate. CA Forest Practice Rule requirements range 50-200 TPA depending on location and forest management prescriptions."
+    },
+    {
+      "name": "lbs_clean_seed_per_bushel",
+      "unit": "lb clean seed / bushel of cones",
+      "status": "published",
+      "source_ref": "CAL FIRE AON 2025 Table 2",
+      "by_species": {
+        "Big-Cone Douglas Fir": 0.75,
+        "Coast Redwood": 0.75,
+        "Coulter Pine": 0.9,
+        "Douglas Fir": 0.5,
+        "Giant Sequoia": 0.75,
+        "Incense Cedar": 0.7,
+        "Jeffrey Pine": 1.2,
+        "Knobcone Pine": 1.0,
+        "Lodgepole Pine": 1.0,
+        "Ponderosa Pine": 1.0,
+        "Red Fir": 0.9,
+        "Subalpine Fir": 1.0,
+        "Sugar Pine": 1.4,
+        "Western White Pine": 1.0,
+        "White Fir": 1.1
+      },
+      "fallback": {
+        "value": 1.0,
+        "rule": "AON: species absent from Table 2 assume 1 bushel = 1 lb"
+      },
+      "fallback_species": [
+        "Knobcone Pine",
+        "Lodgepole Pine",
+        "Subalpine Fir",
+        "Western White Pine"
+      ],
+      "fallback_applied": {
+        "Big-Cone Douglas Fir": false,
+        "Coast Redwood": false,
+        "Coulter Pine": false,
+        "Douglas Fir": false,
+        "Giant Sequoia": false,
+        "Incense Cedar": false,
+        "Jeffrey Pine": false,
+        "Knobcone Pine": true,
+        "Lodgepole Pine": true,
+        "Ponderosa Pine": false,
+        "Red Fir": false,
+        "Subalpine Fir": true,
+        "Sugar Pine": false,
+        "Western White Pine": true,
+        "White Fir": false
+      }
+    },
+    {
+      "name": "seeds_per_lb",
+      "unit": "seeds/lb",
+      "status": "published",
+      "source_ref": "CAL FIRE Terms of Sale Feb 2026, 'Average Seeds/pounds'",
+      "by_species": {
+        "Big-Cone Douglas Fir": 4240,
+        "Coast Redwood": 95364,
+        "Coulter Pine": 1365,
+        "Douglas Fir": 30455,
+        "Giant Sequoia": 79203,
+        "Incense Cedar": 15137,
+        "Jeffrey Pine": 3585,
+        "Ponderosa Pine": 9240,
+        "Red Fir": 5113,
+        "Sugar Pine": 1794,
+        "Western White Pine": 13717,
+        "White Fir": 10651
+      },
+      "source_names": {
+        "Big-Cone Douglas Fir": "Big Cone Douglas-Fir",
+        "Coast Redwood": "Coast Redwood",
+        "Coulter Pine": "Coulter Pine",
+        "Douglas Fir": "Douglas-Fir",
+        "Giant Sequoia": "Giant Sequoia",
+        "Incense Cedar": "Incense Cedar",
+        "Jeffrey Pine": "Jeffrey Pine",
+        "Ponderosa Pine": "Ponderosa Pine",
+        "Red Fir": "Red Fir",
+        "Sugar Pine": "Non-BRR Sugar Pine",
+        "Western White Pine": "Western White Pine",
+        "White Fir": "White Fir"
+      },
+      "missing_species": {
+        "Knobcone Pine": "No 'Average Seeds/pounds' or seed price published for this species in CAL FIRE Terms of Sale (Feb 2026).",
+        "Lodgepole Pine": "No 'Average Seeds/pounds' or seed price published for this species in CAL FIRE Terms of Sale (Feb 2026).",
+        "Subalpine Fir": "No 'Average Seeds/pounds' or seed price published for this species in CAL FIRE Terms of Sale (Feb 2026)."
+      },
+      "warning": "Seeds per pound. NOT seedlings per pound."
+    },
+    {
+      "name": "price_per_lb_usd",
+      "unit": "USD/lb",
+      "status": "published",
+      "source_ref": "CAL FIRE Terms of Sale Feb 2026, seed price list",
+      "by_species": {
+        "Big-Cone Douglas Fir": 300.0,
+        "Coast Redwood": 832.0,
+        "Coulter Pine": 257.0,
+        "Douglas Fir": 497.0,
+        "Giant Sequoia": 660.0,
+        "Incense Cedar": 420.0,
+        "Jeffrey Pine": 230.0,
+        "Ponderosa Pine": 230.0,
+        "Red Fir": 205.0,
+        "Sugar Pine": 334.0,
+        "Western White Pine": 268.0,
+        "White Fir": 223.0
+      },
+      "source_names": {
+        "Big-Cone Douglas Fir": "Big Cone Douglas-Fir",
+        "Coast Redwood": "Coast Redwood",
+        "Coulter Pine": "Coulter Pine",
+        "Douglas Fir": "Douglas-Fir",
+        "Giant Sequoia": "Giant Sequoia",
+        "Incense Cedar": "Incense Cedar",
+        "Jeffrey Pine": "Jeffrey Pine",
+        "Ponderosa Pine": "Ponderosa Pine",
+        "Red Fir": "Red Fir",
+        "Sugar Pine": "Non-BRR Sugar Pine",
+        "Western White Pine": "Western White Pine",
+        "White Fir": "White Fir"
+      },
+      "missing_species": {
+        "Knobcone Pine": "No 'Average Seeds/pounds' or seed price published for this species in CAL FIRE Terms of Sale (Feb 2026).",
+        "Lodgepole Pine": "No 'Average Seeds/pounds' or seed price published for this species in CAL FIRE Terms of Sale (Feb 2026).",
+        "Subalpine Fir": "No 'Average Seeds/pounds' or seed price published for this species in CAL FIRE Terms of Sale (Feb 2026)."
+      },
+      "warning": "Seed list, denominated in pounds. Never the seedling price list."
+    }
+  ],
+  "unpublished": [
+    {
+      "name": "seeds_per_pot",
+      "default_value": 2,
+      "min": 1,
+      "max": 4,
+      "unit": "seeds/pot",
+      "status": "unpublished",
+      "unpublished_by": "CAL FIRE",
+      "source_ref": "Not published. CAL FIRE AON: historical LAMRC nursery datasets (internal)",
+      "adjustable": true,
+      "rationale": "No published value exists: the CAL FIRE AON sources this factor from internal, historical LAMRC nursery datasets. The default is a round general placeholder, not CAL FIRE's figure. The only related general figure is that conifer seed commonly germinates above 90% under nursery conditions, which is general and not CAL FIRE's. Adjust to your nursery's figures."
+    },
+    {
+      "name": "nursery_survival_rate",
+      "default_value": 0.9,
+      "min": 0.5,
+      "max": 1.0,
+      "unit": "fraction",
+      "status": "unpublished",
+      "unpublished_by": "CAL FIRE",
+      "source_ref": "Not published. CAL FIRE AON: historical LAMRC nursery datasets (internal)",
+      "adjustable": true,
+      "rationale": "No published value exists: the CAL FIRE AON sources this factor from internal, historical LAMRC nursery datasets. The default is a round general placeholder, not CAL FIRE's figure. The only related general figure is that conifer seed commonly germinates above 90% under nursery conditions, which is general and not CAL FIRE's. Adjust to your nursery's figures. This is nursery survival to a two-year seedling, NOT field survival after outplanting."
+    },
+    {
+      "name": "probability_of_tree_in_nursery",
+      "default_value": 0.9,
+      "min": 0.5,
+      "max": 1.0,
+      "unit": "fraction",
+      "status": "unpublished",
+      "unpublished_by": "CAL FIRE",
+      "source_ref": "Not published. CAL FIRE AON: historical LAMRC nursery datasets (internal)",
+      "adjustable": true,
+      "rationale": "No published value exists: the CAL FIRE AON sources this factor from internal, historical LAMRC nursery datasets. The default is a round general placeholder, not CAL FIRE's figure. The only related general figure is that conifer seed commonly germinates above 90% under nursery conditions, which is general and not CAL FIRE's. Adjust to your nursery's figures."
+    }
+  ]
+}

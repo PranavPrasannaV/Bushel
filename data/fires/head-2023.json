@@ -1,0 +1,124 @@
+{
+  "fire": {
+    "id": "head-2023",
+    "name": "Head",
+    "year": 2023,
+    "discovery_date": "2023-08-15",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 6953.7951,
+    "retained_acres": 1462.7458,
+    "excluded_acres": 5491.0493,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 260.4244,
+    "conifer_acres": 730.1223
+  },
+  "planting": {
+    "interior_acres": 44.2566,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.16994029745292683,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "321_1500",
+      "seed_zone": "321",
+      "elevation_band": "1500–2000 ft",
+      "planting_acres": 1.112,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 1.112
+        }
+      ]
+    },
+    {
+      "cell_id": "321_2000",
+      "seed_zone": "321",
+      "elevation_band": "2000–2500 ft",
+      "planting_acres": 6.6718,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 6.4495
+        },
+        {
+          "species": "Incense Cedar",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "321_2500",
+      "seed_zone": "321",
+      "elevation_band": "2500–3000 ft",
+      "planting_acres": 20.0155,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 19.7931
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "321_3000",
+      "seed_zone": "321",
+      "elevation_band": "3000–3500 ft",
+      "planting_acres": 10.8973,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 7.5614
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 3.3359
+        }
+      ]
+    },
+    {
+      "cell_id": "321_3500",
+      "seed_zone": "321",
+      "elevation_band": "3500–4000 ft",
+      "planting_acres": 5.3375,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 5.1151
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "321_4000",
+      "seed_zone": "321",
+      "elevation_band": "4000–4500 ft",
+      "planting_acres": 0.2224,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 0.2224
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/head-2023.geojson"
+}

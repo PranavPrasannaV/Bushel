@@ -1,0 +1,31 @@
+{
+  "fire": {
+    "id": "w-1-mcdonald-2019",
+    "name": "W-1 Mcdonald",
+    "year": 2019,
+    "discovery_date": "2019-08-08",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 1020.3218,
+    "retained_acres": 193.7349,
+    "excluded_acres": 826.5869,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 0.0,
+    "conifer_acres": 2.0016
+  },
+  "planting": {
+    "interior_acres": 0.0,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.0,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [],
+  "geometry_ref": "fires/w-1-mcdonald-2019.geojson",
+  "result": "no_interior",
+  "message": "All burned acres lie within natural seeding distance. No planting order required."
+}

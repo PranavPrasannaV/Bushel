@@ -1,0 +1,110 @@
+{
+  "fire": {
+    "id": "loyalton-2020",
+    "name": "Loyalton",
+    "year": 2020,
+    "discovery_date": "2020-08-14",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 46720.8885,
+    "retained_acres": 29311.3041,
+    "excluded_acres": 17409.5844,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 1823.8601,
+    "conifer_acres": 6726.7768
+  },
+  "planting": {
+    "interior_acres": 323.5845,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.17741739073079124,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "772_5500",
+      "seed_zone": "772",
+      "elevation_band": "5500–6000 ft",
+      "planting_acres": 94.073,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Jeffrey Pine",
+          "acres": 50.9284
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 43.1446
+        }
+      ]
+    },
+    {
+      "cell_id": "772_6000",
+      "seed_zone": "772",
+      "elevation_band": "6000–6500 ft",
+      "planting_acres": 169.9097,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Jeffrey Pine",
+          "acres": 85.8444
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 81.3965
+        },
+        {
+          "species": "White Fir",
+          "acres": 2.6687
+        }
+      ]
+    },
+    {
+      "cell_id": "772_6500",
+      "seed_zone": "772",
+      "elevation_band": "6500–7000 ft",
+      "planting_acres": 42.9222,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Ponderosa Pine",
+          "acres": 17.5692
+        },
+        {
+          "species": "Jeffrey Pine",
+          "acres": 16.0124
+        },
+        {
+          "species": "White Fir",
+          "acres": 9.3406
+        }
+      ]
+    },
+    {
+      "cell_id": "772_7000",
+      "seed_zone": "772",
+      "elevation_band": "7000–7500 ft",
+      "planting_acres": 16.6796,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Ponderosa Pine",
+          "acres": 10.0078
+        },
+        {
+          "species": "White Fir",
+          "acres": 5.3375
+        },
+        {
+          "species": "Jeffrey Pine",
+          "acres": 1.3344
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/loyalton-2020.geojson"
+}

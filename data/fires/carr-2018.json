@@ -1,0 +1,651 @@
+{
+  "fire": {
+    "id": "carr-2018",
+    "name": "Carr",
+    "year": 2018,
+    "discovery_date": "2018-07-23",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 229651.467,
+    "retained_acres": 92336.0404,
+    "excluded_acres": 137315.4266,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 15002.5337,
+    "conifer_acres": 35049.6497
+  },
+  "planting": {
+    "interior_acres": 3713.5491,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.2475281291986033,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "331_2000",
+      "seed_zone": "331",
+      "elevation_band": "2000–2500 ft",
+      "planting_acres": 7.5614,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 7.1166
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 0.4448
+        }
+      ]
+    },
+    {
+      "cell_id": "331_2500",
+      "seed_zone": "331",
+      "elevation_band": "2500–3000 ft",
+      "planting_acres": 63.6049,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 59.6018
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 3.3359
+        },
+        {
+          "species": "Sugar Pine",
+          "acres": 0.6672
+        }
+      ]
+    },
+    {
+      "cell_id": "331_3000",
+      "seed_zone": "331",
+      "elevation_band": "3000–3500 ft",
+      "planting_acres": 112.3094,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 91.1819
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 17.1244
+        },
+        {
+          "species": "Sugar Pine",
+          "acres": 2.2239
+        },
+        {
+          "species": "Knobcone Pine",
+          "acres": 0.8896
+        },
+        {
+          "species": "Jeffrey Pine",
+          "acres": 0.6672
+        },
+        {
+          "species": "Incense Cedar",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "331_3500",
+      "seed_zone": "331",
+      "elevation_band": "3500–4000 ft",
+      "planting_acres": 84.2876,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 73.3903
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 10.4526
+        },
+        {
+          "species": "Sugar Pine",
+          "acres": 0.4448
+        }
+      ]
+    },
+    {
+      "cell_id": "331_4000",
+      "seed_zone": "331",
+      "elevation_band": "4000–4500 ft",
+      "planting_acres": 6.2271,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 4.0031
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 2.0016
+        },
+        {
+          "species": "Sugar Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "331_4500",
+      "seed_zone": "331",
+      "elevation_band": "4500–5000 ft",
+      "planting_acres": 2.2239,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 2.0016
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "332_500",
+      "seed_zone": "332",
+      "elevation_band": "500–1000 ft",
+      "planting_acres": 0.4448,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Ponderosa Pine",
+          "acres": 0.4448
+        }
+      ]
+    },
+    {
+      "cell_id": "332_1000",
+      "seed_zone": "332",
+      "elevation_band": "1000–1500 ft",
+      "planting_acres": 133.2145,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 80.0621
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 52.93
+        },
+        {
+          "species": "Knobcone Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "332_1500",
+      "seed_zone": "332",
+      "elevation_band": "1500–2000 ft",
+      "planting_acres": 165.017,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Ponderosa Pine",
+          "acres": 100.0777
+        },
+        {
+          "species": "Douglas Fir",
+          "acres": 64.9393
+        }
+      ]
+    },
+    {
+      "cell_id": "332_2000",
+      "seed_zone": "332",
+      "elevation_band": "2000–2500 ft",
+      "planting_acres": 108.5287,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 80.9517
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 20.6827
+        },
+        {
+          "species": "Knobcone Pine",
+          "acres": 5.7823
+        },
+        {
+          "species": "Sugar Pine",
+          "acres": 1.112
+        }
+      ]
+    },
+    {
+      "cell_id": "332_2500",
+      "seed_zone": "332",
+      "elevation_band": "2500–3000 ft",
+      "planting_acres": 273.1009,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 234.849
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 36.2504
+        },
+        {
+          "species": "Knobcone Pine",
+          "acres": 0.8896
+        },
+        {
+          "species": "Sugar Pine",
+          "acres": 0.8896
+        },
+        {
+          "species": "White Fir",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "332_3000",
+      "seed_zone": "332",
+      "elevation_band": "3000–3500 ft",
+      "planting_acres": 411.6529,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 379.628
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 29.1337
+        },
+        {
+          "species": "Jeffrey Pine",
+          "acres": 0.8896
+        },
+        {
+          "species": "Knobcone Pine",
+          "acres": 0.8896
+        },
+        {
+          "species": "Sugar Pine",
+          "acres": 0.8896
+        },
+        {
+          "species": "Incense Cedar",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "332_3500",
+      "seed_zone": "332",
+      "elevation_band": "3500–4000 ft",
+      "planting_acres": 215.0558,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 187.4789
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 24.0186
+        },
+        {
+          "species": "Sugar Pine",
+          "acres": 1.3344
+        },
+        {
+          "species": "Jeffrey Pine",
+          "acres": 1.112
+        },
+        {
+          "species": "White Fir",
+          "acres": 0.8896
+        },
+        {
+          "species": "Knobcone Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "332_4000",
+      "seed_zone": "332",
+      "elevation_band": "4000–4500 ft",
+      "planting_acres": 92.5163,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 63.8273
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 21.3499
+        },
+        {
+          "species": "White Fir",
+          "acres": 6.6718
+        },
+        {
+          "species": "Sugar Pine",
+          "acres": 0.4448
+        },
+        {
+          "species": "Jeffrey Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "332_4500",
+      "seed_zone": "332",
+      "elevation_band": "4500–5000 ft",
+      "planting_acres": 13.7885,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 10.4526
+        },
+        {
+          "species": "White Fir",
+          "acres": 2.2239
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 0.8896
+        },
+        {
+          "species": "Red Fir",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "332_5000",
+      "seed_zone": "332",
+      "elevation_band": "5000–5500 ft",
+      "planting_acres": 6.4495,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "White Fir",
+          "acres": 4.8927
+        },
+        {
+          "species": "Douglas Fir",
+          "acres": 1.3344
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "521_1000",
+      "seed_zone": "521",
+      "elevation_band": "1000–1500 ft",
+      "planting_acres": 7.5614,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Ponderosa Pine",
+          "acres": 5.7823
+        },
+        {
+          "species": "Douglas Fir",
+          "acres": 1.7792
+        }
+      ]
+    },
+    {
+      "cell_id": "521_1500",
+      "seed_zone": "521",
+      "elevation_band": "1500–2000 ft",
+      "planting_acres": 36.9175,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 25.1306
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 11.5645
+        },
+        {
+          "species": "Knobcone Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "521_2000",
+      "seed_zone": "521",
+      "elevation_band": "2000–2500 ft",
+      "planting_acres": 184.5877,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 153.6748
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 25.1306
+        },
+        {
+          "species": "Knobcone Pine",
+          "acres": 5.3375
+        },
+        {
+          "species": "Incense Cedar",
+          "acres": 0.2224
+        },
+        {
+          "species": "Jeffrey Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "521_2500",
+      "seed_zone": "521",
+      "elevation_band": "2500–3000 ft",
+      "planting_acres": 449.46,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 389.191
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 48.4821
+        },
+        {
+          "species": "Knobcone Pine",
+          "acres": 8.451
+        },
+        {
+          "species": "Sugar Pine",
+          "acres": 3.3359
+        }
+      ]
+    },
+    {
+      "cell_id": "521_3000",
+      "seed_zone": "521",
+      "elevation_band": "3000–3500 ft",
+      "planting_acres": 546.4241,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 460.1349
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 80.5069
+        },
+        {
+          "species": "Jeffrey Pine",
+          "acres": 2.2239
+        },
+        {
+          "species": "Sugar Pine",
+          "acres": 2.2239
+        },
+        {
+          "species": "White Fir",
+          "acres": 0.6672
+        },
+        {
+          "species": "Incense Cedar",
+          "acres": 0.4448
+        },
+        {
+          "species": "Knobcone Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "521_3500",
+      "seed_zone": "521",
+      "elevation_band": "3500–4000 ft",
+      "planting_acres": 598.4645,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 504.1691
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 84.9548
+        },
+        {
+          "species": "White Fir",
+          "acres": 4.0031
+        },
+        {
+          "species": "Incense Cedar",
+          "acres": 3.5583
+        },
+        {
+          "species": "Knobcone Pine",
+          "acres": 1.112
+        },
+        {
+          "species": "Jeffrey Pine",
+          "acres": 0.4448
+        },
+        {
+          "species": "Sugar Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "521_4000",
+      "seed_zone": "521",
+      "elevation_band": "4000–4500 ft",
+      "planting_acres": 165.4618,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 143.2223
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 15.5676
+        },
+        {
+          "species": "White Fir",
+          "acres": 3.1135
+        },
+        {
+          "species": "Incense Cedar",
+          "acres": 2.8911
+        },
+        {
+          "species": "Sugar Pine",
+          "acres": 0.4448
+        },
+        {
+          "species": "Jeffrey Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "521_4500",
+      "seed_zone": "521",
+      "elevation_band": "4500–5000 ft",
+      "planting_acres": 28.2441,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 25.353
+        },
+        {
+          "species": "Incense Cedar",
+          "acres": 1.112
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 0.6672
+        },
+        {
+          "species": "White Fir",
+          "acres": 0.6672
+        },
+        {
+          "species": "Sugar Pine",
+          "acres": 0.4448
+        }
+      ]
+    },
+    {
+      "cell_id": "521_5000",
+      "seed_zone": "521",
+      "elevation_band": "5000–5500 ft",
+      "planting_acres": 0.4448,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Ponderosa Pine",
+          "acres": 0.2224
+        },
+        {
+          "species": "White Fir",
+          "acres": 0.2224
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/carr-2018.geojson"
+}

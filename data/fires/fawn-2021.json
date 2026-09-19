@@ -1,0 +1,64 @@
+{
+  "fire": {
+    "id": "fawn-2021",
+    "name": "Fawn",
+    "year": 2021,
+    "discovery_date": "2021-09-22",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 8576.5026,
+    "retained_acres": 6206.453,
+    "excluded_acres": 2370.0495,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 103.1912,
+    "conifer_acres": 473.0338
+  },
+  "planting": {
+    "interior_acres": 3.1135,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.030172146462101423,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "521_1000",
+      "seed_zone": "521",
+      "elevation_band": "1000–1500 ft",
+      "planting_acres": 2.2239,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 1.3344
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 0.8896
+        }
+      ]
+    },
+    {
+      "cell_id": "521_1500",
+      "seed_zone": "521",
+      "elevation_band": "1500–2000 ft",
+      "planting_acres": 0.8896,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Ponderosa Pine",
+          "acres": 0.6672
+        },
+        {
+          "species": "Douglas Fir",
+          "acres": 0.2224
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/fawn-2021.geojson"
+}

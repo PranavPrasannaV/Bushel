@@ -1,0 +1,56 @@
+{
+  "fire": {
+    "id": "tennant-2021",
+    "name": "Tennant",
+    "year": 2021,
+    "discovery_date": "2021-06-28",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 10591.0362,
+    "retained_acres": 2625.7982,
+    "excluded_acres": 7965.238,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 264.4275,
+    "conifer_acres": 1941.7294
+  },
+  "planting": {
+    "interior_acres": 38.9191,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.14718249803821462,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "741_4500",
+      "seed_zone": "741",
+      "elevation_band": "4500–5000 ft",
+      "planting_acres": 4.2255,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 4.2255
+        }
+      ]
+    },
+    {
+      "cell_id": "741_5000",
+      "seed_zone": "741",
+      "elevation_band": "5000–5500 ft",
+      "planting_acres": 34.6936,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 34.6936
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/tennant-2021.geojson"
+}

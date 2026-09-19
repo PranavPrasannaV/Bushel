@@ -1,0 +1,31 @@
+{
+  "fire": {
+    "id": "allen-2020",
+    "name": "Allen",
+    "year": 2020,
+    "discovery_date": "2020-07-21",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 1034.7951,
+    "retained_acres": 336.5216,
+    "excluded_acres": 698.2735,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 0.4448,
+    "conifer_acres": 67.8304
+  },
+  "planting": {
+    "interior_acres": 0.0,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.0,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [],
+  "geometry_ref": "fires/allen-2020.geojson",
+  "result": "no_interior",
+  "message": "All burned acres lie within natural seeding distance. No planting order required."
+}

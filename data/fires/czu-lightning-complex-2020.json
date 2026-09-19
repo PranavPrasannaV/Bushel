@@ -1,0 +1,148 @@
+{
+  "fire": {
+    "id": "czu-lightning-complex-2020",
+    "name": "Czu Lightning Complex",
+    "year": 2020,
+    "discovery_date": "2020-08-16",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 86553.4648,
+    "retained_acres": 85020.5949,
+    "excluded_acres": 1532.8699,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 20532.8263,
+    "conifer_acres": 53622.5103
+  },
+  "planting": {
+    "interior_acres": 5903.2487,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.2875029776100526,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "97_0",
+      "seed_zone": "97",
+      "elevation_band": "0–500 ft",
+      "planting_acres": 519.292,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Coast Redwood",
+          "acres": 412.9872
+        },
+        {
+          "species": "Douglas Fir",
+          "acres": 103.1912
+        },
+        {
+          "species": "Coulter Pine",
+          "acres": 3.1135
+        }
+      ]
+    },
+    {
+      "cell_id": "97_500",
+      "seed_zone": "97",
+      "elevation_band": "500–1000 ft",
+      "planting_acres": 1901.9207,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Coast Redwood",
+          "acres": 1713.5523
+        },
+        {
+          "species": "Douglas Fir",
+          "acres": 163.2378
+        },
+        {
+          "species": "Coulter Pine",
+          "acres": 25.1306
+        }
+      ]
+    },
+    {
+      "cell_id": "97_1000",
+      "seed_zone": "97",
+      "elevation_band": "1000–1500 ft",
+      "planting_acres": 2081.1709,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Coast Redwood",
+          "acres": 2035.1352
+        },
+        {
+          "species": "Douglas Fir",
+          "acres": 39.1415
+        },
+        {
+          "species": "Coulter Pine",
+          "acres": 6.8942
+        }
+      ]
+    },
+    {
+      "cell_id": "97_1500",
+      "seed_zone": "97",
+      "elevation_band": "1500–2000 ft",
+      "planting_acres": 963.8593,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Coast Redwood",
+          "acres": 961.8577
+        },
+        {
+          "species": "Douglas Fir",
+          "acres": 1.7792
+        },
+        {
+          "species": "Coulter Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "97_2000",
+      "seed_zone": "97",
+      "elevation_band": "2000–2500 ft",
+      "planting_acres": 432.3356,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Coast Redwood",
+          "acres": 408.7617
+        },
+        {
+          "species": "Douglas Fir",
+          "acres": 23.5739
+        }
+      ]
+    },
+    {
+      "cell_id": "97_2500",
+      "seed_zone": "97",
+      "elevation_band": "2500–3000 ft",
+      "planting_acres": 4.6703,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Coast Redwood",
+          "acres": 4.4479
+        },
+        {
+          "species": "Douglas Fir",
+          "acres": 0.2224
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/czu-lightning-complex-2020.geojson"
+}
