@@ -1,33 +1,53 @@
+/* Report 02: the order's assumptions. The stocking rate and the three unpublished factors sit in a
+   two-by-two grid under the formula that uses them. Amber marks the unpublished ones, and only them. */
+
 .assumptions {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--color-border);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+  min-width: 0;
 }
 
 .assumptions-head {
+  grid-column: 1 / -1;
   display: flex;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
   gap: var(--space-3);
 }
 
 .assumptions-formula {
+  grid-column: 1 / -1;
+  order: 1;
+  max-width: var(--measure);
   color: var(--color-text-muted);
   font-size: var(--text-sm);
 }
 
 .assumptions-formula .formula {
+  display: block;
+  margin: var(--space-3) 0;
+  padding: var(--space-3) var(--space-4);
+  border-top: 1px solid var(--color-rule);
+  border-bottom: 1px solid var(--color-rule);
   font-family: var(--font-mono);
-  font-size: var(--text-xs);
+  font-size: var(--text-sm);
   color: var(--color-text);
 }
 
 .assumption {
+  order: 2;
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+}
+
+.assumption.published {
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-text);
 }
 
 .assumption-head {
@@ -39,20 +59,21 @@
 }
 
 .assumption-head label {
-  font-size: var(--text-base);
-  font-weight: var(--weight-semibold);
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  line-height: var(--leading-snug);
   color: var(--color-text);
 }
 
 .assumption-status {
+  font-family: var(--font-mono);
   font-size: var(--text-2xs);
-  font-weight: var(--weight-semibold);
-  letter-spacing: var(--tracking-caps);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 .assumption.unpublished .assumption-status {
-  color: var(--color-unpublished);
+  color: var(--color-unpublished-text);
 }
 
 .assumption.published .assumption-status {
@@ -68,7 +89,7 @@
 .assumption-inputs input[type='range'] {
   flex: 1;
   min-width: 0;
-  accent-color: var(--color-text-muted);
+  accent-color: var(--color-text);
 }
 
 .assumption.unpublished input[type='range'] {
@@ -80,9 +101,9 @@
   padding: var(--space-1) var(--space-2);
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-sm);
-  background: var(--color-surface-sunken);
+  background: var(--paper-50);
   color: var(--color-text);
-  font: inherit;
+  font-family: var(--font-mono);
   font-size: var(--text-sm);
 }
 
@@ -93,12 +114,15 @@
 .assumption-unit {
   min-width: 4.5rem;
   color: var(--color-text-muted);
+  font-family: var(--font-mono);
   font-size: var(--text-xs);
 }
 
 .assumption-meta {
   color: var(--color-text-muted);
-  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  line-height: var(--leading-snug);
 }
 
 .assumption.unpublished .assumption-meta {
@@ -107,10 +131,11 @@
 
 .assumption-used {
   color: var(--color-text);
+  font-weight: var(--weight-medium);
 }
 
 .assumption-clamped {
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-medium);
 }
 
 .assumption-source {
@@ -119,8 +144,8 @@
 }
 
 .caveat {
-  padding-left: var(--space-2);
-  border-left: 2px solid var(--color-border-strong);
+  padding-left: var(--space-3);
+  border-left: 2px solid var(--color-text);
   color: var(--color-text);
   font-size: var(--text-sm);
 }
@@ -131,12 +156,20 @@
 
 .rationale summary {
   cursor: pointer;
-  font-size: var(--text-xs);
-  font-weight: var(--weight-semibold);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .rationale p {
-  margin-top: var(--space-1);
+  margin-top: var(--space-2);
   font-size: var(--text-xs);
   line-height: var(--leading-normal);
+}
+
+@media (max-width: 900px) {
+  .assumptions {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

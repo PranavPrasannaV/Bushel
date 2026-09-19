@@ -79,6 +79,7 @@
 }
 
 .factor-value {
+  font-family: var(--font-mono);
   font-weight: var(--weight-semibold);
 }
 

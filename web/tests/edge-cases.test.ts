@@ -44,7 +44,7 @@ import { renderToStaticMarkup } from 'react-dom/server'
 import { describe, expect, it } from 'vitest'
 import AssumptionPanel from '../src/components/AssumptionPanel.tsx'
 import FactorTrail from '../src/components/FactorTrail.tsx'
-import OrderSummary from '../src/components/OrderSummary.tsx'
+import OrderSummary, { AcreageFunnel } from '../src/components/OrderSummary.tsx'
 import OrderTable from '../src/components/OrderTable.tsx'
 import { computeOrder, GAP_MESSAGE } from '../src/convert/computeOrder.ts'
 import type { Cell, EmptyResult, Factors, FireIndex, FireRecord, Order } from '../src/convert/types.ts'
@@ -95,8 +95,10 @@ const cell = (zone: string, low: number, species: [string, number][]): Cell => (
 
 const withCells = (cells: Cell[], over: Partial<FireRecord> = {}): FireRecord => ({ ...fire, cells, ...over })
 
+// The slip (totals, finding, stamp) and the funnel (retained and excluded acres), as the page shows them.
 const summary = (record: FireRecord, order: Order) =>
-  renderToStaticMarkup(createElement(OrderSummary, { entry, record, order }))
+  renderToStaticMarkup(createElement(OrderSummary, { entry, record, order })) +
+  renderToStaticMarkup(createElement(AcreageFunnel, { record }))
 const table = (order: Order, selectedKey: string | null = null) =>
   renderToStaticMarkup(
     createElement(OrderTable, {

@@ -3,7 +3,7 @@ import AssumptionPanel from './components/AssumptionPanel.tsx'
 import FactorTrail from './components/FactorTrail.tsx'
 import FireSelector from './components/FireSelector.tsx'
 import LiveBuild from './components/LiveBuild.tsx'
-import OrderSummary from './components/OrderSummary.tsx'
+import OrderSummary, { AcreageFunnel } from './components/OrderSummary.tsx'
 import OrderTable from './components/OrderTable.tsx'
 import Validation from './components/Validation.tsx'
 import { computeOrder } from './convert/computeOrder.ts'
@@ -222,14 +222,36 @@ export default function App() {
   )
   const validation = useMemo(() => <Validation />, [])
 
+  const year = record?.fire?.year ?? entry?.year
+  const perimeterAcres = record?.retained?.perimeter_acres ?? entry?.perimeter_acres
+  const hasOrder = fire.status === 'ready' && !!order && !order.finding
+  // The report's sections, in order. Assumptions and lines exist only when there is an order to adjust.
+  const sections = [
+    { id: 'from-fire', title: 'From the fire to the order', show: fire.status === 'ready' && !!record?.retained },
+    { id: 'assumptions', title: 'Assumptions', show: hasOrder },
+    { id: 'lines', title: 'Order lines', show: hasOrder },
+    { id: 'check', title: 'Checked against published figures', show: true },
+  ].filter((x) => x.show)
+  const num = (id: string) => String(sections.findIndex((x) => x.id === id) + 1).padStart(2, '0')
+
   return (
     <div className="shell">
-      <header className="shell-header">
-        <span className="wordmark">Bushel</span>
-        <span className="tagline">
-          Computes the conifer seed order for one burned California fire (bushels of cones, pounds of clean seed and
-          cost) using CAL FIRE's Assessment of Needs method.
-        </span>
+      <header className="topbar">
+        <a className="wordmark" href={import.meta.env.BASE_URL}>
+          Bushel
+        </a>
+        <p className="topbar-tag">Post-fire seed orders, California</p>
+        {load.status === 'ready' && (
+          <div className="topbar-controls">
+            <FireSelector fires={load.index.fires} liveFires={liveFires} value={fireId} onChange={selectFire} />
+            <LiveBuild
+              prebuilt={load.index.fires}
+              generatedAt={load.index.generated_at}
+              onPick={selectFire}
+              onBuilt={onBuilt}
+            />
+          </div>
+        )}
       </header>
 
       {load.status === 'loading' && (
@@ -252,72 +274,73 @@ export default function App() {
 
       {load.status === 'ready' && (
         <main className="shell-main">
-          <section className="map-region" aria-label="Burn map">
-            {map}
-            <button
-              type="button"
-              className="map-toggle"
-              aria-pressed={showAll}
-              onClick={() => toggleAll(!showAll)}
-            >
-              {showAll ? `Back to ${fireName || 'the fire'}` : 'All fires'}
-            </button>
-            {fire.status === 'ready' && fire.mapError && (
-              <p className="map-note" role="status">
-                Map layers not loaded: {fire.mapError}
-              </p>
-            )}
-          </section>
-
-          <aside className="order-region" aria-label="Seed order">
-            <FireSelector fires={load.index.fires} liveFires={liveFires} value={fireId} onChange={selectFire} />
-            <LiveBuild
-              prebuilt={load.index.fires}
-              generatedAt={load.index.generated_at}
-              onPick={selectFire}
-              onBuilt={onBuilt}
-            />
-
-            {fire.status === 'idle' && (
-              <div className="order-intro">
-                <p className="caps">Seed order</p>
-                <p className="detail">
-                  {load.index.fires.length} fires, {load.index.coverage_years[0]}–{load.index.coverage_years[1]}.
-                  Severity: {load.index.severity_source}. Choose one to compute its order.
+          <div className="stage" data-view={showAll ? 'overview' : 'fire'}>
+            <section className="map-region" aria-label="Burn map">
+              {map}
+              <button
+                type="button"
+                className="map-toggle"
+                aria-pressed={showAll}
+                onClick={() => toggleAll(!showAll)}
+              >
+                {showAll ? `Back to ${fireName || 'the fire'}` : 'All fires'}
+              </button>
+              {fire.status === 'ready' && fire.mapError && (
+                <p className="map-note" role="status">
+                  Map layers not loaded: {fire.mapError}
                 </p>
+              )}
+            </section>
+
+            {/* The sheet's title block: the fire's name set on the map, like a quadrangle title. */}
+            {!showAll && fireName && (
+              <div className="title-block">
+                <p className="title-kicker">Burned {year}</p>
+                <h1 className="title-name">{fireName}</h1>
+                {perimeterAcres !== undefined && (
+                  <p className="title-stamp">
+                    <span>{Math.round(perimeterAcres).toLocaleString('en-US')} acres burned</span>
+                    {record?.planting && (
+                      <span className="title-stamp-key">
+                        {Math.round(record.planting.interior_acres).toLocaleString('en-US')} acres can&rsquo;t
+                        reseed
+                      </span>
+                    )}
+                  </p>
+                )}
               </div>
             )}
 
-            {fire.status === 'loading' && (
-              <div className="order-intro" role="status">
-                <div className="spinner" aria-hidden="true" />
-                <p className="detail">Loading this fire's cells…</p>
-              </div>
-            )}
+            <aside className="slip-region" aria-label="Seed order" data-hidden={showAll}>
+              {fire.status === 'idle' && (
+                <div className="order-intro">
+                  <p className="caps">Seed order</p>
+                  <p className="detail">
+                    {load.index.fires.length} fires, {load.index.coverage_years[0]}–{load.index.coverage_years[1]}.
+                    Severity: {load.index.severity_source}. Choose one to compute its order.
+                  </p>
+                </div>
+              )}
 
-            {fire.status === 'error' && (
-              <div className="state-card state-card--error" role="alert">
-                <h2>Could not load this fire</h2>
-                <p className="detail">{fire.message}</p>
-              </div>
-            )}
+              {fire.status === 'loading' && (
+                <div className="order-intro" role="status">
+                  <div className="spinner" aria-hidden="true" />
+                  <p className="detail">Loading this fire&rsquo;s cells…</p>
+                </div>
+              )}
 
-            {fire.status === 'ready' && order && entry && (
-              <>
-                <OrderSummary entry={entry} record={fire.record} order={order} />
+              {fire.status === 'error' && (
+                <div className="state-card state-card--error" role="alert">
+                  <h2>Could not load this fire</h2>
+                  <p className="detail">{fire.message}</p>
+                </div>
+              )}
 
-                {!order.finding && (
-                  <>
-                    <AssumptionPanel
-                      factors={load.factors}
-                      used={order.assumptions_used}
-                      onChange={onAssumption}
-                      onReset={onReset}
-                    />
-                    <div className="order-actions">
-                      <h3>
-                        Order lines <span className="count">{order.lines.length}</span>
-                      </h3>
+              {fire.status === 'ready' && order && entry && (
+                <>
+                  <OrderSummary entry={entry} record={fire.record} order={order} />
+                  <div className="slip-actions">
+                    {!order.finding && (
                       <button
                         type="button"
                         className="button-primary"
@@ -325,20 +348,77 @@ export default function App() {
                       >
                         Export order
                       </button>
-                    </div>
-                    <OrderTable
-                      lines={order.lines}
-                      selectedKey={selectedKey}
-                      onToggle={onToggleLine}
-                      trail={renderTrail}
-                    />
-                  </>
-                )}
-              </>
-            )}
+                    )}
+                    <a className="slip-more" href={order.finding ? '#from-fire' : '#lines'}>
+                      {order.finding ? 'See the acreage' : `All ${order.lines.length} lines`}
+                      <span aria-hidden="true"> ↓</span>
+                    </a>
+                  </div>
+                </>
+              )}
+            </aside>
+          </div>
 
-            {validation}
-          </aside>
+          <div className="report">
+            <nav className="report-contents" aria-label="Report contents">
+              <p className="caps">The order, in full</p>
+              <ol>
+                {sections.map((x) => (
+                  <li key={x.id}>
+                    <a href={`#${x.id}`}>
+                      <span className="report-num">{num(x.id)}</span>
+                      {x.title}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+
+            <div className="report-body">
+              {fire.status === 'ready' && record?.retained && (
+                <section className="report-section" id="from-fire">
+                  <span className="report-num">{num('from-fire')}</span>
+                  <AcreageFunnel record={record} />
+                </section>
+              )}
+
+              {fire.status === 'ready' && order && hasOrder && (
+                <>
+                  <section className="report-section" id="assumptions">
+                    <span className="report-num">{num('assumptions')}</span>
+                    <AssumptionPanel
+                      factors={load.factors}
+                      used={order.assumptions_used}
+                      onChange={onAssumption}
+                      onReset={onReset}
+                    />
+                  </section>
+
+                  <section className="report-section" id="lines">
+                    <span className="report-num">{num('lines')}</span>
+                    <div className="lines">
+                      <div className="order-actions">
+                        <h3>
+                          Order lines <span className="count">{order.lines.length}</span>
+                        </h3>
+                      </div>
+                      <OrderTable
+                        lines={order.lines}
+                        selectedKey={selectedKey}
+                        onToggle={onToggleLine}
+                        trail={renderTrail}
+                      />
+                    </div>
+                  </section>
+                </>
+              )}
+
+              <section className="report-section" id="check">
+                <span className="report-num">{num('check')}</span>
+                {validation}
+              </section>
+            </div>
+          </div>
         </main>
       )}
     </div>

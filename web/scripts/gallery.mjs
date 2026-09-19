@@ -21,18 +21,29 @@ async function open(query) {
   await page.waitForTimeout(400)
 }
 
-// 1. The first frame: the featured fire, its interior lit, the order beside it.
+// Scroll a report section to just under the sticky top bar, without the smooth-scroll animation.
+async function show(selector) {
+  await page.evaluate((sel) => {
+    document.documentElement.style.scrollBehavior = 'auto'
+    const el = document.querySelector(sel)
+    window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 84)
+  }, selector)
+  await page.waitForTimeout(300)
+}
+
+// 1. The first frame: the featured fire, its interior lit, the order slip on the map.
 await open('?fire=north-complex-2020')
 await page.screenshot({ path: file('01-first-frame.png') })
 
 // 2. The interior close up: the map pane alone.
 await page.locator('.map-region').screenshot({ path: file('02-interior.png') })
 
-// 3. The order summary: acres retained and excluded, the interior, bushels, pounds, dollars.
-await page.locator('.summary').first().screenshot({ path: file('03-order.png') })
+// 3. The seed requisition slip: bushels, pounds, dollars, trees, and the gap disclosed.
+await page.locator('.slip-region').screenshot({ path: file('03-order.png') })
 
 // 4. One order line's factor trail: every factor beside the CAL FIRE table it came from.
 const firstLine = page.locator('.order-table tbody tr').first()
+await show('#lines')
 await firstLine.click()
 await page.waitForTimeout(300)
 await page.locator('.factor-trail').first().screenshot({ path: file('04-factor-trail.png') })
@@ -40,16 +51,10 @@ await page.locator('.factor-trail').first().screenshot({ path: file('04-factor-t
 // 5. The three factors CAL FIRE doesn't publish, in amber.
 await page.locator('.assumptions, .assumption-panel').first().screenshot({ path: file('05-unpublished-factors.png') })
 
-// 6. Validation: the like-for-like check first. The panel is taller than the viewport inside a scrolling
-// column, so scroll its top into view and clip the viewport rather than shooting the whole element.
-const panel = page.locator('.validation')
-await panel.evaluate((el) => el.scrollIntoView({ block: 'start' }))
-await page.waitForTimeout(300)
-const box = await panel.boundingBox()
-await page.screenshot({
-  path: file('06-validation.png'),
-  clip: { x: box.x, y: Math.max(box.y, 0), width: box.width, height: Math.min(box.height, 900 - Math.max(box.y, 0)) },
-})
+// 6. Validation: report section 04, the like-for-like check first. Taller than the viewport, so the page
+// scrolls to its heading and the viewport is shot as the reader sees it.
+await show('#check')
+await page.screenshot({ path: file('06-validation.png') })
 
 // 7. All fires over California.
 await page.goto(new URL('?view=all', base).href)

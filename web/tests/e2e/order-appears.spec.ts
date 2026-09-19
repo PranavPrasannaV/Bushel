@@ -84,7 +84,8 @@ test('retained and excluded acres, the perimeter date and the provisional state 
   const summary = page.locator('.summary')
   await expect(page.getByTestId('retained-acres')).toHaveText('3,000 ac')
   await expect(page.getByTestId('excluded-acres')).toHaveText('2,000 ac')
-  await expect(summary).toContainText('Outside State Responsibility Area')
+  // The acreage lives in the report's funnel; the slip carries the date and the provisional flag.
+  await expect(page.locator('.funnel')).toContainText('Outside State Responsibility Area')
   await expect(summary).toContainText('Perimeter data as of 2021-10-01')
   await expect(summary.locator('.provisional-flag')).toHaveCount(0) // fixture is not provisional
 })

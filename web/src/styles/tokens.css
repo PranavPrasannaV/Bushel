@@ -1,127 +1,135 @@
 /*
- * Bushel design tokens (T019).
+ * Bushel design tokens: "survey sheet".
  *
- * Why dark: the seed-limited interior has to *light up* against the burn; on a dark canvas it can be
- * the one luminous thing on screen, whereas on a light report page it could only ever be a dark blob.
+ * The page is a cartographer's sheet, not a dashboard: warm paper, ink, hairline rules, a map with a title
+ * block, and the order set as a requisition slip. Contract: design-system/bushel/MASTER.md.
  *
  * Colour rules (binding on every component):
- *   - regen-*   = the seed-limited interior ONLY. The single visual peak; nothing else is this bright.
- *   - amber-*   = RESERVED for the three unpublished CAL FIRE factors. Never use amber for anything else.
- *   - priority-* (red/orange/yellow) = AON collection-priority badges in the order table ONLY.
- *   - char-*    = the rest of the burn and the perimeter: deliberately muted so the interior wins.
- *   - ash-*     = neutral ground, surfaces, text. sky-* = interaction (focus, selection, links).
+ *   - sprout-*  = the seed-limited interior ONLY. The single saturated colour on the page.
+ *   - amber-*   = RESERVED for the three unpublished CAL FIRE factors. Never anything else.
+ *   - priority-* = AON collection-priority badges in the order table ONLY.
+ *   - umber-*   = the burn: perimeter, high severity, retained ground. Muted so the interior wins.
+ *   - paper-* / ink-* = ground, surfaces, text. forest-* = actions, focus, selection.
  *
- * Type: Newsreader (serif, report headings and headline figures) + Public Sans (the US government's
- * own UI face; agency-report tone). Chosen with the ui-ux-pro-max skill (editorial + data pairings).
+ * Type: Instrument Serif (display: fire names, the headline figure), IBM Plex Sans (reading), IBM Plex Mono
+ * (labels, stamps, ledger figures).
  */
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  /* ---- Colour scales ---------------------------------------------------- */
+  /* ---- Scales ------------------------------------------------------------ */
 
-  /* ash: neutral charcoal with a faint conifer-green cast */
-  --ash-950: #0b0e0d;
-  --ash-900: #111614;
-  --ash-850: #161c1a;
-  --ash-800: #1d2421;
-  --ash-700: #2a332f;
-  --ash-600: #3b4540;
-  --ash-500: #56615b;
-  --ash-400: #7d8882;
-  --ash-300: #a3aca7;
-  --ash-200: #c8cfcb;
-  --ash-100: #e4e8e6;
-  --ash-50: #f3f5f4;
+  /* paper: the sheet. Warm, never grey-blue. */
+  --paper-50: #fbfaf6;
+  --paper-100: #f5f2ea;
+  --paper-200: #ede8dc;
+  --paper-300: #e2dccd;
+  --paper-400: #d3cbb8;
+  --paper-500: #b9af98;
 
-  /* char: burned ground, muted warm brown-grey (the rest of the burn, the perimeter) */
-  --char-800: #2a221e;
-  --char-700: #3a2f2a;
-  --char-600: #4d3f37;
-  --char-500: #66544a;
-  --char-400: #857064;
-  --char-300: #a8968a;
+  /* ink: text and line work */
+  --ink-900: #161915;
+  --ink-800: #23271f;
+  --ink-700: #3a3e35;
+  --ink-600: #52564c;
+  --ink-500: #6d7066;
+  --ink-400: #8b8d83;
 
-  /* regen: the seed-limited interior, the one peak */
-  --regen-200: #b3fbe4;
-  --regen-300: #6ff5cf;
-  --regen-400: #2ee8b6;
-  --regen-500: #14c99a;
-  --regen-900: #07382c;
-  --regen-glow: rgb(46 232 182 / 0.45);
+  /* forest: the one action colour */
+  --forest-900: #102219;
+  --forest-800: #173226;
+  --forest-700: #1f4332;
+  --forest-600: #2b5a44;
+  --forest-100: #dfe8e0;
+
+  /* umber: burned ground */
+  --umber-900: #2f241e;
+  --umber-700: #5a4436;
+  --umber-600: #7a5d4a;
+  --umber-500: #93735d;
+  --umber-300: #c4ae99;
+  --umber-200: #d8c9b8;
+
+  /* sprout: the seed-limited interior, the one peak */
+  --sprout-800: #07573b;
+  --sprout-700: #0b7a53;
+  --sprout-600: #0f9a68;
+  --sprout-500: #16bf84;
+  --sprout-200: #b6ecd4;
+  --sprout-100: #dcf6ea;
 
   /* amber: RESERVED for unpublished CAL FIRE factors */
-  --amber-300: #fbd48c;
-  --amber-400: #f2a93b;
-  --amber-500: #d98d14;
-  --amber-950: #2b1f0b;
+  --amber-800: #7a4a0c;
+  --amber-600: #b8741a;
+  --amber-400: #e0a548;
+  --amber-100: #fbefd9;
 
   /* priority: AON collection-priority badges only (1 red, 2 orange, 3 yellow) */
-  --priority-1: #e5484d;
+  --priority-1: #c8413a;
   --priority-1-ink: #ffffff;
-  --priority-2: #ef6f2e;
-  --priority-2-ink: #1a0d05;
-  --priority-3: #eee150;
-  --priority-3-ink: #1a1805;
+  --priority-2: #dc7430;
+  --priority-2-ink: #ffffff;
+  --priority-3: #e6c23f;
+  --priority-3-ink: #2b2305;
 
-  /* sky: interaction only, low saturation so it never competes with the interior */
-  --sky-300: #a9cdf0;
-  --sky-400: #7fb2e5;
-  --sky-900: #13263a;
+  /* ---- Semantic roles ------------------------------------------------------ */
 
-  /* ---- Semantic roles --------------------------------------------------- */
-
-  --color-bg: var(--ash-950);
-  --color-surface: var(--ash-900);
-  --color-surface-raised: var(--ash-850);
-  --color-surface-sunken: var(--ash-950);
-  --color-border: var(--ash-700);
-  --color-border-strong: var(--ash-600);
-  --color-text: var(--ash-100);
-  --color-text-muted: var(--ash-300);
-  --color-text-subtle: var(--ash-400);
-  --color-accent: var(--sky-400);
-  --color-focus: var(--sky-300);
-  --color-selected-bg: var(--sky-900);
+  --color-bg: var(--paper-100);
+  --color-surface: var(--paper-50);
+  --color-surface-sunken: var(--paper-200);
+  --color-border: var(--paper-300);
+  --color-border-strong: var(--paper-500);
+  --color-rule: var(--ink-900);
+  --color-text: var(--ink-900);
+  --color-text-muted: var(--ink-600);
+  --color-text-subtle: var(--ink-500);
+  --color-accent: var(--forest-700);
+  --color-accent-hover: var(--forest-800);
+  --color-on-accent: var(--paper-50);
+  --color-focus: var(--forest-600);
+  --color-selected-bg: var(--forest-100);
 
   /* Factor provenance */
-  --color-published-border: var(--ash-600);
-  --color-published-text: var(--ash-200);
-  --color-unpublished: var(--amber-400);
-  --color-unpublished-text: var(--amber-300);
-  --color-unpublished-bg: var(--amber-950);
-  --color-unpublished-border: var(--amber-500);
+  --color-published-border: var(--paper-400);
+  --color-published-text: var(--ink-700);
+  --color-unpublished: var(--amber-600);
+  --color-unpublished-text: var(--amber-800);
+  --color-unpublished-bg: var(--amber-100);
+  --color-unpublished-border: var(--amber-400);
 
   /* Map layers (MapLibre needs literal values: read with getComputedStyle) */
-  --map-canvas: #0d1110;
-  --map-perimeter-line: var(--char-300);
-  --map-burn-fill: var(--char-600);
-  --map-high-severity-fill: var(--char-500);
-  --map-excluded-fill: var(--ash-800);
-  --map-cell-line: var(--ash-500);
-  --map-interior-fill: var(--regen-400);
-  --map-interior-line: var(--regen-200);
-  --map-interior-glow: var(--regen-glow);
+  --map-canvas: #ebe6da;
+  --map-grid: rgb(22 25 21 / 0.06);
+  --map-perimeter-line: var(--umber-900);
+  --map-burn-fill: var(--umber-300);
+  --map-high-severity-fill: var(--umber-600);
+  --map-excluded-fill: var(--paper-300);
+  --map-cell-line: var(--paper-50);
+  --map-state-line: var(--ink-400);
+  --map-interior-fill: var(--sprout-500);
+  --map-interior-line: var(--sprout-700);
+  --map-interior-glow: rgb(22 191 132 / 0.35);
 
-  /* ---- Typography ------------------------------------------------------- */
+  /* ---- Typography ---------------------------------------------------------- */
 
-  --font-display: 'Newsreader', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
-  --font-sans: 'Public Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --font-display: 'Instrument Serif', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
 
-  /* Type scale (rem, 16px root, ~1.2 ratio) */
-  --text-2xs: 0.6875rem; /* 11 — map labels, caps */
-  --text-xs: 0.75rem; /* 12 — source refs, captions */
-  --text-sm: 0.8125rem; /* 13 — order table */
-  --text-base: 0.9375rem; /* 15 — panel body */
+  --text-2xs: 0.6875rem; /* 11: stamps, eyebrow labels */
+  --text-xs: 0.75rem; /* 12 */
+  --text-sm: 0.8125rem; /* 13: tables */
+  --text-base: 0.9375rem; /* 15: body */
   --text-md: 1.0625rem; /* 17 */
-  --text-lg: 1.25rem; /* 20 — section heads */
-  --text-xl: 1.5rem; /* 24 */
-  --text-2xl: 2rem; /* 32 — fire name */
-  --text-3xl: 2.75rem; /* 44 — headline bushel figure */
+  --text-lg: 1.375rem; /* 22: section heads (serif) */
+  --text-xl: 1.875rem; /* 30 */
+  --text-2xl: 2.75rem; /* 44 */
+  --text-3xl: 4.5rem; /* 72: the headline figure */
+  --text-hero: clamp(2.75rem, 5.2vw, 5.25rem); /* the fire's name on the map */
 
-  --leading-tight: 1.15;
-  --leading-snug: 1.35;
+  --leading-tight: 1.05;
+  --leading-snug: 1.3;
   --leading-normal: 1.55;
 
   --weight-regular: 400;
@@ -129,9 +137,9 @@
   --weight-semibold: 600;
   --weight-bold: 700;
 
-  --tracking-caps: 0.08em;
+  --tracking-caps: 0.12em;
 
-  /* ---- Spacing (4px base) ----------------------------------------------- */
+  /* ---- Space (4px base) ------------------------------------------------------ */
 
   --space-0: 0;
   --space-1: 0.25rem; /* 4 */
@@ -142,16 +150,19 @@
   --space-6: 2rem; /* 32 */
   --space-7: 3rem; /* 48 */
   --space-8: 4rem; /* 64 */
+  --space-9: 6rem; /* 96 */
 
-  /* ---- Shape, depth, motion, layers ------------------------------------- */
+  /* ---- Shape, depth, motion, layers ------------------------------------------ */
 
+  /* Square-cut paper: small radii only. */
   --radius-sm: 2px;
-  --radius-md: 4px;
-  --radius-lg: 6px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
   --radius-pill: 999px;
 
-  --shadow-panel: 0 8px 24px rgb(0 0 0 / 0.35);
-  --shadow-interior-glow: 0 0 24px var(--regen-glow);
+  --shadow-sheet: 0 1px 0 rgb(22 25 21 / 0.04), 0 12px 32px -12px rgb(47 36 30 / 0.28);
+  --shadow-panel: var(--shadow-sheet);
+  --shadow-interior-glow: 0 0 0 3px var(--sprout-100);
 
   --duration-fast: 150ms;
   --duration-base: 240ms;
@@ -161,10 +172,12 @@
   --z-map: 0;
   --z-overlay: 10;
   --z-panel: 20;
+  --z-popover: 40;
   --z-tooltip: 50;
 
-  --header-height: 3.5rem;
-  --order-panel-width: 27.5rem;
+  --header-height: 3.75rem;
+  --slip-width: 23.5rem;
+  --measure: 46rem;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -1,172 +1,233 @@
-/* Live builds and data provenance. Tokens only. Interaction is sky; regen, amber and priority stay
- * reserved for the interior, the unpublished factors and the order badges. */
+/* Find a fire: a search field in the top bar. Results, build progress and provenance open under it. */
 
 .live-build {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-surface-raised);
+  position: relative;
+  min-width: 0;
 }
 
-.live-build-head {
+.live-field {
   display: flex;
   align-items: center;
   gap: var(--space-2);
+  width: 22rem;
+  height: 2.375rem;
+  padding: 0 var(--space-2) 0 var(--space-3);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
 }
 
-.live-build-head h3 {
-  font-size: var(--text-md);
+.live-field:focus-within {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 1px;
 }
 
-/* Mode badge: a sky dot for live, a plain ash outline for pre-built. Told apart by label and form. */
+.live-glass {
+  flex: none;
+  width: 0.875rem;
+  height: 0.875rem;
+  fill: none;
+  stroke: var(--color-text-muted);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.live-input {
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  font: inherit;
+  font-size: var(--text-sm);
+}
+
+.live-input:focus {
+  outline: none;
+}
+
+.live-input::placeholder {
+  color: var(--color-text-subtle);
+}
+
+.live-input::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+
+/* Data mode: Live (a server answers and can build) or Pre-built (a static host). */
 .live-badge {
+  flex: none;
   display: inline-flex;
   align-items: center;
-  gap: var(--space-1);
-  padding: 0 var(--space-2);
+  gap: 0.375rem;
+  padding: 0.125rem var(--space-2);
   border: 1px solid var(--color-border-strong);
   border-radius: var(--radius-pill);
+  font-family: var(--font-mono);
   font-size: var(--text-2xs);
-  font-weight: var(--weight-semibold);
-  letter-spacing: var(--tracking-caps);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-text-muted);
   white-space: nowrap;
 }
 
 .live-badge[data-mode='live'] {
-  border-color: var(--color-accent);
-  color: var(--color-focus);
+  border-color: var(--forest-700);
+  color: var(--forest-700);
 }
 
 .live-badge[data-mode='live']::before {
   content: '';
-  width: 0.45rem;
-  height: 0.45rem;
+  width: 0.375rem;
+  height: 0.375rem;
   border-radius: var(--radius-pill);
-  background: var(--color-accent);
+  background: var(--forest-600);
 }
 
-.live-provenance,
-.live-small {
-  font-size: var(--text-xs);
-  line-height: var(--leading-snug);
-  color: var(--color-text-subtle);
+/* The dropdown: a sheet hung under the field. */
+.live-pop {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: 0;
+  z-index: var(--z-popover);
+  width: min(28rem, calc(100vw - 2 * var(--space-4)));
+  max-height: min(34rem, 70vh);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sheet);
 }
 
-.live-provenance code,
-.live-note code {
-  font-family: var(--font-mono);
-  color: var(--color-text-muted);
-}
-
-.live-note {
-  font-size: var(--text-xs);
-  line-height: var(--leading-snug);
-  color: var(--color-text-muted);
-  border-left: 2px solid var(--color-border-strong);
-  padding-left: var(--space-2);
-}
-
-.live-label {
-  font-size: var(--text-2xs);
-  font-weight: var(--weight-semibold);
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  color: var(--color-text-subtle);
-}
-
-.live-input {
-  width: 100%;
-  padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-md);
-  background: var(--color-surface-sunken);
-  color: var(--color-text);
-  font: inherit;
-  font-size: var(--text-base);
-}
-
-.live-input:focus-visible {
-  outline: 2px solid var(--color-focus);
-  outline-offset: 1px;
+.live-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
 }
 
 .live-results {
   margin: 0;
   padding: 0;
   list-style: none;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  overflow: hidden;
-}
-
-.live-results li + li {
   border-top: 1px solid var(--color-border);
 }
 
+.live-results li {
+  border-bottom: 1px solid var(--color-border);
+}
+
 .live-results button {
-  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: var(--space-3);
-  padding: var(--space-2) var(--space-3);
+  width: 100%;
+  padding: var(--space-2) var(--space-1);
   border: 0;
   background: transparent;
-  color: var(--color-text);
-  font: inherit;
   font-size: var(--text-sm);
   text-align: left;
-  cursor: pointer;
   transition: background-color var(--duration-fast) var(--ease-out);
 }
 
-.live-results button:hover:not(:disabled),
-.live-results button:focus-visible {
+.live-results button:hover:not(:disabled) {
   background: var(--color-selected-bg);
-  outline: none;
 }
 
 .live-results button:disabled {
-  cursor: progress;
-  color: var(--color-text-subtle);
+  cursor: default;
+  opacity: 0.5;
 }
 
 .live-quiet {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
   color: var(--color-text-subtle);
-  font-variant-numeric: tabular-nums;
+}
+
+.live-small,
+.live-provenance {
+  color: var(--color-text-subtle);
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+}
+
+.live-provenance {
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.live-note {
+  padding: var(--space-2) var(--space-3);
+  border-left: 2px solid var(--color-text);
+  background: var(--color-surface-sunken);
+  font-size: var(--text-sm);
 }
 
 .live-status {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: var(--space-2);
   font-size: var(--text-sm);
-  color: var(--color-text-muted);
 }
 
-/* A slow sky pulse while agency services answer. Opacity only, and still under reduced motion. */
+/* While a build runs and the dropdown is closed, a chip under the field keeps it in view. */
+.live-chip {
+  position: absolute;
+  top: calc(100% + var(--space-2));
+  right: 0;
+  z-index: var(--z-popover);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  white-space: nowrap;
+}
+
 .live-pulse {
   flex: none;
   width: 0.5rem;
   height: 0.5rem;
   border-radius: var(--radius-pill);
-  background: var(--color-accent);
-  animation: live-pulse 1.2s var(--ease-out) infinite;
+  background: var(--forest-600);
+  animation: live-pulse 1.2s ease-in-out infinite;
 }
 
 @keyframes live-pulse {
   50% {
-    opacity: 0.25;
+    opacity: 0.3;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .live-pulse {
     animation: none;
+  }
+}
+
+@media (max-width: 1100px) {
+  .live-field {
+    width: 16rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .live-field {
+    width: 100%;
+  }
+  .live-pop {
+    left: 0;
+    right: 0;
+    width: auto;
   }
 }

@@ -1,31 +1,54 @@
+/* The fire picker: a labelled field in the top bar, "FIRE" set in mono inside its frame. */
+
 .fire-selector {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
+  align-items: center;
   min-width: 0;
+  height: 2.375rem;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
 }
 
 .fire-selector label {
+  flex: none;
+  align-self: stretch;
+  display: grid;
+  place-items: center;
+  padding: 0 var(--space-3);
+  border-right: 1px solid var(--color-border);
+  font-family: var(--font-mono);
   font-size: var(--text-2xs);
-  font-weight: var(--weight-semibold);
   letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
   color: var(--color-text-subtle);
 }
 
 .fire-selector select {
-  width: 100%;
-  min-width: 0; /* a long fire label must never widen the page on a phone */
-  text-overflow: ellipsis;
-  padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--color-border-strong);
+  min-width: 0;
+  width: 18rem;
+  height: 100%;
+  padding: 0 2rem 0 var(--space-3);
+  border: 0;
   border-radius: var(--radius-md);
-  background: var(--color-surface-raised);
+  appearance: none;
+  background:
+    linear-gradient(45deg, transparent 50%, var(--color-text) 50%) calc(100% - 15px) 55% / 5px 5px no-repeat,
+    linear-gradient(135deg, var(--color-text) 50%, transparent 50%) calc(100% - 10px) 55% / 5px 5px no-repeat;
   color: var(--color-text);
   font: inherit;
-  font-size: var(--text-base);
+  font-size: var(--text-sm);
+  text-overflow: ellipsis;
+  cursor: pointer;
 }
 
-.fire-selector select:hover {
-  border-color: var(--color-text-subtle);
+.fire-selector select:focus-visible {
+  outline-offset: -2px;
+}
+
+@media (max-width: 760px) {
+  .fire-selector select {
+    flex: 1;
+    width: auto;
+  }
 }

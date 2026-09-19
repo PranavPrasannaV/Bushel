@@ -58,7 +58,7 @@ Two deliverables separated by the precompute boundary, per plan.md:
 - [X] T017 Write `reference/benchmark.json` from the verified figures in `docs/02-FACTS.md` — 55,978 bushels, non-federal, plus the scope note, the known-overestimate caveat and the agency self-contradiction note.
   **Carry a period per figure, not one period for all**: acres burned 1,507,830 covers **2018–2024**; high-severity 359,182 covers **2018–2023 only** — AON Table 1 has no 2024 severity value, and the six years 2018–2023 sum to exactly 359,182. Record `acres_burned_period` and `high_severity_period` separately and state the asymmetry in a `period_note`
 - [X] T018 Build the web app shell in `web/src/App.tsx` that loads `fires/index.json` and `reference/factors.json` with no backend call
-- [X] T019 **GATE** Run the `design-stack` skill *(skill absent here; ui-ux-pro-max used instead — `web/src/styles/tokens.css`)* and commit a design system before any component work — Layer 1 is not optional (plan.md Implementation gates; Design is a sixth of the rubric).
+- [X] T019 **GATE** Run the `design-stack` skill *(skill absent here; ui-ux-pro-max used instead — `web/src/styles/tokens.css`. Superseded 2026-09-18 by the "survey sheet" redesign: contract in `design-system/bushel/MASTER.md`)* and commit a design system before any component work — Layer 1 is not optional (plan.md Implementation gates; Design is a sixth of the rubric).
   **Exit criterion**: `web/src/styles/tokens.css` exists and is committed, containing a named color scale, a type scale, and a spacing scale. No file under `web/src/components/` may be created before it.
 
 ---

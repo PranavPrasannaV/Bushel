@@ -1,10 +1,16 @@
-/* Burn map. Tokens only (tokens.css). Map-layer colours are read from the same --map-* tokens in BurnMap.tsx. */
+/* Burn map on the survey sheet. Tokens only (tokens.css); map-layer colours come from the same --map-*
+   tokens in BurnMap.tsx. The MapLibre canvas is transparent, so the sheet's grid shows through it. */
 
 .burn-map {
   position: relative;
   height: 100%;
   min-height: 20rem;
-  background: var(--map-canvas);
+  background-color: var(--map-canvas);
+  background-image:
+    linear-gradient(var(--map-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--map-grid) 1px, transparent 1px);
+  background-size: 48px 48px;
+  background-position: -1px -1px;
 }
 
 .burn-map .burn-map__canvas {
@@ -12,36 +18,41 @@
   inset: 0;
 }
 
+/* ---- The map key: a paper strip along the map's foot, stopping short of the slip ---- */
+
 .burn-map__legend {
   position: absolute;
-  left: var(--space-4);
-  bottom: var(--space-4);
+  left: var(--space-5);
+  bottom: var(--space-5);
   z-index: var(--z-overlay);
-  max-width: min(21rem, calc(100% - 2 * var(--space-4)));
-  padding: var(--space-3) var(--space-4);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: color-mix(in srgb, var(--color-surface) 90%, transparent);
-  box-shadow: var(--shadow-panel);
-  backdrop-filter: blur(6px);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  font-size: var(--text-sm);
+  display: grid;
+  /* Three columns: the key, the threshold statement, the share and its bar. */
+  grid-template-columns: minmax(0, auto) 13rem 15rem;
+  align-items: start;
+  gap: var(--space-2) var(--space-5);
+  max-width: calc(100% - var(--cover-right, 0px) - 2 * var(--space-5));
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  font-size: var(--text-xs);
   line-height: var(--leading-snug);
 }
 
 .burn-map__name {
+  grid-column: 1 / -1;
   font-size: var(--text-lg);
 }
 
 .burn-map__keys {
+  grid-row: span 2;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 11.5rem));
+  align-content: start;
+  gap: var(--space-2) var(--space-4);
   margin: 0;
   padding: 0;
   list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
   color: var(--color-text-muted);
 }
 
@@ -51,31 +62,39 @@
   gap: var(--space-2);
 }
 
-/* The interior entry leads the legend and reads first. */
+/* The interior leads the key, in ink, across both columns, and alone keeps its technical name on show
+   (the others carry theirs in a tooltip). */
 .burn-map__keys li:first-child {
+  grid-column: 1 / -1;
   color: var(--color-text);
-  font-weight: var(--weight-semibold);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+.burn-map__keys li:first-child .burn-map__sub {
+  display: block;
 }
 
 .burn-map__sub {
-  display: block;
-  font-size: var(--text-xs);
+  display: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
   font-weight: var(--weight-regular);
   color: var(--color-text-subtle);
 }
 
 .burn-map__swatch {
   flex: none;
-  width: 1.125rem;
+  width: 1rem;
   height: 0.75rem;
-  margin-top: 0.2em;
-  border-radius: var(--radius-sm);
+  margin-top: 0.15em;
+  border-radius: 1px;
 }
 
-/* Each swatch matches how the layer draws on the canvas (same token, same opacity). */
+/* Each swatch matches how its layer draws on the canvas (same token, same opacity). */
 .burn-map__swatch--interior {
   background: var(--map-interior-fill);
-  box-shadow: var(--shadow-interior-glow);
+  box-shadow: inset 0 0 0 1px var(--map-interior-line);
 }
 
 .burn-map__swatch--severity {
@@ -91,32 +110,46 @@
 }
 
 .burn-map__swatch--cell {
-  height: 0;
-  margin-top: 0.6em;
-  border-top: 1px dashed var(--map-cell-line);
-  border-radius: 0;
+  background: var(--map-interior-fill);
+  background-image: linear-gradient(90deg, var(--map-cell-line) 50%, transparent 50%);
+  background-size: 5px 1.5px;
+  background-repeat: repeat-x;
+  background-position: 0 50%;
+  box-shadow: inset 0 0 0 1px var(--map-interior-line);
 }
 
+/* Right column: the threshold statement, then the plain share over its bar. */
 .burn-map__method {
+  grid-column: 2;
+  grid-row: 1 / span 2;
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--color-border);
+  padding-left: var(--space-5);
+  border-left: 1px solid var(--color-border);
 }
 
 .burn-map__threshold {
   font-family: var(--font-display);
-  font-size: var(--text-md);
+  font-size: var(--text-base);
   line-height: var(--leading-snug);
   color: var(--color-text);
 }
 
 .burn-map__fraction {
+  grid-column: 3;
+  grid-row: 1 / span 2;
   display: flex;
   flex-direction: column;
   gap: var(--space-1);
-  color: var(--color-text-muted);
+  padding-left: var(--space-5);
+  border-left: 1px solid var(--color-border);
+  color: var(--color-text);
+}
+
+.burn-map__fraction .burn-map__sub {
+  display: block;
+  font-family: var(--font-sans);
 }
 
 /* Interior against the rest of the high-severity burn, in the map's own two colours. */
@@ -125,83 +158,110 @@
   flex: none;
   width: 100%;
   height: 6px;
-  border-radius: var(--radius-sm);
+  margin-block: var(--space-1);
   background:
     linear-gradient(var(--map-interior-fill), var(--map-interior-fill)) left / calc(var(--share, 0) * 100%) 100%
       no-repeat,
     color-mix(in srgb, var(--map-high-severity-fill) 85%, var(--map-canvas));
-  box-shadow: 0 0 6px var(--regen-glow);
 }
 
-@media (max-width: 900px) {
+/* The overview's status line spans the key. */
+.burn-map[data-view='overview'] .burn-map__fraction {
+  grid-column: 1 / -1;
+  grid-row: auto;
+  padding-left: 0;
+  border-left: 0;
+}
+
+/* Compact (a pane narrower than 760px or shorter than 520px, or any screen under 1100px): one column, keys
+   in a row, no sub-lines. */
+.burn-map[data-compact='true'] .burn-map__legend,
+.burn-map[data-view='overview'] .burn-map__legend {
+  grid-template-columns: minmax(0, 1fr);
+  max-width: min(26rem, calc(100% - var(--cover-right, 0px) - 2 * var(--space-5)));
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+}
+.burn-map[data-compact='true'] .burn-map__keys,
+.burn-map[data-view='overview'] .burn-map__keys {
+  grid-row: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+}
+.burn-map[data-compact='true'] .burn-map__keys .burn-map__sub,
+.burn-map[data-compact='true'] .burn-map__method .caps,
+.burn-map[data-view='overview'] .burn-map__keys .burn-map__sub,
+.burn-map[data-view='overview'] .burn-map__method .caps {
+  display: none;
+}
+.burn-map[data-compact='true'] .burn-map__method,
+.burn-map[data-compact='true'] .burn-map__fraction,
+.burn-map[data-view='overview'] .burn-map__method,
+.burn-map[data-view='overview'] .burn-map__fraction {
+  grid-column: 1;
+  grid-row: auto;
+  padding-left: 0;
+  border-left: 0;
+}
+.burn-map[data-compact='true'] .burn-map__threshold,
+.burn-map[data-view='overview'] .burn-map__threshold {
+  font-size: var(--text-sm);
+}
+
+@media (max-width: 1100px) {
   .burn-map__legend {
-    left: var(--space-2);
-    bottom: var(--space-2);
-    max-width: calc(100% - 2 * var(--space-2));
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-2);
+    max-width: min(26rem, calc(100% - var(--cover-right, 0px) - 2 * var(--space-5)));
+    padding: var(--space-3) var(--space-4);
+  }
+  .burn-map__keys {
+    grid-row: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-4);
+  }
+  .burn-map__keys li:first-child .burn-map__sub,
+  .burn-map__method .caps {
+    display: none;
+  }
+  .burn-map__method,
+  .burn-map__fraction {
+    grid-column: 1;
+    grid-row: auto;
+    padding-left: 0;
+    border-left: 0;
+  }
+  .burn-map__threshold {
+    font-size: var(--text-sm);
   }
 }
 
-/* Too narrow for the fire to sit beside the legend (BurnMap.tsx fitBounds): stack the legend under the map
-   so it does not cover the fire. */
+/* Phone: the canvas takes a fixed height and the key sits under it on the sheet, not over the fire. */
 @media (max-width: 760px) {
   .burn-map {
     height: auto;
     display: flex;
     flex-direction: column;
+    background: var(--color-bg);
   }
   .burn-map .burn-map__canvas {
     position: relative;
     inset: auto;
-    height: 55vh;
-    min-height: 18rem;
+    height: 58svh;
+    min-height: 20rem;
+    background-color: var(--map-canvas);
+    background-image:
+      linear-gradient(var(--map-grid) 1px, transparent 1px),
+      linear-gradient(90deg, var(--map-grid) 1px, transparent 1px);
+    background-size: 48px 48px;
+    border-bottom: 1px solid var(--color-rule);
   }
-  .burn-map__legend {
+  .burn-map__legend,
+  .burn-map[data-compact='true'] .burn-map__legend {
     position: static;
     max-width: none;
-    margin: var(--space-2);
-  }
-}
-
-/* Compact (BurnMap.tsx: pane narrower than 760px or shorter than 520px, with the map still beside the
-   order panel): the legend becomes one strip along the bottom edge. Keys run in a row, their
-   sub-lines and the fire name drop (the name heads the order panel), and the threshold statement
-   stays in full. The fire is fitted above the strip. */
-@media (min-width: 761px) {
-  .burn-map[data-compact='true'] .burn-map__legend {
-    right: var(--space-2);
-    left: var(--space-2);
-    bottom: var(--space-2);
-    max-width: none;
-    padding: var(--space-2) var(--space-3);
-    gap: var(--space-2);
-    font-size: var(--text-xs);
-  }
-  .burn-map[data-compact='true'] .burn-map__name,
-  .burn-map[data-compact='true'] .burn-map__keys .burn-map__sub,
-  .burn-map[data-compact='true'] .burn-map__method .caps {
-    display: none;
-  }
-  .burn-map[data-compact='true'] .burn-map__keys {
-    flex-flow: row wrap;
-    gap: var(--space-1) var(--space-3);
-  }
-  .burn-map[data-compact='true'] .burn-map__method {
-    padding-top: var(--space-2);
-  }
-  .burn-map[data-compact='true'] .burn-map__threshold {
-    font-size: var(--text-sm);
-  }
-  .burn-map[data-compact='true'] .burn-map__fraction {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 0 var(--space-2);
-  }
-}
-
-/* The overview's title has no other place on screen, so the compact strip keeps it. */
-@media (min-width: 761px) {
-  .burn-map[data-compact='true'][data-view='overview'] .burn-map__name {
-    display: block;
-    font-size: var(--text-md);
+    margin: var(--space-3) var(--space-3) 0;
   }
 }

@@ -74,7 +74,19 @@ export default function LiveBuild({
   const [found, setFound] = useState<Found[] | null>(null)
   const [searchError, setSearchError] = useState<string | null>(null)
   const [build, setBuild] = useState<Build>({ status: 'idle' })
+  const [open, setOpen] = useState(false)
   const polling = useRef(0)
+  const rootRef = useRef<HTMLElement>(null)
+
+  // A press anywhere outside the search closes its results.
+  useEffect(() => {
+    if (!open) return
+    const away = (e: PointerEvent) => {
+      if (!rootRef.current?.contains(e.target as Node)) setOpen(false)
+    }
+    document.addEventListener('pointerdown', away)
+    return () => document.removeEventListener('pointerdown', away)
+  }, [open])
 
   useEffect(() => {
     if (!canHostServer(window.location.hostname)) return
@@ -149,111 +161,150 @@ export default function LiveBuild({
   const busy = build.status === 'running'
   const [lo, hi] = live ? server.health.years : [2018, 2023]
 
+  // The search lives in the top bar; its results, build progress and provenance open beneath it.
+  const pick = (id: string) => {
+    onPick(id)
+    setQuery('')
+    setOpen(false)
+  }
+
   return (
-    <section className="live-build" aria-labelledby="find-fire-title" data-testid="find-fire">
-      <div className="live-build-head">
+    <section
+      className="live-build"
+      aria-labelledby="find-fire-title"
+      data-testid="find-fire"
+      data-open={open}
+      ref={rootRef}
+      onFocus={() => setOpen(true)}
+      onKeyDown={(e) => {
+        if (e.key === 'Escape') setOpen(false)
+      }}
+    >
+      <h3 id="find-fire-title" className="visually-hidden">
+        Find a fire
+      </h3>
+      <div className="live-field">
+        <svg className="live-glass" viewBox="0 0 16 16" aria-hidden="true">
+          <circle cx="7" cy="7" r="4.75" />
+          <path d="M10.5 10.5 14 14" />
+        </svg>
+        <label className="visually-hidden" htmlFor="fire-search">
+          Find a fire: {prebuilt.length} California fires, {lo}–{hi}
+        </label>
+        <input
+          id="fire-search"
+          className="live-input"
+          type="search"
+          placeholder="Find a fire by name"
+          value={query}
+          autoComplete="off"
+          disabled={busy}
+          onChange={(e) => setQuery(e.target.value)}
+        />
         <span className="live-badge" data-mode={live ? 'live' : 'prebuilt'}>
           {live ? 'Live' : 'Pre-built'}
         </span>
-        <h3 id="find-fire-title">Find a fire</h3>
       </div>
 
-      <label className="live-label" htmlFor="fire-search">
-        {prebuilt.length} California fires, {lo}–{hi}
-      </label>
-      <input
-        id="fire-search"
-        className="live-input"
-        type="search"
-        placeholder="Fire name, e.g. Caldor"
-        value={query}
-        autoComplete="off"
-        disabled={busy}
-        onChange={(e) => setQuery(e.target.value)}
-      />
-
-      {typed && local.length > 0 && (
-        <ul className="live-results" aria-label="Pre-built fires found">
-          {local.slice(0, SHOWN).map((f) => (
-            <li key={f.id}>
-              <button type="button" disabled={busy} onClick={() => onPick(f.id)}>
-                <span>
-                  {f.name} <span className="live-quiet">{f.year}</span>
-                </span>
-                <span className="live-quiet">{fmtAcres(f.interior_acres)} ac interior</span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-      {remote.length > 0 && (
-        <ul className="live-results" aria-label="Fires to build live">
-          {remote.slice(0, SHOWN).map((f) => (
-            <li key={f.id}>
-              <button type="button" disabled={busy} onClick={() => void start(f)}>
-                <span>
-                  {f.name} <span className="live-quiet">{f.year}</span>
-                </span>
-                <span className="live-quiet">
-                  {isPrebuilt(f) ? 'Rebuild live' : 'Build live'} · {fmtAcres(f.gis_acres)} ac
-                </span>
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-      {typed && local.length === 0 && remote.length === 0 && (found !== null || !live) && (
-        <p className="live-small">
-          No {lo}–{hi} fire by that name{live ? '' : ' among the pre-built fires'}.
-        </p>
-      )}
-      {searchError && (
-        <p className="live-note" role="alert">
-          {searchError}
-        </p>
-      )}
-
-      {build.status === 'running' && (
-        <p className="live-status" role="status" aria-live="polite">
+      {busy && !open && (
+        <p className="live-chip" role="status" aria-live="polite">
           <span className="live-pulse" aria-hidden="true" />
-          Building {build.fire.name} ({build.fire.year}): {build.step}…
-        </p>
-      )}
-      {build.status === 'error' && (
-        <p className="live-note" role="alert">
-          {build.fire.name} ({build.fire.year}) was not built. {build.message}
-        </p>
-      )}
-      {build.status === 'done' && (
-        <p className="live-status" role="status">
-          Built {build.fire.name} ({build.fire.year}) live at{' '}
-          {new Date(build.builtAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}. It is selected
-          above.
+          Building {build.fire.name} ({build.fire.year})
         </p>
       )}
 
-      {live ? (
-        <p className="live-small">
-          Fires not yet built are fetched at build time from the agency services ({SOURCES}). LEMMA vegetation is
-          read from the local download: it has no public service.
-          {!server.health.lemma && (
-            <>
-              {' '}
-              Builds need the LEMMA files in <code>data/cache/lemma</code>.
-            </>
+      {open && (
+        <div className="live-pop">
+          {typed && local.length > 0 && (
+            <div className="live-group">
+              <p className="caps">Pre-built</p>
+              <ul className="live-results" aria-label="Pre-built fires found">
+                {local.slice(0, SHOWN).map((f) => (
+                  <li key={f.id}>
+                    <button type="button" disabled={busy} onClick={() => pick(f.id)}>
+                      <span>
+                        {f.name} <span className="live-quiet">{f.year}</span>
+                      </span>
+                      <span className="live-quiet">{fmtAcres(f.interior_acres)} ac interior</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
-        </p>
-      ) : (
-        <p className="live-provenance" data-testid="data-provenance">
-          Every fire here was built by Bushel's pipeline on {generatedAt.slice(0, 10)} from the agency services (
-          {SOURCES}) and LEMMA vegetation.
-          {server.status === 'offline' && (
-            <>
-              {' '}
-              To build a fire live, run <code>python -m bushel.serve</code>.
-            </>
+          {remote.length > 0 && (
+            <div className="live-group">
+              <p className="caps">From CAL FIRE, built now</p>
+              <ul className="live-results" aria-label="Fires to build live">
+                {remote.slice(0, SHOWN).map((f) => (
+                  <li key={f.id}>
+                    <button type="button" disabled={busy} onClick={() => void start(f)}>
+                      <span>
+                        {f.name} <span className="live-quiet">{f.year}</span>
+                      </span>
+                      <span className="live-quiet">
+                        {isPrebuilt(f) ? 'Rebuild live' : 'Build live'} · {fmtAcres(f.gis_acres)} ac
+                      </span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
-        </p>
+          {typed && local.length === 0 && remote.length === 0 && (found !== null || !live) && (
+            <p className="live-small">
+              No {lo}–{hi} fire by that name{live ? '' : ' among the pre-built fires'}.
+            </p>
+          )}
+          {searchError && (
+            <p className="live-note" role="alert">
+              {searchError}
+            </p>
+          )}
+
+          {build.status === 'running' && (
+            <p className="live-status" role="status" aria-live="polite">
+              <span className="live-pulse" aria-hidden="true" />
+              Building {build.fire.name} ({build.fire.year}): {build.step}…
+            </p>
+          )}
+          {build.status === 'error' && (
+            <p className="live-note" role="alert">
+              {build.fire.name} ({build.fire.year}) was not built. {build.message}
+            </p>
+          )}
+          {build.status === 'done' && (
+            <p className="live-status" role="status">
+              Built {build.fire.name} ({build.fire.year}) live at{' '}
+              {new Date(build.builtAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}. It is open
+              now.
+            </p>
+          )}
+
+          {live ? (
+            <p className="live-small">
+              Fires not yet built are fetched at build time from the agency services ({SOURCES}). LEMMA vegetation
+              is read from the local download: it has no public service.
+              {!server.health.lemma && (
+                <>
+                  {' '}
+                  Builds need the LEMMA files in <code>data/cache/lemma</code>.
+                </>
+              )}
+            </p>
+          ) : (
+            <p className="live-provenance" data-testid="data-provenance">
+              Every fire here was built by Bushel's pipeline on {generatedAt.slice(0, 10)} from the agency services (
+              {SOURCES}) and LEMMA vegetation.
+              {server.status === 'offline' && (
+                <>
+                  {' '}
+                  To build a fire live, run <code>python -m bushel.serve</code>.
+                </>
+              )}
+            </p>
+          )}
+        </div>
       )}
     </section>
   )

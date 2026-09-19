@@ -1,4 +1,5 @@
-/* Base + layout, built only on tokens.css. Component styles live beside their components. */
+/* Base and layout, built only on tokens.css (contract: design-system/bushel/MASTER.md).
+   The page is one sheet: a thin top bar, the map stage (map, title block, slip), then the report. */
 
 *,
 *::before,
@@ -6,10 +7,14 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-height) + var(--space-5));
+}
+
 html,
 body,
 #root {
-  height: 100%;
   margin: 0;
 }
 
@@ -25,11 +30,18 @@ body {
 
 h1,
 h2,
-h3 {
+h3,
+h4 {
   margin: 0;
-  font-family: var(--font-display);
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-regular);
   line-height: var(--leading-tight);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  letter-spacing: -0.005em;
 }
 
 p {
@@ -38,12 +50,14 @@ p {
 
 a {
   color: var(--color-accent);
+  text-underline-offset: 0.18em;
+  text-decoration-thickness: 1px;
 }
 
 code,
 .mono {
   font-family: var(--font-mono);
-  font-size: 0.92em;
+  font-size: 0.9em;
 }
 
 :focus-visible {
@@ -53,122 +67,241 @@ code,
 
 button {
   font: inherit;
+  color: inherit;
   cursor: pointer;
 }
 
+::selection {
+  background: var(--sprout-200);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Small mono capitals: every label, stamp and eyebrow on the sheet. */
 .caps {
+  font-family: var(--font-mono);
   font-size: var(--text-2xs);
-  font-weight: var(--weight-semibold);
+  font-weight: var(--weight-medium);
   letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
   color: var(--color-text-subtle);
 }
 
-/* ---- Shell layout: header over [map | order] ---------------------------- */
-
-.shell {
-  display: grid;
-  grid-template-rows: auto 1fr;
-  height: 100%;
-}
-
-.shell-header {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  min-height: var(--header-height);
-  padding: var(--space-2) var(--space-5);
-  border-bottom: 1px solid var(--color-border);
-  background: var(--color-surface);
-}
-
-.wordmark {
-  font-family: var(--font-display);
-  font-size: var(--text-xl);
-  font-weight: var(--weight-bold);
-  letter-spacing: 0.01em;
-}
-
-.shell-header .tagline {
+.detail {
   color: var(--color-text-muted);
   font-size: var(--text-sm);
 }
 
-.shell-main {
-  display: grid;
-  /* The order table needs room for nine columns; the map keeps the larger share at 1280 px. */
-  grid-template-columns: minmax(0, 1fr) clamp(var(--order-panel-width), 46vw, 48rem);
-  min-height: 0;
+/* ---- Top bar ---------------------------------------------------------------- */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-panel);
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  height: var(--header-height);
+  padding: 0 var(--space-5);
+  border-bottom: 1px solid var(--color-rule);
+  background: var(--color-bg);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-style: italic;
+  line-height: 1;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.topbar-tag {
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--color-border-strong);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+  white-space: nowrap;
+}
+
+.topbar-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-left: auto;
+  min-width: 0;
+}
+
+/* ---- Map stage: map, title block, slip ------------------------------------------- */
+
+.stage {
+  /* What covers the map's right edge; the map key stops short of it. */
+  --cover-right: calc(var(--slip-width) + 2 * var(--space-5));
+  position: relative;
+  height: calc(100svh - var(--header-height));
+  min-height: 36rem;
+  border-bottom: 1px solid var(--color-rule);
+  isolation: isolate;
+}
+
+.stage[data-view='overview'] {
+  --cover-right: 0px;
 }
 
 .map-region {
-  position: relative;
-  min-height: 0;
-  background: var(--map-canvas);
+  position: absolute;
+  inset: 0;
 }
 
-.order-region {
-  min-height: 0;
+.title-block {
+  position: absolute;
+  top: var(--space-6);
+  left: var(--space-6);
+  z-index: var(--z-overlay);
+  max-width: min(40rem, calc(100% - var(--cover-right) - 2 * var(--space-6)));
+  pointer-events: none;
+}
+
+.title-kicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.title-name {
+  margin-top: var(--space-1);
+  font-size: var(--text-hero);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.title-stamp {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-4);
+  margin-top: var(--space-3);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--color-rule);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+}
+
+.title-stamp-key {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--sprout-800);
+  font-weight: var(--weight-medium);
+}
+
+.title-stamp-key::before {
+  content: '';
+  width: 0.625rem;
+  height: 0.625rem;
+  border: 1px solid var(--sprout-800);
+  background: var(--sprout-500);
+}
+
+.slip-region {
+  position: absolute;
+  top: var(--space-5);
+  right: var(--space-5);
+  z-index: var(--z-panel);
+  width: var(--slip-width);
+  max-height: calc(100% - 2 * var(--space-5));
   overflow-y: auto;
-  padding: var(--space-5) var(--space-4);
-  border-left: 1px solid var(--color-border);
-  background: var(--color-surface);
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-sheet);
+  scrollbar-width: thin;
 }
 
-@media (max-width: 900px) {
-  /* Stacked: map on top, order below, and the page itself scrolls. */
-  .shell {
-    height: auto;
-    min-height: 100%;
-  }
-  .shell-header {
-    padding: var(--space-2) var(--space-4);
-  }
-  .shell-header .tagline {
-    font-size: var(--text-xs);
-  }
-  /* Stacked, the fire picker leads: it moves above the map so a phone never has to scroll past the map
-     and its legend to change fire. The order panel's other children follow the map in source order. */
-  .shell {
-    grid-template-columns: minmax(0, 1fr);
-  }
-  .shell-main {
-    display: flex;
-    flex-direction: column;
-    row-gap: var(--space-4);
-    min-width: 0;
-  }
-  .order-region {
-    display: contents;
-  }
-  .order-region > .fire-selector {
-    order: -2;
-    margin-bottom: calc(-1 * var(--space-4));
-    padding: var(--space-3) var(--space-4);
-    background: var(--color-surface);
-  }
-  .map-region {
-    order: -1;
-    min-height: 55vh;
-    border-block: 1px solid var(--color-border);
-  }
-  .order-region > :not(.fire-selector) {
-    margin-inline: var(--space-4);
-  }
-  .order-region > :last-child {
-    margin-bottom: var(--space-5);
-  }
+.slip-region[data-hidden='true'] {
+  display: none;
 }
 
-/* Between the two stacked breakpoints the map is not yet stacking its own legend, so it needs a definite
-   height to fill. */
-@media (min-width: 761px) and (max-width: 900px) {
-  .map-region {
-    height: 60vh;
-  }
+.slip-region > .order-intro,
+.slip-region > .state-card {
+  margin: var(--space-5);
+}
+
+.slip-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5) var(--space-5);
+  /* The perforation: the slip tears here. */
+  background:
+    radial-gradient(circle at 0 0, var(--color-bg) 0.45rem, transparent 0.5rem) left top / 1rem 1rem no-repeat,
+    radial-gradient(circle at 100% 0, var(--color-bg) 0.45rem, transparent 0.5rem) right top / 1rem 1rem no-repeat;
+  border-top: 1.5px dashed var(--color-border-strong);
+}
+
+.slip-more {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.slip-more:hover {
+  color: var(--color-text);
+}
+
+/* "All fires" / "Back to <fire>": the one control on the map. */
+.map-toggle {
+  position: absolute;
+  top: var(--space-5);
+  right: calc(var(--cover-right) + var(--space-1));
+  z-index: var(--z-overlay);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  letter-spacing: 0.04em;
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.map-toggle:hover,
+.map-toggle[aria-pressed='true'] {
+  background: var(--color-text);
+  color: var(--color-surface);
+}
+
+.map-note {
+  position: absolute;
+  left: var(--space-5);
+  top: var(--space-5);
+  z-index: var(--z-overlay);
+  max-width: 28rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--color-rule);
+  background: var(--color-surface);
+  color: var(--color-text-muted);
+  font-size: var(--text-xs);
 }
 
 .placeholder {
@@ -180,42 +313,181 @@ button {
   text-align: center;
 }
 
-/* ---- Load states --------------------------------------------------------- */
+/* ---- Report: numbered sections with a contents rail -------------------------------- */
+
+.report {
+  display: grid;
+  grid-template-columns: 14rem minmax(0, 1fr);
+  gap: var(--space-7);
+  max-width: 82rem;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-6) var(--space-9);
+}
+
+.report-contents {
+  position: sticky;
+  top: calc(var(--header-height) + var(--space-6));
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.report-contents ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-rule);
+}
+
+.report-contents li {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.report-contents a {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  color: var(--color-text-muted);
+  font-size: var(--text-sm);
+  line-height: var(--leading-snug);
+  text-decoration: none;
+}
+
+.report-contents a:hover {
+  color: var(--color-text);
+}
+
+.report-num {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--color-text-subtle);
+}
+
+.report-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.report-section {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-6) 0 var(--space-7);
+  border-top: 1px solid var(--color-rule);
+}
+
+.report-section > .report-num {
+  padding-top: 0.55rem;
+}
+
+/* Every section's own heading is its title, set large. */
+.report-section h3 {
+  font-size: var(--text-xl);
+}
+
+.section-lede {
+  max-width: var(--measure);
+  margin-top: var(--space-2);
+  color: var(--color-text-muted);
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.order-actions {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.order-actions h3 .count {
+  margin-left: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--color-text-subtle);
+}
+
+.order-intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* ---- Buttons ------------------------------------------------------------------ */
+
+.button-primary,
+.button-quiet {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  transition:
+    background-color var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.button-primary {
+  border: 1px solid var(--color-accent);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.button-primary:hover {
+  background: var(--color-accent-hover);
+}
+
+.button-quiet {
+  border: 1px solid var(--color-border-strong);
+  background: transparent;
+  color: var(--color-text);
+}
+
+.button-quiet:hover:not(:disabled) {
+  border-color: var(--color-text);
+}
+
+.button-quiet:disabled {
+  cursor: default;
+  opacity: 0.45;
+}
+
+/* ---- Load states --------------------------------------------------------------- */
 
 .state {
   display: grid;
   place-items: center;
-  height: 100%;
+  min-height: 60vh;
   padding: var(--space-6);
 }
 
 .state-card {
   max-width: 32rem;
   padding: var(--space-5);
-  border: 1px solid var(--color-border);
-  border-left: 3px solid var(--color-border-strong);
-  border-radius: var(--radius-md);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-lg);
   background: var(--color-surface);
-  box-shadow: var(--shadow-panel);
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
 }
 
-.state-card--error {
-  border-left-color: var(--ash-200);
-}
-
-.detail {
-  color: var(--color-text-muted);
-  font-size: var(--text-sm);
+.state-card h2 {
+  font-size: var(--text-lg);
 }
 
 .spinner {
   width: 1.25rem;
   height: 1.25rem;
-  border: 2px solid var(--color-border-strong);
-  border-top-color: var(--color-text-muted);
+  border: 1.5px solid var(--color-border-strong);
+  border-top-color: var(--color-text);
   border-radius: var(--radius-pill);
   animation: spin 900ms linear infinite;
 }
@@ -227,22 +499,27 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   .spinner {
     animation: none;
   }
 }
 
-/* ---- Reserved-colour classes (use these; do not restyle ad hoc) ---------- */
+/* ---- Reserved-colour classes (use these; do not restyle ad hoc) ------------------- */
 
 /* AON collection priority: order-table badges ONLY */
 .priority-badge {
   display: inline-grid;
   place-items: center;
-  min-width: 1.5rem;
-  padding: 0 var(--space-2);
+  min-width: 1.375rem;
+  padding: 0 var(--space-1);
   border-radius: var(--radius-sm);
-  font-size: var(--text-xs);
-  font-weight: var(--weight-bold);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  font-weight: var(--weight-medium);
+  line-height: 1.5;
 }
 .priority-badge[data-priority='1'] {
   background: var(--priority-1);
@@ -270,28 +547,15 @@ button {
   color: var(--color-published-text);
 }
 
+.unpublished-value {
+  color: var(--color-unpublished-text);
+  font-weight: var(--weight-semibold);
+}
+
 .note {
   padding: var(--space-3);
   border-radius: var(--radius-md);
   font-size: var(--text-sm);
-}
-
-/* ---- Order panel (T036–T043) ---------------------------------------------- */
-
-.order-region > * {
-  min-width: 0;
-}
-
-.order-region h3 {
-  font-size: var(--text-lg);
-}
-
-.order-region h3 .count {
-  margin-left: var(--space-1);
-  color: var(--color-text-subtle);
-  font-family: var(--font-sans);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-medium);
 }
 
 /* Table 2 fallback marker (a dagger in the table, a tag in the trail). Neutral, never amber. */
@@ -301,57 +565,6 @@ button {
   font-weight: var(--weight-semibold);
 }
 
-.order-intro {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-.order-actions {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-  padding-top: var(--space-3);
-  border-top: 1px solid var(--color-border);
-}
-
-.button-primary,
-.button-quiet {
-  padding: var(--space-1) var(--space-3);
-  border-radius: var(--radius-md);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-semibold);
-  transition: background-color var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out);
-}
-
-.button-primary {
-  border: 1px solid var(--color-accent);
-  background: var(--color-selected-bg);
-  color: var(--color-text);
-}
-
-.button-primary:hover {
-  border-color: var(--color-focus);
-}
-
-.button-quiet {
-  border: 1px solid var(--color-border-strong);
-  background: transparent;
-  color: var(--color-text-muted);
-}
-
-.button-quiet:hover:not(:disabled) {
-  border-color: var(--color-text-subtle);
-  color: var(--color-text);
-}
-
-.button-quiet:disabled {
-  cursor: default;
-  opacity: 0.5;
-}
-
-/* Table 2 fallback marker: neutral, never amber (amber is reserved for unpublished factors). */
 .fallback-mark {
   display: inline-block;
   margin-left: var(--space-1);
@@ -359,50 +572,90 @@ button {
   border: 1px dashed var(--color-border-strong);
   border-radius: var(--radius-sm);
   color: var(--color-text-muted);
+  font-family: var(--font-mono);
   font-size: var(--text-2xs);
-  font-weight: var(--weight-medium);
   line-height: 1.4;
   vertical-align: 0.1em;
 }
 
-/* An unpublished factor's value inside running text or a formula. */
-.unpublished-value {
-  color: var(--color-unpublished-text);
-  font-weight: var(--weight-semibold);
+/* ---- Narrower screens -------------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  :root {
+    --slip-width: 21rem;
+  }
+  .topbar-tag {
+    display: none;
+  }
+  .report {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-5);
+    padding: var(--space-7) var(--space-5) var(--space-8);
+  }
+  .report-contents {
+    position: static;
+  }
 }
 
-.map-note {
-  position: absolute;
-  left: var(--space-4);
-  bottom: var(--space-4);
-  z-index: var(--z-overlay);
-  max-width: 28rem;
-  padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-surface);
-  color: var(--color-text-muted);
-  font-size: var(--text-xs);
-}
-
-/* "All fires" / "Back to <fire>": the one control on the map. Sky is interaction; the map stays dark. */
-.map-toggle {
-  position: absolute;
-  top: var(--space-3);
-  right: var(--space-3);
-  z-index: var(--z-overlay);
-  padding: var(--space-1) var(--space-3);
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-pill);
-  background: color-mix(in srgb, var(--color-surface) 88%, transparent);
-  color: var(--color-text);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-semibold);
-  backdrop-filter: blur(6px);
-  transition: border-color var(--duration-fast) var(--ease-out);
-}
-
-.map-toggle:hover,
-.map-toggle[aria-pressed='true'] {
-  border-color: var(--color-accent);
+/* Phone: the bar wraps into two rows, the map comes next with its title set on it, the slip is a sheet
+   pulled up over the map's foot, and the report follows in one column. */
+@media (max-width: 760px) {
+  .topbar {
+    position: static;
+    flex-wrap: wrap;
+    height: auto;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+  }
+  .topbar-controls {
+    flex: 1 1 100%;
+    flex-direction: column;
+    align-items: stretch;
+    margin-left: 0;
+  }
+  .stage {
+    --cover-right: 0px;
+    height: auto;
+    min-height: 0;
+    border-bottom: 0;
+  }
+  .map-region {
+    position: relative;
+    inset: auto;
+  }
+  .title-block {
+    top: var(--space-4);
+    left: var(--space-4);
+    max-width: calc(100% - 8rem);
+  }
+  .title-name {
+    font-size: 2.5rem;
+  }
+  .map-toggle {
+    top: var(--space-4);
+    right: var(--space-4);
+  }
+  .slip-region {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: auto;
+    max-height: none;
+    margin: var(--space-4) var(--space-3) 0;
+    overflow: visible;
+  }
+  .report {
+    padding: var(--space-6) var(--space-4) var(--space-8);
+  }
+  .report-section {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-2);
+    padding: var(--space-5) 0 var(--space-6);
+  }
+  .report-section > .report-num {
+    padding-top: 0;
+  }
+  .report-section h3 {
+    font-size: var(--text-lg);
+  }
 }

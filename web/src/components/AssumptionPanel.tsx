@@ -116,13 +116,13 @@ export default function AssumptionPanel({
       )}
 
       <p className="assumptions-formula">
-        CAL FIRE's method converts seed to seedlings with{' '}
+        CAL FIRE's method converts seed to seedlings with this formula:
         <span className="formula">
           seedlings/lb = (seeds/lb ÷ <span className="unpublished-value">seeds/pot</span>) ×{' '}
           <span className="unpublished-value">nursery survival</span> ×{' '}
           <span className="unpublished-value">probability of a tree in nursery</span>
         </span>
-        . The three highlighted factors come from internal LAMRC nursery datasets and are not published. The defaults
+        The three highlighted factors come from internal LAMRC nursery datasets and are not published. The defaults
         below are general placeholders, not CAL FIRE's figures: set them to your nursery's.
       </p>
 

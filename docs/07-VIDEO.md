@@ -9,7 +9,7 @@ the app, running `python -m bushel.serve`.
 
 ---
 
-## 0:00 — The problem (on screen: a photo-free title card, then the dark map)
+## 0:00 — The problem (on screen: a photo-free title card, then the map sheet)
 
 > After a bad wildfire, parts of a conifer forest can't come back on their own. The trees that would
 > have dropped seed are dead, and most conifer seed lands within about a hundred metres of the tree
@@ -60,7 +60,7 @@ the app, running `python -m bushel.serve`.
 > The whole order recalculates in the browser, instantly. If the state published these three
 > numbers, this calculation would be fully reproducible — for every state.
 
-## 2:40 — Is it right? (on screen: the validation panel)
+## 2:40 — Is it right? (on screen: scroll to section 04 of the report, "Checked against published figures")
 
 > Is it right? Two checks, both against published figures.
 >
@@ -73,7 +73,7 @@ the app, running `python -m bushel.serve`.
 > figure also covers insect die-off and timber harvest, and it uses an internal boundary it doesn't
 > publish.
 
-## 3:20 — Live (on screen: terminal + the "Find a fire" panel, Live badge)
+## 3:20 — Live (on screen: terminal + the "Find a fire" search in the top bar, Live badge)
 
 > The site ships with every fire from 2018 to 2023 already built. But Bushel isn't a recording.
 > Pick one — *(type "Monument", choose "Rebuild live")* — and it fetches that fire's perimeter,

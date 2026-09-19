@@ -35,7 +35,7 @@ const PEAK: [layer: string, prop: 'fill-opacity' | 'line-opacity', full: number]
   ['interior-glow', 'line-opacity', 1],
   ['interior-fill', 'fill-opacity', 0.9],
   ['cells', 'line-opacity', 0.55],
-  ['interior-edge', 'line-opacity', 0.9],
+  ['interior-edge', 'line-opacity', 0.5],
 ]
 
 /** Layers bottom to top. Colours come from the design tokens (tokens.css `--map-*`). */
@@ -90,7 +90,7 @@ function mapLayers(token: (name: string) => string): LayerSpecification[] {
       type: 'line',
       source: SOURCE,
       filter: on('interior'),
-      paint: { 'line-color': token('--map-interior-line'), 'line-width': 1, 'line-opacity': 0 },
+      paint: { 'line-color': token('--map-interior-line'), 'line-width': 0.75, 'line-opacity': 0 },
     },
   ]
 }
@@ -106,7 +106,7 @@ function overviewLayers(token: (name: string) => string): LayerSpecification[] {
       source: OVERVIEW,
       filter: on('state'),
       layout: hidden,
-      paint: { 'line-color': token('--map-cell-line'), 'line-width': 1, 'line-opacity': 0.7 },
+      paint: { 'line-color': token('--map-state-line'), 'line-width': 1, 'line-opacity': 0.8 },
     },
     // A faint fill under each perimeter, so a click anywhere inside a fire opens it.
     {
@@ -228,7 +228,7 @@ export default function BurnMap(props: {
     return () => observer.disconnect()
   }, [])
 
-  // Create the map once. The style is a single background layer: no tiles, no network.
+  // Create the map once. No tiles, no network: the canvas is transparent over the sheet's survey grid (CSS).
   useEffect(() => {
     const el = canvasRef.current!
     const css = getComputedStyle(el)
@@ -238,7 +238,7 @@ export default function BurnMap(props: {
       style: {
         version: 8,
         sources: {},
-        layers: [{ id: 'canvas', type: 'background', paint: { 'background-color': token('--map-canvas') } }],
+        layers: [{ id: 'canvas', type: 'background', paint: { 'background-color': 'rgba(0, 0, 0, 0)' } }],
         transition: { duration: 0, delay: 0 }, // nothing animates except the interior reveal
       },
       center: [-119.5, 37.5],
@@ -293,23 +293,40 @@ export default function BurnMap(props: {
     }
   }, [map, onPickFire])
 
-  // Fit the fire clear of the legend: beside it when there is room, above the bottom strip when compact.
+  // Fit the fire into the part of the canvas nothing covers: clear of the title block and the slip set on the
+  // map (siblings in the stage) and of the map key. Tall covers take a side, wide ones the top or bottom.
   useEffect(() => {
     const root = rootRef.current
     const target = inOverview ? overview : geojson
     const bounds = target && boundsOf(target)
     if (!map || !root || !bounds) return
     map.resize()
-    const legend = legendRef.current
-    const stacked = legend ? getComputedStyle(legend).position === 'static' : false
-    const padding = { top: 40, right: 40, bottom: 40, left: 40 }
-    if (legend && !stacked && compact) padding.bottom = legend.offsetHeight + 32
-    else if (legend && !stacked) {
-      const beside = legend.offsetWidth + 64
-      if (root.clientWidth - beside >= 360) padding.left = beside
+    const c = canvasRef.current!.getBoundingClientRect()
+    const pad = { top: 40, right: 40, bottom: 40, left: 40 }
+    const stage = root.closest('.stage')
+    const covers = [...(stage?.querySelectorAll<HTMLElement>('.title-block, .slip-region') ?? []), legendRef.current]
+    for (const el of covers) {
+      if (!el) continue
+      const r = el.getBoundingClientRect()
+      const w = Math.min(r.right, c.right) - Math.max(r.left, c.left)
+      const h = Math.min(r.bottom, c.bottom) - Math.max(r.top, c.top)
+      if (w <= 0 || h <= 0) continue
+      if (h >= w * 0.9) {
+        if (c.right - r.right < r.left - c.left) pad.right = Math.max(pad.right, c.right - r.left + 32)
+        else pad.left = Math.max(pad.left, r.right - c.left + 32)
+      } else if (r.top - c.top < c.bottom - r.bottom) {
+        pad.top = Math.max(pad.top, r.bottom - c.top + 24)
+      } else {
+        pad.bottom = Math.max(pad.bottom, c.bottom - r.top + 24)
+      }
     }
-    map.fitBounds(bounds, { padding, duration: 0 })
-  }, [map, geojson, overview, inOverview, compact, box])
+    // Never squeeze the fire into a sliver: if the covers leave too little room, it runs under the map key
+    // first, then under the rest.
+    if (c.width - pad.left - pad.right < 240) pad.left = pad.right = 24
+    if (c.height - pad.top - pad.bottom < 220) pad.bottom = 24
+    if (c.height - pad.top - pad.bottom < 180) pad.top = 24
+    map.fitBounds(bounds, { padding: pad, duration: 0 })
+  }, [map, geojson, overview, inOverview, compact, box, fireName])
 
   // Draw the selected fire: the rest of the burn first, then the interior rises once the map is idle.
   useEffect(() => {
@@ -344,11 +361,8 @@ export default function BurnMap(props: {
       <div className="burn-map__canvas" ref={canvasRef} />
 
       <div className="burn-map__legend" ref={legendRef}>
-        {inOverview ? (
-          <h2 className="burn-map__name">California, 2018–2023</h2>
-        ) : (
-          fireName && <h2 className="burn-map__name">{fireName}</h2>
-        )}
+        {/* The fire's own name is set on the map as the stage's title block; the overview has no fire. */}
+        {inOverview && <h2 className="burn-map__name">California, 2018–2023</h2>}
 
         {/* Each key leads with what it means on the ground; the technical name sits under it (and in the
             tooltip, since the compact strip drops the sub-lines). */}
