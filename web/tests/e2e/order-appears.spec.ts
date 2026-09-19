@@ -38,6 +38,12 @@ test.beforeEach(async ({ page }) => {
   await expect(page.getByLabel('Fire', { exact: true })).toHaveValue('fixture-fire')
 })
 
+
+// The relief and water tiles are scenery from a public server; tests draw without them.
+test.beforeEach(async ({ page }) => {
+  await page.route(/basemap\.nationalmap\.gov\//, (route) => route.abort())
+})
+
 test('selecting a fire shows one line per cell × species with zone, band, species and bushels', async ({ page }) => {
   const rows = page.locator('tr.order-row')
   // Fixture: 522_4500 {Douglas Fir, Sugar Pine}, 522_5000 {Douglas Fir, Western White Pine, Knobcone Pine},

@@ -183,7 +183,7 @@ Four things fall out of that split:
 
 ### How the app is organised
 
-Bushel opens on a map of the United States, drawn state by state. California is built. The ten western states that Dobrowski et al. (2024) assessed alongside it are marked as next, because every California-only input has a public national counterpart and there is a published seed-limited need to check an order against. The rest are greyed out: Bushel will not show a figure it cannot check.
+Bushel opens on a map of the United States, drawn state by state. California is **built and checked**: every fire from 2018 to 2023, built ahead of time from California's own data and checked against CAL FIRE's published need. The rest of the lower 48 is **built live on request**: pick any fire there and Bushel builds it in the browser, from national services, at that moment (see [Live national builds](#live-national-builds)). Alaska and Hawaii are outside the national burn-severity mosaic, so they stay grey.
 
 From there it works like any map application, one level at a time, and every level has its own link:
 
@@ -194,10 +194,31 @@ From there it works like any map application, one level at a time, and every lev
 | County | `?county=06063` | The county's fires, each fire's share inside the county line, and the county's share of the order |
 | Address | `?at=39.760,-121.622` | The county the point falls in, whether it lies inside a fire's perimeter, and the nearest fires |
 | Fire | `?fire=north-complex-2020` | The seed order, its assumptions, every order line and its factor trail |
+| Any US fire, built live | `?us=OR4482112218820200816` | The same order, built in the browser from national data, with every source and its timing |
 
 One search covers all of it. Counties and fires match on the device. Addresses are looked up as you type with OpenStreetMap's Photon geocoder, the only request the app makes to a service it doesn't host. A searched address never goes into a link: the link carries the point, rounded to about 100 m.
 
 County figures come from `python -m bushel.geo`. It measures each fire's perimeter and seed-limited interior inside each of California's 58 counties (Census boundaries, California Albers), and splits each fire's default-factor order by its interior's share. So a county's order is an estimate by share, and it is labelled as one. A test holds the county roll-up to the fire index: each fire's county shares add back up to the whole fire, except any part that crossed into Oregon or Nevada, which the test measures; and the county acres add up to the statewide total.
+
+### Live national builds
+
+Search any fire in the lower 48 (by name, a county, or an address near it) and Bushel builds it in your browser from national public services, called at that moment. Nothing about it is bundled with the site:
+
+| Input | National service | California uses instead |
+|---|---|---|
+| Perimeter | MTBS burned-area boundaries (1984 on) | CAL FIRE FRAP |
+| Burn severity | MTBS thematic severity, by year | the same |
+| Whose land | PAD-US manager type: the order covers non-federal land | State Responsibility Area |
+| Conifer forest | FIA BIGMAP forest type groups, 2018, 30 m (pinyon–juniper excluded) | LEMMA |
+| Species | USFS Individual Tree Species basal area (Forest Health Protection) | LEMMA |
+| Seed zones | Provisional national seed zones (Bower et al. 2014) | California's own seed zones |
+| Elevation | USGS 3DEP | the same |
+
+Every service is keyless and open to browsers (CORS). The build lays a 30 m grid in Web Mercator, scaled by latitude so cells stay ~30 m on the ground; rasterises the perimeter, federal land and seed zones; runs an exact Euclidean distance transform in JavaScript (Felzenszwalb–Huttenlocher, tested against brute force); keeps high-severity conifer on non-federal land more than 90 m from any tree that survived; and splits it by seed zone and 500 ft band. It returns the same fire record as the pipeline, so the order, its assumptions and its factor trail come from the same code. A 200,000-acre fire builds in 6–25 seconds.
+
+**Checked against the pipeline.** On the Caldor fire (2021), the live build finds **2,250** acres that can't reseed; California's pipeline, from California's own data, finds **2,239** (+0.5%). On Beachie Creek (Oregon, 2020) the live build's seed-limited share of the badly burned conifer ground is 19.7%, beside Baker's published 21.9%. Outside California no published order exists to check against, and the page says so.
+
+**What a live order can and can't price.** Seed weights and prices are CAL FIRE's. Species it lists (ponderosa and Jeffrey pine, Douglas-fir, white and red fir, sugar pine, incense cedar and others) get pounds, bushels and dollars; species it doesn't (western hemlock, western larch, Engelmann spruce) get trees, with the gap disclosed on the line.
 
 ### Pipeline stages
 
@@ -258,11 +279,11 @@ Everything is public and keyless. All but LEMMA are free of registration and ver
 
 Both CAL FIRE PDFs are committed to `reference/` along with the AON's extracted text, so every figure can be re-checked without a network call.
 
-### Scope, and why it's California
+### Scope, and why California is built and checked
 
 Not timidity — verifiability. California is where the ground truth lives: a published benchmark denominated in the same unit as the output, with the conversion table, the price list, and the operational seed-zone system all from the same agency.
 
-Nationally, none of that exists in one place. Gap figures are published in seedlings or acres, never in pounds of conifer seed, and the federal seed-zone system is a different, generalized map. The closest thing to a benchmark is a peer-reviewed estimate of the West's reforestation need in hectares (Dobrowski et al. 2024), which checks the interior step but not the order. Going national now would produce a bigger-sounding claim and remove the one total that makes the order itself verifiable. How it would extend is under [What's next](#whats-next).
+Nationally, none of that exists in one place. Gap figures are published in seedlings or acres, never in pounds of conifer seed, and the federal seed-zone system is a different, generalized map. The closest thing to a benchmark is a peer-reviewed estimate of the West's reforestation need in hectares (Dobrowski et al. 2024), which checks the interior step but not the order. So California is the one place the order itself is checked. Everywhere else in the lower 48 is built live from national data, on the same method, and labelled as unchecked (see [Live national builds](#live-national-builds)).
 
 The method generalises. The ground truth doesn't — yet. See Part 4.
 
@@ -350,7 +371,7 @@ python ../scripts/fill_numbers.py                                   # copy figur
 
 Details of the LEMMA download are in [`docs/04-DATA-SOURCES.md`](docs/04-DATA-SOURCES.md) §6.
 
-After the build, the pre-built fires run fully offline; only live builds need the network. Validation scenarios are in [`specs/001-post-fire-seed-order/quickstart.md`](specs/001-post-fire-seed-order/quickstart.md).
+After the build, the pre-built fires' numbers need no network; the map's relief and water tiles come from USGS The National Map when online, and live builds call the agency services. Validation scenarios are in [`specs/001-post-fire-seed-order/quickstart.md`](specs/001-post-fire-seed-order/quickstart.md).
 
 ---
 
@@ -406,7 +427,8 @@ None of them chains burn perimeter → seed-limited interior → zone and elevat
 ## What's next
 
 - **Publish three numbers, and this becomes reproducible anywhere.** CAL FIRE's formula needs seeds per pot, nursery survival and the probability of a tree in the nursery. With them public, every step from a price list to a bushel count would be public.
-- **The rest of the West.** Every California-only layer has a public national counterpart: provisional seed transfer zones (Bower et al. 2014), LANDFIRE existing vegetation type, and PAD-US land ownership, beside MTBS and 3DEP, which are already national. Dobrowski et al. (2024) estimated the reforestation need of 11 western states with the same seed-limited-interior idea, so the interior step would have a peer-reviewed total to check against there too. The order would stop at hectares until each state publishes its own conversion factors.
+- **Check the West.** Live builds already run on national data everywhere in the lower 48. Dobrowski et al. (2024) estimated the reforestation need of 11 western states with the same seed-limited-interior idea; running every MTBS fire in those states and comparing state totals would check the live interior step the way California's is checked.
+- **Each state's own seed prices.** Species CAL FIRE doesn't sell get trees, not pounds, until state nurseries' price and seed-weight tables are added.
 - **Current fires.** MTBS runs one to two years behind. Rapid post-fire severity products exist, but they would need their own validation before they fed an order.
 - **Close the acres-burned gap.** Add Local Responsibility Area land, and use CAL FIRE's timberland boundary if it is published.
 - **87 zone codes, not 85.** Buck (1970) and the AON describe 85 seed zones; the California Seed Zones layer holds 87 distinct codes. Find out why.

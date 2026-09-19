@@ -54,8 +54,10 @@ Tokens live in `web/src/styles/tokens.css`; this file is the reasoning they foll
   over a 1 px ink rule, like a USGS quadrangle title.
 - The requisition slip: a punched tag hole, mono header ("Seed requisition"), the 72 px figure, ledger
   rows with dotted leaders, a perforated divider above the action.
-- The survey grid under the map: faint 48 px graticule on the canvas, so the empty sheet still reads as
-  a map.
+- The survey grid under the map: faint 48 px graticule on the canvas, with USGS shaded relief and water
+  laid over it at low opacity and no saturation, so every view sits in its landscape.
+- The leash: each map view is locked to the frame it opens on (fire, county or state); zooming in pans
+  within it, never out of it.
 - Numbered report sections (`01 —`) with a sticky contents rail.
 
 ## Motion

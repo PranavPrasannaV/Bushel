@@ -1,9 +1,11 @@
-// One search for everything Bushel knows a place by: a county, a fire, or any address. Counties and fires
-// match instantly on the device; addresses are looked up with OpenStreetMap's Photon geocoder as you type.
+// One search for everything Bushel knows a place by: a county, a fire, or any address. Counties and
+// California's built fires match instantly on the device; addresses (OpenStreetMap's Photon geocoder) and
+// any fire in the lower 48 (MTBS, built live on request) are looked up as you type.
 // Keyboard: "/" focuses it from anywhere, arrows move, Enter opens, Escape closes.
 import { useEffect, useId, useMemo, useRef, useState } from 'react'
 import type { FireIndexEntry } from '../convert/types.ts'
 import { geocode, type Address, type Counties, type County } from '../geo/places.ts'
+import { searchFires, type NationalFire } from '../national/api.ts'
 import { matchFires } from './LiveBuild.tsx'
 import { fmtAcres } from './OrderTable.tsx'
 import './SearchBar.css'
@@ -12,6 +14,7 @@ type Result =
   | { kind: 'county'; county: County }
   | { kind: 'fire'; fire: FireIndexEntry }
   | { kind: 'address'; address: Address }
+  | { kind: 'national'; fire: NationalFire }
 
 const LOCAL = 4
 const ADDRESS_MIN = 3
@@ -30,6 +33,7 @@ export default function SearchBar({
   onFire,
   onCounty,
   onAddress,
+  onLive,
   size = 'bar',
   placeholder = 'Search a county, an address or a fire',
 }: {
@@ -38,6 +42,8 @@ export default function SearchBar({
   onFire: (id: string) => void
   onCounty: (fips: string) => void
   onAddress: (address: Address) => void
+  /** Any fire in the lower 48, to be built live from national data. */
+  onLive?: (fire: NationalFire) => void
   size?: 'hero' | 'bar'
   placeholder?: string
 }) {
@@ -48,6 +54,7 @@ export default function SearchBar({
   // Address results are kept with the query they answer, so a stale answer is never shown for a new query.
   const [found, setFound] = useState<{ q: string; list: Address[] } | null>(null)
   const [failed, setFailed] = useState<{ q: string; message: string } | null>(null)
+  const [nationwide, setNationwide] = useState<{ q: string; list: NationalFire[] } | null>(null)
   const inputRef = useRef<HTMLInputElement>(null)
   const rootRef = useRef<HTMLDivElement>(null)
   const typed = query.trim()
@@ -92,7 +99,23 @@ export default function SearchBar({
     }
   }, [typed])
 
+  // Fires anywhere in the lower 48, from MTBS, debounced the same way.
+  useEffect(() => {
+    if (!onLive || typed.length < ADDRESS_MIN) return
+    const ctrl = new AbortController()
+    const timer = window.setTimeout(() => {
+      searchFires(typed, ctrl.signal)
+        .then((list) => setNationwide({ q: typed, list }))
+        .catch(() => {}) // the national search failing leaves the rest of the results as they are
+    }, 350)
+    return () => {
+      ctrl.abort()
+      window.clearTimeout(timer)
+    }
+  }, [typed, onLive])
+
   const addresses = found?.q === typed ? found.list : null
+  const national = nationwide?.q === typed ? nationwide.list : null
   const addressError = failed?.q === typed ? failed.message : null
 
   const results = useMemo<Result[]>(() => {
@@ -104,9 +127,10 @@ export default function SearchBar({
       ...matchFires(fires, typed)
         .slice(0, LOCAL)
         .map((fire): Result => ({ kind: 'fire', fire })),
+      ...(national ?? []).slice(0, 5).map((fire): Result => ({ kind: 'national', fire })),
       ...(addresses ?? []).slice(0, 5).map((address): Result => ({ kind: 'address', address })),
     ]
-  }, [typed, counties, fires, addresses])
+  }, [typed, counties, fires, addresses, national])
 
   function choose(r: Result) {
     setOpen(false)
@@ -114,6 +138,7 @@ export default function SearchBar({
     inputRef.current?.blur()
     if (r.kind === 'county') onCounty(r.county.fips)
     else if (r.kind === 'fire') onFire(r.fire.id)
+    else if (r.kind === 'national') onLive?.(r.fire)
     else onAddress(r.address)
   }
 
@@ -122,7 +147,8 @@ export default function SearchBar({
   const showList = open && typed.length > 0
   const groups: [Result['kind'], string][] = [
     ['county', 'Counties'],
-    ['fire', 'Fires'],
+    ['fire', 'California fires, built'],
+    ['national', 'Fires anywhere in the US · built live'],
     ['address', 'Addresses'],
   ]
 
@@ -216,6 +242,16 @@ export default function SearchBar({
                               {r.fire.name} <span className="search-year">{r.fire.year}</span>
                             </span>
                             <span className="search-meta">{fmtAcres(r.fire.interior_acres)} ac can’t reseed</span>
+                          </>
+                        )}
+                        {r.kind === 'national' && (
+                          <>
+                            <span className="search-name">
+                              {r.fire.name} <span className="search-year">{r.fire.year}</span>
+                            </span>
+                            <span className="search-meta">
+                              {r.fire.state} · {fmtAcres(r.fire.acres)} ac · build live
+                            </span>
                           </>
                         )}
                         {r.kind === 'address' && (

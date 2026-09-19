@@ -1,36 +1,33 @@
-// Which states Bushel covers, and what stands between the rest and a real order. Stated plainly on the
-// national map: only California is built. The West is next because every California-only input has a
-// public western counterpart and Dobrowski et al. (2024) published a seed-limited reforestation need for
-// eleven western states to check against. The rest of the country has no such published figure yet.
+// What Bushel covers, by state, and how. California's fires are built ahead of time from California's own
+// data and checked against CAL FIRE's published need. Every other state in the lower 48 is built live, on
+// request, in the browser, from national services, and says so. Alaska and Hawaii are outside the
+// national burn-severity mosaic Bushel reads.
 
-export type Coverage = 'covered' | 'next' | 'later'
+export type Coverage = 'covered' | 'live' | 'later'
 
-/** The ten western states Dobrowski et al. (2024) assessed alongside California. */
-const NEXT = new Set(['AZ', 'CO', 'ID', 'MT', 'NM', 'NV', 'OR', 'UT', 'WA', 'WY'])
+const OUTSIDE = new Set(['AK', 'HI'])
 
 export function coverage(postal: string): Coverage {
   if (postal === 'CA') return 'covered'
-  return NEXT.has(postal) ? 'next' : 'later'
+  return OUTSIDE.has(postal) ? 'later' : 'live'
 }
 
 export const COVERAGE_COPY: Record<Coverage, { label: string; detail: string }> = {
   covered: {
-    label: 'Built',
+    label: 'Built and checked',
     detail:
       'Every CAL FIRE perimeter of 1,000+ acres from 2018 to 2023 with a burn-severity assessment, built from ' +
-      'the agency services and checked against CAL FIRE’s own published need.',
+      'California’s own data and checked against CAL FIRE’s published need.',
   },
-  next: {
-    label: 'Next: the West',
+  live: {
+    label: 'Built live on request',
     detail:
-      'The same pipeline runs on national layers that already exist (provisional seed zones, LANDFIRE ' +
-      'vegetation, PAD-US ownership, MTBS severity), and Dobrowski et al. (2024) published this state’s ' +
-      'seed-limited need to check against. It opens once those inputs are validated here.',
+      'Search any fire here and Bushel builds it in your browser from national data: MTBS burn severity, ' +
+      'PAD-US land ownership, USFS tree species and forest types, the national seed zones and USGS elevation. ' +
+      'Not yet checked against a published figure for this state.',
   },
   later: {
     label: 'Not yet',
-    detail:
-      'Fewer severe conifer burns, and no published seed-limited need to check an order against yet. ' +
-      'Bushel will not show a figure it cannot check.',
+    detail: 'The national burn-severity mosaic Bushel reads covers the lower 48 states only.',
   },
 }

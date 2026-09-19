@@ -1,9 +1,11 @@
 /// <reference types="geojson" />
-// Burn map (T052, T053). Draws one fire's GeoJSON on a plain background: no basemap tiles, fully offline.
+// Burn map (T052, T053). Draws a fire, a county or the state over faint USGS relief and water; the fire's
+// own layers need no network, so it still draws if the relief tiles can't load.
 // The seed-limited interior is the one luminous layer and the one animation on screen (SC-006).
 // The threshold and Baker's reference are fixed. Nothing here changes them (FR-006).
 import { useEffect, useRef, useState, type CSSProperties, type JSX } from 'react'
 import {
+  AttributionControl,
   LngLatBounds,
   Map as MapLibreMap,
   Marker,
@@ -24,6 +26,7 @@ setWorkerUrl(import.meta.env.DEV ? workerUrl.replace('type=classic', 'type=modul
 // FR-005, verbatim from docs/03-DO-NOT-CLAIM.md. Never "most conservative".
 const THRESHOLD_STATEMENT = '90 m — Baker (2023), the published estimate least favourable to this conclusion.'
 
+const USGS = 'https://basemap.nationalmap.gov/arcgis/rest/services'
 const SOURCE = 'fire'
 const OVERVIEW = 'statewide'
 const EMPTY: GeoJSON.FeatureCollection = { type: 'FeatureCollection', features: [] }
@@ -203,6 +206,53 @@ function setPeak(map: MapLibreMap, level: 0 | 1, ms: number) {
     map.setPaintProperty(id, `${prop}-transition`, { duration: ms, delay: 0 })
     map.setPaintProperty(id, prop, full * level)
   }
+  // A live national build draws its interior as a raster; it rises the same way.
+  if (map.getLayer(NATIONAL_INTERIOR)) {
+    map.setPaintProperty(NATIONAL_INTERIOR, 'raster-opacity-transition', { duration: ms, delay: 0 })
+    map.setPaintProperty(NATIONAL_INTERIOR, 'raster-opacity', level)
+  }
+}
+
+/** A live build's classes (1 retained burn, 2 rest of high severity, 3 interior) as two PNGs. */
+export interface ClassRaster {
+  data: Uint8Array
+  width: number
+  height: number
+  /** Top-left, top-right, bottom-right, bottom-left, as [lon, lat]. */
+  coordinates: [number, number][]
+}
+const NATIONAL_BASE = 'nat-base'
+const NATIONAL_INTERIOR = 'nat-interior'
+
+function hexRgb(hex: string): [number, number, number] {
+  const h = hex.replace('#', '')
+  const v = h.length === 3 ? h.replace(/./g, (c) => c + c) : h
+  return [parseInt(v.slice(0, 2), 16), parseInt(v.slice(2, 4), 16), parseInt(v.slice(4, 6), 16)]
+}
+
+/** Paint the classes into a base image (burn, high severity) and an interior image, in the map's colours. */
+function paintClasses(c: ClassRaster, token: (name: string) => string): { base: string; interior: string } {
+  const burn = hexRgb(token('--map-burn-fill'))
+  const high = hexRgb(token('--map-high-severity-fill'))
+  const lit = hexRgb(token('--map-interior-fill'))
+  const draw = (pick: (v: number) => [number, number, number, number] | null) => {
+    const canvas = document.createElement('canvas')
+    canvas.width = c.width
+    canvas.height = c.height
+    const ctx = canvas.getContext('2d')!
+    const img = ctx.createImageData(c.width, c.height)
+    for (let i = 0; i < c.data.length; i++) {
+      const px = pick(c.data[i])
+      if (!px) continue
+      img.data.set(px, i * 4)
+    }
+    ctx.putImageData(img, 0, 0)
+    return canvas.toDataURL('image/png')
+  }
+  return {
+    base: draw((v) => (v === 1 ? [...burn, 115] : v === 2 || v === 3 ? [...high, 217] : null)),
+    interior: draw((v) => (v === 3 ? [...lit, 235] : null)),
+  }
 }
 
 /** Bounds of the state outline, else the perimeter features, else everything. */
@@ -244,6 +294,10 @@ export default function BurnMap(props: {
   /** A searched address, pinned on the overview. */
   pin?: [number, number] | null
   overviewTitle?: string
+  /** A live national build, drawn as a raster under the perimeter. */
+  classes?: ClassRaster | null
+  /** A live build outside California: the order's scope is non-federal land, not the state's area. */
+  national?: boolean
 }): JSX.Element {
   const {
     geojson,
@@ -257,6 +311,8 @@ export default function BurnMap(props: {
     fitBox = null,
     pin = null,
     overviewTitle = 'California, 2018–2023',
+    classes = null,
+    national = false,
   } = props
   const inOverview = showOverview && !!overview
   const rootRef = useRef<HTMLDivElement>(null)
@@ -284,7 +340,9 @@ export default function BurnMap(props: {
     return () => observer.disconnect()
   }, [])
 
-  // Create the map once. No tiles, no network: the canvas is transparent over the sheet's survey grid (CSS).
+  // Create the map once. The ground is USGS shaded relief with rivers and lakes (public domain, keyless),
+  // laid faintly over the sheet's survey grid, so a fire sits in its landscape. If the tiles can't load
+  // the map still draws: the fire's own layers need no network.
   useEffect(() => {
     const el = canvasRef.current!
     const css = getComputedStyle(el)
@@ -293,22 +351,61 @@ export default function BurnMap(props: {
       container: el,
       style: {
         version: 8,
-        sources: {},
-        layers: [{ id: 'canvas', type: 'background', paint: { 'background-color': 'rgba(0, 0, 0, 0)' } }],
+        sources: {
+          relief: {
+            type: 'raster',
+            tiles: [`${USGS}/USGSShadedReliefOnly/MapServer/tile/{z}/{y}/{x}`],
+            tileSize: 256,
+            maxzoom: 16,
+            attribution: 'Relief and water: USGS The National Map',
+          },
+          water: {
+            type: 'raster',
+            tiles: [`${USGS}/USGSHydroCached/MapServer/tile/{z}/{y}/{x}`],
+            tileSize: 256,
+            maxzoom: 15,
+          },
+        },
+        layers: [
+          { id: 'canvas', type: 'background', paint: { 'background-color': 'rgba(0, 0, 0, 0)' } },
+          {
+            id: 'relief',
+            type: 'raster',
+            source: 'relief',
+            paint: { 'raster-opacity': 0.32, 'raster-saturation': -1, 'raster-contrast': 0.1, 'raster-fade-duration': 0 },
+          },
+          {
+            id: 'water',
+            type: 'raster',
+            source: 'water',
+            paint: { 'raster-opacity': 0.55, 'raster-saturation': -0.55, 'raster-fade-duration': 0 },
+          },
+        ],
         transition: { duration: 0, delay: 0 }, // nothing animates except the interior reveal
       },
       center: [-119.5, 37.5],
       zoom: 5,
       attributionControl: false,
+      // Never wider than the country: a view's own leash (below) holds it tighter still.
+      renderWorldCopies: false,
       dragRotate: false,
       pitchWithRotate: false,
       touchPitch: false,
       maxPitch: 0,
     })
     m.touchZoomRotate.disableRotation()
+    m.addControl(new AttributionControl({ compact: true }), 'bottom-right')
     if (import.meta.env.DEV) (window as unknown as { __bushelMap?: MapLibreMap }).__bushelMap = m
-    m.on('error', (e) => console.error('map error:', e.error?.message ?? e))
-    m.on('load', () => {
+    // A relief or water tile that fails is scenery missing, not an error worth reporting.
+    m.on('error', (e) => {
+      const source = (e as unknown as { sourceId?: string }).sourceId
+      if (source === 'relief' || source === 'water') return
+      console.error('map error:', e.error?.message ?? e)
+    })
+    // The fire's own layers go on as soon as the style is parsed. MapLibre's "load" waits for the first
+    // tiles, so a network that blocks the relief would otherwise leave the fire undrawn.
+    const init = () => {
+      if (m.getSource(SOURCE)) return
       m.addSource(SOURCE, { type: 'geojson', data: EMPTY })
       for (const layer of mapLayers(token)) m.addLayer(layer)
       m.addSource(COUNTIES, { type: 'geojson', data: EMPTY, promoteId: 'fips' })
@@ -316,7 +413,8 @@ export default function BurnMap(props: {
       m.addSource(OVERVIEW, { type: 'geojson', data: EMPTY })
       for (const layer of overviewLayers(token)) m.addLayer(layer)
       setMap(m)
-    })
+    }
+    m.once('style.load', init)
     return () => {
       setMap(null)
       m.remove()
@@ -336,8 +434,9 @@ export default function BurnMap(props: {
   useEffect(() => {
     if (!map) return
     map.getSource<GeoJSONSource>(COUNTIES)?.setData(counties ?? EMPTY)
-    const show = inOverview && !!counties
+    const show = !!counties
     for (const id of COUNTY_LAYERS) map.setLayoutProperty(id, 'visibility', show ? 'visible' : 'none')
+    map.setLayoutProperty('ct-fill', 'visibility', show && inOverview ? 'visible' : 'none')
     map.setFilter('ct-focus', ['==', ['get', 'fips'], focusCounty ?? ''])
   }, [map, counties, focusCounty, inOverview])
 
@@ -441,8 +540,49 @@ export default function BurnMap(props: {
     if (c.width - pad.left - pad.right < 240) pad.left = pad.right = 24
     if (c.height - pad.top - pad.bottom < 220) pad.bottom = 24
     if (c.height - pad.top - pad.bottom < 180) pad.top = 24
+    // The leash: the map is locked to the frame it opens on. At that zoom it hardly moves; zoomed in, it pans
+    // anywhere inside the frame, never out of it and never further out than the frame.
+    map.setMaxBounds(null)
+    map.setMinZoom(0)
     map.fitBounds(bounds, { padding: pad, duration: 0 })
+    const view = map.getBounds()
+    const dx = (view.getEast() - view.getWest()) * 0.04
+    const dy = (view.getNorth() - view.getSouth()) * 0.04
+    map.setMinZoom(Math.max(0, map.getZoom() - 0.1))
+    map.setMaxBounds([
+      [view.getWest() - dx, view.getSouth() - dy],
+      [view.getEast() + dx, view.getNorth() + dy],
+    ])
   }, [map, geojson, overview, inOverview, compact, box, fitBox])
+
+  // A live national build: its classes as two image layers under the perimeter line.
+  useEffect(() => {
+    if (!map || !classes) return
+    const token = (name: string) => getComputedStyle(canvasRef.current!).getPropertyValue(name).trim()
+    const { base, interior } = paintClasses(classes, token)
+    const coordinates = classes.coordinates as [[number, number], [number, number], [number, number], [number, number]]
+    map.addSource(NATIONAL_BASE, { type: 'image', url: base, coordinates })
+    map.addSource(NATIONAL_INTERIOR, { type: 'image', url: interior, coordinates })
+    map.addLayer(
+      { id: NATIONAL_BASE, type: 'raster', source: NATIONAL_BASE, paint: { 'raster-resampling': 'nearest', 'raster-fade-duration': 0 } },
+      'perimeter',
+    )
+    map.addLayer(
+      {
+        id: NATIONAL_INTERIOR,
+        type: 'raster',
+        source: NATIONAL_INTERIOR,
+        paint: { 'raster-resampling': 'nearest', 'raster-opacity': 0, 'raster-fade-duration': 0 },
+      },
+      'perimeter',
+    )
+    return () => {
+      for (const id of [NATIONAL_INTERIOR, NATIONAL_BASE]) {
+        if (map.getLayer(id)) map.removeLayer(id)
+        if (map.getSource(id)) map.removeSource(id)
+      }
+    }
+  }, [map, classes])
 
   // Draw the selected fire: the rest of the burn first, then the interior rises once the map is idle.
   useEffect(() => {
@@ -451,24 +591,33 @@ export default function BurnMap(props: {
     map.getSource<GeoJSONSource>(SOURCE)?.setData(geojson ?? EMPTY)
     setPeak(map, 0, 0)
 
-    const hasInterior = !!geojson?.features.some((f) => f.properties?.layer === 'interior')
+    const hasInterior =
+      !!geojson?.features.some((f) => f.properties?.layer === 'interior') || !!classes?.data.includes(3)
     root.dataset.peak = hasInterior ? 'drawing' : 'none'
     if (!hasInterior) return
 
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const token = getComputedStyle(root).getPropertyValue('--duration-reveal').trim()
     const ms = reduce ? 0 : (parseFloat(token) || 1.2) * (token.endsWith('ms') ? 1 : 1000)
+    // The interior rises as soon as the fire's own layers are drawn, without waiting for the relief tiles.
     let timer = 0
+    let done = false
+    const ready = () =>
+      map.isSourceLoaded(SOURCE) && (!classes || (map.getSource(NATIONAL_INTERIOR) && map.isSourceLoaded(NATIONAL_INTERIOR)))
     const reveal = () => {
+      if (done || !ready()) return
+      done = true
+      map.off('render', reveal)
       setPeak(map, 1, ms)
       timer = window.setTimeout(() => (root.dataset.peak = 'revealed'), ms)
     }
-    map.once('idle', reveal)
+    map.on('render', reveal)
+    map.triggerRepaint()
     return () => {
-      map.off('idle', reveal)
+      map.off('render', reveal)
       window.clearTimeout(timer)
     }
-  }, [map, geojson])
+  }, [map, geojson, classes])
 
   const fraction = planting && Number.isFinite(planting.interior_fraction) ? planting.interior_fraction : null
 
@@ -499,11 +648,13 @@ export default function BurnMap(props: {
                   <span className="burn-map__sub">Rest of high-severity burn</span>
                 </span>
               </li>
-              <li title="Non-federal land in CAL FIRE's State Responsibility Area">
+              <li title={national ? 'Land not managed by a federal agency (PAD-US)' : "Non-federal land in CAL FIRE's State Responsibility Area"}>
                 <span className="burn-map__swatch burn-map__swatch--retained" aria-hidden="true" />
                 <span>
-                  Land the state is responsible for
-                  <span className="burn-map__sub">Non-federal, State Responsibility Area: the order's scope</span>
+                  {national ? 'Non-federal land' : 'Land the state is responsible for'}
+                  <span className="burn-map__sub">
+                    {national ? "Not federal in PAD-US: the order's scope" : "Non-federal, State Responsibility Area: the order's scope"}
+                  </span>
                 </span>
               </li>
             </>
@@ -536,8 +687,8 @@ export default function BurnMap(props: {
         ) : planting ? (
           <p className="burn-map__fraction">
             <span>
-              {fraction === null ? '—' : pct(fraction)} of the badly burned conifer forest the state is responsible for can't
-              reseed itself
+              {fraction === null ? '—' : pct(fraction)} of the badly burned conifer forest {national ? 'on non-federal land' : 'the state is responsible for'}{' '}
+              can't reseed itself
             </span>
             {fraction !== null && (
               // The same split as a bar: lit interior against the rest of the badly burned forest.

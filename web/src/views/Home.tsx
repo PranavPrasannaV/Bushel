@@ -1,10 +1,12 @@
-// Home: what Bushel is, one search for any place, and the national map of what it covers. California is
-// built; the West is next; the rest are greyed until the data to check an order against exists.
+// Home: what Bushel is, one search for any place or fire, and the national map of what it covers.
+// California is built ahead of time and checked; the rest of the lower 48 is built live on request.
+import { useEffect, useState } from 'react'
 import type { FireIndexEntry } from '../convert/types.ts'
 import NationMap, { type FirePoints } from '../components/NationMap.tsx'
 import SearchBar from '../components/SearchBar.tsx'
 import { coverage, COVERAGE_COPY, type Coverage } from '../geo/coverage.ts'
 import { fmt, type Address, type Counties } from '../geo/places.ts'
+import { firesAround, largestInState, type NationalFire } from '../national/api.ts'
 import './Home.css'
 
 // A worked address for the "Try" row: the town the 2018 Camp Fire burned.
@@ -28,6 +30,7 @@ export default function Home({
   onCounty,
   onFire,
   onAddress,
+  onLive,
   onDismiss,
 }: {
   fires: FireIndexEntry[]
@@ -35,12 +38,13 @@ export default function Home({
   states: GeoJSON.FeatureCollection | null
   points: FirePoints | null
   /** A state called out: picked on the map, or where a searched address fell outside coverage. */
-  focus?: { postal: string; name: string; address?: string } | null
+  focus?: { postal: string; name: string; address?: string; lon?: number; lat?: number } | null
   notice?: string | null
   onState: (postal: string) => void
   onCounty: (fips: string) => void
   onFire: (id: string) => void
   onAddress: (address: Address) => void
+  onLive: (fire: NationalFire) => void
   onDismiss?: () => void
 }) {
   const interior = fires.reduce((s, f) => s + f.interior_acres, 0)
@@ -53,6 +57,19 @@ export default function Home({
       .filter((f) => coverage(f.properties?.postal as string) === c)
       .map((f) => f.properties?.name as string)
   const focusStatus = focus ? coverage(focus.postal) : null
+  const [picks, setPicks] = useState<{ key: string; fires: NationalFire[] } | null>(null)
+  const focusKey = focus ? `${focus.postal}|${focus.lon ?? ''}|${focus.lat ?? ''}` : ''
+  useEffect(() => {
+    if (!focus || focusStatus !== 'live') return
+    const ctrl = new AbortController()
+    const ask =
+      focus.lon !== undefined && focus.lat !== undefined
+        ? firesAround(focus.lon, focus.lat, 60, ctrl.signal)
+        : largestInState(focus.postal, ctrl.signal)
+    ask.then((fires) => setPicks({ key: focusKey, fires })).catch(() => setPicks({ key: focusKey, fires: [] }))
+    return () => ctrl.abort()
+  }, [focusKey]) // eslint-disable-line react-hooks/exhaustive-deps
+  const shownPicks = picks?.key === focusKey ? picks.fires : null
 
   return (
     <div className="home">
@@ -74,6 +91,7 @@ export default function Home({
             onFire={onFire}
             onCounty={onCounty}
             onAddress={onAddress}
+            onLive={onLive}
             placeholder="Search a county, an address or a fire"
           />
           <p className="home-try">
@@ -112,12 +130,36 @@ export default function Home({
               <h2 className="home-notice-name">{focus.name}</h2>
               {focus.address && (
                 <p className="home-notice-address">
-                  {focus.address} is in {focus.name}. Bushel covers California today.
+                  {focus.address} is in {focus.name}.{' '}
+                  {focusStatus === 'live' ? 'Pick a fire near it to build live.' : 'Bushel does not reach it yet.'}
                 </p>
               )}
               <p className="home-notice-detail">{COVERAGE_COPY[focusStatus].detail}</p>
+              {focusStatus === 'live' && (
+                <div className="home-notice-fires">
+                  <p className="caps">{focus.address ? 'Fires near it' : `Largest fires since 2017`}</p>
+                  {shownPicks === null ? (
+                    <p className="home-notice-detail">Asking MTBS…</p>
+                  ) : shownPicks.length === 0 ? (
+                    <p className="home-notice-detail">No mapped wildfire nearby. Search a fire by name instead.</p>
+                  ) : (
+                    <ul>
+                      {shownPicks.map((f) => (
+                        <li key={f.id}>
+                          <button type="button" onClick={() => onLive(f)}>
+                            <span>
+                              {f.name} <span className="ranked-year">{f.year}</span>
+                            </span>
+                            <span className="home-notice-meta">{fmt(f.acres)} ac · build live</span>
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
               <button type="button" className="button-quiet" onClick={() => onState('CA')}>
-                Open California instead
+                {focusStatus === 'live' ? 'Or open California, built and checked' : 'Open California instead'}
               </button>
             </aside>
           )}
@@ -151,16 +193,15 @@ export default function Home({
           Where it works
         </h2>
         <div className="home-tiers">
-          {(['covered', 'next', 'later'] as Coverage[]).map((c) => {
+          {(['covered', 'live', 'later'] as Coverage[]).map((c) => {
             const names = statesBy(c)
             return (
               <article key={c} className="home-tier" data-status={c}>
                 <p className="slip-kind">{COVERAGE_COPY[c].label}</p>
                 <h3>
-                  {c === 'covered' ? 'California' : c === 'next' ? `${names.length} western states` : `${names.length} states`}
+                  {c === 'covered' ? 'California' : c === 'live' ? `${names.length} more states and DC` : names.join(' and ')}
                 </h3>
                 <p>{COVERAGE_COPY[c].detail}</p>
-                {c === 'next' && names.length > 0 && <p className="home-tier-list">{names.join(' · ')}</p>}
                 {c === 'covered' && (
                   <button type="button" className="button-primary" onClick={() => onState('CA')}>
                     Open California

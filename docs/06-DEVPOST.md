@@ -36,10 +36,10 @@ forester what one fire needs. Bushel does the state's calculation for one fire, 
 
 ## What it does
 
-Bushel opens on a map of the United States. California is built, one dot per fire; the ten western states
-with a published seed-limited need to check against are next; the rest are greyed out. One search finds
-any county, address or fire, and the app works down from there: California, a county, an address, a fire.
-Take the North Complex fire (2020), 318,797 acres:
+Bushel opens on a map of the United States. California is built and checked, one dot per fire. Every other
+state in the lower 48 is **built live**: search any fire there and Bushel builds it in your browser from
+national services, at that moment. One search finds any county, address or fire, and the app works down
+from there. Take the North Complex fire (2020), 318,797 acres:
 
 1. **Whose land.** The perimeter is clipped to CAL FIRE's State Responsibility Area, because that is the
    state's jurisdiction. The federal acres it leaves out are shown, not hidden.
@@ -63,6 +63,11 @@ Take the North Complex fire (2020), 318,797 acres:
 7. **Any place.** Search a county and see its fires ranked by ground that can't reseed, with the county's
    share of the order. Search an address and Bushel says which fire's perimeter it lies in, or how far the
    nearest built fire is. Every view has its own link; a searched address never goes into one.
+8. **Any fire in the lower 48, live.** Type "Beachie Creek" and Bushel pulls the perimeter and burn severity
+   from MTBS, federal land from PAD-US, forest type and tree species from the Forest Service, seed zones
+   from the national provisional map and elevation from USGS, then runs the same interior and seed-zone
+   steps in the browser: a 200,000-acre fire in 6–25 seconds. On the Caldor fire it finds 2,250 acres that
+   can't reseed where the California pipeline finds 2,239.
 
 ## How we built it
 
@@ -228,6 +233,7 @@ task list (`specs/001-post-fire-seed-order/`).
 | Seed prices, seeds per pound, deadlines | CAL FIRE Seed and Seedlings Terms of Sale, Feb 2026 | public PDF, in the repo |
 | State and county boundaries | US Census cartographic boundary files, 2023 (1:20M states, 1:500k counties) | public download, keyless |
 | Address search | OpenStreetMap, through the Photon geocoder (komoot) | public service, keyless; only the typed query is sent |
+| Live builds outside California | MTBS perimeters and severity; PAD-US manager type; FIA BIGMAP forest type groups; USFS Individual Tree Species basal area; provisional national seed zones (Bower et al. 2014); USGS 3DEP | public services, keyless, called from the browser at build time |
 
 ## Built with
 

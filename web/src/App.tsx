@@ -3,6 +3,7 @@ import AssumptionPanel from './components/AssumptionPanel.tsx'
 import FactorTrail from './components/FactorTrail.tsx'
 import FireSelector from './components/FireSelector.tsx'
 import LiveBuild from './components/LiveBuild.tsx'
+import { LiveProgress, LiveSources } from './components/LivePanel.tsx'
 import type { FirePoints } from './components/NationMap.tsx'
 import OrderSummary, { AcreageFunnel } from './components/OrderSummary.tsx'
 import OrderTable from './components/OrderTable.tsx'
@@ -14,6 +15,8 @@ import type { Assumptions, Factors, FireIndex, FireIndexEntry, FireRecord, Order
 import { getData, getFireData, isLive } from './data.ts'
 import { downloadOrderExport } from './export/exportOrder.ts'
 import { countyAt, firesNear, fmt, type Address, type Counties, type NearFire } from './geo/places.ts'
+import type { NationalFire } from './national/api.ts'
+import type { NationalBuild, Step } from './national/build.ts'
 import { parseRoute, routeSearch, type Route } from './route.ts'
 import Home from './views/Home.tsx'
 
@@ -89,6 +92,9 @@ function useReference<T>(path: string, wanted: boolean): T | null {
   return value
 }
 
+/** A live national build: its steps while it runs, then the build. */
+type LiveState = { id: string; status: 'building' | 'ready' | 'error'; steps: Step[]; build?: NationalBuild; message?: string }
+
 export default function App() {
   const [route, setRoute] = useState<Route>(firstRoute)
   const [load, setLoad] = useState<Load>({ status: 'loading' })
@@ -102,13 +108,17 @@ export default function App() {
   // The address text of a search, kept in the page (the link carries only the rounded point).
   const [placeText, setPlaceText] = useState<Address | null>(null)
   const fireCtrl = useRef<AbortController | null>(null)
+  const [live, setLive] = useState<LiveState | null>(null)
+  const [liveTry, setLiveTry] = useState(0)
 
   const regional = route.view === 'state' || route.view === 'county' || route.view === 'place'
-  const national = route.view === 'nation' || route.view === 'place'
+  // A California fire is drawn inside its county lines too.
+  const withCounties = regional || route.view === 'fire'
+  const national = route.view === 'nation' || route.view === 'place' || route.view === 'live'
   const counties = useReference<Counties>('reference/counties.json', true)
   const states = useReference<GeoJSON.FeatureCollection>('reference/us-states.geojson', national)
   const points = useReference<FirePoints>('reference/fire-points.json', national)
-  const outlines = useReference<GeoJSON.FeatureCollection>('reference/ca-counties.geojson', regional)
+  const outlines = useReference<GeoJSON.FeatureCollection>('reference/ca-counties.geojson', withCounties)
   const overview = useReference<GeoJSON.FeatureCollection>('reference/statewide.geojson', regional)
 
   const navigate = useCallback((next: Route, replace = false) => {
@@ -176,7 +186,34 @@ export default function App() {
     else navigate({ view: 'fire', id: FEATURED_FIRE }, true)
   }, [load, routeFire, fireId, navigate, selectFire])
 
+  // A live build follows the route: started when its link opens, streamed step by step, kept once built.
+  const routeLive = route.view === 'live' ? route.id : null
+  const liveReady = live?.id === routeLive && live?.status === 'ready'
+  useEffect(() => {
+    if (!routeLive || liveReady) return
+    const ctrl = new AbortController()
+    const id = routeLive
+    setLive({ id, status: 'building', steps: [] })
+    import('./national/build.ts')
+      .then(({ buildNational, initialSteps }) => {
+        setLive((l) => (l?.id === id ? { ...l, steps: initialSteps() } : l))
+        return buildNational(id, (steps) => setLive((l) => (l?.id === id ? { ...l, steps } : l)), ctrl.signal)
+      })
+      .then((build) => {
+        if (ctrl.signal.aborted) return
+        setOverrides({})
+        setSelectedKey(null)
+        setLive({ id, status: 'ready', steps: build.steps, build })
+      })
+      .catch((err: unknown) => {
+        if (!ctrl.signal.aborted) setLive((l) => ({ id, status: 'error', steps: l?.steps ?? [], message: errorText(err) }))
+      })
+    return () => ctrl.abort()
+    // liveReady is read, not tracked: a finished build must not restart itself.
+  }, [routeLive, liveTry]) // eslint-disable-line react-hooks/exhaustive-deps
+
   const openFire = useCallback((id: string) => navigate({ view: 'fire', id }), [navigate])
+  const openLive = useCallback((f: NationalFire) => navigate({ view: 'live', id: f.id }), [navigate])
   const openCounty = useCallback((fips: string) => navigate({ view: 'county', fips }), [navigate])
   const openState = useCallback(
     (postal: string) => navigate(postal === 'CA' ? { view: 'state' } : { view: 'nation', state: postal }),
@@ -196,7 +233,9 @@ export default function App() {
   }
 
   const factors = load.status === 'ready' ? load.factors : null
-  const record = fire.status === 'ready' ? fire.record : null
+  const liveBuild = route.view === 'live' && live?.id === route.id ? live.build : undefined
+  const isLiveView = route.view === 'live'
+  const record = isLiveView ? (liveBuild?.record ?? null) : fire.status === 'ready' ? fire.record : null
 
   // FR-013: every adjustment recomputes here, in the browser. No reload, no request.
   const order = useMemo(
@@ -213,9 +252,25 @@ export default function App() {
 
   const prebuilt = useMemo(() => (load.status === 'ready' ? load.index.fires : []), [load])
   const allFires = useMemo(() => [...prebuilt, ...liveFires], [prebuilt, liveFires])
-  const entry = allFires.find((f) => f.id === fireId)
+  const liveEntry = useMemo<FireIndexEntry | undefined>(() => {
+    const r = liveBuild?.record
+    if (!r?.fire || !r.retained) return undefined
+    return {
+      id: r.fire.id,
+      name: r.fire.name,
+      year: r.fire.year,
+      discovery_date: r.fire.discovery_date,
+      perimeter_acres: r.retained.perimeter_acres,
+      retained_acres: r.retained.retained_acres,
+      interior_acres: r.planting?.interior_acres ?? 0,
+      provisional: false,
+    }
+  }, [liveBuild])
+  const entry = isLiveView ? liveEntry : allFires.find((f) => f.id === fireId)
   const fireName = record?.fire?.name ?? entry?.name ?? ''
-  const geojson = fire.status === 'ready' ? fire.geojson : null
+  const geojson = isLiveView ? (liveBuild?.geojson ?? null) : fire.status === 'ready' ? fire.geojson : null
+  const classes = liveBuild?.classes ?? null
+  const shownReady = isLiveView ? !!liveBuild : fire.status === 'ready'
   const planting = record?.planting ?? null
 
   // Place: the searched point, its county, and the fires nearest it.
@@ -257,6 +312,9 @@ export default function App() {
     route.view === 'county' ? counties?.counties[route.fips] : placeCounty ? counties?.counties[placeCounty] : undefined
 
   const view = outside ? 'nation' : route.view
+  const isFire = view === 'fire' || view === 'live'
+  const liveState = live && route.view === 'live' && live.id === route.id ? live : null
+  const liveStateName = liveBuild ? stateByPostal.get(liveBuild.fire.state)?.name ?? liveBuild.fire.state : null
 
   // One map for the state, county, place and fire views. Memoised: a slider moves the order, not the map.
   const fitBox = view === 'county' || view === 'place' ? (county?.bbox ?? null) : null
@@ -275,19 +333,36 @@ export default function App() {
             planting={planting}
             fireName={fireName}
             overview={overview}
-            showOverview={view !== 'fire'}
+            showOverview={!isFire}
             onPickFire={openFire}
-            counties={outlines}
+            counties={isLiveView ? null : outlines}
             focusCounty={focusCounty}
             onPickCounty={openCounty}
             fitBox={fitBox}
             pin={pin}
             overviewTitle={overviewTitle}
+            classes={classes}
+            national={isLiveView}
           />
         </Suspense>
       </MapBoundary>
     ),
-    [geojson, planting, fireName, overview, view, openFire, outlines, focusCounty, openCounty, fitBox, pin, overviewTitle],
+    [
+      geojson,
+      planting,
+      fireName,
+      overview,
+      isFire,
+      openFire,
+      outlines,
+      focusCounty,
+      openCounty,
+      fitBox,
+      pin,
+      overviewTitle,
+      classes,
+      isLiveView,
+    ],
   )
   const validation = useMemo(() => <Validation />, [])
 
@@ -296,10 +371,12 @@ export default function App() {
   const crumbs: [string, (() => void) | null][] = [
     ['United States', view === 'nation' ? null : () => navigate({ view: 'nation' })],
   ]
-  if (view !== 'nation') crumbs.push(['California', view === 'state' ? null : () => navigate({ view: 'state' })])
+  if (view === 'live' && liveStateName) crumbs.push([liveStateName, null])
+  else if (view !== 'nation') crumbs.push(['California', view === 'state' ? null : () => navigate({ view: 'state' })])
   if (view === 'county' && county) crumbs.push([`${county.name} County`, null])
   if (view === 'place' && county) crumbs.push([`${county.name} County`, () => openCounty(county.fips)])
   if (view === 'place') crumbs.push([placeShown?.label ?? 'Place', null])
+  if (view === 'live') crumbs.push([fireName || 'Building…', null])
   if (view === 'fire') {
     if (fireCounty) crumbs.push([`${fireCounty.name} County`, () => openCounty(fireCounty.fips)])
     crumbs.push([fireName || 'Fire', null])
@@ -307,19 +384,23 @@ export default function App() {
 
   const year = record?.fire?.year ?? entry?.year
   const perimeterAcres = record?.retained?.perimeter_acres ?? entry?.perimeter_acres
-  const hasOrder = view === 'fire' && fire.status === 'ready' && !!order && !order.finding
+  const hasOrder = isFire && shownReady && !!order && !order.finding
   const sections = [
-    { id: 'from-fire', title: 'From the fire to the order', show: fire.status === 'ready' && !!record?.retained },
+    { id: 'from-fire', title: 'From the fire to the order', show: shownReady && !!record?.retained },
     { id: 'assumptions', title: 'Assumptions', show: hasOrder },
     { id: 'lines', title: 'Order lines', show: hasOrder },
-    { id: 'check', title: 'Checked against published figures', show: true },
+    {
+      id: 'check',
+      title: isLiveView ? 'Where these numbers came from' : 'Checked against published figures',
+      show: !isLiveView || !!liveBuild,
+    },
   ].filter((x) => x.show)
   const num = (id: string) => String(sections.findIndex((x) => x.id === id) + 1).padStart(2, '0')
 
   const outsideState = outside?.state ? stateByName.get(outside.state) : null
   const nationFocus =
     outside && outsideState
-      ? { ...outsideState, address: placeShown?.label }
+      ? { ...outsideState, address: placeShown?.label, lon: outside.lon, lat: outside.lat }
       : route.view === 'nation' && route.state
         ? (stateByPostal.get(route.state) ?? null)
         : null
@@ -374,6 +455,7 @@ export default function App() {
                 onFire={openFire}
                 onCounty={openCounty}
                 onAddress={openAddress}
+                onLive={openLive}
               />
             </div>
           </div>
@@ -410,6 +492,7 @@ export default function App() {
             onCounty={openCounty}
             onFire={openFire}
             onAddress={openAddress}
+            onLive={openLive}
             onDismiss={() => navigate({ view: 'nation' })}
           />
         </main>
@@ -417,7 +500,7 @@ export default function App() {
 
       {load.status === 'ready' && view !== 'nation' && (
         <main className="shell-main">
-          <div className="stage" data-view={view === 'fire' ? 'fire' : 'overview'}>
+          <div className="stage" data-view={isFire ? 'fire' : 'overview'}>
             <section className="map-region" aria-label="Burn map">
               {map}
               {view === 'fire' && fire.status === 'ready' && fire.mapError && (
@@ -428,11 +511,12 @@ export default function App() {
             </section>
 
             {/* The sheet's title block: the place's name set on the map, like a quadrangle title. */}
-            {view === 'fire' && fireName && (
+            {isFire && fireName && (
               <div className="title-block">
                 <p className="title-kicker">
                   Burned {year}
-                  {fireCounty ? ` · ${fireCounty.name} County` : ''}
+                  {view === 'live' ? ` · ${liveStateName} · built live from national data` : ''}
+                  {view === 'fire' && fireCounty ? ` · ${fireCounty.name} County` : ''}
                 </p>
                 <h1 className="title-name">{fireName}</h1>
                 {perimeterAcres !== undefined && (
@@ -474,7 +558,15 @@ export default function App() {
               </div>
             )}
 
-            <aside className="slip-region" aria-label={view === 'fire' ? 'Seed order' : 'Brief'}>
+            <aside className="slip-region" aria-label={isFire ? 'Seed order' : 'Brief'}>
+              {view === 'live' && liveState && liveState.status !== 'ready' && (
+                <LiveProgress
+                  steps={liveState.steps}
+                  status={liveState.status}
+                  message={liveState.message}
+                  onRetry={() => setLiveTry((n) => n + 1)}
+                />
+              )}
               {view === 'state' && (
                 <StatePanel counties={counties} fires={prebuilt} onCounty={openCounty}>
                   <div className="region-live">
@@ -516,21 +608,25 @@ export default function App() {
                   <p className="detail">{fire.message}</p>
                 </div>
               )}
-              {view === 'fire' && fire.status === 'ready' && order && entry && (
+              {isFire && shownReady && record && order && entry && (
                 <>
-                  <OrderSummary entry={entry} record={fire.record} order={order} />
+                  <OrderSummary entry={entry} record={record} order={order} />
                   <div className="slip-actions">
                     {!order.finding && (
                       <button
                         type="button"
                         className="button-primary"
-                        onClick={() => downloadOrderExport(order, fire.record, load.factors)}
+                        onClick={() => downloadOrderExport(order, record, load.factors)}
                       >
                         Export order
                       </button>
                     )}
                     <a className="slip-more" href={order.finding ? '#from-fire' : '#lines'}>
-                      {order.finding ? 'See the acreage' : `All ${order.lines.length} lines`}
+                      {order.finding
+                        ? 'See the acreage'
+                        : order.lines.length === 1
+                          ? 'The order line'
+                          : `All ${order.lines.length} lines`}
                       <span aria-hidden="true"> ↓</span>
                     </a>
                   </div>
@@ -539,7 +635,7 @@ export default function App() {
             </aside>
           </div>
 
-          {view === 'fire' && (
+          {isFire && (view === 'fire' || liveBuild) && (
             <div className="report">
               <nav className="report-contents" aria-label="Report contents">
                 <p className="caps">The order, in full</p>
@@ -556,14 +652,14 @@ export default function App() {
               </nav>
 
               <div className="report-body">
-                {fire.status === 'ready' && record?.retained && (
+                {shownReady && record?.retained && (
                   <section className="report-section" id="from-fire">
                     <span className="report-num">{num('from-fire')}</span>
                     <AcreageFunnel record={record} />
                   </section>
                 )}
 
-                {fire.status === 'ready' && order && hasOrder && (
+                {shownReady && order && hasOrder && (
                   <>
                     <section className="report-section" id="assumptions">
                       <span className="report-num">{num('assumptions')}</span>
@@ -596,7 +692,7 @@ export default function App() {
 
                 <section className="report-section" id="check">
                   <span className="report-num">{num('check')}</span>
-                  {validation}
+                  {liveBuild ? <LiveSources build={liveBuild} /> : validation}
                 </section>
               </div>
             </div>

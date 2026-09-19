@@ -50,6 +50,12 @@ async function interiorPixels(page: Page): Promise<number> {
   }, png)
 }
 
+
+// The relief and water tiles are scenery from a public server; tests draw without them.
+test.beforeEach(async ({ page }) => {
+  await page.route(/basemap\.nationalmap\.gov\//, (route) => route.abort())
+})
+
 test('the interior is drawn as the luminous layer, with the threshold statement and a cross-check', async ({
   page,
 }) => {

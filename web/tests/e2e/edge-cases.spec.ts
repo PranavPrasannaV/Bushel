@@ -79,6 +79,12 @@ for (const [result, message, retained] of [
   })
 }
 
+
+// The relief and water tiles are scenery from a public server; tests draw without them.
+test.beforeEach(async ({ page }) => {
+  await page.route(/basemap\.nationalmap\.gov\//, (route) => route.abort())
+})
+
 test('a fire still burning is stamped with its perimeter date and flagged provisional', async ({ page }) => {
   const errors = await openFire(page, 'fixture-provisional', {
     ...base,

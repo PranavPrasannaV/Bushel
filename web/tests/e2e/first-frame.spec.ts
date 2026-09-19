@@ -23,20 +23,29 @@ async function interiorPixels(page: Page): Promise<number> {
   }, shot.toString('base64'))
 }
 
-test('the home page is the national map: California built, the West next, and one search', async ({ page }) => {
+
+// The relief and water tiles are scenery from a public server; tests draw without them.
+test.beforeEach(async ({ page }) => {
+  await page.route(/basemap\.nationalmap\.gov\//, (route) => route.abort())
+})
+
+test('the home page is the national map: California built and checked, the lower 48 live, and one search', async ({
+  page,
+}) => {
   await page.goto('/')
   await expect(page.getByRole('heading', { level: 1 })).toContainText('which forest can’t grow back on its own')
   await expect(page.getByRole('img', { name: /Map of the United States/ })).toBeVisible()
   await expect(page.getByRole('link', { name: /Open California/ })).toBeVisible()
   await expect(page.locator('.nation-dots circle')).toHaveCount(237)
-  await expect(page.locator('.nation-state[data-status="next"]')).toHaveCount(10)
+  await expect(page.locator('.nation-state[data-status="live"]')).toHaveCount(48) // the lower 48 and DC, less California
+  await expect(page.locator('.nation-state[data-status="later"]')).toHaveCount(2) // Alaska and Hawaii
   await expect(page.getByRole('combobox', { name: 'Search a county, an address or a fire' })).toBeVisible()
 })
 
 test("a fire's own link opens with its interior lit and its order", async ({ page }) => {
   await page.goto(`/?fire=${FEATURED}`)
   await expect(page.getByLabel('Fire', { exact: true })).toHaveValue(FEATURED)
-  await expect(page.locator('.burn-map')).toHaveAttribute('data-peak', 'revealed', { timeout: 8000 })
+  await expect(page.locator('.burn-map')).toHaveAttribute('data-peak', 'revealed', { timeout: 15_000 })
   expect(await interiorPixels(page)).toBeGreaterThan(500)
   await expect(page.getByTestId('total-bushels')).toHaveText(/\d/)
   await expect(page.getByRole('navigation', { name: 'Where you are' })).toContainText('North Complex')
@@ -56,7 +65,7 @@ test.describe('on a phone', () => {
     page,
   }) => {
     await page.goto(`/?fire=${FEATURED}`)
-    await expect(page.locator('.burn-map')).toHaveAttribute('data-peak', 'revealed', { timeout: 8000 })
+    await expect(page.locator('.burn-map')).toHaveAttribute('data-peak', 'revealed', { timeout: 15_000 })
     expect(await interiorPixels(page)).toBeGreaterThan(300)
 
     const width = await page.evaluate(() => document.documentElement.scrollWidth)

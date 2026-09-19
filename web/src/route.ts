@@ -6,6 +6,7 @@
 //   ?at=lat,lon             a searched address: the point only, rounded to ~100 m. The address text
 //                            stays in the page, never in a link that could be logged or shared.
 //   ?fire=id                 one fire's order
+//   ?us=MTBS_ID              any fire in the lower 48, built live in the browser from national data
 import type { Address } from './geo/places.ts'
 
 export type Route =
@@ -14,11 +15,14 @@ export type Route =
   | { view: 'county'; fips: string }
   | { view: 'place'; address: Address }
   | { view: 'fire'; id: string }
+  | { view: 'live'; id: string }
 
 export function parseRoute(search: string): Route {
   const q = new URLSearchParams(search)
   const fire = q.get('fire')
   if (fire) return { view: 'fire', id: fire }
+  const us = q.get('us')
+  if (us && /^[A-Za-z0-9]{10,40}$/.test(us)) return { view: 'live', id: us.toUpperCase() }
   const county = q.get('county')
   if (county && /^\d{5}$/.test(county)) return { view: 'county', fips: county }
   const at = q.get('at')?.split(',').map(Number)
@@ -41,6 +45,7 @@ export function routeSearch(r: Route): string {
   if (r.view === 'state') return '?view=state'
   if (r.view === 'county') return `?county=${enc(r.fips)}`
   if (r.view === 'fire') return `?fire=${enc(r.id)}`
+  if (r.view === 'live') return `?us=${enc(r.id)}`
   // The comma is left as is, so the point reads as one in the address bar.
   const at = `?at=${r.address.lat.toFixed(3)},${r.address.lon.toFixed(3)}`
   return r.address.state ? `${at}&st=${enc(r.address.state)}` : at

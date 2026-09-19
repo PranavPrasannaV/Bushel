@@ -1,0 +1,133 @@
+/* The live build's progress list and its sources section. */
+
+.live-progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-5);
+}
+
+.live-steps {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-rule);
+}
+
+.live-steps li {
+  display: grid;
+  grid-template-columns: 1rem minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.live-step-mark {
+  width: 0.625rem;
+  height: 0.625rem;
+  border: 1.5px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+}
+
+.live-steps li[data-status='running'] .live-step-mark {
+  border-color: var(--forest-700);
+  border-top-color: transparent;
+  animation: spin 800ms linear infinite;
+}
+
+.live-steps li[data-status='done'] .live-step-mark {
+  border-color: var(--forest-700);
+  background: var(--forest-700);
+}
+
+.live-steps li[data-status='failed'] .live-step-mark {
+  border-color: var(--priority-1);
+  background: var(--priority-1);
+}
+
+.live-step-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.live-step-label {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}
+
+.live-steps li[data-status='waiting'] .live-step-label {
+  color: var(--color-text-subtle);
+}
+
+.live-step-source {
+  font-size: var(--text-2xs);
+  color: var(--color-text-subtle);
+  line-height: var(--leading-snug);
+}
+
+.live-step-time {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.live-progress .region-verdict {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  align-items: flex-start;
+}
+
+.live-sources {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  min-width: 0;
+  max-width: 54rem;
+}
+
+.live-diffs {
+  display: flex;
+  flex-direction: column;
+  margin: var(--space-2) 0;
+  border-top: 1px solid var(--color-rule);
+}
+
+.live-diffs > div {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr);
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--text-sm);
+}
+
+.live-diffs dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+  padding-top: 0.2em;
+}
+
+.live-diffs dd {
+  margin: 0;
+  color: var(--color-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .live-steps li[data-status='running'] .live-step-mark {
+    animation: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .live-diffs > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+}

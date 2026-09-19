@@ -50,11 +50,13 @@ describe('FR-006: threshold_m and baker_reference_fraction have no control', () 
     const props = sig![1]
     const keys = [...props.matchAll(/^\s*(\w+)\??\s*:/gm)].map((m) => m[1]).sort()
     expect(keys).toEqual([
+      'classes',
       'counties',
       'fireName',
       'fitBox',
       'focusCounty',
       'geojson',
+      'national',
       'onPickCounty',
       'onPickFire',
       'overview',

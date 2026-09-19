@@ -1,4 +1,4 @@
-/* The national map. Covered is the one open sheet (paper, ink edge); next is hatched umber; the rest are
+/* The national map. Covered is the one open sheet (paper, ink edge); live is hatched umber; the rest are
    greyed paper. Fire dots use the interior's colour because each one is an interior. */
 
 .nation {
@@ -32,7 +32,7 @@
   fill: var(--paper-300);
 }
 
-.nation-state[data-status='next'] {
+.nation-state[data-status='live'] {
   fill: url(#nation-hatch);
   stroke: var(--paper-50);
 }
@@ -62,6 +62,10 @@
   fill: var(--paper-400);
 }
 
+.nation-state[data-status='live'][data-hover] {
+  stroke: var(--ink-900);
+}
+
 .nation-state[data-focus] {
   stroke-dasharray: 4 3;
 }
@@ -83,15 +87,6 @@
   pointer-events: none;
 }
 
-.nation-labels text {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.08em;
-  fill: var(--umber-700);
-  text-anchor: middle;
-  dominant-baseline: middle;
-  pointer-events: none;
-}
 
 .nation-tip {
   position: absolute;
@@ -119,7 +114,8 @@
   color: var(--color-text-muted);
 }
 
-.nation-tip-status[data-status='covered'] {
+.nation-tip-status[data-status='covered'],
+.nation-tip-status[data-status='live'] {
   color: var(--forest-700);
 }
 
@@ -155,7 +151,7 @@
   border-color: var(--ink-900);
 }
 
-.nation-key-item[data-status='next'] .nation-swatch {
+.nation-key-item[data-status='live'] .nation-swatch {
   background: repeating-linear-gradient(45deg, var(--umber-200) 0 2px, var(--umber-300) 2px 4px);
 }
 

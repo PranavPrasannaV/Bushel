@@ -40,6 +40,12 @@ test.beforeEach(async ({ page }) => {
   await expect(page.locator('tr.order-row')).toHaveCount(6)
 })
 
+
+// The relief and water tiles are scenery from a public server; tests draw without them.
+test.beforeEach(async ({ page }) => {
+  await page.route(/basemap\.nationalmap\.gov\//, (route) => route.abort())
+})
+
 test('the three unpublished factors are amber, labelled, bounded and adjustable', async ({ page }) => {
   // The reserved amber token, resolved in the page, so the test tracks tokens.css rather than a hex value.
   const amber = await page.evaluate(() => {

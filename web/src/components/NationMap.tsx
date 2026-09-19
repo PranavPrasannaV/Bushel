@@ -1,7 +1,8 @@
 /// <reference types="geojson" />
 // The national map: every state, drawn in Albers USA (Alaska and Hawaii inset), shaded by what Bushel
-// covers. California is built and carries one dot per fire, sized by its seed-limited interior; the
-// western states are next; the rest are not yet covered. SVG, no tiles: it draws before MapLibre loads.
+// covers. California is built and checked, one dot per fire sized by its seed-limited interior; the rest of
+// the lower 48 is built live on request; Alaska and Hawaii are not yet. SVG, no tiles: it draws before
+// MapLibre loads.
 import { useMemo, useState, type PointerEvent as ReactPointerEvent } from 'react'
 import { geoAlbersUsa, geoPath } from 'd3-geo'
 import { coverage, COVERAGE_COPY, type Coverage } from '../geo/coverage.ts'
@@ -69,7 +70,7 @@ export default function NationMap({
           className="nation-svg"
           viewBox={`0 0 ${W} ${H}`}
           role="img"
-          aria-label="Map of the United States. California is covered; the western states are next; the rest are not yet covered."
+          aria-label="Map of the United States. California is built and checked; the rest of the lower 48 is built live on request; Alaska and Hawaii are not yet covered."
           onPointerLeave={() => setHover(null)}
         >
           <defs>
@@ -113,15 +114,6 @@ export default function NationMap({
               <circle key={d.id} cx={d.xy[0]} cy={d.xy[1]} r={d.r} />
             ))}
           </g>
-          <g className="nation-labels" aria-hidden="true">
-            {shapes
-              .filter((s) => s.status !== 'later' && s.postal !== 'CA' && Number.isFinite(s.centroid[0]))
-              .map((s) => (
-                <text key={s.postal} x={s.centroid[0]} y={s.centroid[1]}>
-                  {s.postal}
-                </text>
-              ))}
-          </g>
         </svg>
 
         {hover && tip && (
@@ -134,7 +126,9 @@ export default function NationMap({
             <p className="nation-tip-status" data-status={tip.status}>
               {COVERAGE_COPY[tip.status].label}
             </p>
-            <p className="nation-tip-cta">{tip.status === 'covered' ? 'Open California →' : 'See what it takes →'}</p>
+            <p className="nation-tip-cta">
+              {tip.status === 'covered' ? 'Open California →' : tip.status === 'live' ? 'Pick a fire to build →' : 'Why not yet →'}
+            </p>
           </div>
         )}
       </div>
@@ -142,11 +136,11 @@ export default function NationMap({
       <figcaption className="nation-key">
         <span className="nation-key-item" data-status="covered">
           <span className="nation-swatch" aria-hidden="true" />
-          Built: California
+          Built and checked: California
         </span>
-        <span className="nation-key-item" data-status="next">
+        <span className="nation-key-item" data-status="live">
           <span className="nation-swatch" aria-hidden="true" />
-          Next: the West, 10 states
+          Built live on request: the lower 48
         </span>
         <span className="nation-key-item" data-status="later">
           <span className="nation-swatch" aria-hidden="true" />

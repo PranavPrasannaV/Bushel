@@ -78,7 +78,19 @@ the app, running `python -m bushel.serve`.
 > figure also covers insect die-off and timber harvest, and it uses an internal boundary it doesn't
 > publish.
 
-## 3:20 — Live (on screen: terminal + California's "Build a fire from the agency services" field, Live badge)
+## 3:20 — Live, anywhere (on screen: type "Beachie Creek" in the search; the build ticks through its sources)
+
+> And it isn't only California. Type a fire from anywhere in the lower 48 — Beachie Creek, Oregon — and
+> Bushel builds it right now, in the browser, from national data: MTBS severity, federal land, Forest
+> Service tree species, the national seed zones, USGS elevation. About twenty seconds.
+>
+> *(the order appears; scroll to "Where these numbers came from")*
+>
+> It says exactly where every number came from, and that outside California there's no published figure
+> to check it against yet. On the Caldor fire, the live build and our California pipeline agree to half a
+> percent.
+
+## 3:40 — Live, rebuilt (optional; on screen: terminal + California's "Build a fire from the agency services" field)
 
 > The site ships with every fire from 2018 to 2023 already built. But Bushel isn't a recording.
 > Pick one — *(type "Monument", choose "Rebuild live")* — and it fetches that fire's perimeter,
