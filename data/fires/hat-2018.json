@@ -1,0 +1,43 @@
+{
+  "fire": {
+    "id": "hat-2018",
+    "name": "Hat",
+    "year": 2018,
+    "discovery_date": "2018-08-09",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 1769.3625,
+    "retained_acres": 1239.014,
+    "excluded_acres": 530.3485,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 9.7854,
+    "conifer_acres": 84.51
+  },
+  "planting": {
+    "interior_acres": 0.6672,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.06818321172358821,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "732_4000",
+      "seed_zone": "732",
+      "elevation_band": "4000–4500 ft",
+      "planting_acres": 0.6672,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Incense Cedar",
+          "acres": 0.6672
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/hat-2018.geojson"
+}

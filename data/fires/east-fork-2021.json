@@ -1,0 +1,31 @@
+{
+  "fire": {
+    "id": "east-fork-2021",
+    "name": "East Fork",
+    "year": 2021,
+    "discovery_date": "2021-07-01",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 1135.7484,
+    "retained_acres": 11.7831,
+    "excluded_acres": 1123.9653,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 0.0,
+    "conifer_acres": 4.0031
+  },
+  "planting": {
+    "interior_acres": 0.0,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.0,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [],
+  "geometry_ref": "fires/east-fork-2021.geojson",
+  "result": "no_interior",
+  "message": "All burned acres lie within natural seeding distance. No planting order required."
+}

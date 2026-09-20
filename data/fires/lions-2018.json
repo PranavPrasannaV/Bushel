@@ -1,0 +1,31 @@
+{
+  "fire": {
+    "id": "lions-2018",
+    "name": "Lions",
+    "year": 2018,
+    "discovery_date": "2018-06-18",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 13461.3719,
+    "retained_acres": 0.0,
+    "excluded_acres": 13461.3719,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 0.0,
+    "conifer_acres": 0.0
+  },
+  "planting": {
+    "interior_acres": 0.0,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.0,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [],
+  "geometry_ref": "fires/lions-2018.geojson",
+  "result": "no_retained_area",
+  "message": "Entire perimeter lies outside State Responsibility Area."
+}

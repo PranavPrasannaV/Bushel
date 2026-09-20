@@ -1,0 +1,31 @@
+{
+  "fire": {
+    "id": "holy-2018",
+    "name": "Holy",
+    "year": 2018,
+    "discovery_date": "2018-08-06",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 23025.4047,
+    "retained_acres": 3782.1261,
+    "excluded_acres": 19243.2785,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 0.0,
+    "conifer_acres": 0.0
+  },
+  "planting": {
+    "interior_acres": 0.0,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.0,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [],
+  "geometry_ref": "fires/holy-2018.geojson",
+  "result": "no_conifer",
+  "message": "No conifer species present in pre-fire vegetation."
+}

@@ -1,0 +1,95 @@
+{
+  "fire": {
+    "id": "hennessey-2020",
+    "name": "Hennessey",
+    "year": 2020,
+    "discovery_date": "2020-08-17",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 305351.9695,
+    "retained_acres": 251563.6419,
+    "excluded_acres": 53788.3276,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 2885.1283,
+    "conifer_acres": 13462.0047
+  },
+  "planting": {
+    "interior_acres": 148.115,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.05133740499512622,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "380_500",
+      "seed_zone": "380",
+      "elevation_band": "500–1000 ft",
+      "planting_acres": 21.1275,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 21.1275
+        }
+      ]
+    },
+    {
+      "cell_id": "380_1000",
+      "seed_zone": "380",
+      "elevation_band": "1000–1500 ft",
+      "planting_acres": 51.818,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 51.818
+        }
+      ]
+    },
+    {
+      "cell_id": "380_1500",
+      "seed_zone": "380",
+      "elevation_band": "1500–2000 ft",
+      "planting_acres": 43.1446,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 43.1446
+        }
+      ]
+    },
+    {
+      "cell_id": "380_2000",
+      "seed_zone": "380",
+      "elevation_band": "2000–2500 ft",
+      "planting_acres": 29.5785,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 29.5785
+        }
+      ]
+    },
+    {
+      "cell_id": "380_2500",
+      "seed_zone": "380",
+      "elevation_band": "2500–3000 ft",
+      "planting_acres": 2.4463,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 2.4463
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/hennessey-2020.geojson"
+}

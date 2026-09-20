@@ -1,0 +1,2380 @@
+{
+  "generated_at": "2026-09-18T16:06:58Z",
+  "severity_source": "MTBS thematic burn severity, class 4 = High",
+  "coverage_years": [
+    2018,
+    2023
+  ],
+  "fires": [
+    {
+      "id": "august-complex-2020",
+      "name": "August Complex",
+      "year": 2020,
+      "discovery_date": "2020-08-16",
+      "perimeter_acres": 1032699.8938,
+      "retained_acres": 172000.6606,
+      "interior_acres": 4914.7036,
+      "provisional": false
+    },
+    {
+      "id": "dixie-2021",
+      "name": "Dixie",
+      "year": 2021,
+      "discovery_date": "2021-07-13",
+      "perimeter_acres": 963405.6299,
+      "retained_acres": 205026.6885,
+      "interior_acres": 5781.8211,
+      "provisional": false
+    },
+    {
+      "id": "ranch-2018",
+      "name": "Ranch",
+      "year": 2018,
+      "discovery_date": "2018-07-27",
+      "perimeter_acres": 410202.4849,
+      "retained_acres": 91241.4549,
+      "interior_acres": 1291.4469,
+      "provisional": false
+    },
+    {
+      "id": "scu-lightning-complex-2020",
+      "name": "Scu Lightning Complex",
+      "year": 2020,
+      "discovery_date": "2020-08-16",
+      "perimeter_acres": 396824.6148,
+      "retained_acres": 395098.4172,
+      "interior_acres": 2.2239,
+      "provisional": false
+    },
+    {
+      "id": "creek-2020",
+      "name": "Creek",
+      "year": 2020,
+      "discovery_date": "2020-09-04",
+      "perimeter_acres": 379842.5115,
+      "retained_acres": 23173.0547,
+      "interior_acres": 593.5718,
+      "provisional": false
+    },
+    {
+      "id": "north-complex-2020",
+      "name": "North Complex",
+      "year": 2020,
+      "discovery_date": "2020-08-17",
+      "perimeter_acres": 318797.3222,
+      "retained_acres": 115707.636,
+      "interior_acres": 13507.3732,
+      "provisional": false
+    },
+    {
+      "id": "hennessey-2020",
+      "name": "Hennessey",
+      "year": 2020,
+      "discovery_date": "2020-08-17",
+      "perimeter_acres": 305351.9695,
+      "retained_acres": 251563.6419,
+      "interior_acres": 148.115,
+      "provisional": false
+    },
+    {
+      "id": "carr-2018",
+      "name": "Carr",
+      "year": 2018,
+      "discovery_date": "2018-07-23",
+      "perimeter_acres": 229651.467,
+      "retained_acres": 92336.0404,
+      "interior_acres": 3713.5491,
+      "provisional": false
+    },
+    {
+      "id": "monument-2021",
+      "name": "Monument",
+      "year": 2021,
+      "discovery_date": "2021-07-31",
+      "perimeter_acres": 223107.9026,
+      "retained_acres": 15930.2622,
+      "interior_acres": 679.861,
+      "provisional": false
+    },
+    {
+      "id": "caldor-2021",
+      "name": "Caldor",
+      "year": 2021,
+      "discovery_date": "2021-08-14",
+      "perimeter_acres": 221786.4379,
+      "retained_acres": 40060.372,
+      "interior_acres": 2239.0713,
+      "provisional": false
+    },
+    {
+      "id": "river-complex-2021",
+      "name": "River Complex",
+      "year": 2021,
+      "discovery_date": "2021-07-31",
+      "perimeter_acres": 199354.1488,
+      "retained_acres": 7944.0349,
+      "interior_acres": 1111.5294,
+      "provisional": false
+    },
+    {
+      "id": "castle-2020",
+      "name": "Castle",
+      "year": 2020,
+      "discovery_date": "2020-08-19",
+      "perimeter_acres": 170647.9416,
+      "retained_acres": 8968.7951,
+      "interior_acres": 98.0761,
+      "provisional": false
+    },
+    {
+      "id": "slater-2020",
+      "name": "Slater",
+      "year": 2020,
+      "discovery_date": "2020-09-08",
+      "perimeter_acres": 157429.8335,
+      "retained_acres": 8553.7491,
+      "interior_acres": 1200.265,
+      "provisional": false
+    },
+    {
+      "id": "camp-2018",
+      "name": "Camp",
+      "year": 2018,
+      "discovery_date": "2018-11-08",
+      "perimeter_acres": 153335.5741,
+      "retained_acres": 105161.4378,
+      "interior_acres": 334.4818,
+      "provisional": false
+    },
+    {
+      "id": "antelope-2021",
+      "name": "Antelope",
+      "year": 2021,
+      "discovery_date": "2021-08-01",
+      "perimeter_acres": 145631.75,
+      "retained_acres": 22411.4981,
+      "interior_acres": 647.169,
+      "provisional": false
+    },
+    {
+      "id": "red-salmon-complex-2020",
+      "name": "Red Salmon Complex",
+      "year": 2020,
+      "discovery_date": "2020-07-27",
+      "perimeter_acres": 143836.4683,
+      "retained_acres": 81.4539,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "dolan-2020",
+      "name": "Dolan",
+      "year": 2020,
+      "discovery_date": "2020-08-18",
+      "perimeter_acres": 124527.4317,
+      "retained_acres": 13065.1808,
+      "interior_acres": 37.1399,
+      "provisional": false
+    },
+    {
+      "id": "mcfarland-2021",
+      "name": "Mcfarland",
+      "year": 2021,
+      "discovery_date": "2021-07-30",
+      "perimeter_acres": 122447.7081,
+      "retained_acres": 50885.3795,
+      "interior_acres": 288.0013,
+      "provisional": false
+    },
+    {
+      "id": "bobcat-2020",
+      "name": "Bobcat",
+      "year": 2020,
+      "discovery_date": "2020-09-06",
+      "perimeter_acres": 115998.0131,
+      "retained_acres": 13525.8489,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "sugar-2021",
+      "name": "Sugar",
+      "year": 2021,
+      "discovery_date": "2021-07-02",
+      "perimeter_acres": 105003.8942,
+      "retained_acres": 21971.3055,
+      "interior_acres": 173.9128,
+      "provisional": false
+    },
+    {
+      "id": "windy-2021",
+      "name": "Windy",
+      "year": 2021,
+      "discovery_date": "2021-09-09",
+      "perimeter_acres": 97528.2763,
+      "retained_acres": 2011.6033,
+      "interior_acres": 2.8911,
+      "provisional": false
+    },
+    {
+      "id": "ferguson-2018",
+      "name": "Ferguson",
+      "year": 2018,
+      "discovery_date": "2018-07-13",
+      "perimeter_acres": 96831.2494,
+      "retained_acres": 4259.37,
+      "interior_acres": 6.8942,
+      "provisional": false
+    },
+    {
+      "id": "mccash-2021",
+      "name": "Mccash",
+      "year": 2021,
+      "discovery_date": "2021-08-01",
+      "perimeter_acres": 94970.4843,
+      "retained_acres": 222.7393,
+      "interior_acres": 0.4448,
+      "provisional": false
+    },
+    {
+      "id": "york-2023",
+      "name": "York",
+      "year": 2023,
+      "discovery_date": "2023-07-28",
+      "perimeter_acres": 93077.858,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "county-2018",
+      "name": "County",
+      "year": 2018,
+      "discovery_date": "2018-06-30",
+      "perimeter_acres": 89831.1743,
+      "retained_acres": 78172.1763,
+      "interior_acres": 412.9872,
+      "provisional": false
+    },
+    {
+      "id": "woolsey-2018",
+      "name": "Woolsey",
+      "year": 2018,
+      "discovery_date": "2018-11-08",
+      "perimeter_acres": 89551.4208,
+      "retained_acres": 48479.8111,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "kelly-2023",
+      "name": "Kelly",
+      "year": 2023,
+      "discovery_date": "2023-08-15",
+      "perimeter_acres": 89326.0955,
+      "retained_acres": 2201.1214,
+      "interior_acres": 122.0948,
+      "provisional": false
+    },
+    {
+      "id": "knp-complex-2021",
+      "name": "Knp Complex",
+      "year": 2021,
+      "discovery_date": "2021-09-09",
+      "perimeter_acres": 88257.1146,
+      "retained_acres": 1813.6846,
+      "interior_acres": 6.2271,
+      "provisional": false
+    },
+    {
+      "id": "czu-lightning-complex-2020",
+      "name": "Czu Lightning Complex",
+      "year": 2020,
+      "discovery_date": "2020-08-16",
+      "perimeter_acres": 86553.4648,
+      "retained_acres": 85020.5949,
+      "interior_acres": 5903.2487,
+      "provisional": false
+    },
+    {
+      "id": "w-5-cold-springs-2020",
+      "name": "W-5 Cold Springs",
+      "year": 2020,
+      "discovery_date": "2020-08-18",
+      "perimeter_acres": 84817.7252,
+      "retained_acres": 19308.1088,
+      "interior_acres": 71.6111,
+      "provisional": false
+    },
+    {
+      "id": "caldwell-2020",
+      "name": "Caldwell",
+      "year": 2020,
+      "discovery_date": "2020-07-22",
+      "perimeter_acres": 81224.7327,
+      "retained_acres": 3371.2565,
+      "interior_acres": 162.5706,
+      "provisional": false
+    },
+    {
+      "id": "kincade-2019",
+      "name": "Kincade",
+      "year": 2019,
+      "discovery_date": "2019-10-23",
+      "perimeter_acres": 77762.1318,
+      "retained_acres": 73203.9736,
+      "interior_acres": 325.1413,
+      "provisional": false
+    },
+    {
+      "id": "mosquito-2022",
+      "name": "Mosquito",
+      "year": 2022,
+      "discovery_date": "2022-09-06",
+      "perimeter_acres": 76771.4717,
+      "retained_acres": 22907.831,
+      "interior_acres": 1385.9647,
+      "provisional": false
+    },
+    {
+      "id": "glass-2020",
+      "name": "Glass",
+      "year": 2020,
+      "discovery_date": "2020-09-27",
+      "perimeter_acres": 67484.4126,
+      "retained_acres": 65122.8015,
+      "interior_acres": 1443.5649,
+      "provisional": false
+    },
+    {
+      "id": "delta-2018",
+      "name": "Delta",
+      "year": 2018,
+      "discovery_date": "2018-09-05",
+      "perimeter_acres": 63505.6219,
+      "retained_acres": 29063.7687,
+      "interior_acres": 1656.1744,
+      "provisional": false
+    },
+    {
+      "id": "mckinney-2022",
+      "name": "Mckinney",
+      "year": 2022,
+      "discovery_date": "2022-07-29",
+      "perimeter_acres": 60102.2632,
+      "retained_acres": 20888.5609,
+      "interior_acres": 1772.9317,
+      "provisional": false
+    },
+    {
+      "id": "zogg-2020",
+      "name": "Zogg",
+      "year": 2020,
+      "discovery_date": "2020-09-27",
+      "perimeter_acres": 56338.0832,
+      "retained_acres": 55180.9403,
+      "interior_acres": 85.8444,
+      "provisional": false
+    },
+    {
+      "id": "walbridge-2020",
+      "name": "Walbridge",
+      "year": 2020,
+      "discovery_date": "2020-08-17",
+      "perimeter_acres": 55208.947,
+      "retained_acres": 53908.2915,
+      "interior_acres": 775.7132,
+      "provisional": false
+    },
+    {
+      "id": "walker-2019",
+      "name": "Walker",
+      "year": 2019,
+      "discovery_date": "2019-09-04",
+      "perimeter_acres": 54614.8992,
+      "retained_acres": 930.9186,
+      "interior_acres": 9.563,
+      "provisional": false
+    },
+    {
+      "id": "river-2020",
+      "name": "River",
+      "year": 2020,
+      "discovery_date": "2020-08-16",
+      "perimeter_acres": 50213.835,
+      "retained_acres": 46653.4269,
+      "interior_acres": 0.4448,
+      "provisional": false
+    },
+    {
+      "id": "river-2018",
+      "name": "River",
+      "year": 2018,
+      "discovery_date": "2018-07-27",
+      "perimeter_acres": 48920.3936,
+      "retained_acres": 18277.2282,
+      "interior_acres": 7.7838,
+      "provisional": false
+    },
+    {
+      "id": "loyalton-2020",
+      "name": "Loyalton",
+      "year": 2020,
+      "discovery_date": "2020-08-14",
+      "perimeter_acres": 46720.8885,
+      "retained_acres": 29311.3041,
+      "interior_acres": 323.5845,
+      "provisional": false
+    },
+    {
+      "id": "dome-2020",
+      "name": "Dome",
+      "year": 2020,
+      "discovery_date": "2020-08-15",
+      "perimeter_acres": 44211.2612,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "hirz-2018",
+      "name": "Hirz",
+      "year": 2018,
+      "discovery_date": "2018-08-09",
+      "perimeter_acres": 40608.4521,
+      "retained_acres": 13986.7609,
+      "interior_acres": 34.6936,
+      "provisional": false
+    },
+    {
+      "id": "stone-2018",
+      "name": "Stone",
+      "year": 2018,
+      "discovery_date": "2018-08-15",
+      "perimeter_acres": 39584.2394,
+      "retained_acres": 3308.4751,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "natchez-2018",
+      "name": "Natchez",
+      "year": 2018,
+      "discovery_date": "2018-10-19",
+      "perimeter_acres": 38117.8574,
+      "retained_acres": 221.8348,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "klamathon-2018",
+      "name": "Klamathon",
+      "year": 2018,
+      "discovery_date": "2018-07-05",
+      "perimeter_acres": 38008.7942,
+      "retained_acres": 29511.4398,
+      "interior_acres": 35.1384,
+      "provisional": false
+    },
+    {
+      "id": "donnell-2018",
+      "name": "Donnell",
+      "year": 2018,
+      "discovery_date": "2018-08-01",
+      "perimeter_acres": 36461.3873,
+      "retained_acres": 28.7334,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "mosquito-2023",
+      "name": "Mosquito",
+      "year": 2023,
+      "discovery_date": "2023-08-15",
+      "perimeter_acres": 34188.441,
+      "retained_acres": 51.2933,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "apple-2020",
+      "name": "Apple",
+      "year": 2020,
+      "discovery_date": "2020-07-31",
+      "perimeter_acres": 33235.8191,
+      "retained_acres": 6539.7883,
+      "interior_acres": 40.4759,
+      "provisional": false
+    },
+    {
+      "id": "lake-2020",
+      "name": "Lake",
+      "year": 2020,
+      "discovery_date": "2020-08-12",
+      "perimeter_acres": 30999.4058,
+      "retained_acres": 3945.8627,
+      "interior_acres": 0.4448,
+      "provisional": false
+    },
+    {
+      "id": "campbell-2022",
+      "name": "Campbell",
+      "year": 2022,
+      "discovery_date": "2022-08-05",
+      "perimeter_acres": 30132.8532,
+      "retained_acres": 4531.6569,
+      "interior_acres": 1.3344,
+      "provisional": false
+    },
+    {
+      "id": "mineral-2020",
+      "name": "Mineral",
+      "year": 2020,
+      "discovery_date": "2020-07-13",
+      "perimeter_acres": 29666.9518,
+      "retained_acres": 16633.923,
+      "interior_acres": 0.4448,
+      "provisional": false
+    },
+    {
+      "id": "sheep-2020",
+      "name": "Sheep",
+      "year": 2020,
+      "discovery_date": "2020-08-17",
+      "perimeter_acres": 29541.1497,
+      "retained_acres": 19631.6788,
+      "interior_acres": 1357.7205,
+      "provisional": false
+    },
+    {
+      "id": "fairview-2022",
+      "name": "Fairview",
+      "year": 2022,
+      "discovery_date": "2022-09-06",
+      "perimeter_acres": 28097.9008,
+      "retained_acres": 11884.3431,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "slink-2020",
+      "name": "Slink",
+      "year": 2020,
+      "discovery_date": "2020-08-29",
+      "perimeter_acres": 26751.8005,
+      "retained_acres": 4282.9509,
+      "interior_acres": 50.706,
+      "provisional": false
+    },
+    {
+      "id": "french-2021",
+      "name": "French",
+      "year": 2021,
+      "discovery_date": "2021-08-18",
+      "perimeter_acres": 26535.0448,
+      "retained_acres": 2620.7329,
+      "interior_acres": 40.6983,
+      "provisional": false
+    },
+    {
+      "id": "lava-2021",
+      "name": "Lava",
+      "year": 2021,
+      "discovery_date": "2021-06-25",
+      "perimeter_acres": 26328.8999,
+      "retained_acres": 4897.9769,
+      "interior_acres": 60.269,
+      "provisional": false
+    },
+    {
+      "id": "holy-2018",
+      "name": "Holy",
+      "year": 2018,
+      "discovery_date": "2018-08-06",
+      "perimeter_acres": 23025.4047,
+      "retained_acres": 3782.1261,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "gold-2020",
+      "name": "Gold",
+      "year": 2020,
+      "discovery_date": "2020-07-20",
+      "perimeter_acres": 22652.5533,
+      "retained_acres": 9611.257,
+      "interior_acres": 110.7526,
+      "provisional": false
+    },
+    {
+      "id": "el-dorado-2020",
+      "name": "El Dorado",
+      "year": 2020,
+      "discovery_date": "2020-09-05",
+      "perimeter_acres": 22503.7211,
+      "retained_acres": 6789.4087,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "mountain-view-2020",
+      "name": "Mountain View",
+      "year": 2020,
+      "discovery_date": "2020-11-17",
+      "perimeter_acres": 20374.5718,
+      "retained_acres": 2463.7471,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "oak-2022",
+      "name": "Oak",
+      "year": 2022,
+      "discovery_date": "2022-07-22",
+      "perimeter_acres": 18957.5325,
+      "retained_acres": 10035.3792,
+      "interior_acres": 210.3855,
+      "provisional": false
+    },
+    {
+      "id": "whaleback-2018",
+      "name": "Whaleback",
+      "year": 2018,
+      "discovery_date": "2018-08-05",
+      "perimeter_acres": 18701.9303,
+      "retained_acres": 498.3415,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "alisal-2021",
+      "name": "Alisal",
+      "year": 2021,
+      "discovery_date": "2021-10-11",
+      "perimeter_acres": 16953.2591,
+      "retained_acres": 13695.9352,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "valley-2020",
+      "name": "Valley",
+      "year": 2020,
+      "discovery_date": "2020-09-05",
+      "perimeter_acres": 16389.5385,
+      "retained_acres": 5429.5577,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "pawnee-2018",
+      "name": "Pawnee",
+      "year": 2018,
+      "discovery_date": "2018-06-23",
+      "perimeter_acres": 15196.9327,
+      "retained_acres": 5577.1483,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "tucker-2019",
+      "name": "Tucker",
+      "year": 2019,
+      "discovery_date": "2019-07-28",
+      "perimeter_acres": 14142.4224,
+      "retained_acres": 414.9069,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "elliot-2023",
+      "name": "Elliot",
+      "year": 2023,
+      "discovery_date": "2023-08-15",
+      "perimeter_acres": 13875.2753,
+      "retained_acres": 148.8874,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "blue-ridge-2020",
+      "name": "Blue Ridge",
+      "year": 2020,
+      "discovery_date": "2020-10-26",
+      "perimeter_acres": 13694.548,
+      "retained_acres": 1270.2113,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "lions-2018",
+      "name": "Lions",
+      "year": 2018,
+      "discovery_date": "2018-06-18",
+      "perimeter_acres": 13461.3719,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "mountain-2022",
+      "name": "Mountain",
+      "year": 2022,
+      "discovery_date": "2022-09-02",
+      "perimeter_acres": 13440.7219,
+      "retained_acres": 13385.4405,
+      "interior_acres": 24.241,
+      "provisional": false
+    },
+    {
+      "id": "cranston-2018",
+      "name": "Cranston",
+      "year": 2018,
+      "discovery_date": "2018-07-25",
+      "perimeter_acres": 13229.1649,
+      "retained_acres": 1096.4606,
+      "interior_acres": 1.112,
+      "provisional": false
+    },
+    {
+      "id": "salt-2021",
+      "name": "Salt",
+      "year": 2021,
+      "discovery_date": "2021-06-30",
+      "perimeter_acres": 12599.1477,
+      "retained_acres": 8384.5802,
+      "interior_acres": 207.4944,
+      "provisional": false
+    },
+    {
+      "id": "silverado-2020",
+      "name": "Silverado",
+      "year": 2020,
+      "discovery_date": "2020-10-26",
+      "perimeter_acres": 12469.2366,
+      "retained_acres": 7642.9691,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "pearch-2023",
+      "name": "Pearch",
+      "year": 2023,
+      "discovery_date": "2023-08-17",
+      "perimeter_acres": 12152.4602,
+      "retained_acres": 44.8627,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "waverly-2018",
+      "name": "Waverly",
+      "year": 2018,
+      "discovery_date": "2018-06-29",
+      "perimeter_acres": 11759.6147,
+      "retained_acres": 11759.6147,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "ammon-2022",
+      "name": "Ammon",
+      "year": 2022,
+      "discovery_date": "2022-08-05",
+      "perimeter_acres": 11464.8943,
+      "retained_acres": 934.8886,
+      "interior_acres": 2.4463,
+      "provisional": false
+    },
+    {
+      "id": "tennant-2021",
+      "name": "Tennant",
+      "year": 2021,
+      "discovery_date": "2021-06-28",
+      "perimeter_acres": 10591.0362,
+      "retained_acres": 2625.7982,
+      "interior_acres": 38.9191,
+      "provisional": false
+    },
+    {
+      "id": "taboose-2019",
+      "name": "Taboose",
+      "year": 2019,
+      "discovery_date": "2019-09-04",
+      "perimeter_acres": 10267.6405,
+      "retained_acres": 816.1595,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "maria-2019",
+      "name": "Maria",
+      "year": 2019,
+      "discovery_date": "2019-10-31",
+      "perimeter_acres": 10042.437,
+      "retained_acres": 9640.44,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "river-2021",
+      "name": "River",
+      "year": 2021,
+      "discovery_date": "2021-07-11",
+      "perimeter_acres": 9655.1966,
+      "retained_acres": 9655.1966,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "hog-2020",
+      "name": "Hog",
+      "year": 2020,
+      "discovery_date": "2020-07-18",
+      "perimeter_acres": 9566.3589,
+      "retained_acres": 6591.711,
+      "interior_acres": 23.1291,
+      "provisional": false
+    },
+    {
+      "id": "nadeau-2020",
+      "name": "Nadeau",
+      "year": 2020,
+      "discovery_date": "2020-07-29",
+      "perimeter_acres": 9150.3779,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "devil-2020",
+      "name": "Devil",
+      "year": 2020,
+      "discovery_date": "2020-09-09",
+      "perimeter_acres": 8871.9719,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "red-bank-2019",
+      "name": "Red Bank",
+      "year": 2019,
+      "discovery_date": "2019-09-05",
+      "perimeter_acres": 8822.0251,
+      "retained_acres": 7905.376,
+      "interior_acres": 0.2224,
+      "provisional": false
+    },
+    {
+      "id": "saddle-ridge-2019",
+      "name": "Saddle Ridge",
+      "year": 2019,
+      "discovery_date": "2019-10-10",
+      "perimeter_acres": 8799.3236,
+      "retained_acres": 3931.7384,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "walkers-2021",
+      "name": "Walkers",
+      "year": 2021,
+      "discovery_date": "2021-08-15",
+      "perimeter_acres": 8778.7795,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "quarry-2023",
+      "name": "Quarry",
+      "year": 2023,
+      "discovery_date": "2023-09-09",
+      "perimeter_acres": 8645.4339,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "fawn-2021",
+      "name": "Fawn",
+      "year": 2021,
+      "discovery_date": "2021-09-22",
+      "perimeter_acres": 8576.5026,
+      "retained_acres": 6206.453,
+      "interior_acres": 3.1135,
+      "provisional": false
+    },
+    {
+      "id": "red-2022",
+      "name": "Red",
+      "year": 2022,
+      "discovery_date": "2022-08-04",
+      "perimeter_acres": 8432.4412,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "rattlesnake-2020",
+      "name": "Rattlesnake",
+      "year": 2020,
+      "discovery_date": "2020-08-16",
+      "perimeter_acres": 8422.8669,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "rabbit-2023",
+      "name": "Rabbit",
+      "year": 2023,
+      "discovery_date": "2023-07-14",
+      "perimeter_acres": 8354.7816,
+      "retained_acres": 8293.0881,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "yeti-2022",
+      "name": "Yeti",
+      "year": 2022,
+      "discovery_date": "2022-07-29",
+      "perimeter_acres": 7886.0141,
+      "retained_acres": 41.2542,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "ufish-2023",
+      "name": "Ufish",
+      "year": 2023,
+      "discovery_date": "2023-08-16",
+      "perimeter_acres": 7850.5794,
+      "retained_acres": 16.0327,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "stagecoach-2020",
+      "name": "Stagecoach",
+      "year": 2020,
+      "discovery_date": "2020-08-03",
+      "perimeter_acres": 7750.6472,
+      "retained_acres": 4141.4098,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "carmel-2020",
+      "name": "Carmel",
+      "year": 2020,
+      "discovery_date": "2020-08-18",
+      "perimeter_acres": 6996.9511,
+      "retained_acres": 6996.9511,
+      "interior_acres": 0.2224,
+      "provisional": false
+    },
+    {
+      "id": "boot-2018",
+      "name": "Boot",
+      "year": 2018,
+      "discovery_date": "2018-09-14",
+      "perimeter_acres": 6972.2574,
+      "retained_acres": 369.5169,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "head-2023",
+      "name": "Head",
+      "year": 2023,
+      "discovery_date": "2023-08-15",
+      "perimeter_acres": 6953.7951,
+      "retained_acres": 1462.7458,
+      "interior_acres": 44.2566,
+      "provisional": false
+    },
+    {
+      "id": "north-2020",
+      "name": "North",
+      "year": 2020,
+      "discovery_date": "2020-08-02",
+      "perimeter_acres": 6882.2854,
+      "retained_acres": 191.1691,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "bond-2020",
+      "name": "Bond",
+      "year": 2020,
+      "discovery_date": "2020-12-03",
+      "perimeter_acres": 6681.0659,
+      "retained_acres": 6420.9837,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "springs-2019",
+      "name": "Springs",
+      "year": 2019,
+      "discovery_date": "2019-07-26",
+      "perimeter_acres": 6614.5785,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "snow-2020",
+      "name": "Snow",
+      "year": 2020,
+      "discovery_date": "2020-09-17",
+      "perimeter_acres": 6253.4328,
+      "retained_acres": 433.4907,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "lost-lake-2022",
+      "name": "Lost Lake",
+      "year": 2022,
+      "discovery_date": "2022-05-26",
+      "perimeter_acres": 5856.5749,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "barnes-2022",
+      "name": "Barnes",
+      "year": 2022,
+      "discovery_date": "2022-09-07",
+      "perimeter_acres": 5840.5685,
+      "retained_acres": 1235.4501,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "plant-2023",
+      "name": "Plant",
+      "year": 2023,
+      "discovery_date": "2023-08-19",
+      "perimeter_acres": 5761.5366,
+      "retained_acres": 4970.6261,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "lone-2019",
+      "name": "Lone",
+      "year": 2019,
+      "discovery_date": "2019-09-05",
+      "perimeter_acres": 5737.1952,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "moore-2018",
+      "name": "Moore",
+      "year": 2018,
+      "discovery_date": "2018-08-09",
+      "perimeter_acres": 5574.3791,
+      "retained_acres": 2755.3658,
+      "interior_acres": 2.0016,
+      "provisional": false
+    },
+    {
+      "id": "crews-2020",
+      "name": "Crews",
+      "year": 2020,
+      "discovery_date": "2020-07-05",
+      "perimeter_acres": 5513.1853,
+      "retained_acres": 5513.1853,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "briceburg-2019",
+      "name": "Briceburg",
+      "year": 2019,
+      "discovery_date": "2019-10-06",
+      "perimeter_acres": 5508.3503,
+      "retained_acres": 1357.2396,
+      "interior_acres": 7.7838,
+      "provisional": false
+    },
+    {
+      "id": "southern-2021",
+      "name": "Southern",
+      "year": 2021,
+      "discovery_date": "2021-05-02",
+      "perimeter_acres": 5365.8943,
+      "retained_acres": 2305.7906,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "south-2019",
+      "name": "South",
+      "year": 2019,
+      "discovery_date": "2019-09-05",
+      "perimeter_acres": 5333.9685,
+      "retained_acres": 1124.2722,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "almond-2023",
+      "name": "Almond",
+      "year": 2023,
+      "discovery_date": "2023-08-06",
+      "perimeter_acres": 5228.8677,
+      "retained_acres": 4415.9852,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "route-2022",
+      "name": "Route",
+      "year": 2022,
+      "discovery_date": "2022-08-31",
+      "perimeter_acres": 5227.9321,
+      "retained_acres": 4711.2238,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "grant-2020",
+      "name": "Grant",
+      "year": 2020,
+      "discovery_date": "2020-06-12",
+      "perimeter_acres": 5062.1968,
+      "retained_acres": 5062.1968,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "woodward-2020",
+      "name": "Woodward",
+      "year": 2020,
+      "discovery_date": "2020-08-18",
+      "perimeter_acres": 4901.7189,
+      "retained_acres": 13.0453,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "washburn-2022",
+      "name": "Washburn",
+      "year": 2022,
+      "discovery_date": "2022-07-07",
+      "perimeter_acres": 4886.1218,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "alder-2018",
+      "name": "Alder",
+      "year": 2018,
+      "discovery_date": "2018-10-04",
+      "perimeter_acres": 4654.1884,
+      "retained_acres": 686.2889,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "tick-2019",
+      "name": "Tick",
+      "year": 2019,
+      "discovery_date": "2019-10-24",
+      "perimeter_acres": 4581.7391,
+      "retained_acres": 3761.9429,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "planada-2018",
+      "name": "Planada",
+      "year": 2018,
+      "discovery_date": "2018-06-15",
+      "perimeter_acres": 4564.1144,
+      "retained_acres": 4564.1144,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "electra-2022",
+      "name": "Electra",
+      "year": 2022,
+      "discovery_date": "2022-07-04",
+      "perimeter_acres": 4466.226,
+      "retained_acres": 3549.1402,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "border-32-2022",
+      "name": "Border 32",
+      "year": 2022,
+      "discovery_date": "2022-08-31",
+      "perimeter_acres": 4456.3566,
+      "retained_acres": 2650.6935,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "hill-2018",
+      "name": "Hill",
+      "year": 2018,
+      "discovery_date": "2018-11-08",
+      "perimeter_acres": 4310.059,
+      "retained_acres": 2342.5505,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "deep-2023",
+      "name": "Deep",
+      "year": 2023,
+      "discovery_date": "2023-08-15",
+      "perimeter_acres": 4198.2049,
+      "retained_acres": 9.8339,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "airport-2022",
+      "name": "Airport",
+      "year": 2022,
+      "discovery_date": "2022-02-16",
+      "perimeter_acres": 4140.0708,
+      "retained_acres": 4140.0708,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "ranch2-2020",
+      "name": "Ranch2",
+      "year": 2020,
+      "discovery_date": "2020-08-13",
+      "perimeter_acres": 4119.2008,
+      "retained_acres": 42.8955,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "mill-2022",
+      "name": "Mill",
+      "year": 2022,
+      "discovery_date": "2022-09-02",
+      "perimeter_acres": 3939.3799,
+      "retained_acres": 3798.0848,
+      "interior_acres": 5.1151,
+      "provisional": false
+    },
+    {
+      "id": "sun-2018",
+      "name": "Sun",
+      "year": 2018,
+      "discovery_date": "2018-10-08",
+      "perimeter_acres": 3866.9098,
+      "retained_acres": 3699.4547,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "mill-creek-1-2018",
+      "name": "Mill Creek 1",
+      "year": 2018,
+      "discovery_date": "2018-09-05",
+      "perimeter_acres": 3676.6776,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "beach-2020",
+      "name": "Beach",
+      "year": 2020,
+      "discovery_date": "2020-08-16",
+      "perimeter_acres": 3668.4065,
+      "retained_acres": 81.4165,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "tarina-2018",
+      "name": "Tarina",
+      "year": 2018,
+      "discovery_date": "2018-08-03",
+      "perimeter_acres": 3516.189,
+      "retained_acres": 3516.189,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "caples-2019",
+      "name": "Caples",
+      "year": 2019,
+      "discovery_date": "2019-10-10",
+      "perimeter_acres": 3441.7564,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "lane-2018",
+      "name": "Lane",
+      "year": 2018,
+      "discovery_date": "2018-06-24",
+      "perimeter_acres": 3416.6456,
+      "retained_acres": 3297.8401,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "r1-ranch-2019",
+      "name": "R1 Ranch",
+      "year": 2019,
+      "discovery_date": "2019-08-28",
+      "perimeter_acres": 3379.3023,
+      "retained_acres": 724.2641,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "charlie-2018",
+      "name": "Charlie",
+      "year": 2018,
+      "discovery_date": "2018-09-22",
+      "perimeter_acres": 3350.5231,
+      "retained_acres": 597.9271,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "refuge-2019",
+      "name": "Refuge",
+      "year": 2019,
+      "discovery_date": "2019-05-07",
+      "perimeter_acres": 3283.4551,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "creek-5-2020",
+      "name": "Creek 5",
+      "year": 2020,
+      "discovery_date": "2020-12-24",
+      "perimeter_acres": 3052.167,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "dexter-2021",
+      "name": "Dexter",
+      "year": 2021,
+      "discovery_date": "2021-07-12",
+      "perimeter_acres": 2967.8358,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "georges-2018",
+      "name": "Georges",
+      "year": 2018,
+      "discovery_date": "2018-07-08",
+      "perimeter_acres": 2942.3436,
+      "retained_acres": 156.2264,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "branch-2020",
+      "name": "Branch",
+      "year": 2020,
+      "discovery_date": "2020-07-28",
+      "perimeter_acres": 2922.2039,
+      "retained_acres": 2922.2039,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "bena-2020",
+      "name": "Bena",
+      "year": 2020,
+      "discovery_date": "2020-07-01",
+      "perimeter_acres": 2884.4009,
+      "retained_acres": 2884.4009,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "willow-2021",
+      "name": "Willow",
+      "year": 2021,
+      "discovery_date": "2021-06-17",
+      "perimeter_acres": 2877.8692,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "rabbit-2-2023",
+      "name": "Rabbit",
+      "year": 2023,
+      "discovery_date": "2023-09-30",
+      "perimeter_acres": 2857.9992,
+      "retained_acres": 9.501,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "moc-2020",
+      "name": "Moc",
+      "year": 2020,
+      "discovery_date": "2020-08-20",
+      "perimeter_acres": 2857.5984,
+      "retained_acres": 1428.9338,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "rodgers-2022",
+      "name": "Rodgers",
+      "year": 2022,
+      "discovery_date": "2022-08-08",
+      "perimeter_acres": 2839.6804,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "3-9-2023",
+      "name": "3-9",
+      "year": 2023,
+      "discovery_date": "2023-08-16",
+      "perimeter_acres": 2836.3809,
+      "retained_acres": 281.0461,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "laura-2-2020",
+      "name": "Laura 2",
+      "year": 2020,
+      "discovery_date": "2020-11-17",
+      "perimeter_acres": 2729.0137,
+      "retained_acres": 1281.488,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "apple-2018",
+      "name": "Apple",
+      "year": 2018,
+      "discovery_date": "2018-06-09",
+      "perimeter_acres": 2725.706,
+      "retained_acres": 2260.1571,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "south-2023",
+      "name": "South",
+      "year": 2023,
+      "discovery_date": "2023-12-09",
+      "perimeter_acres": 2715.4233,
+      "retained_acres": 2695.2223,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "hurdy-gurdy-2023",
+      "name": "Hurdy Gurdy",
+      "year": 2023,
+      "discovery_date": "2023-08-15",
+      "perimeter_acres": 2677.7833,
+      "retained_acres": 51.2063,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "river-2-2021",
+      "name": "River",
+      "year": 2021,
+      "discovery_date": "2021-08-04",
+      "perimeter_acres": 2618.7905,
+      "retained_acres": 2434.5258,
+      "interior_acres": 30.2457,
+      "provisional": false
+    },
+    {
+      "id": "cave-2019",
+      "name": "Cave",
+      "year": 2019,
+      "discovery_date": "2019-11-25",
+      "perimeter_acres": 2597.2675,
+      "retained_acres": 1400.91,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "ranch-2019",
+      "name": "Ranch",
+      "year": 2019,
+      "discovery_date": "2019-11-03",
+      "perimeter_acres": 2534.2091,
+      "retained_acres": 1252.4367,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "lonoak-2019",
+      "name": "Lonoak",
+      "year": 2019,
+      "discovery_date": "2019-06-25",
+      "perimeter_acres": 2520.883,
+      "retained_acres": 2335.6633,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "mojave-2021",
+      "name": "Mojave",
+      "year": 2021,
+      "discovery_date": "2021-06-17",
+      "perimeter_acres": 2490.4941,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "snell-2018",
+      "name": "Snell",
+      "year": 2018,
+      "discovery_date": "2018-09-08",
+      "perimeter_acres": 2488.2073,
+      "retained_acres": 2444.8547,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "highland-2023",
+      "name": "Highland",
+      "year": 2023,
+      "discovery_date": "2023-10-30",
+      "perimeter_acres": 2422.5677,
+      "retained_acres": 1693.9167,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "thunder-2022",
+      "name": "Thunder",
+      "year": 2022,
+      "discovery_date": "2022-06-22",
+      "perimeter_acres": 2465.1761,
+      "retained_acres": 2465.1761,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "long-valley-2019",
+      "name": "Long Valley",
+      "year": 2019,
+      "discovery_date": "2019-08-24",
+      "perimeter_acres": 2438.5507,
+      "retained_acres": 87.5262,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "sand-2019",
+      "name": "Sand",
+      "year": 2019,
+      "discovery_date": "2019-06-08",
+      "perimeter_acres": 2422.0275,
+      "retained_acres": 2066.7558,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "knob-2021",
+      "name": "Knob",
+      "year": 2021,
+      "discovery_date": "2021-08-29",
+      "perimeter_acres": 2421.2519,
+      "retained_acres": 841.6679,
+      "interior_acres": 1.3344,
+      "provisional": false
+    },
+    {
+      "id": "meyers-2020",
+      "name": "Meyers",
+      "year": 2020,
+      "discovery_date": "2020-08-17",
+      "perimeter_acres": 2360.2391,
+      "retained_acres": 2360.2376,
+      "interior_acres": 38.6967,
+      "provisional": false
+    },
+    {
+      "id": "tiltill-2021",
+      "name": "Tiltill",
+      "year": 2021,
+      "discovery_date": "2021-07-31",
+      "perimeter_acres": 2348.5315,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "bonny-2023",
+      "name": "Bonny",
+      "year": 2023,
+      "discovery_date": "2023-07-26",
+      "perimeter_acres": 2323.1234,
+      "retained_acres": 1185.2393,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "chrome2-2018",
+      "name": "Chrome2",
+      "year": 2018,
+      "discovery_date": "2018-06-09",
+      "perimeter_acres": 2259.0977,
+      "retained_acres": 2250.4114,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "redwood-2023",
+      "name": "Redwood",
+      "year": 2023,
+      "discovery_date": "2023-08-15",
+      "perimeter_acres": 2248.4485,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "rock-2019",
+      "name": "Rock",
+      "year": 2019,
+      "discovery_date": "2019-06-26",
+      "perimeter_acres": 2233.8903,
+      "retained_acres": 2233.8903,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "turkey-2018",
+      "name": "Turkey",
+      "year": 2018,
+      "discovery_date": "2018-08-06",
+      "perimeter_acres": 2222.9783,
+      "retained_acres": 2222.9783,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "holser-2020",
+      "name": "Holser",
+      "year": 2020,
+      "discovery_date": "2020-08-17",
+      "perimeter_acres": 2188.6249,
+      "retained_acres": 2177.8226,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "pass-2020",
+      "name": "Pass",
+      "year": 2020,
+      "discovery_date": "2020-06-28",
+      "perimeter_acres": 2163.6981,
+      "retained_acres": 1805.6122,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "nelson-2018",
+      "name": "Nelson",
+      "year": 2018,
+      "discovery_date": "2018-08-10",
+      "perimeter_acres": 2158.43,
+      "retained_acres": 1111.9042,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "hills-2020",
+      "name": "Hills",
+      "year": 2020,
+      "discovery_date": "2020-08-15",
+      "perimeter_acres": 2120.9768,
+      "retained_acres": 2118.6469,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "eagle-2018",
+      "name": "Eagle",
+      "year": 2018,
+      "discovery_date": "2018-07-14",
+      "perimeter_acres": 2097.8859,
+      "retained_acres": 360.1722,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "peak-2021",
+      "name": "Peak",
+      "year": 2021,
+      "discovery_date": "2021-07-20",
+      "perimeter_acres": 2096.6378,
+      "retained_acres": 821.5601,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "pleasant-2018",
+      "name": "Pleasant",
+      "year": 2018,
+      "discovery_date": "2018-02-18",
+      "perimeter_acres": 2075.6964,
+      "retained_acres": 2046.4861,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "wolf-2020",
+      "name": "Wolf",
+      "year": 2020,
+      "discovery_date": "2020-08-10",
+      "perimeter_acres": 2057.2911,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "fox-2020",
+      "name": "Fox",
+      "year": 2020,
+      "discovery_date": "2020-09-14",
+      "perimeter_acres": 2027.5512,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "marlow-2023",
+      "name": "Marlow",
+      "year": 2023,
+      "discovery_date": "2023-08-15",
+      "perimeter_acres": 1997.1976,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "pond-2020",
+      "name": "Pond",
+      "year": 2020,
+      "discovery_date": "2020-08-01",
+      "perimeter_acres": 1962.3322,
+      "retained_acres": 1700.2511,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "sanderson-2020",
+      "name": "Sanderson",
+      "year": 2020,
+      "discovery_date": "2020-12-13",
+      "perimeter_acres": 1954.6415,
+      "retained_acres": 1668.272,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "tenaja-2019",
+      "name": "Tenaja",
+      "year": 2019,
+      "discovery_date": "2019-09-04",
+      "perimeter_acres": 1939.531,
+      "retained_acres": 1686.2203,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "cow-2019",
+      "name": "Cow",
+      "year": 2019,
+      "discovery_date": "2019-07-25",
+      "perimeter_acres": 1875.97,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "lime-2019",
+      "name": "Lime",
+      "year": 2019,
+      "discovery_date": "2019-09-05",
+      "perimeter_acres": 1873.9355,
+      "retained_acres": 1026.7197,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "quail-2020",
+      "name": "Quail",
+      "year": 2020,
+      "discovery_date": "2020-06-06",
+      "perimeter_acres": 1840.9978,
+      "retained_acres": 1840.9978,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "shell-2021",
+      "name": "Shell",
+      "year": 2021,
+      "discovery_date": "2021-06-27",
+      "perimeter_acres": 1828.0416,
+      "retained_acres": 1828.0416,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "easy-2019",
+      "name": "Easy",
+      "year": 2019,
+      "discovery_date": "2019-10-30",
+      "perimeter_acres": 1806.2433,
+      "retained_acres": 1046.293,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "eden-2018",
+      "name": "Eden",
+      "year": 2018,
+      "discovery_date": "2018-10-04",
+      "perimeter_acres": 1777.6029,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "hat-2018",
+      "name": "Hat",
+      "year": 2018,
+      "discovery_date": "2018-08-09",
+      "perimeter_acres": 1769.3625,
+      "retained_acres": 1239.014,
+      "interior_acres": 0.6672,
+      "provisional": false
+    },
+    {
+      "id": "mcmillian-2019",
+      "name": "Mcmillian",
+      "year": 2019,
+      "discovery_date": "2019-06-12",
+      "perimeter_acres": 1763.8191,
+      "retained_acres": 1763.8191,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "kerlin-2018",
+      "name": "Kerlin",
+      "year": 2018,
+      "discovery_date": "2018-09-04",
+      "perimeter_acres": 1752.5685,
+      "retained_acres": 514.3178,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "nees-2018",
+      "name": "Nees",
+      "year": 2018,
+      "discovery_date": "2018-05-02",
+      "perimeter_acres": 1739.0749,
+      "retained_acres": 1739.0749,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "hancock-2023",
+      "name": "Hancock",
+      "year": 2023,
+      "discovery_date": "2023-08-21",
+      "perimeter_acres": 1728.135,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "lone-pine-2023",
+      "name": "Lone Pine",
+      "year": 2023,
+      "discovery_date": "2023-08-15",
+      "perimeter_acres": 1684.7266,
+      "retained_acres": 237.0635,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "fork-2020",
+      "name": "Fork",
+      "year": 2020,
+      "discovery_date": "2020-09-08",
+      "perimeter_acres": 1668.4498,
+      "retained_acres": 540.8149,
+      "interior_acres": 3.5583,
+      "provisional": false
+    },
+    {
+      "id": "soda-2020",
+      "name": "Soda",
+      "year": 2020,
+      "discovery_date": "2020-06-10",
+      "perimeter_acres": 1653.1294,
+      "retained_acres": 1653.1294,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "salt-2020",
+      "name": "Salt",
+      "year": 2020,
+      "discovery_date": "2020-08-18",
+      "perimeter_acres": 1593.7228,
+      "retained_acres": 1593.7228,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "soledad-2020",
+      "name": "Soledad",
+      "year": 2020,
+      "discovery_date": "2020-07-05",
+      "perimeter_acres": 1525.5401,
+      "retained_acres": 1525.5401,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "coyote-2020",
+      "name": "Coyote",
+      "year": 2020,
+      "discovery_date": "2020-07-15",
+      "perimeter_acres": 1485.0722,
+      "retained_acres": 1485.0722,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "chaparral-2021",
+      "name": "Chaparral",
+      "year": 2021,
+      "discovery_date": "2021-08-28",
+      "perimeter_acres": 1427.2854,
+      "retained_acres": 376.9885,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "walker-2020",
+      "name": "Walker",
+      "year": 2020,
+      "discovery_date": "2020-06-16",
+      "perimeter_acres": 1398.0154,
+      "retained_acres": 1145.8356,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "summit-2022",
+      "name": "Summit",
+      "year": 2022,
+      "discovery_date": "2022-08-03",
+      "perimeter_acres": 1394.4335,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "owens-2021",
+      "name": "Owens",
+      "year": 2021,
+      "discovery_date": "2021-05-01",
+      "perimeter_acres": 1390.0118,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "dalton-2020",
+      "name": "Dalton",
+      "year": 2020,
+      "discovery_date": "2020-07-23",
+      "perimeter_acres": 1367.0733,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "stone-2-2018",
+      "name": "Stone",
+      "year": 2018,
+      "discovery_date": "2018-06-04",
+      "perimeter_acres": 1350.645,
+      "retained_acres": 638.8225,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "valley-2018",
+      "name": "Valley",
+      "year": 2018,
+      "discovery_date": "2018-07-06",
+      "perimeter_acres": 1343.2062,
+      "retained_acres": 104.4459,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "middle-2019",
+      "name": "Middle",
+      "year": 2019,
+      "discovery_date": "2019-09-05",
+      "perimeter_acres": 1339.5958,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "scorpion-2020",
+      "name": "Scorpion",
+      "year": 2020,
+      "discovery_date": "2020-05-31",
+      "perimeter_acres": 1320.7224,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "moraine-2020",
+      "name": "Moraine",
+      "year": 2020,
+      "discovery_date": "2020-08-21",
+      "perimeter_acres": 1316.0493,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "airline-2018",
+      "name": "Airline",
+      "year": 2018,
+      "discovery_date": "2018-06-21",
+      "perimeter_acres": 1312.8458,
+      "retained_acres": 1312.8458,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "willows-2020",
+      "name": "Willows",
+      "year": 2020,
+      "discovery_date": "2020-09-09",
+      "perimeter_acres": 1309.0903,
+      "retained_acres": 1309.0903,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "east-2023",
+      "name": "East",
+      "year": 2023,
+      "discovery_date": "2023-08-01",
+      "perimeter_acres": 1291.1646,
+      "retained_acres": 1291.1646,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "mountaineer-2018",
+      "name": "Mountaineer",
+      "year": 2018,
+      "discovery_date": "2018-10-13",
+      "perimeter_acres": 1270.7438,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "nettle-2021",
+      "name": "Nettle",
+      "year": 2021,
+      "discovery_date": "2021-06-18",
+      "perimeter_acres": 1265.7505,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "patterson-2018",
+      "name": "Patterson",
+      "year": 2018,
+      "discovery_date": "2018-05-17",
+      "perimeter_acres": 1260.9824,
+      "retained_acres": 1260.9824,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "moffat-2018",
+      "name": "Moffat",
+      "year": 2018,
+      "discovery_date": "2018-04-19",
+      "perimeter_acres": 1253.9282,
+      "retained_acres": 1253.9282,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "pendleton-complex-2018",
+      "name": "Pendleton Complex",
+      "year": 2018,
+      "discovery_date": "2018-07-06",
+      "perimeter_acres": 1237.6456,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "butte-2018",
+      "name": "Butte",
+      "year": 2018,
+      "discovery_date": "2018-07-31",
+      "perimeter_acres": 1237.5672,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "dump-2018",
+      "name": "Dump",
+      "year": 2018,
+      "discovery_date": "2018-06-24",
+      "perimeter_acres": 1220.0875,
+      "retained_acres": 1140.5013,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "palisades-2021",
+      "name": "Palisades",
+      "year": 2021,
+      "discovery_date": "2021-05-15",
+      "perimeter_acres": 1202.6495,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "bone-2023",
+      "name": "Bone",
+      "year": 2023,
+      "discovery_date": "2023-06-15",
+      "perimeter_acres": 1180.6128,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "east-fork-2021",
+      "name": "East Fork",
+      "year": 2021,
+      "discovery_date": "2021-07-01",
+      "perimeter_acres": 1135.7484,
+      "retained_acres": 11.7831,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "north-2018",
+      "name": "North",
+      "year": 2018,
+      "discovery_date": "2018-09-03",
+      "perimeter_acres": 1119.7725,
+      "retained_acres": 356.2001,
+      "interior_acres": 22.6843,
+      "provisional": false
+    },
+    {
+      "id": "sargent-2021",
+      "name": "Sargent",
+      "year": 2021,
+      "discovery_date": "2021-05-30",
+      "perimeter_acres": 1117.9006,
+      "retained_acres": 1117.9006,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "noname-2023",
+      "name": "Noname",
+      "year": 2023,
+      "discovery_date": "2023-08-05",
+      "perimeter_acres": 1113.8953,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "boulder-2019",
+      "name": "Boulder",
+      "year": 2019,
+      "discovery_date": "2019-06-05",
+      "perimeter_acres": 1110.8484,
+      "retained_acres": 1110.8484,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "corral-2023",
+      "name": "Corral",
+      "year": 2023,
+      "discovery_date": "2023-08-15",
+      "perimeter_acres": 1090.289,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "airport-2020",
+      "name": "Airport",
+      "year": 2020,
+      "discovery_date": "2020-12-01",
+      "perimeter_acres": 1085.7018,
+      "retained_acres": 409.3277,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "radford-2022",
+      "name": "Radford",
+      "year": 2022,
+      "discovery_date": "2022-09-05",
+      "perimeter_acres": 1079.2777,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "pilot-2023",
+      "name": "Pilot",
+      "year": 2023,
+      "discovery_date": "2023-08-15",
+      "perimeter_acres": 1055.163,
+      "retained_acres": 729.8796,
+      "interior_acres": 0.4448,
+      "provisional": false
+    },
+    {
+      "id": "ivanpah-2020",
+      "name": "Ivanpah",
+      "year": 2020,
+      "discovery_date": "2020-06-22",
+      "perimeter_acres": 1051.4855,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "grade-2020",
+      "name": "Grade",
+      "year": 2020,
+      "discovery_date": "2020-06-22",
+      "perimeter_acres": 1050.2372,
+      "retained_acres": 1011.95,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "district-2023",
+      "name": "District",
+      "year": 2023,
+      "discovery_date": "2023-07-07",
+      "perimeter_acres": 1043.6662,
+      "retained_acres": 1043.6662,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "allen-2020",
+      "name": "Allen",
+      "year": 2020,
+      "discovery_date": "2020-07-21",
+      "perimeter_acres": 1034.7951,
+      "retained_acres": 336.5216,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "geology-2023",
+      "name": "Geology",
+      "year": 2023,
+      "discovery_date": "2023-06-10",
+      "perimeter_acres": 1033.3159,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "w-1-mcdonald-2019",
+      "name": "W-1 Mcdonald",
+      "year": 2019,
+      "discovery_date": "2019-08-08",
+      "perimeter_acres": 1020.3218,
+      "retained_acres": 193.7349,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "front-2018",
+      "name": "Front",
+      "year": 2018,
+      "discovery_date": "2018-08-19",
+      "perimeter_acres": 1013.3302,
+      "retained_acres": 40.6514,
+      "interior_acres": 0.0,
+      "provisional": false
+    },
+    {
+      "id": "sandalwood-2019",
+      "name": "Sandalwood",
+      "year": 2019,
+      "discovery_date": "2019-10-10",
+      "perimeter_acres": 1008.1849,
+      "retained_acres": 0.0,
+      "interior_acres": 0.0,
+      "provisional": false
+    }
+  ]
+}

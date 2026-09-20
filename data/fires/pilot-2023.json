@@ -1,0 +1,43 @@
+{
+  "fire": {
+    "id": "pilot-2023",
+    "name": "Pilot",
+    "year": 2023,
+    "discovery_date": "2023-08-15",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 1055.163,
+    "retained_acres": 729.8796,
+    "excluded_acres": 325.2834,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 52.4852,
+    "conifer_acres": 474.1458
+  },
+  "planting": {
+    "interior_acres": 0.4448,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.008474770030408573,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "303_3500",
+      "seed_zone": "303",
+      "elevation_band": "3500–4000 ft",
+      "planting_acres": 0.4448,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 0.4448
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/pilot-2023.geojson"
+}

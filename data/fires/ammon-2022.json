@@ -1,0 +1,56 @@
+{
+  "fire": {
+    "id": "ammon-2022",
+    "name": "Ammon",
+    "year": 2022,
+    "discovery_date": "2022-08-05",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 11464.8943,
+    "retained_acres": 934.8886,
+    "excluded_acres": 10530.0057,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 45.1462,
+    "conifer_acres": 553.9856
+  },
+  "planting": {
+    "interior_acres": 2.4463,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.054186177352689706,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "303_2000",
+      "seed_zone": "303",
+      "elevation_band": "2000–2500 ft",
+      "planting_acres": 2.2239,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 2.2239
+        }
+      ]
+    },
+    {
+      "cell_id": "303_2500",
+      "seed_zone": "303",
+      "elevation_band": "2500–3000 ft",
+      "planting_acres": 0.2224,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 0.2224
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/ammon-2022.geojson"
+}

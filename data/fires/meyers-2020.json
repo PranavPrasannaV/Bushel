@@ -1,0 +1,64 @@
+{
+  "fire": {
+    "id": "meyers-2020",
+    "name": "Meyers",
+    "year": 2020,
+    "discovery_date": "2020-08-17",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 2360.2391,
+    "retained_acres": 2360.2376,
+    "excluded_acres": 0.0015,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 283.331,
+    "conifer_acres": 908.7053
+  },
+  "planting": {
+    "interior_acres": 38.6967,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.13657771299293053,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "95_500",
+      "seed_zone": "95",
+      "elevation_band": "500–1000 ft",
+      "planting_acres": 13.1213,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Coast Redwood",
+          "acres": 10.0078
+        },
+        {
+          "species": "Douglas Fir",
+          "acres": 3.1135
+        }
+      ]
+    },
+    {
+      "cell_id": "95_1000",
+      "seed_zone": "95",
+      "elevation_band": "1000–1500 ft",
+      "planting_acres": 25.5754,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Coast Redwood",
+          "acres": 18.6812
+        },
+        {
+          "species": "Douglas Fir",
+          "acres": 6.8942
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/meyers-2020.geojson"
+}

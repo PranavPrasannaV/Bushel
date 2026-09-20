@@ -1,0 +1,2248 @@
+{
+  "generated_at": "2026-09-18T16:17:08Z",
+  "benchmark_ref": "reference/benchmark.json",
+  "computed_total_bushels": 2143.8,
+  "difference_pct": -96.2,
+  "coverage": "partial",
+  "rollup": {
+    "published_total_bushels": 55978,
+    "unit": "bushels of cones",
+    "window": "2018-2023",
+    "window_note": "The published total's severity input stops at 2023: the AON states that 2023 is the most recent year of tree mortality and wildfire severity data available at the time of publication. The roll-up therefore aggregates 2018-2023 fires only.",
+    "fires_included": [
+      "3-9-2023",
+      "airline-2018",
+      "airport-2020",
+      "airport-2022",
+      "alder-2018",
+      "alisal-2021",
+      "allen-2020",
+      "almond-2023",
+      "ammon-2022",
+      "antelope-2021",
+      "apple-2018",
+      "apple-2020",
+      "august-complex-2020",
+      "barnes-2022",
+      "beach-2020",
+      "bena-2020",
+      "blue-ridge-2020",
+      "bobcat-2020",
+      "bond-2020",
+      "bone-2023",
+      "bonny-2023",
+      "boot-2018",
+      "border-32-2022",
+      "boulder-2019",
+      "branch-2020",
+      "briceburg-2019",
+      "butte-2018",
+      "caldor-2021",
+      "caldwell-2020",
+      "camp-2018",
+      "campbell-2022",
+      "caples-2019",
+      "carmel-2020",
+      "carr-2018",
+      "castle-2020",
+      "cave-2019",
+      "chaparral-2021",
+      "charlie-2018",
+      "chrome2-2018",
+      "corral-2023",
+      "county-2018",
+      "cow-2019",
+      "coyote-2020",
+      "cranston-2018",
+      "creek-2020",
+      "creek-5-2020",
+      "crews-2020",
+      "czu-lightning-complex-2020",
+      "dalton-2020",
+      "deep-2023",
+      "delta-2018",
+      "devil-2020",
+      "dexter-2021",
+      "district-2023",
+      "dixie-2021",
+      "dolan-2020",
+      "dome-2020",
+      "donnell-2018",
+      "dump-2018",
+      "eagle-2018",
+      "east-2023",
+      "east-fork-2021",
+      "easy-2019",
+      "eden-2018",
+      "el-dorado-2020",
+      "electra-2022",
+      "elliot-2023",
+      "fairview-2022",
+      "fawn-2021",
+      "ferguson-2018",
+      "fork-2020",
+      "fox-2020",
+      "french-2021",
+      "front-2018",
+      "geology-2023",
+      "georges-2018",
+      "glass-2020",
+      "gold-2020",
+      "grade-2020",
+      "grant-2020",
+      "hancock-2023",
+      "hat-2018",
+      "head-2023",
+      "hennessey-2020",
+      "highland-2023",
+      "hill-2018",
+      "hills-2020",
+      "hirz-2018",
+      "hog-2020",
+      "holser-2020",
+      "holy-2018",
+      "hurdy-gurdy-2023",
+      "ivanpah-2020",
+      "kelly-2023",
+      "kerlin-2018",
+      "kincade-2019",
+      "klamathon-2018",
+      "knob-2021",
+      "knp-complex-2021",
+      "lake-2020",
+      "lane-2018",
+      "laura-2-2020",
+      "lava-2021",
+      "lime-2019",
+      "lions-2018",
+      "lone-2019",
+      "lone-pine-2023",
+      "long-valley-2019",
+      "lonoak-2019",
+      "lost-lake-2022",
+      "loyalton-2020",
+      "maria-2019",
+      "marlow-2023",
+      "mccash-2021",
+      "mcfarland-2021",
+      "mckinney-2022",
+      "mcmillian-2019",
+      "meyers-2020",
+      "middle-2019",
+      "mill-2022",
+      "mill-creek-1-2018",
+      "mineral-2020",
+      "moc-2020",
+      "moffat-2018",
+      "mojave-2021",
+      "monument-2021",
+      "moore-2018",
+      "moraine-2020",
+      "mosquito-2022",
+      "mosquito-2023",
+      "mountain-2022",
+      "mountain-view-2020",
+      "mountaineer-2018",
+      "nadeau-2020",
+      "natchez-2018",
+      "nees-2018",
+      "nelson-2018",
+      "nettle-2021",
+      "noname-2023",
+      "north-2018",
+      "north-2020",
+      "north-complex-2020",
+      "oak-2022",
+      "owens-2021",
+      "palisades-2021",
+      "pass-2020",
+      "patterson-2018",
+      "pawnee-2018",
+      "peak-2021",
+      "pearch-2023",
+      "pendleton-complex-2018",
+      "pilot-2023",
+      "planada-2018",
+      "plant-2023",
+      "pleasant-2018",
+      "pond-2020",
+      "quail-2020",
+      "quarry-2023",
+      "r1-ranch-2019",
+      "rabbit-2-2023",
+      "rabbit-2023",
+      "radford-2022",
+      "ranch-2018",
+      "ranch-2019",
+      "ranch2-2020",
+      "rattlesnake-2020",
+      "red-2022",
+      "red-bank-2019",
+      "red-salmon-complex-2020",
+      "redwood-2023",
+      "refuge-2019",
+      "river-2-2021",
+      "river-2018",
+      "river-2020",
+      "river-2021",
+      "river-complex-2021",
+      "rock-2019",
+      "rodgers-2022",
+      "route-2022",
+      "saddle-ridge-2019",
+      "salt-2020",
+      "salt-2021",
+      "sand-2019",
+      "sandalwood-2019",
+      "sanderson-2020",
+      "sargent-2021",
+      "scorpion-2020",
+      "scu-lightning-complex-2020",
+      "sheep-2020",
+      "shell-2021",
+      "silverado-2020",
+      "slater-2020",
+      "slink-2020",
+      "snell-2018",
+      "snow-2020",
+      "soda-2020",
+      "soledad-2020",
+      "south-2019",
+      "south-2023",
+      "southern-2021",
+      "springs-2019",
+      "stagecoach-2020",
+      "stone-2-2018",
+      "stone-2018",
+      "sugar-2021",
+      "summit-2022",
+      "sun-2018",
+      "taboose-2019",
+      "tarina-2018",
+      "tenaja-2019",
+      "tennant-2021",
+      "thunder-2022",
+      "tick-2019",
+      "tiltill-2021",
+      "tucker-2019",
+      "turkey-2018",
+      "ufish-2023",
+      "valley-2018",
+      "valley-2020",
+      "w-1-mcdonald-2019",
+      "w-5-cold-springs-2020",
+      "walbridge-2020",
+      "walker-2019",
+      "walker-2020",
+      "walkers-2021",
+      "washburn-2022",
+      "waverly-2018",
+      "whaleback-2018",
+      "willow-2021",
+      "willows-2020",
+      "windy-2021",
+      "wolf-2020",
+      "woodward-2020",
+      "woolsey-2018",
+      "yeti-2022",
+      "york-2023",
+      "zogg-2020"
+    ],
+    "fires_excluded": [],
+    "computed_total_bushels": 2143.8,
+    "difference_pct": -96.2,
+    "coverage": "partial",
+    "coverage_fraction": 0.9673,
+    "gap_acres": 184.4,
+    "statement": "Partial: 237 fires, 96.7% of the burned SRA acreage in 2018-2023, at default factors. The published total covers every fire in its window statewide. Acres of species with no Terms of Sale row are counted as gap acres, not bushels."
+  },
+  "acreage_check": {
+    "acres_burned": {
+      "stage": "Acres burned on non-federal conifer forestland",
+      "published": 1507830,
+      "period": "2018-2024",
+      "computed": 830010.7,
+      "unit": "acres",
+      "difference_pct": -45.0,
+      "tolerance_pct": 10.0,
+      "within_tolerance": false,
+      "status": "fail",
+      "coverage": "full",
+      "missing_years": [],
+      "by_year": {
+        "2018": 112101.7,
+        "2019": 7503.8,
+        "2020": 324717.4,
+        "2021": 272355.0,
+        "2022": 38614.6,
+        "2023": 3373.1,
+        "2024": 71345.2
+      },
+      "conifer_filter": true,
+      "two_species_sensitivity": 906744.7,
+      "note": "Every CAL FIRE (FRAP) perimeter 2018-2024, unioned per year so overlapping records count once, intersected with State Responsibility Area in EPSG:3310. Then restricted to 30 m pixels whose pre-fire LEMMA 2023.1 dominant species (by basal area) is one of the 15 species of interest: model year 2017 for 2018-2021 fires, 2021 for 2022-2024 fires. Burned SRA before the conifer filter: 3,394,990 acres. Counting a pixel when either of its two dominant species (LEMMA FORTYPBA, the 'up to two dominant tree species' attribute the AON describes) is one of the 15: 906,745 acres (-39.9%)."
+    },
+    "high_severity": {
+      "stage": "High-severity acres on non-federal conifer forestland",
+      "published": 359182,
+      "period": "2018-2023",
+      "computed": 239580.8,
+      "unit": "acres",
+      "difference_pct": -33.3,
+      "tolerance_pct": 10.0,
+      "within_tolerance": null,
+      "status": "partial",
+      "coverage": "partial",
+      "coverage_fraction": 0.9673,
+      "window_burned_sra_acres": 2871718.6,
+      "fires": [
+        {
+          "id": "3-9-2023",
+          "year": 2023,
+          "high_severity_acres": 5.8,
+          "burned_sra_acres": 281.0
+        },
+        {
+          "id": "airline-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1312.8
+        },
+        {
+          "id": "airport-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 409.3
+        },
+        {
+          "id": "airport-2022",
+          "year": 2022,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 4140.1
+        },
+        {
+          "id": "alder-2018",
+          "year": 2018,
+          "high_severity_acres": 44.0,
+          "burned_sra_acres": 686.3
+        },
+        {
+          "id": "alisal-2021",
+          "year": 2021,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 13695.9
+        },
+        {
+          "id": "allen-2020",
+          "year": 2020,
+          "high_severity_acres": 0.4,
+          "burned_sra_acres": 336.5
+        },
+        {
+          "id": "almond-2023",
+          "year": 2023,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 4416.0
+        },
+        {
+          "id": "ammon-2022",
+          "year": 2022,
+          "high_severity_acres": 45.1,
+          "burned_sra_acres": 934.9
+        },
+        {
+          "id": "antelope-2021",
+          "year": 2021,
+          "high_severity_acres": 3680.4,
+          "burned_sra_acres": 22411.5
+        },
+        {
+          "id": "apple-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 2260.2
+        },
+        {
+          "id": "apple-2020",
+          "year": 2020,
+          "high_severity_acres": 431.0,
+          "burned_sra_acres": 6539.8
+        },
+        {
+          "id": "august-complex-2020",
+          "year": 2020,
+          "high_severity_acres": 22991.6,
+          "burned_sra_acres": 172000.7
+        },
+        {
+          "id": "barnes-2022",
+          "year": 2022,
+          "high_severity_acres": 6.2,
+          "burned_sra_acres": 1235.5
+        },
+        {
+          "id": "beach-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 81.4
+        },
+        {
+          "id": "bena-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 2884.4
+        },
+        {
+          "id": "blue-ridge-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1270.2
+        },
+        {
+          "id": "bobcat-2020",
+          "year": 2020,
+          "high_severity_acres": 2.0,
+          "burned_sra_acres": 13525.8
+        },
+        {
+          "id": "bond-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 6421.0
+        },
+        {
+          "id": "bone-2023",
+          "year": 2023,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "bonny-2023",
+          "year": 2023,
+          "high_severity_acres": 0.4,
+          "burned_sra_acres": 1185.2
+        },
+        {
+          "id": "boot-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 369.5
+        },
+        {
+          "id": "border-32-2022",
+          "year": 2022,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 2650.7
+        },
+        {
+          "id": "boulder-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1110.8
+        },
+        {
+          "id": "branch-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 2922.2
+        },
+        {
+          "id": "briceburg-2019",
+          "year": 2019,
+          "high_severity_acres": 85.4,
+          "burned_sra_acres": 1357.2
+        },
+        {
+          "id": "butte-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "caldor-2021",
+          "year": 2021,
+          "high_severity_acres": 9786.9,
+          "burned_sra_acres": 40060.4
+        },
+        {
+          "id": "caldwell-2020",
+          "year": 2020,
+          "high_severity_acres": 1058.4,
+          "burned_sra_acres": 3371.3
+        },
+        {
+          "id": "camp-2018",
+          "year": 2018,
+          "high_severity_acres": 4168.3,
+          "burned_sra_acres": 105161.4
+        },
+        {
+          "id": "campbell-2022",
+          "year": 2022,
+          "high_severity_acres": 106.5,
+          "burned_sra_acres": 4531.7
+        },
+        {
+          "id": "caples-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "carmel-2020",
+          "year": 2020,
+          "high_severity_acres": 1.8,
+          "burned_sra_acres": 6997.0
+        },
+        {
+          "id": "carr-2018",
+          "year": 2018,
+          "high_severity_acres": 15002.5,
+          "burned_sra_acres": 92336.0
+        },
+        {
+          "id": "castle-2020",
+          "year": 2020,
+          "high_severity_acres": 1073.1,
+          "burned_sra_acres": 8968.8
+        },
+        {
+          "id": "cave-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1400.9
+        },
+        {
+          "id": "chaparral-2021",
+          "year": 2021,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 377.0
+        },
+        {
+          "id": "charlie-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 597.9
+        },
+        {
+          "id": "chrome2-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 2250.4
+        },
+        {
+          "id": "corral-2023",
+          "year": 2023,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "county-2018",
+          "year": 2018,
+          "high_severity_acres": 916.0,
+          "burned_sra_acres": 78172.2
+        },
+        {
+          "id": "cow-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "coyote-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1485.1
+        },
+        {
+          "id": "cranston-2018",
+          "year": 2018,
+          "high_severity_acres": 16.2,
+          "burned_sra_acres": 1096.5
+        },
+        {
+          "id": "creek-2020",
+          "year": 2020,
+          "high_severity_acres": 4495.3,
+          "burned_sra_acres": 23173.1
+        },
+        {
+          "id": "creek-5-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "crews-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 5513.2
+        },
+        {
+          "id": "czu-lightning-complex-2020",
+          "year": 2020,
+          "high_severity_acres": 20532.8,
+          "burned_sra_acres": 85020.6
+        },
+        {
+          "id": "dalton-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "deep-2023",
+          "year": 2023,
+          "high_severity_acres": 0.2,
+          "burned_sra_acres": 9.8
+        },
+        {
+          "id": "delta-2018",
+          "year": 2018,
+          "high_severity_acres": 7881.7,
+          "burned_sra_acres": 29063.8
+        },
+        {
+          "id": "devil-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "dexter-2021",
+          "year": 2021,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "district-2023",
+          "year": 2023,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1043.7
+        },
+        {
+          "id": "dixie-2021",
+          "year": 2021,
+          "high_severity_acres": 42589.3,
+          "burned_sra_acres": 205026.7
+        },
+        {
+          "id": "dolan-2020",
+          "year": 2020,
+          "high_severity_acres": 573.3,
+          "burned_sra_acres": 13065.2
+        },
+        {
+          "id": "dome-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "donnell-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 28.7
+        },
+        {
+          "id": "dump-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1140.5
+        },
+        {
+          "id": "eagle-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 360.2
+        },
+        {
+          "id": "east-2023",
+          "year": 2023,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1291.2
+        },
+        {
+          "id": "east-fork-2021",
+          "year": 2021,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 11.8
+        },
+        {
+          "id": "easy-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1046.3
+        },
+        {
+          "id": "eden-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "el-dorado-2020",
+          "year": 2020,
+          "high_severity_acres": 53.4,
+          "burned_sra_acres": 6789.4
+        },
+        {
+          "id": "electra-2022",
+          "year": 2022,
+          "high_severity_acres": 6.9,
+          "burned_sra_acres": 3549.1
+        },
+        {
+          "id": "elliot-2023",
+          "year": 2023,
+          "high_severity_acres": 0.2,
+          "burned_sra_acres": 148.9
+        },
+        {
+          "id": "fairview-2022",
+          "year": 2022,
+          "high_severity_acres": 0.7,
+          "burned_sra_acres": 11884.3
+        },
+        {
+          "id": "fawn-2021",
+          "year": 2021,
+          "high_severity_acres": 103.2,
+          "burned_sra_acres": 6206.5
+        },
+        {
+          "id": "ferguson-2018",
+          "year": 2018,
+          "high_severity_acres": 325.8,
+          "burned_sra_acres": 4259.4
+        },
+        {
+          "id": "fork-2020",
+          "year": 2020,
+          "high_severity_acres": 81.8,
+          "burned_sra_acres": 540.8
+        },
+        {
+          "id": "fox-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "french-2021",
+          "year": 2021,
+          "high_severity_acres": 257.8,
+          "burned_sra_acres": 2620.7
+        },
+        {
+          "id": "front-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 40.7
+        },
+        {
+          "id": "geology-2023",
+          "year": 2023,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "georges-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 156.2
+        },
+        {
+          "id": "glass-2020",
+          "year": 2020,
+          "high_severity_acres": 7513.8,
+          "burned_sra_acres": 65122.8
+        },
+        {
+          "id": "gold-2020",
+          "year": 2020,
+          "high_severity_acres": 1129.1,
+          "burned_sra_acres": 9611.3
+        },
+        {
+          "id": "grade-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1011.9
+        },
+        {
+          "id": "grant-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 5062.2
+        },
+        {
+          "id": "hancock-2023",
+          "year": 2023,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "hat-2018",
+          "year": 2018,
+          "high_severity_acres": 9.8,
+          "burned_sra_acres": 1239.0
+        },
+        {
+          "id": "head-2023",
+          "year": 2023,
+          "high_severity_acres": 260.4,
+          "burned_sra_acres": 1462.7
+        },
+        {
+          "id": "hennessey-2020",
+          "year": 2020,
+          "high_severity_acres": 2885.1,
+          "burned_sra_acres": 251563.6
+        },
+        {
+          "id": "highland-2023",
+          "year": 2023,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1693.9
+        },
+        {
+          "id": "hill-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 2342.6
+        },
+        {
+          "id": "hills-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 2118.6
+        },
+        {
+          "id": "hirz-2018",
+          "year": 2018,
+          "high_severity_acres": 946.1,
+          "burned_sra_acres": 13986.8
+        },
+        {
+          "id": "hog-2020",
+          "year": 2020,
+          "high_severity_acres": 912.7,
+          "burned_sra_acres": 6591.7
+        },
+        {
+          "id": "holser-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 2177.8
+        },
+        {
+          "id": "holy-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 3782.1
+        },
+        {
+          "id": "hurdy-gurdy-2023",
+          "year": 2023,
+          "high_severity_acres": 0.7,
+          "burned_sra_acres": 51.2
+        },
+        {
+          "id": "ivanpah-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "kelly-2023",
+          "year": 2023,
+          "high_severity_acres": 334.9,
+          "burned_sra_acres": 2201.1
+        },
+        {
+          "id": "kerlin-2018",
+          "year": 2018,
+          "high_severity_acres": 24.5,
+          "burned_sra_acres": 514.3
+        },
+        {
+          "id": "kincade-2019",
+          "year": 2019,
+          "high_severity_acres": 1398.2,
+          "burned_sra_acres": 73204.0
+        },
+        {
+          "id": "klamathon-2018",
+          "year": 2018,
+          "high_severity_acres": 453.9,
+          "burned_sra_acres": 29511.4
+        },
+        {
+          "id": "knob-2021",
+          "year": 2021,
+          "high_severity_acres": 60.3,
+          "burned_sra_acres": 841.7
+        },
+        {
+          "id": "knp-complex-2021",
+          "year": 2021,
+          "high_severity_acres": 169.0,
+          "burned_sra_acres": 1813.7
+        },
+        {
+          "id": "lake-2020",
+          "year": 2020,
+          "high_severity_acres": 24.0,
+          "burned_sra_acres": 3945.9
+        },
+        {
+          "id": "lane-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 3297.8
+        },
+        {
+          "id": "laura-2-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1281.5
+        },
+        {
+          "id": "lava-2021",
+          "year": 2021,
+          "high_severity_acres": 191.7,
+          "burned_sra_acres": 4898.0
+        },
+        {
+          "id": "lime-2019",
+          "year": 2019,
+          "high_severity_acres": 1.6,
+          "burned_sra_acres": 1026.7
+        },
+        {
+          "id": "lions-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "lone-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "lone-pine-2023",
+          "year": 2023,
+          "high_severity_acres": 4.9,
+          "burned_sra_acres": 237.1
+        },
+        {
+          "id": "long-valley-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 87.5
+        },
+        {
+          "id": "lonoak-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 2335.7
+        },
+        {
+          "id": "lost-lake-2022",
+          "year": 2022,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "loyalton-2020",
+          "year": 2020,
+          "high_severity_acres": 1823.9,
+          "burned_sra_acres": 29311.3
+        },
+        {
+          "id": "maria-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 9640.4
+        },
+        {
+          "id": "marlow-2023",
+          "year": 2023,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "mccash-2021",
+          "year": 2021,
+          "high_severity_acres": 19.3,
+          "burned_sra_acres": 222.7
+        },
+        {
+          "id": "mcfarland-2021",
+          "year": 2021,
+          "high_severity_acres": 1365.3,
+          "burned_sra_acres": 50885.4
+        },
+        {
+          "id": "mckinney-2022",
+          "year": 2022,
+          "high_severity_acres": 4938.9,
+          "burned_sra_acres": 20888.6
+        },
+        {
+          "id": "mcmillian-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1763.8
+        },
+        {
+          "id": "meyers-2020",
+          "year": 2020,
+          "high_severity_acres": 283.3,
+          "burned_sra_acres": 2360.2
+        },
+        {
+          "id": "middle-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "mill-2022",
+          "year": 2022,
+          "high_severity_acres": 62.0,
+          "burned_sra_acres": 3798.1
+        },
+        {
+          "id": "mill-creek-1-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "mineral-2020",
+          "year": 2020,
+          "high_severity_acres": 6.2,
+          "burned_sra_acres": 16633.9
+        },
+        {
+          "id": "moc-2020",
+          "year": 2020,
+          "high_severity_acres": 1.6,
+          "burned_sra_acres": 1428.9
+        },
+        {
+          "id": "moffat-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1253.9
+        },
+        {
+          "id": "mojave-2021",
+          "year": 2021,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "monument-2021",
+          "year": 2021,
+          "high_severity_acres": 3027.5,
+          "burned_sra_acres": 15930.3
+        },
+        {
+          "id": "moore-2018",
+          "year": 2018,
+          "high_severity_acres": 199.3,
+          "burned_sra_acres": 2755.4
+        },
+        {
+          "id": "moraine-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "mosquito-2022",
+          "year": 2022,
+          "high_severity_acres": 4548.9,
+          "burned_sra_acres": 22907.8
+        },
+        {
+          "id": "mosquito-2023",
+          "year": 2023,
+          "high_severity_acres": 0.2,
+          "burned_sra_acres": 51.3
+        },
+        {
+          "id": "mountain-2022",
+          "year": 2022,
+          "high_severity_acres": 1743.8,
+          "burned_sra_acres": 13385.4
+        },
+        {
+          "id": "mountain-view-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 2463.7
+        },
+        {
+          "id": "mountaineer-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "nadeau-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "natchez-2018",
+          "year": 2018,
+          "high_severity_acres": 2.7,
+          "burned_sra_acres": 221.8
+        },
+        {
+          "id": "nees-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1739.1
+        },
+        {
+          "id": "nelson-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1111.9
+        },
+        {
+          "id": "nettle-2021",
+          "year": 2021,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "noname-2023",
+          "year": 2023,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "north-2018",
+          "year": 2018,
+          "high_severity_acres": 169.5,
+          "burned_sra_acres": 356.2
+        },
+        {
+          "id": "north-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 191.2
+        },
+        {
+          "id": "north-complex-2020",
+          "year": 2020,
+          "high_severity_acres": 38436.1,
+          "burned_sra_acres": 115707.6
+        },
+        {
+          "id": "oak-2022",
+          "year": 2022,
+          "high_severity_acres": 1181.4,
+          "burned_sra_acres": 10035.4
+        },
+        {
+          "id": "owens-2021",
+          "year": 2021,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "palisades-2021",
+          "year": 2021,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "pass-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1805.6
+        },
+        {
+          "id": "patterson-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1261.0
+        },
+        {
+          "id": "pawnee-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 5577.1
+        },
+        {
+          "id": "peak-2021",
+          "year": 2021,
+          "high_severity_acres": 12.0,
+          "burned_sra_acres": 821.6
+        },
+        {
+          "id": "pearch-2023",
+          "year": 2023,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 44.9
+        },
+        {
+          "id": "pendleton-complex-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "pilot-2023",
+          "year": 2023,
+          "high_severity_acres": 52.5,
+          "burned_sra_acres": 729.9
+        },
+        {
+          "id": "planada-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 4564.1
+        },
+        {
+          "id": "plant-2023",
+          "year": 2023,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 4970.6
+        },
+        {
+          "id": "pleasant-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 2046.5
+        },
+        {
+          "id": "pond-2020",
+          "year": 2020,
+          "high_severity_acres": 2.7,
+          "burned_sra_acres": 1700.3
+        },
+        {
+          "id": "quail-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1841.0
+        },
+        {
+          "id": "quarry-2023",
+          "year": 2023,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "r1-ranch-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 724.3
+        },
+        {
+          "id": "rabbit-2-2023",
+          "year": 2023,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 9.5
+        },
+        {
+          "id": "rabbit-2023",
+          "year": 2023,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 8293.1
+        },
+        {
+          "id": "radford-2022",
+          "year": 2022,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "ranch-2018",
+          "year": 2018,
+          "high_severity_acres": 6125.6,
+          "burned_sra_acres": 91241.5
+        },
+        {
+          "id": "ranch-2019",
+          "year": 2019,
+          "high_severity_acres": 0.4,
+          "burned_sra_acres": 1252.4
+        },
+        {
+          "id": "ranch2-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 42.9
+        },
+        {
+          "id": "rattlesnake-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "red-2022",
+          "year": 2022,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "red-bank-2019",
+          "year": 2019,
+          "high_severity_acres": 6.7,
+          "burned_sra_acres": 7905.4
+        },
+        {
+          "id": "red-salmon-complex-2020",
+          "year": 2020,
+          "high_severity_acres": 0.9,
+          "burned_sra_acres": 81.5
+        },
+        {
+          "id": "redwood-2023",
+          "year": 2023,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "refuge-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "river-2-2021",
+          "year": 2021,
+          "high_severity_acres": 253.1,
+          "burned_sra_acres": 2434.5
+        },
+        {
+          "id": "river-2018",
+          "year": 2018,
+          "high_severity_acres": 243.7,
+          "burned_sra_acres": 18277.2
+        },
+        {
+          "id": "river-2020",
+          "year": 2020,
+          "high_severity_acres": 18.5,
+          "burned_sra_acres": 46653.4
+        },
+        {
+          "id": "river-2021",
+          "year": 2021,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 9655.2
+        },
+        {
+          "id": "river-complex-2021",
+          "year": 2021,
+          "high_severity_acres": 2914.7,
+          "burned_sra_acres": 7944.0
+        },
+        {
+          "id": "rock-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 2233.9
+        },
+        {
+          "id": "rodgers-2022",
+          "year": 2022,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "route-2022",
+          "year": 2022,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 4711.2
+        },
+        {
+          "id": "saddle-ridge-2019",
+          "year": 2019,
+          "high_severity_acres": 0.9,
+          "burned_sra_acres": 3931.7
+        },
+        {
+          "id": "salt-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1593.7
+        },
+        {
+          "id": "salt-2021",
+          "year": 2021,
+          "high_severity_acres": 1225.6,
+          "burned_sra_acres": 8384.6
+        },
+        {
+          "id": "sand-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 2066.8
+        },
+        {
+          "id": "sandalwood-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "sanderson-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1668.3
+        },
+        {
+          "id": "sargent-2021",
+          "year": 2021,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1117.9
+        },
+        {
+          "id": "scorpion-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "scu-lightning-complex-2020",
+          "year": 2020,
+          "high_severity_acres": 53.8,
+          "burned_sra_acres": 395098.4
+        },
+        {
+          "id": "sheep-2020",
+          "year": 2020,
+          "high_severity_acres": 6060.5,
+          "burned_sra_acres": 19631.7
+        },
+        {
+          "id": "shell-2021",
+          "year": 2021,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1828.0
+        },
+        {
+          "id": "silverado-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 7643.0
+        },
+        {
+          "id": "slater-2020",
+          "year": 2020,
+          "high_severity_acres": 2922.5,
+          "burned_sra_acres": 8553.7
+        },
+        {
+          "id": "slink-2020",
+          "year": 2020,
+          "high_severity_acres": 206.8,
+          "burned_sra_acres": 4283.0
+        },
+        {
+          "id": "snell-2018",
+          "year": 2018,
+          "high_severity_acres": 48.7,
+          "burned_sra_acres": 2444.9
+        },
+        {
+          "id": "snow-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 433.5
+        },
+        {
+          "id": "soda-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1653.1
+        },
+        {
+          "id": "soledad-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1525.5
+        },
+        {
+          "id": "south-2019",
+          "year": 2019,
+          "high_severity_acres": 32.5,
+          "burned_sra_acres": 1124.3
+        },
+        {
+          "id": "south-2023",
+          "year": 2023,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 2695.2
+        },
+        {
+          "id": "southern-2021",
+          "year": 2021,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 2305.8
+        },
+        {
+          "id": "springs-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "stagecoach-2020",
+          "year": 2020,
+          "high_severity_acres": 1.3,
+          "burned_sra_acres": 4141.4
+        },
+        {
+          "id": "stone-2-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 638.8
+        },
+        {
+          "id": "stone-2018",
+          "year": 2018,
+          "high_severity_acres": 66.1,
+          "burned_sra_acres": 3308.5
+        },
+        {
+          "id": "sugar-2021",
+          "year": 2021,
+          "high_severity_acres": 1853.2,
+          "burned_sra_acres": 21971.3
+        },
+        {
+          "id": "summit-2022",
+          "year": 2022,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "sun-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 3699.5
+        },
+        {
+          "id": "taboose-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 816.2
+        },
+        {
+          "id": "tarina-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 3516.2
+        },
+        {
+          "id": "tenaja-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1686.2
+        },
+        {
+          "id": "tennant-2021",
+          "year": 2021,
+          "high_severity_acres": 264.4,
+          "burned_sra_acres": 2625.8
+        },
+        {
+          "id": "thunder-2022",
+          "year": 2022,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 2465.2
+        },
+        {
+          "id": "tick-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 3761.9
+        },
+        {
+          "id": "tiltill-2021",
+          "year": 2021,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "tucker-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 414.9
+        },
+        {
+          "id": "turkey-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 2223.0
+        },
+        {
+          "id": "ufish-2023",
+          "year": 2023,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 16.0
+        },
+        {
+          "id": "valley-2018",
+          "year": 2018,
+          "high_severity_acres": 0.7,
+          "burned_sra_acres": 104.4
+        },
+        {
+          "id": "valley-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 5429.6
+        },
+        {
+          "id": "w-1-mcdonald-2019",
+          "year": 2019,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 193.7
+        },
+        {
+          "id": "w-5-cold-springs-2020",
+          "year": 2020,
+          "high_severity_acres": 584.5,
+          "burned_sra_acres": 19308.1
+        },
+        {
+          "id": "walbridge-2020",
+          "year": 2020,
+          "high_severity_acres": 5328.6,
+          "burned_sra_acres": 53908.3
+        },
+        {
+          "id": "walker-2019",
+          "year": 2019,
+          "high_severity_acres": 110.8,
+          "burned_sra_acres": 930.9
+        },
+        {
+          "id": "walker-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1145.8
+        },
+        {
+          "id": "walkers-2021",
+          "year": 2021,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "washburn-2022",
+          "year": 2022,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "waverly-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 11759.6
+        },
+        {
+          "id": "whaleback-2018",
+          "year": 2018,
+          "high_severity_acres": 10.2,
+          "burned_sra_acres": 498.3
+        },
+        {
+          "id": "willow-2021",
+          "year": 2021,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "willows-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 1309.1
+        },
+        {
+          "id": "windy-2021",
+          "year": 2021,
+          "high_severity_acres": 146.3,
+          "burned_sra_acres": 2011.6
+        },
+        {
+          "id": "wolf-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "woodward-2020",
+          "year": 2020,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 13.0
+        },
+        {
+          "id": "woolsey-2018",
+          "year": 2018,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 48479.8
+        },
+        {
+          "id": "yeti-2022",
+          "year": 2022,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 41.3
+        },
+        {
+          "id": "york-2023",
+          "year": 2023,
+          "high_severity_acres": 0.0,
+          "burned_sra_acres": 0.0
+        },
+        {
+          "id": "zogg-2020",
+          "year": 2020,
+          "high_severity_acres": 577.6,
+          "burned_sra_acres": 55180.9
+        }
+      ],
+      "excluded": [],
+      "conifer_filter": true,
+      "note": "MTBS class 4 (High) inside the perimeter and State Responsibility Area, 2018-2023 fires only. Covers 237 fires, 96.7% of the burned SRA acreage in 2018-2023; the published figure covers every fire in that window statewide, so no 10% verdict is given on partial coverage. Conifer-filtered (LEMMA 2023.1)."
+    }
+  },
+  "interior_crosscheck": {
+    "stage": "Seed-limited interior as a share of high-severity acres",
+    "threshold_m": 90,
+    "reference_fraction": 0.219,
+    "reference_source": "Baker 2023, Climate 11(11):214, a 90 m inward buffer across ~56M ha",
+    "computed_fraction": 0.2239,
+    "difference_pts": 0.5,
+    "interior_acres": 53638.4,
+    "high_severity_acres": 239580.8,
+    "fires": [
+      {
+        "id": "3-9-2023",
+        "interior_acres": 0.0,
+        "high_severity_acres": 5.8
+      },
+      {
+        "id": "alder-2018",
+        "interior_acres": 0.0,
+        "high_severity_acres": 44.0
+      },
+      {
+        "id": "allen-2020",
+        "interior_acres": 0.0,
+        "high_severity_acres": 0.4
+      },
+      {
+        "id": "ammon-2022",
+        "interior_acres": 2.4,
+        "high_severity_acres": 45.1
+      },
+      {
+        "id": "antelope-2021",
+        "interior_acres": 647.2,
+        "high_severity_acres": 3680.4
+      },
+      {
+        "id": "apple-2020",
+        "interior_acres": 40.5,
+        "high_severity_acres": 431.0
+      },
+      {
+        "id": "august-complex-2020",
+        "interior_acres": 4914.7,
+        "high_severity_acres": 22991.6
+      },
+      {
+        "id": "barnes-2022",
+        "interior_acres": 0.0,
+        "high_severity_acres": 6.2
+      },
+      {
+        "id": "bobcat-2020",
+        "interior_acres": 0.0,
+        "high_severity_acres": 2.0
+      },
+      {
+        "id": "bonny-2023",
+        "interior_acres": 0.0,
+        "high_severity_acres": 0.4
+      },
+      {
+        "id": "briceburg-2019",
+        "interior_acres": 7.8,
+        "high_severity_acres": 85.4
+      },
+      {
+        "id": "caldor-2021",
+        "interior_acres": 2239.1,
+        "high_severity_acres": 9786.9
+      },
+      {
+        "id": "caldwell-2020",
+        "interior_acres": 162.6,
+        "high_severity_acres": 1058.4
+      },
+      {
+        "id": "camp-2018",
+        "interior_acres": 334.5,
+        "high_severity_acres": 4168.3
+      },
+      {
+        "id": "campbell-2022",
+        "interior_acres": 1.3,
+        "high_severity_acres": 106.5
+      },
+      {
+        "id": "carmel-2020",
+        "interior_acres": 0.2,
+        "high_severity_acres": 1.8
+      },
+      {
+        "id": "carr-2018",
+        "interior_acres": 3713.5,
+        "high_severity_acres": 15002.5
+      },
+      {
+        "id": "castle-2020",
+        "interior_acres": 98.1,
+        "high_severity_acres": 1073.1
+      },
+      {
+        "id": "county-2018",
+        "interior_acres": 413.0,
+        "high_severity_acres": 916.0
+      },
+      {
+        "id": "cranston-2018",
+        "interior_acres": 1.1,
+        "high_severity_acres": 16.2
+      },
+      {
+        "id": "creek-2020",
+        "interior_acres": 593.6,
+        "high_severity_acres": 4495.3
+      },
+      {
+        "id": "czu-lightning-complex-2020",
+        "interior_acres": 5903.2,
+        "high_severity_acres": 20532.8
+      },
+      {
+        "id": "deep-2023",
+        "interior_acres": 0.0,
+        "high_severity_acres": 0.2
+      },
+      {
+        "id": "delta-2018",
+        "interior_acres": 1656.2,
+        "high_severity_acres": 7881.7
+      },
+      {
+        "id": "dixie-2021",
+        "interior_acres": 5781.8,
+        "high_severity_acres": 42589.3
+      },
+      {
+        "id": "dolan-2020",
+        "interior_acres": 37.1,
+        "high_severity_acres": 573.3
+      },
+      {
+        "id": "el-dorado-2020",
+        "interior_acres": 0.0,
+        "high_severity_acres": 53.4
+      },
+      {
+        "id": "electra-2022",
+        "interior_acres": 0.0,
+        "high_severity_acres": 6.9
+      },
+      {
+        "id": "elliot-2023",
+        "interior_acres": 0.0,
+        "high_severity_acres": 0.2
+      },
+      {
+        "id": "fairview-2022",
+        "interior_acres": 0.0,
+        "high_severity_acres": 0.7
+      },
+      {
+        "id": "fawn-2021",
+        "interior_acres": 3.1,
+        "high_severity_acres": 103.2
+      },
+      {
+        "id": "ferguson-2018",
+        "interior_acres": 6.9,
+        "high_severity_acres": 325.8
+      },
+      {
+        "id": "fork-2020",
+        "interior_acres": 3.6,
+        "high_severity_acres": 81.8
+      },
+      {
+        "id": "french-2021",
+        "interior_acres": 40.7,
+        "high_severity_acres": 257.8
+      },
+      {
+        "id": "glass-2020",
+        "interior_acres": 1443.6,
+        "high_severity_acres": 7513.8
+      },
+      {
+        "id": "gold-2020",
+        "interior_acres": 110.8,
+        "high_severity_acres": 1129.1
+      },
+      {
+        "id": "hat-2018",
+        "interior_acres": 0.7,
+        "high_severity_acres": 9.8
+      },
+      {
+        "id": "head-2023",
+        "interior_acres": 44.3,
+        "high_severity_acres": 260.4
+      },
+      {
+        "id": "hennessey-2020",
+        "interior_acres": 148.1,
+        "high_severity_acres": 2885.1
+      },
+      {
+        "id": "hirz-2018",
+        "interior_acres": 34.7,
+        "high_severity_acres": 946.1
+      },
+      {
+        "id": "hog-2020",
+        "interior_acres": 23.1,
+        "high_severity_acres": 912.7
+      },
+      {
+        "id": "hurdy-gurdy-2023",
+        "interior_acres": 0.0,
+        "high_severity_acres": 0.7
+      },
+      {
+        "id": "kelly-2023",
+        "interior_acres": 122.1,
+        "high_severity_acres": 334.9
+      },
+      {
+        "id": "kerlin-2018",
+        "interior_acres": 0.0,
+        "high_severity_acres": 24.5
+      },
+      {
+        "id": "kincade-2019",
+        "interior_acres": 325.1,
+        "high_severity_acres": 1398.2
+      },
+      {
+        "id": "klamathon-2018",
+        "interior_acres": 35.1,
+        "high_severity_acres": 453.9
+      },
+      {
+        "id": "knob-2021",
+        "interior_acres": 1.3,
+        "high_severity_acres": 60.3
+      },
+      {
+        "id": "knp-complex-2021",
+        "interior_acres": 6.2,
+        "high_severity_acres": 169.0
+      },
+      {
+        "id": "lake-2020",
+        "interior_acres": 0.4,
+        "high_severity_acres": 24.0
+      },
+      {
+        "id": "lava-2021",
+        "interior_acres": 60.3,
+        "high_severity_acres": 191.7
+      },
+      {
+        "id": "lime-2019",
+        "interior_acres": 0.0,
+        "high_severity_acres": 1.6
+      },
+      {
+        "id": "lone-pine-2023",
+        "interior_acres": 0.0,
+        "high_severity_acres": 4.9
+      },
+      {
+        "id": "loyalton-2020",
+        "interior_acres": 323.6,
+        "high_severity_acres": 1823.9
+      },
+      {
+        "id": "mccash-2021",
+        "interior_acres": 0.4,
+        "high_severity_acres": 19.3
+      },
+      {
+        "id": "mcfarland-2021",
+        "interior_acres": 288.0,
+        "high_severity_acres": 1365.3
+      },
+      {
+        "id": "mckinney-2022",
+        "interior_acres": 1772.9,
+        "high_severity_acres": 4938.9
+      },
+      {
+        "id": "meyers-2020",
+        "interior_acres": 38.7,
+        "high_severity_acres": 283.3
+      },
+      {
+        "id": "mill-2022",
+        "interior_acres": 5.1,
+        "high_severity_acres": 62.0
+      },
+      {
+        "id": "mineral-2020",
+        "interior_acres": 0.4,
+        "high_severity_acres": 6.2
+      },
+      {
+        "id": "moc-2020",
+        "interior_acres": 0.0,
+        "high_severity_acres": 1.6
+      },
+      {
+        "id": "monument-2021",
+        "interior_acres": 679.9,
+        "high_severity_acres": 3027.5
+      },
+      {
+        "id": "moore-2018",
+        "interior_acres": 2.0,
+        "high_severity_acres": 199.3
+      },
+      {
+        "id": "mosquito-2022",
+        "interior_acres": 1386.0,
+        "high_severity_acres": 4548.9
+      },
+      {
+        "id": "mosquito-2023",
+        "interior_acres": 0.0,
+        "high_severity_acres": 0.2
+      },
+      {
+        "id": "mountain-2022",
+        "interior_acres": 24.2,
+        "high_severity_acres": 1743.8
+      },
+      {
+        "id": "natchez-2018",
+        "interior_acres": 0.0,
+        "high_severity_acres": 2.7
+      },
+      {
+        "id": "north-2018",
+        "interior_acres": 22.7,
+        "high_severity_acres": 169.5
+      },
+      {
+        "id": "north-complex-2020",
+        "interior_acres": 13507.4,
+        "high_severity_acres": 38436.1
+      },
+      {
+        "id": "oak-2022",
+        "interior_acres": 210.4,
+        "high_severity_acres": 1181.4
+      },
+      {
+        "id": "peak-2021",
+        "interior_acres": 0.0,
+        "high_severity_acres": 12.0
+      },
+      {
+        "id": "pilot-2023",
+        "interior_acres": 0.4,
+        "high_severity_acres": 52.5
+      },
+      {
+        "id": "pond-2020",
+        "interior_acres": 0.0,
+        "high_severity_acres": 2.7
+      },
+      {
+        "id": "ranch-2018",
+        "interior_acres": 1291.4,
+        "high_severity_acres": 6125.6
+      },
+      {
+        "id": "ranch-2019",
+        "interior_acres": 0.0,
+        "high_severity_acres": 0.4
+      },
+      {
+        "id": "red-bank-2019",
+        "interior_acres": 0.2,
+        "high_severity_acres": 6.7
+      },
+      {
+        "id": "red-salmon-complex-2020",
+        "interior_acres": 0.0,
+        "high_severity_acres": 0.9
+      },
+      {
+        "id": "river-2-2021",
+        "interior_acres": 30.2,
+        "high_severity_acres": 253.1
+      },
+      {
+        "id": "river-2018",
+        "interior_acres": 7.8,
+        "high_severity_acres": 243.7
+      },
+      {
+        "id": "river-2020",
+        "interior_acres": 0.4,
+        "high_severity_acres": 18.5
+      },
+      {
+        "id": "river-complex-2021",
+        "interior_acres": 1111.5,
+        "high_severity_acres": 2914.7
+      },
+      {
+        "id": "saddle-ridge-2019",
+        "interior_acres": 0.0,
+        "high_severity_acres": 0.9
+      },
+      {
+        "id": "salt-2021",
+        "interior_acres": 207.5,
+        "high_severity_acres": 1225.6
+      },
+      {
+        "id": "scu-lightning-complex-2020",
+        "interior_acres": 2.2,
+        "high_severity_acres": 53.8
+      },
+      {
+        "id": "sheep-2020",
+        "interior_acres": 1357.7,
+        "high_severity_acres": 6060.5
+      },
+      {
+        "id": "slater-2020",
+        "interior_acres": 1200.3,
+        "high_severity_acres": 2922.5
+      },
+      {
+        "id": "slink-2020",
+        "interior_acres": 50.7,
+        "high_severity_acres": 206.8
+      },
+      {
+        "id": "snell-2018",
+        "interior_acres": 0.0,
+        "high_severity_acres": 48.7
+      },
+      {
+        "id": "south-2019",
+        "interior_acres": 0.0,
+        "high_severity_acres": 32.5
+      },
+      {
+        "id": "stagecoach-2020",
+        "interior_acres": 0.0,
+        "high_severity_acres": 1.3
+      },
+      {
+        "id": "stone-2018",
+        "interior_acres": 0.0,
+        "high_severity_acres": 66.1
+      },
+      {
+        "id": "sugar-2021",
+        "interior_acres": 173.9,
+        "high_severity_acres": 1853.2
+      },
+      {
+        "id": "tennant-2021",
+        "interior_acres": 38.9,
+        "high_severity_acres": 264.4
+      },
+      {
+        "id": "valley-2018",
+        "interior_acres": 0.0,
+        "high_severity_acres": 0.7
+      },
+      {
+        "id": "w-5-cold-springs-2020",
+        "interior_acres": 71.6,
+        "high_severity_acres": 584.5
+      },
+      {
+        "id": "walbridge-2020",
+        "interior_acres": 775.7,
+        "high_severity_acres": 5328.6
+      },
+      {
+        "id": "walker-2019",
+        "interior_acres": 9.6,
+        "high_severity_acres": 110.8
+      },
+      {
+        "id": "whaleback-2018",
+        "interior_acres": 0.0,
+        "high_severity_acres": 10.2
+      },
+      {
+        "id": "windy-2021",
+        "interior_acres": 2.9,
+        "high_severity_acres": 146.3
+      },
+      {
+        "id": "zogg-2020",
+        "interior_acres": 85.8,
+        "high_severity_acres": 577.6
+      }
+    ],
+    "note": "Pooled over the 99 fires with high-severity conifer ground on retained non-federal land (a fire without any adds nothing to either side): total interior acres divided by total high-severity acres. Baker's figure is an average over ~56M ha and these are California fires, so agreement is corroboration, not proof. A cross-check, never a multiplier."
+  },
+  "attributed_gap": [
+    "CAL FIRE's timberland boundary: the AON restricts its domain to productive conifer forestland using a timberlands boundary 'mapped internally by CAL FIRE'. Bushel does not have that layer, so it cannot apply it, and its retained acreage can exceed the AON's.",
+    "Known overestimate in the benchmark: the AON does not explicitly exclude privately-owned industrial land and so, in its own words, somewhat overestimates need. Bushel does not exclude it either, so a total that matched 55,978 would share that overestimate.",
+    "Unpublished nursery factors: seeds_per_pot, nursery_survival_rate and probability_of_tree_in_nursery are not published by CAL FIRE (the AON takes them from internal LAMRC nursery datasets). Bushel's defaults (2, 0.9, 0.9) are general placeholders, not CAL FIRE's, and every pound and bushel depends on them directly.",
+    "A current jurisdiction boundary on past fires: the State Responsibility Area layer used was last edited 2026-04-09 and is applied to fires from 2018 onward; the SRA boundary in force when each fire burned may differ.",
+    "Scope: the published acres-burned figure covers every fire 2018-2024 and the high-severity figure every fire 2018-2023, statewide, whatever its size. Bushel's per-fire set is 237 fires from 2018-2023: CAL FIRE perimeters of 1,000+ acres with an MTBS assessment, because MTBS maps no smaller fire in the West.",
+    "What 55,978 measures: the AON sizes the need to reforest 25% of productive conifer forest on non-federal land, statewide, driven by wildfire plus insect/disease mortality plus timber harvest. The target is not a per-burn figure, so a sum over burns alone is not expected to equal it.",
+    "Fire coverage: the high-severity check covers 237 fires (96.7% of the burned SRA acreage in 2018-2023) and the bushel roll-up covers 237 fires (96.7%). The published figures cover every fire in their windows, statewide.",
+    "SRA only: Bushel retains State Responsibility Area, while the AON's jurisdiction is SRA plus Local Responsibility Area. LRA land inside 2018-2024 perimeters adds 134,963 acres (all cover types) that Bushel leaves out.",
+    "Conifer definition: Bushel counts a 30 m pixel as conifer forest when LEMMA's single dominant species by basal area (TREEPLBA) is one of the 15. The AON describes LEMMA's vegetation type as 'an attribute that identifies up to two dominant tree species based on basal area'. Counting a pixel when either of the two is one of the 15 gives 906,745 acres burned (-39.9%) instead of 830,011: the difference is stands whose dominant tree is not one of the 15 but whose second is."
+  ],
+  "scope_note": "25% of productive conifer forest on non-federal land, statewide - not 25% of burned acres. Driven by wildfire plus insect/disease mortality plus timber harvest.",
+  "known_overestimate": "The AON does not explicitly exclude privately-owned industrial land and therefore somewhat overestimates need."
+}

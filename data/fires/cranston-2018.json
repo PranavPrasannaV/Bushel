@@ -1,0 +1,56 @@
+{
+  "fire": {
+    "id": "cranston-2018",
+    "name": "Cranston",
+    "year": 2018,
+    "discovery_date": "2018-07-25",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 13229.1649,
+    "retained_acres": 1096.4606,
+    "excluded_acres": 12132.7042,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 16.2348,
+    "conifer_acres": 207.4944
+  },
+  "planting": {
+    "interior_acres": 1.112,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.06849483824870033,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "997_4500",
+      "seed_zone": "997",
+      "elevation_band": "4500–5000 ft",
+      "planting_acres": 0.2224,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Coulter Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "997_5000",
+      "seed_zone": "997",
+      "elevation_band": "5000–5500 ft",
+      "planting_acres": 0.8896,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Coulter Pine",
+          "acres": 0.8896
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/cranston-2018.geojson"
+}

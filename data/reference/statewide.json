@@ -1,0 +1,48 @@
+{
+  "generated_at": "2026-09-18T16:06:58+00:00",
+  "window": [
+    2018,
+    2023
+  ],
+  "min_perimeter_acres": 1000,
+  "selection": "Every CAL FIRE (FRAP) perimeter 2018-2023 of at least 1,000 acres, matched to its MTBS assessment by overlap in the same year.",
+  "candidates": 242,
+  "built": 237,
+  "not_built": [
+    {
+      "id": "baccarat-2020",
+      "name": "Baccarat",
+      "year": 2020,
+      "gis_acres": 10456.4,
+      "reason": "no MTBS assessment overlaps this perimeter"
+    },
+    {
+      "id": "bluejay-2020",
+      "name": "Bluejay",
+      "year": 2020,
+      "gis_acres": 6922.0,
+      "reason": "no MTBS assessment overlaps this perimeter"
+    },
+    {
+      "id": "scott-2023",
+      "name": "Scott",
+      "year": 2023,
+      "gis_acres": 1936.0,
+      "reason": "no MTBS assessment overlaps this perimeter"
+    },
+    {
+      "id": "danny-2023",
+      "name": "Danny",
+      "year": 2023,
+      "gis_acres": 1531.3,
+      "reason": "no MTBS assessment overlaps this perimeter"
+    },
+    {
+      "id": "oak-2020",
+      "name": "Oak",
+      "year": 2020,
+      "gis_acres": 1146.5,
+      "reason": "no MTBS assessment overlaps this perimeter"
+    }
+  ]
+}

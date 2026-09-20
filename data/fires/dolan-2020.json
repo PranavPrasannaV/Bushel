@@ -1,0 +1,124 @@
+{
+  "fire": {
+    "id": "dolan-2020",
+    "name": "Dolan",
+    "year": 2020,
+    "discovery_date": "2020-08-18",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 124527.4317,
+    "retained_acres": 13065.1808,
+    "excluded_acres": 111462.2509,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 573.3339,
+    "conifer_acres": 1909.2597
+  },
+  "planting": {
+    "interior_acres": 37.1399,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.0647788313232481,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "120_500",
+      "seed_zone": "120",
+      "elevation_band": "500–1000 ft",
+      "planting_acres": 2.8911,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 1.112
+        },
+        {
+          "species": "Coast Redwood",
+          "acres": 0.8896
+        },
+        {
+          "species": "Coulter Pine",
+          "acres": 0.8896
+        }
+      ]
+    },
+    {
+      "cell_id": "120_1000",
+      "seed_zone": "120",
+      "elevation_band": "1000–1500 ft",
+      "planting_acres": 2.2239,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Coast Redwood",
+          "acres": 2.0016
+        },
+        {
+          "species": "Coulter Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "120_1500",
+      "seed_zone": "120",
+      "elevation_band": "1500–2000 ft",
+      "planting_acres": 3.3359,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Coast Redwood",
+          "acres": 3.3359
+        }
+      ]
+    },
+    {
+      "cell_id": "120_2000",
+      "seed_zone": "120",
+      "elevation_band": "2000–2500 ft",
+      "planting_acres": 20.6827,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Coast Redwood",
+          "acres": 19.5707
+        },
+        {
+          "species": "Coulter Pine",
+          "acres": 1.112
+        }
+      ]
+    },
+    {
+      "cell_id": "120_2500",
+      "seed_zone": "120",
+      "elevation_band": "2500–3000 ft",
+      "planting_acres": 7.5614,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Coast Redwood",
+          "acres": 7.5614
+        }
+      ]
+    },
+    {
+      "cell_id": "120_3000",
+      "seed_zone": "120",
+      "elevation_band": "3000–3500 ft",
+      "planting_acres": 0.4448,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Coast Redwood",
+          "acres": 0.4448
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/dolan-2020.geojson"
+}

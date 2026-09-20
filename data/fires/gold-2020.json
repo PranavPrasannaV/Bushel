@@ -1,0 +1,105 @@
+{
+  "fire": {
+    "id": "gold-2020",
+    "name": "Gold",
+    "year": 2020,
+    "discovery_date": "2020-07-20",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 22652.5533,
+    "retained_acres": 9611.257,
+    "excluded_acres": 13041.2963,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 1129.0986,
+    "conifer_acres": 4579.777
+  },
+  "planting": {
+    "interior_acres": 110.7526,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.09808939626707534,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "732_5000",
+      "seed_zone": "732",
+      "elevation_band": "5000–5500 ft",
+      "planting_acres": 18.9036,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Ponderosa Pine",
+          "acres": 15.1228
+        },
+        {
+          "species": "Jeffrey Pine",
+          "acres": 3.1135
+        },
+        {
+          "species": "White Fir",
+          "acres": 0.4448
+        },
+        {
+          "species": "Incense Cedar",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "732_5500",
+      "seed_zone": "732",
+      "elevation_band": "5500–6000 ft",
+      "planting_acres": 81.3965,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Ponderosa Pine",
+          "acres": 46.9253
+        },
+        {
+          "species": "Jeffrey Pine",
+          "acres": 31.8025
+        },
+        {
+          "species": "Incense Cedar",
+          "acres": 2.4463
+        },
+        {
+          "species": "White Fir",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "732_6000",
+      "seed_zone": "732",
+      "elevation_band": "6000–6500 ft",
+      "planting_acres": 10.4526,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Jeffrey Pine",
+          "acres": 7.5614
+        },
+        {
+          "species": "Ponderosa Pine",
+          "acres": 2.0016
+        },
+        {
+          "species": "Incense Cedar",
+          "acres": 0.6672
+        },
+        {
+          "species": "White Fir",
+          "acres": 0.2224
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/gold-2020.geojson"
+}

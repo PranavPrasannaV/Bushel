@@ -1,0 +1,64 @@
+{
+  "fire": {
+    "id": "mill-2022",
+    "name": "Mill",
+    "year": 2022,
+    "discovery_date": "2022-09-02",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 3939.3799,
+    "retained_acres": 3798.0848,
+    "excluded_acres": 141.2951,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 62.0482,
+    "conifer_acres": 381.4072
+  },
+  "planting": {
+    "interior_acres": 5.1151,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.08243752437621076,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "516_3000",
+      "seed_zone": "516",
+      "elevation_band": "3000–3500 ft",
+      "planting_acres": 4.4479,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Ponderosa Pine",
+          "acres": 2.8911
+        },
+        {
+          "species": "Douglas Fir",
+          "acres": 1.3344
+        },
+        {
+          "species": "Knobcone Pine",
+          "acres": 0.2224
+        }
+      ]
+    },
+    {
+      "cell_id": "516_3500",
+      "seed_zone": "516",
+      "elevation_band": "3500–4000 ft",
+      "planting_acres": 0.6672,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Douglas Fir",
+          "acres": 0.6672
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/mill-2022.geojson"
+}

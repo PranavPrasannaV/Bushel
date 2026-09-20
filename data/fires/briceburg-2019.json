@@ -1,0 +1,47 @@
+{
+  "fire": {
+    "id": "briceburg-2019",
+    "name": "Briceburg",
+    "year": 2019,
+    "discovery_date": "2019-10-06",
+    "perimeter_source_date": "2026-05-21",
+    "provisional": false
+  },
+  "retained": {
+    "perimeter_acres": 5508.3503,
+    "retained_acres": 1357.2396,
+    "excluded_acres": 4151.1107,
+    "excluded_reason": "Outside State Responsibility Area",
+    "high_severity_acres": 85.3996,
+    "conifer_acres": 304.6809
+  },
+  "planting": {
+    "interior_acres": 7.7838,
+    "threshold_m": 90,
+    "threshold_source": "Baker 2023, Climate 11(11):214",
+    "interior_fraction": 0.09114562597482892,
+    "baker_reference_fraction": 0.219,
+    "note": "21.9% is a cross-check on the computed fraction, never a multiplier",
+    "unpartitioned_acres": 0.0
+  },
+  "cells": [
+    {
+      "cell_id": "532_3000",
+      "seed_zone": "532",
+      "elevation_band": "3000–3500 ft",
+      "planting_acres": 7.7838,
+      "allocation_source": "LEMMA 2023.1 GNN, dominant tree species by basal area",
+      "species": [
+        {
+          "species": "Ponderosa Pine",
+          "acres": 5.1151
+        },
+        {
+          "species": "Knobcone Pine",
+          "acres": 2.6687
+        }
+      ]
+    }
+  ],
+  "geometry_ref": "fires/briceburg-2019.geojson"
+}
