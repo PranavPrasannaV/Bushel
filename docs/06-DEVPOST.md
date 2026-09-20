@@ -1,6 +1,6 @@
 # Bushel — Devpost submission
 
-**Video:** [fill: video URL] · **Repo:** https://github.com/PranavPrasannaV/Bushel · **Live site:** https://pranavprasannav.github.io/Bushel/
+**Video:** https://www.youtube.com/watch?v=xdiB-Ic4ztI · **Repo:** https://github.com/PranavPrasannaV/Bushel · **Live site:** https://pranavprasannav.github.io/Bushel/
 
 **Elevator pitch:** After a wildfire, Bushel works out the seed order that would bring the forest back:
 which acres can't reseed themselves, which conifer species, how many bushels of cones from which seed
