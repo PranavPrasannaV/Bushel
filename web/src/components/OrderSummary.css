@@ -103,6 +103,81 @@
   color: var(--color-text-muted);
 }
 
+/* What the order covers, set in the same ruled band as the figure it qualifies, so a partial order cannot
+   be read as a complete one from the top of the slip alone. The bar IS the share, so the weight tracks the
+   data: near-full it is an almost solid rule under one muted line; at a quarter it is a quarter-filled bar
+   under a figure set like the headline's, against a sunken block. Quiet is the base state; [data-level] only
+   ever escalates it. */
+.headline-covers {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: var(--space-1) var(--space-2);
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.covers-label {
+  grid-column: 1 / -1;
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-text-subtle);
+}
+
+.covers-figure {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  line-height: 1;
+  white-space: nowrap;
+  color: var(--color-text-muted);
+}
+
+.covers-of {
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  color: var(--color-text-muted);
+}
+
+/* The covered share in ink over the hatch that marks the rest — the same hatch the mix uses for "N more". */
+.covers-bar {
+  grid-column: 1 / -1;
+  height: 4px;
+  margin-top: var(--space-1);
+  background:
+    linear-gradient(var(--color-text), var(--color-text)) left / calc(var(--covered, 0) * 100%) 100% no-repeat,
+    repeating-linear-gradient(135deg, var(--paper-400) 0 2px, transparent 2px 5px) var(--color-surface-sunken);
+}
+
+/* Most of the fire is not in the order: the share is a headline figure of its own. */
+.headline-covers[data-level='partial'] {
+  margin-top: var(--space-4);
+  padding: var(--space-3);
+  border-top: 0;
+  border-left: 3px solid var(--color-text);
+  background: var(--color-surface-sunken);
+}
+
+.headline-covers[data-level='partial'] .covers-figure {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.headline-covers[data-level='partial'] .covers-of {
+  font-size: var(--text-sm);
+  color: var(--color-text);
+}
+
+.headline-covers[data-level='partial'] .covers-bar {
+  height: 8px;
+  margin-top: var(--space-2);
+}
+
 /* What the bushels are made of: one stacked bar, a key of species and shares under it. */
 .mix {
   display: flex;

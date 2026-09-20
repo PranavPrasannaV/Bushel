@@ -11,6 +11,63 @@ import './OrderSummary.css'
 /** The species in an order, darkest first: ink and burn tones, never the interior's green. */
 const MIX_TONES = ['var(--ink-900)', 'var(--umber-600)', 'var(--umber-300)', 'var(--paper-400)']
 
+/** Below this share of the trees, the coverage line is set loud beside the headline figure; at or above it,
+ *  one quiet line. A display threshold only: the figure shown is the measured one either way. */
+const COVERAGE_LOUD_BELOW = 0.95
+
+/**
+ * The mix's shares as whole percents that add up, by largest remainder (Hamilton): floor every share, then
+ * hand the points left over to the largest remainders. Two guards on top of that, because this row is read
+ * as a mix and a mix has to behave like one:
+ *   - a share under half a point reads "<1%", never "1%" (which overstates it, and pushed the old row to
+ *     101%) and never "0%" (which reads as none). One whole point is held back for those shares, so the
+ *     largest cannot read "100%" while another species is listed beside it.
+ *   - a named share that still floors to nothing borrows a point from the largest.
+ * A one-species mix is the only row that reads "100%", and there it is true.
+ */
+function shareLabels(values: number[]): string[] {
+  const total = values.reduce((sum, v) => sum + v, 0)
+  if (!(total > 0)) return values.map(() => '—')
+  const exact = values.map((v) => (v / total) * 100)
+  const named = exact.map((p, i) => (p >= 0.5 ? i : -1)).filter((i) => i >= 0)
+  const budget = named.length === values.length ? 100 : 99
+  const namedTotal = named.reduce((sum, i) => sum + exact[i], 0)
+  const scaled = named.map((i) => (exact[i] / namedTotal) * budget)
+  const whole = scaled.map((v) => Math.floor(v))
+  let left = budget - whole.reduce((sum, v) => sum + v, 0)
+  for (const { k } of scaled.map((v, k) => ({ k, rem: v - Math.floor(v) })).sort((a, b) => b.rem - a.rem)) {
+    if (left <= 0) break
+    whole[k] += 1
+    left -= 1
+  }
+  for (let k = 0; k < whole.length; k += 1) {
+    if (whole[k] > 0) continue
+    const biggest = whole.indexOf(Math.max(...whole))
+    if (whole[biggest] < 2) break
+    whole[biggest] -= 1
+    whole[k] = 1
+  }
+  const labels = values.map(() => '<1%')
+  named.forEach((i, k) => {
+    labels[i] = `${whole[k]}%`
+  })
+  return labels
+}
+
+/**
+ * A coverage share, rounded so it never claims more ground than the order covers: while a line is excluded
+ * the figure reads ">99.9%", never "100%", and a sliver reads "<1%", never "0%". A true zero — not one line
+ * computable — is stated as 0%, which is measured, not a 0 standing in for unknown (SC-009).
+ */
+function coverageFigure(fraction: number): string {
+  const pct = fraction * 100
+  if (pct <= 0) return '0%'
+  if (pct < 1) return '<1%'
+  if (pct < 99) return `${Math.round(pct)}%`
+  const tenths = Math.round(pct * 10) / 10
+  return tenths >= 100 ? '>99.9%' : `${tenths.toFixed(1)}%`
+}
+
 export default function OrderSummary({
   entry,
   record,
@@ -36,7 +93,15 @@ export default function OrderSummary({
   const mix = bySpecies.slice(0, MIX_TONES.length)
   const rest = bySpecies.slice(MIX_TONES.length).reduce((sum, x) => sum + x.bushels, 0)
   if (rest > 0) mix.push({ species: `${bySpecies.length - MIX_TONES.length} more`, bushels: rest })
-  const pctOf = (v: number) => `${Math.max(1, Math.round((v / allBushels) * 100))}%`
+  const mixPct = shareLabels(mix.map((m) => m.bushels))
+
+  // What the order covers. sumLines() counts a line's trees in `trees` only when the line is computable and
+  // in `gap_trees` when it is not, so the trees to plant on this fire are trees + gap_trees and the order
+  // covers the first of the two. Both figures come straight from the totals; neither is new.
+  const orderTrees = t.trees.value ?? 0
+  const excludedTrees = t.gap_trees.value ?? 0
+  const allTrees = orderTrees + excludedTrees
+  const covered = t.gap_lines > 0 && allTrees > 0 ? orderTrees / allTrees : null
 
   // The order as a requisition slip: what it is for, the headline figure, then the ledger.
   return (
@@ -72,6 +137,27 @@ export default function OrderSummary({
               {fmtQty(known(t.bushels.value))}
             </p>
             <p className="headline-unit">{t.bushels.unit}</p>
+            {/* A partial order says so where the figure is, not only in the note under the ledger: the share
+                covered sits in the same band, and the bar under it is that share, so the treatment scales
+                with the data — near-full it is one quiet line, at a quarter it is unmissable. */}
+            {covered !== null && (
+              <p
+                className="headline-covers"
+                data-testid="coverage"
+                data-level={covered < COVERAGE_LOUD_BELOW ? 'partial' : 'most'}
+              >
+                <span className="covers-label">Covers</span>
+                <span className="covers-figure">{coverageFigure(covered)}</span>
+                <span className="covers-of">
+                  of the {fmtInt(allTrees)} trees to plant — {fmtInt(excludedTrees)} are not in this order.
+                </span>
+                <span
+                  className="covers-bar"
+                  aria-hidden="true"
+                  style={{ '--covered': covered } as CSSProperties}
+                />
+              </p>
+            )}
           </div>
           {allBushels > 0 && (
             <div className="mix">
@@ -79,7 +165,7 @@ export default function OrderSummary({
               <p
                 className="mix-bar"
                 role="img"
-                aria-label={mix.map((m) => `${m.species} ${pctOf(m.bushels)}`).join(', ')}
+                aria-label={mix.map((m, i) => `${m.species} ${mixPct[i]}`).join(', ')}
               >
                 {mix.map((m, i) => (
                   <span key={m.species} style={{ flexGrow: m.bushels, background: MIX_TONES[i] } as CSSProperties} data-rest={i >= MIX_TONES.length || undefined} />
@@ -90,7 +176,7 @@ export default function OrderSummary({
                   <li key={m.species}>
                     <span className="mix-swatch" style={{ background: MIX_TONES[i] } as CSSProperties} data-rest={i >= MIX_TONES.length || undefined} aria-hidden="true" />
                     <span className="mix-name">{m.species}</span>
-                    <span className="mix-pct">{pctOf(m.bushels)}</span>
+                    <span className="mix-pct">{mixPct[i]}</span>
                   </li>
                 ))}
               </ul>
