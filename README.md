@@ -4,6 +4,8 @@
 
 California publishes a statewide seed need once a year: **55,978 bushels of cones**, sized to reforest 25% of productive conifer forest on non-federal land, not only burned land. Bushel applies the same method to one fire, on demand.
 
+**Live site:** https://bushel-five.vercel.app · **Demo video:** https://www.youtube.com/watch?v=xdiB-Ic4ztI
+
 Built for [NextStep Hacks 2026](https://nextstep2026.devpost.com) — theme *Earth Forward*.
 
 ---
