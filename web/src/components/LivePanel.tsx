@@ -1,5 +1,10 @@
 // A live national build, shown as it happens (each national service ticking off as it answers) and, once
-// done, where every number came from and how the build differs from California's checked ones.
+// done, the cross-check, where every number came from and how the build differs from California's checked
+// ones. The cross-check leads the report section, the way the California branch leads with its own
+// like-for-like check: it is the one number on the page that was computed twice, and it is stated as what
+// it is — two implementations of one method agreeing, not a check against ground truth or a published
+// figure. Outside California there is still nothing published to check a single fire against, and the
+// block says so rather than letting the agreement stand in for validation.
 import type { NationalBuild, Step } from '../national/build.ts'
 import './LivePanel.css'
 
@@ -56,12 +61,45 @@ export function LiveProgress({
   )
 }
 
-/** Report section for a live build: the method's differences from California, then every source. */
+/** Report section for a live build: the cross-check, then the method's differences from California, then
+ *  every source. */
 export function LiveSources({ build }: { build: NationalBuild }) {
   return (
     <section className="live-sources" aria-labelledby="live-sources-title">
       <p className="caps">Built live</p>
-      <h3 id="live-sources-title">Where these numbers came from</h3>
+      <h3 id="live-sources-title">Checked, and where these numbers came from</h3>
+      <div className="live-check" data-testid="live-crosscheck">
+        <p className="caps">Cross-check</p>
+        <h4>The Caldor fire, computed twice</h4>
+        <div className="live-check-figures">
+          <div className="live-check-total">
+            <p className="caps">This live build</p>
+            <p className="live-check-figure">2,250</p>
+            <p className="live-check-unit">acres that can&rsquo;t reseed</p>
+          </div>
+          <div className="live-check-total">
+            <p className="caps">California&rsquo;s pipeline</p>
+            <p className="live-check-figure">2,239</p>
+            <p className="live-check-unit">from California&rsquo;s own data</p>
+          </div>
+          <div className="live-check-total">
+            <p className="caps">Difference</p>
+            <p className="live-check-figure">+0.5%</p>
+          </div>
+        </div>
+        <p className="detail">
+          Caldor burned in California in 2021, so both implementations can run on it: this browser build,
+          from national services, and the Python pipeline, from California&rsquo;s own data. They were
+          written independently and land within half a percent of each other on the same fire. That is two
+          implementations of one method agreeing &mdash; not a check against ground truth, and not a check
+          against a published figure.
+        </p>
+        <p className="live-check-note">
+          No published figure yet for the fire on this page. CAL FIRE publishes its assessment for
+          California annually and statewide, not fire by fire. Seed weights and prices are CAL FIRE&rsquo;s;
+          species it doesn&rsquo;t list show trees, not seed.
+        </p>
+      </div>
       <p className="section-lede">
         This fire was built in your browser a moment ago, from national public services, at {Math.round(build.groundRes)} m
         cells. The steps are California&rsquo;s; four inputs are national stand-ins for California&rsquo;s own:
@@ -81,14 +119,6 @@ export function LiveSources({ build }: { build: NationalBuild }) {
         <div>
           <dt>Seed zones</dt>
           <dd>The provisional national seed zones (Bower et al. 2014), where California uses its own map.</dd>
-        </div>
-        <div>
-          <dt>Checked against</dt>
-          <dd>
-            No published figure yet. On the Caldor fire (2021), this live build finds 2,250 acres that can&rsquo;t reseed;
-            California&rsquo;s pipeline, from California&rsquo;s own data, finds 2,239. Seed weights and prices are
-            CAL FIRE&rsquo;s; species it doesn&rsquo;t list show trees, not seed.
-          </dd>
         </div>
       </dl>
       <div className="region-table-wrap">

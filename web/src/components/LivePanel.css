@@ -89,6 +89,67 @@
   max-width: 54rem;
 }
 
+/* The cross-check: the one figure on this page computed twice, set as a ledger block on the sheet — heavy
+   top rule and the page's existing three-figure summary row, the same treatment the California branch gives
+   its published check. Deliberately not a badge: no sprout, no amber, no priority colour, no seal. */
+.live-check {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: var(--space-2) 0;
+  padding: var(--space-4);
+  border-top: 1.5px solid var(--color-rule);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.live-check h4 {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  letter-spacing: -0.005em;
+}
+
+.live-check-figures {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: var(--space-5);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+
+.live-check-total {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.live-check-figure {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.live-check-unit {
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-2xs);
+  line-height: var(--leading-snug);
+}
+
+.live-check .detail {
+  max-width: var(--measure);
+}
+
+.live-check-note {
+  color: var(--color-text-subtle);
+  font-size: var(--text-xs);
+  line-height: var(--leading-snug);
+  max-width: var(--measure);
+}
+
 .live-diffs {
   display: flex;
   flex-direction: column;
@@ -129,5 +190,18 @@
   .live-diffs > div {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-1);
+  }
+
+  .live-check {
+    padding: var(--space-3);
+  }
+
+  .live-check-figures {
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+  }
+
+  .live-check-figure {
+    font-size: var(--text-xl);
   }
 }
