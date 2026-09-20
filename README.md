@@ -1,6 +1,6 @@
 # Bushel
 
-**For a burned California fire, Bushel works out the seed order to replant it — which acres are unlikely to grow back on their own, which species, how much seed, zone by zone.**
+**For a burned fire in the lower 48, Bushel works out the seed order to replant it — which acres are unlikely to grow back on their own, which species, how much seed, zone by zone.** California is built ahead of time and checked against the state's own published figures; every other state in the lower 48 is built live from national data, with no published state figure to check it against. Alaska and Hawaii are outside the national burn-severity mosaic.
 
 California publishes a statewide seed need once a year: **55,978 bushels of cones**, sized to reforest 25% of productive conifer forest on non-federal land, not only burned land. Bushel applies the same method to one fire, on demand.
 
@@ -405,7 +405,7 @@ None of them chains burn perimeter → seed-limited interior → zone and elevat
 
 ## Hard questions
 
-**Why only California?** Because that is where the result can be checked. CAL FIRE publishes the benchmark, the cone-to-seed table, the seed prices and the seed-zone system, all in one set of units. See [Scope](#scope-and-why-its-california).
+**Why is only California checked?** Because that is where the result can be checked. CAL FIRE publishes the benchmark, the cone-to-seed table, the seed prices and the seed-zone system, all in one set of units. Every other state in the lower 48 is built live on the same method and labelled unchecked. See [Scope](#scope-and-why-california-is-built-and-checked).
 
 **Why 90 m, not 100 m or 200 m?** Baker (2023) measured the share of high-severity burn area more than 90 m from a live seed edge and found it averages 21.9%, the published estimate least favourable to the conclusion that planting is needed. Gill et al. (2022) put most wind-dispersed conifer seed within 200 m and non-serotinous seed rarely much beyond 100 m. We take the threshold that hurts our case, fix it (no control on screen can change it), and show our computed share next to Baker's as a check.
 
@@ -419,9 +419,9 @@ None of them chains burn perimeter → seed-limited interior → zone and elevat
 
 **Isn't this what CAST or the Seedlot Selection Tool does?** No. Those match seed to a site's future climate. Bushel does not do climate matching. It starts from one fire's perimeter and ends with a quantity of cones. See [Prior art](#prior-art-named-up-front).
 
-**Is the site live, or a recording?** Both, and the page says which. The deployed site serves fires built ahead of time by the pipeline, and labels them Pre-built. `python -m bushel.serve` builds any other 2018–2023 California fire from the agency services on request. A live build of a pre-built fire comes out identical, field for field.
+**Is the site live, or a recording?** Both, and the page says which. The deployed site serves California's fires built ahead of time by the pipeline and labels them Pre-built; any fire in the rest of the lower 48 it builds live in the browser, from national services, while you wait. `python -m bushel.serve` builds any other 2018–2023 California fire from the agency services on request. A live build of a pre-built fire comes out identical, field for field.
 
-**Why not this year's fires?** MTBS burn severity runs one to two years behind, and the AON's own severity data stops at 2023. Bushel refuses a fire outside 2018–2023 and says why, rather than reading severity from a different product.
+**Why not this year's fires?** MTBS burn severity runs one to two years behind, and the AON's own severity data stops at 2023. California is built for 2018–2023, and Bushel refuses a California fire outside that window and says why; elsewhere in the lower 48 it builds whatever MTBS has already assessed, which the state maps list from 2015 on. Either way it will not read severity from a different product.
 
 **Where's the AI?** There is no model anywhere in the numeric path. Every quantity is deterministic arithmetic over public data, and it is unit-tested. The implementation was written with Claude Code, from a written spec and task list.
 

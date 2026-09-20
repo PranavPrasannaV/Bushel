@@ -4,8 +4,8 @@
 
 **Elevator pitch:** After a wildfire, Bushel works out the seed order that would bring the forest back:
 which acres can't reseed themselves, which conifer species, how many bushels of cones from which seed
-zone, and what it costs — for every California fire from 2018 to 2023, checked against the state's own
-figures.
+zone, and what it costs. Every California fire from 2018 to 2023 is built and checked against the
+state's own figures; any other fire in the lower 48 is built live in the browser.
 
 ---
 
